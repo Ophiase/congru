@@ -35,6 +35,18 @@ where $\mathcal{S} = \bigcup_{i=1}^{n} \{s_{i,k} : k = 1, \ldots, N_i, s_{i,k} \
 
 **Objective**: Recover the transformation $(R, t)$ and establish correspondence between $\mathcal{P}$ and the relevant points in $\mathcal{Q}$.
 
+### Additional Hypotheses
+
+#### Hypothesis 1: Exterior Uniform Noise
+Uniform noise points are sampled exclusively outside the convex hull of the original point cloud $\mathcal{P}$.
+
+#### Hypothesis 2: Bounded Isotropic Gaussian Noise (points identify their own distribution)
+All Gaussian distributions are isotropic, with standard deviation $\sigma \leq \alpha \cdot d_{\min}$, where $d_{\min}$ is the minimum pairwise distance between points in $\mathcal{P}$.
+
+#### Hypothesis 3: Limited Point Separation (the point cloud is not too sparse)
+The minimum distance between any two points in $\mathcal{P}$ is at most $\Delta$.
+
+
 ### Problem Variants
 
 #### Variant 1: Minimal Sampling (Simplest Case)
@@ -53,4 +65,3 @@ where $\mathcal{S} = \bigcup_{i=1}^{n} \{s_{i,k} : k = 1, \ldots, N_i, s_{i,k} \
 - **Complexity**: Full statistical inference problem requiring probabilistic alignment methods
 
 Each variant represents increasing complexity in both the observation model and the required algorithmic sophistication for robust point cloud alignment.
-
