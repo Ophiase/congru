@@ -9,6 +9,10 @@
 </p>
 </p>
 
+**Work In Progress**: \
+This project is under active development.\
+Comeback later when the first release will be available.
+
 ## Installation
 
 ## Theory
