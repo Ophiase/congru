@@ -1,4 +1,4 @@
-use crate::{ types::{ Vec3 }, point_cloud::PointCloud };
+use crate::{ types::{ Vec3 }, point_cloud::{ PointCloud, PointCloudMetadata } };
 
 impl PointCloud {
     pub fn new() -> Self {
@@ -13,6 +13,14 @@ impl PointCloud {
         Self {
             points,
             metadata: None,
+        }
+    }
+
+    /// Create a point cloud with metadata
+    pub fn with_metadata(points: Vec<Vec3>, metadata: PointCloudMetadata) -> Self {
+        Self {
+            points,
+            metadata: Some(metadata),
         }
     }
 
