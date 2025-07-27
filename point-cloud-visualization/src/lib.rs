@@ -1,14 +1,11 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+use point_cloud::PointCloud;
+
+#[allow(unused_variables)]
+pub fn show_point_cloud(point_cloud: &PointCloud) {
+    unimplemented!("show_point_cloud is not implemented yet");
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+#[allow(unused_variables)]
+pub fn show_before_after(original_point_cloud: &PointCloud, sampled_point_cloud: &PointCloud) {
+    unimplemented!("show_before_after is not implemented yet");
 }
