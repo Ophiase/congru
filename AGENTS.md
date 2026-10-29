@@ -45,8 +45,8 @@ before work is declared done.
 Rust follows `.agents/portable/rules/rust.md`; Python follows
 `.agents/portable/rules/python.md`. Folders of code follow
 `.agents/rules/layout.md`: one concept each, seven entries at most, two
-hundred lines per file. Read `.agents/portable/rules/comments.md` before
-writing code.
+hundred lines per file. Read `.agents/portable/rules/comments.md` and
+`.agents/rules/rust-docs.md` before writing code.
 
 ## Rules and checks
 
@@ -61,6 +61,11 @@ all over the changed files.
 A test checks an algorithmic property against the truth of the synthetic
 generator: a known motion recovered within a bound derived from the noise.
 Never a number copied from a run.
+
+## Done
+
+A topic is done when the [review](.claude/skills/review/SKILL.md) skill
+returns **ready**: the publication first, the code second.
 
 ## Branches
 

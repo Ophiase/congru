@@ -1,0 +1,21 @@
+name: A registration case
+description: Data or a setting where recalage fails, or where you would need it
+body:
+  - type: textarea
+    id: setting
+    attributes:
+      label: The setting
+      description: Sensor, object, what is known beforehand (correspondences, a rough pose, nothing).
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: data
+    attributes:
+      label: Data
+      description: A link to a file you can share, its size and licence.

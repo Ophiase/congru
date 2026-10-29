@@ -39,7 +39,7 @@ rumdl-fmt:
 [script("bash")]
 guards:
     status=0
-    for check in markdown french comment-slop hardcoded-url portable rust-format folder-size yaml-extension config-format file-length; do
+    for check in markdown french comment-slop doc-slop hardcoded-url portable rust-format folder-size yaml-extension config-format file-length; do
         just _guard "$check" || status=1
     done
     exit $status

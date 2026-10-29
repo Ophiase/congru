@@ -67,6 +67,11 @@
           },
           {
             "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/on-edit.sh doc-slop",
+            "timeout": 30
+          },
+          {
+            "type": "command",
             "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/on-edit.sh hardcoded-url",
             "timeout": 30
           },
@@ -108,6 +113,11 @@
           },
           {
             "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/on-stop.sh doc-slop",
+            "timeout": 30
+          },
+          {
+            "type": "command",
             "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/on-stop.sh hardcoded-url",
             "timeout": 60
           },
@@ -120,6 +130,18 @@
             "type": "command",
             "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/on-stop.sh rust-format",
             "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/before-write.sh yaml-extension",
+            "timeout": 10
           }
         ]
       }
