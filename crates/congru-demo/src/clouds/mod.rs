@@ -12,7 +12,7 @@ use congru_sim::bracket;
 use nalgebra::Vector3;
 
 use crate::Summary;
-use crate::picture::palette::{BAD, FAIR, GOOD, MODEL, OBSERVED, TEXT, Tone};
+use crate::picture::palette::{BAD, FAIR, GOOD, MODEL, MUTED, OBSERVED, TEXT, Tone};
 use crate::picture::{self, Tile, font};
 use congru_track::Phase;
 use congru_vision::Image;
@@ -108,19 +108,21 @@ fn label(picture: &mut Image<Tone>, name: &str, record: &Record) -> f64 {
     if record.shot.jumped {
         font::write(picture, TILE_WIDTH - 70, 8, "knock", BAD);
     }
-    font::write(picture, 8, 8, name, TEXT);
+    font::write(picture, 8, 8, name, MUTED);
     let (phase, tone) = match record.update.as_ref().map(|update| update.phase) {
         Some(Phase::Follow) => ("follow", GOOD),
         Some(Phase::Find) => ("find", FAIR),
         None => ("lost", BAD),
     };
     let error = record.error_degrees();
+    font::write(picture, 8, TILE_HEIGHT - 22, phase, tone);
+    let after_phase = 8 + (phase.len() + 1) * font::ADVANCE;
     font::write(
         picture,
-        8,
+        after_phase,
         TILE_HEIGHT - 22,
-        &format!("{phase} {error:.1}°"),
-        tone,
+        &format!("{error:.1}°"),
+        TEXT,
     );
     error
 }

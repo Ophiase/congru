@@ -1,9 +1,7 @@
-use congru::{
-    Alignment, Distance, Error, Icp, Kernel, Multistart, PointCloud, Prior, RigidTransform,
-};
+use congru::{Alignment, Distance, Error, Icp, Kernel, PointCloud, Prior, RigidTransform};
 
 use crate::noise::{LearnedNoise, deviation_of};
-use crate::{Gains, Health, ModelView, MotionFilter};
+use crate::{ModelView, MotionFilter, Settings};
 
 /// Tukey's constant for 95 % efficiency on Gaussian residuals.
 const KERNEL_DEVIATIONS: f64 = 4.685;
@@ -30,47 +28,25 @@ pub struct Update {
     pub alignment: Alignment,
 }
 
-/// How far the part may plausibly move between two frames.
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub struct Agility {
-    /// In radians.
-    pub rotation: f64,
-    pub translation: f64,
-}
-
 /// Follows one model through a stream of point clouds.
 #[derive(Debug)]
 pub struct Tracker<View> {
+    pub name: String,
     pub view: View,
-    /// The local refinement of a followed frame; its kernel, gate and prior
-    /// are set each frame from the learned noise.
-    pub follow: Icp,
-    pub find: Multistart,
-    pub health: Health,
-    pub agility: Agility,
+    pub settings: Settings,
     filter: MotionFilter,
     noise: LearnedNoise,
 }
 
 impl<View: ModelView> Tracker<View> {
     #[must_use]
-    pub fn new(
-        view: View,
-        follow: Icp,
-        find: Multistart,
-        health: Health,
-        agility: Agility,
-        gains: Gains,
-        noise_floor: f64,
-    ) -> Self {
+    pub fn new(name: impl Into<String>, view: View, settings: Settings) -> Self {
         Self {
+            name: name.into(),
             view,
-            follow,
-            find,
-            health,
-            agility,
-            filter: MotionFilter::new(gains),
-            noise: LearnedNoise::new(noise_floor),
+            settings,
+            filter: MotionFilter::new(settings.gains),
+            noise: LearnedNoise::new(settings.noise_floor),
         }
     }
 
@@ -80,19 +56,35 @@ impl<View: ModelView> Tracker<View> {
     /// # Errors
     /// When the search fails too; the next frame starts with a search.
     pub fn update(&mut self, scan: &PointCloud) -> Result<Update, Error> {
-        if let Some(predicted) = self.filter.predict()
+        self.update_from(scan, None)
+    }
+
+    /// As [`Tracker::update`], following from `guess` when there is nothing
+    /// to predict from yet.
+    ///
+    /// # Errors
+    /// As [`Tracker::update`].
+    pub fn update_from(
+        &mut self,
+        scan: &PointCloud,
+        guess: Option<RigidTransform>,
+    ) -> Result<Update, Error> {
+        if let Some(predicted) = self.filter.predict().or(guess)
             && let Ok((alignment, deviation)) = self.follow_from(scan, &predicted)
-            && self
-                .health
-                .trusts(alignment.inlier_fraction, deviation, self.noise.deviation())
+            && self.settings.health.trusts(
+                alignment.inlier_fraction,
+                deviation,
+                self.noise.deviation(),
+            )
         {
             return Ok(self.accept(alignment, deviation, Phase::Follow));
         }
         self.filter.reset();
-        let alignment = self.find.align(scan, self.view.whole())?;
+        let alignment = self.settings.find.align(scan, self.view.whole())?;
         let deviation = deviation_of(scan, self.view.whole(), &alignment.transform);
         let lenient = self.noise.deviation().map(|known| known * 2.0);
         if self
+            .settings
             .health
             .trusts(alignment.inlier_fraction, deviation, lenient)
         {
@@ -135,17 +127,37 @@ impl<View: ModelView> Tracker<View> {
 
     fn tuned(&self) -> Result<Icp, Error> {
         let Some(deviation) = self.noise.deviation() else {
-            return Ok(self.follow);
+            return Ok(self.settings.follow);
         };
         Ok(Icp {
             kernel: Kernel::Tukey(Distance::new(KERNEL_DEVIATIONS * deviation)?),
             max_correspondence_distance: Some(Distance::new(GATE_DEVIATIONS * deviation)?),
             prior: Some(Prior::new(
-                self.agility.rotation,
-                self.agility.translation,
+                self.settings.agility.rotation,
+                self.settings.agility.translation,
                 deviation,
             )?),
-            ..self.follow
+            ..self.settings.follow
         })
+    }
+}
+
+impl<View: ModelView> congru::Aligner for Tracker<View> {
+    fn name(&self) -> &str {
+        &self.name
+    }
+
+    fn align(&mut self, frame: &congru::Frame<'_>) -> Result<congru::Estimate, Error> {
+        let update = self.update_from(frame.scan, frame.guess)?;
+        Ok(congru::Estimate {
+            pose: update.pose,
+            trusted: update.trusted,
+            observability: update.alignment.observability,
+        })
+    }
+
+    fn reset(&mut self) {
+        self.filter.reset();
+        self.noise = LearnedNoise::new(self.settings.noise_floor);
     }
 }

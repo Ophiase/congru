@@ -3,10 +3,10 @@
     reason = "a broken fixture should fail the test loudly"
 )]
 
-use congru::{Distance, Icp, Kernel, Multistart, OrientedCloud};
+use congru::{Distance, OrientedCloud};
 use congru_synth::sequence::{Drift, Jump, Sequence};
 use congru_synth::shapes;
-use congru_track::{Agility, Gains, Health, SensorView, Tracker};
+use congru_track::{SensorView, Settings, Tracker};
 
 const FRAMES: usize = 40;
 const SPAN: f64 = 2.5;
@@ -28,33 +28,10 @@ fn model() -> OrientedCloud {
 
 fn errors(sequence: &Sequence) -> Vec<f64> {
     let model = model();
-    let kernel = Kernel::Cauchy(Distance::new(5.0 * NOISE).unwrap());
     let mut tracker = Tracker::new(
+        "tracker",
         SensorView::new(model.clone()).unwrap(),
-        Icp {
-            kernel,
-            ..Icp::default()
-        },
-        Multistart {
-            starts: 48,
-            icp: Icp {
-                kernel,
-                ..Icp::default()
-            },
-        },
-        Health {
-            min_inliers: 0.5,
-            max_noise_ratio: 2.0,
-        },
-        Agility {
-            rotation: 0.1,
-            translation: 0.1,
-        },
-        Gains {
-            pose: 0.6,
-            velocity: 0.2,
-        },
-        NOISE / 4.0,
+        Settings::for_part(SPAN).unwrap(),
     );
     sequence
         .shoot(model.cloud(), SPAN, 3)

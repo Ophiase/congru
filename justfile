@@ -20,12 +20,28 @@ doc:
 
 [doc("Recompute the figures of the documentation from real runs, into docs/figures/")]
 figures:
-    cargo run --release -q -p congru-bench -- docs/figures
+    cargo run --release -q -p congru-figures -- docs/figures
 
 [doc("Run both demos: writes docs/figures/clouds.gif and tracking.gif, prints their tables")]
 demo:
     cargo run --release -q -p congru-demo -- clouds docs/figures/clouds.gif
     cargo run --release -q -p congru-demo -- camera docs/figures/tracking.gif
+
+[doc("The published benchmark, on the evaluation seeds: resumes where it stopped, rewrites docs/benchmark/results.md as cells finish")]
+bench:
+    cargo run --release -q -p congru-bench -- docs/benchmark/results.md
+
+[doc("Draw every benchmark situation as the methods receive it: docs/benchmark/scenes.md")]
+bench-scenes:
+    cargo run --release -q -p congru-bench -- --scenes
+
+[doc("The published benchmark from scratch, after a change of the code")]
+bench-fresh:
+    cargo run --release -q -p congru-bench -- --fresh docs/benchmark/results.md
+
+[doc("The benchmark on the tuning seeds, for trying ideas: writes target/bench-tuning.md")]
+bench-tuning seeds="6":
+    cargo run --release -q -p congru-bench -- --tuning --seeds {{ seeds }} target/bench-tuning.md
 
 [doc("Everything that must pass before declaring work done")]
 check: lint test rumdl
@@ -53,7 +69,7 @@ python-test: python-dev
 [script("bash")]
 guards:
     status=0
-    for check in markdown french comment-slop doc-slop hardcoded-url portable rust-format folder-size yaml-extension config-format file-length; do
+    for check in markdown french comment-slop doc-slop hardcoded-url portable rust-format folder-size yaml-extension config-format file-length version; do
         just _guard "$check" || status=1
     done
     exit $status

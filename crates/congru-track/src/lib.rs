@@ -3,14 +3,14 @@
 //! failed frame, find the model again over all rotations.
 
 mod filter;
-mod health;
 mod noise;
 mod sensor;
+mod settings;
 mod tracker;
 mod view;
 
 pub use filter::{Gains, MotionFilter};
-pub use health::Health;
 pub use sensor::SensorView;
-pub use tracker::{Agility, Phase, Tracker, Update};
+pub use settings::{Agility, Health, Settings};
+pub use tracker::{Phase, Tracker, Update};
 pub use view::{ModelView, WholeModel};

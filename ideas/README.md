@@ -41,6 +41,7 @@ views is **measured against a known truth**, not hoped for.
 - **problem/**:
   [observation-model](problem/observation-model.md) ·
   [hypotheses](problem/hypotheses.md) ·
+  [hypothesis-ladder](problem/hypothesis-ladder.md) ·
   [variants](problem/variants.md) ·
   [what-we-know](problem/what-we-know.md) ·
   [measuring-success](problem/measuring-success.md) ·
@@ -62,7 +63,8 @@ views is **measured against a known truth**, not hoped for.
   [performance](architecture/performance.md) ·
   [benchmark](architecture/benchmark.md) ·
   [stack](architecture/stack.md) ·
-  [extension-points](architecture/extension-points.md)
+  [extension-points](architecture/extension-points.md) ·
+  [contract](architecture/contract.md)
 - **demo/**: [README](demo/README.md) — A: point clouds over time;
   B: a depth camera (scene, sensor, degradations, perception, tracking,
   video)

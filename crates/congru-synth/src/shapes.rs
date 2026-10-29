@@ -61,18 +61,47 @@ pub fn lumpy_sphere_mesh(rings: u32) -> Result<TriangleMesh, Error> {
 /// # Errors
 /// [`Error::Empty`] for a zero side.
 pub fn wavy_patch(side: u32) -> Result<PointCloud, Error> {
-    let step = 1.0 / f64::from(side.max(2) - 1);
-    PointCloud::new(
-        (0..side * side)
-            .map(|index| {
-                let along = f64::from(index % side) * step;
-                let across = f64::from(index / side) * step;
-                let height = 0.25 * (2.5 * along + 0.3).sin() * (1.7 * across).cos()
-                    + 0.1 * along * across * across;
-                Point::new(along, across, height)
+    PointCloud::new(patch_vertices(side))
+}
+
+/// The same patch as a triangle mesh, two triangles per grid cell.
+///
+/// # Errors
+/// [`Error::Empty`] below two points a side.
+pub fn wavy_patch_mesh(side: u32) -> Result<TriangleMesh, Error> {
+    let corner = |along: u32, across: u32| across * side + along;
+    let triangles: Vec<[u32; 3]> = (0..side.saturating_sub(1))
+        .flat_map(|across| {
+            (0..side.saturating_sub(1)).flat_map(move |along| {
+                [
+                    [
+                        corner(along, across),
+                        corner(along + 1, across),
+                        corner(along, across + 1),
+                    ],
+                    [
+                        corner(along + 1, across),
+                        corner(along + 1, across + 1),
+                        corner(along, across + 1),
+                    ],
+                ]
             })
-            .collect::<Vec<_>>(),
-    )
+        })
+        .collect();
+    TriangleMesh::new(PointCloud::new(patch_vertices(side))?, triangles)
+}
+
+fn patch_vertices(side: u32) -> Vec<Point> {
+    let step = 1.0 / f64::from(side.max(2) - 1);
+    (0..side * side)
+        .map(|index| {
+            let along = f64::from(index % side) * step;
+            let across = f64::from(index / side) * step;
+            let height = 0.25 * (2.5 * along + 0.3).sin() * (1.7 * across).cos()
+                + 0.1 * along * across * across;
+            Point::new(along, across, height)
+        })
+        .collect()
 }
 
 fn lumpy(direction: Vector3<f64>) -> Point {

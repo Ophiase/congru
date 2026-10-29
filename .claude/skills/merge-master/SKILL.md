@@ -19,9 +19,10 @@ this on its own; it never pushes.
 1. **Checks**: `just check` and `just guards`.
 2. **Confidentiality**: `git grep -i` for the names kept in
    `.agents/local.md` finds nothing, nor does `git log main..HEAD -p`.
-3. **A small bump**, on the branch: the patch number of
-   `workspace.package.version` in `Cargo.toml` (0.1.0 → 0.1.1), the minor
-   one only when a set of features lands. Write two to five lines under the
+3. **A small bump**, on the branch: the patch number of `VERSION` and of
+   `workspace.package.version` in `Cargo.toml`, together (0.1.0 → 0.1.1),
+   the minor one only when a set of features lands; `just guards` checks
+   they agree. Write two to five lines under the
    new version in `CHANGELOG.md`, the top of `Unreleased` moved there. Keep
    each release short.
 4. **Merge**: `git switch main && git merge --no-ff dev/<topic>`, the

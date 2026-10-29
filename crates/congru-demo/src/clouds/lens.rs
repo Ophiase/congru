@@ -3,7 +3,7 @@ use congru_vision::Image;
 use congru_vision::pixel::{containing, coordinate};
 use nalgebra::{Rotation3, Vector3};
 
-use crate::picture::palette::{PAPER, Tone};
+use crate::picture::palette::{CARD, Tone};
 
 const TURN: f64 = 0.65;
 const TILT: f64 = -0.45;
@@ -40,7 +40,7 @@ impl Lens {
 
     /// Each layer drawn over the previous ones, its points far to near.
     pub fn draw(&self, layers: &[Layer<'_>]) -> Image<Tone> {
-        let mut picture = Image::filled(self.width, self.height, PAPER);
+        let mut picture = Image::filled(self.width, self.height, CARD);
         for layer in layers {
             let mut dots: Vec<(f64, usize, usize)> = layer
                 .points

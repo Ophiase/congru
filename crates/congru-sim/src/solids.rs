@@ -101,6 +101,34 @@ impl Solids {
         self
     }
 
+    /// A prism: the closed outline `profile` in the xy plane, star-shaped
+    /// about the origin, swept along z from `from` to `to`.
+    pub fn extrusion(&mut self, profile: &[[f64; 2]], from: f64, to: f64) -> &mut Self {
+        let count = u32::try_from(profile.len()).unwrap_or(0);
+        let bottom = self.push_vertices(
+            profile
+                .iter()
+                .map(|[across, along]| Point::new(*across, *along, from)),
+        );
+        let top = self.push_vertices(
+            profile
+                .iter()
+                .map(|[across, along]| Point::new(*across, *along, to)),
+        );
+        let centres = self.push_vertices([Point::new(0.0, 0.0, from), Point::new(0.0, 0.0, to)]);
+        for corner in 0..count {
+            let next = (corner + 1) % count;
+            self.triangles
+                .push([bottom + corner, bottom + next, top + next]);
+            self.triangles
+                .push([bottom + corner, top + next, top + corner]);
+            self.triangles
+                .push([centres, bottom + next, bottom + corner]);
+            self.triangles.push([centres + 1, top + corner, top + next]);
+        }
+        self
+    }
+
     /// # Errors
     /// [`Error::Empty`] when no solid was added.
     pub fn build(&self) -> Result<TriangleMesh, Error> {

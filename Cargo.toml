@@ -3,6 +3,7 @@ resolver = "3"
 members = [
   "crates/congru",
   "crates/congru-synth",
+  "crates/congru-figures",
   "crates/congru-bench",
   "crates/congru-vision",
   "crates/congru-sim",

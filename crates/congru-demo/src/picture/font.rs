@@ -3,7 +3,8 @@ use congru_vision::Image;
 use super::palette::Tone;
 
 const SCALE: usize = 2;
-const ADVANCE: usize = 6 * SCALE;
+/// Horizontal distance from one character to the next, in pixels.
+pub const ADVANCE: usize = 6 * SCALE;
 
 /// Five columns by seven rows, the top row first, the leftmost column in
 /// the fifth bit.

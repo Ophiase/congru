@@ -1,4 +1,4 @@
-# congru
+# Congru - Efficient point cloud alignment
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
 [![Rust 1.89+](https://img.shields.io/badge/Rust-1.89%2B-orange.svg)](https://www.rust-lang.org/)
@@ -15,7 +15,12 @@ one onto the other, says how sure it is, and runs wherever the robot runs.
   <img src="docs/figures/tracking.gif" alt="A machined part tracked through a simulated depth camera" width="49%">
 </p>
 
-<p align="center"><a href="docs/demos.md">What the demos show, and how well they do</a></p>
+<p align="center">
+  <a href="docs/demos.md">The demos</a> ·
+  <a href="docs/benchmark/protocol.md">How methods are tested</a> ·
+  <a href="docs/benchmark/scenes.md">The scenes they are tested on</a> ·
+  <a href="docs/benchmark/results.md">The results, method by method</a>
+</p>
 
 ## Why this project exists
 
@@ -64,46 +69,66 @@ eyeballed ([measuring success](ideas/problem/measuring-success.md)).
 
 ## How it is solved
 
+Rigid registration is a family of methods, not one algorithm; which one wins
+depends on what is known beforehand and on what the data does
+([the landscape](ideas/method/landscape.md)).
+
+| Family | Needs | Methods | In congru |
+| --- | --- | --- | --- |
+| Correspondences | Which point goes with which | Kabsch, Umeyama, RANSAC, TEASER++ | Closed form; RANSAC next |
+| Local, no correspondences | A guess within about 20° | ICP point-to-point and point-to-plane, robust, trimmed, annealed, adaptive; NDT, CPD | The ICP family |
+| Global | Nothing | Multistart, FPFH with RANSAC, Go-ICP | Multistart; FPFH next |
+| Tracking | The last frames | Any of the above inside a motion filter | Two-phase tracker |
+| Learned | Training data | PointNet, Deep Closest Point, GeoTransformer | Out of the core |
+
+Every method is one [`Aligner`](ideas/architecture/contract.md) and goes
+through the same [benchmark](docs/benchmark/protocol.md): three families of
+models, thirteen situations that each break one hypothesis, six tracking
+sequences, many seeds. A default is a default because a table says so, and
+[the results](docs/benchmark/results.md) say where each method wins and
+where it breaks.
+
+<details>
+<summary>The ideas, in pictures</summary>
+
 ![Iterative closest point, step by step](docs/figures/icp-steps.svg)
 
-*Iterative closest point on a toy spiral. Red crosses are the model, blue
-dots a noisy observation of it, moved. Each step pairs every dot with its
-nearest cross, moves the dots by the motion that best fits those pairs, and
-pairs again.*
-
-What to do depends on what is known beforehand
-([what we know](ideas/problem/what-we-know.md)).
-
-| You know | congru uses | Cost |
-| --- | --- | --- |
-| Which point goes with which | The closed form of Kabsch and Umeyama | One 3×3 SVD |
-| A rough pose, within about 20° | ICP, point-to-point or point-to-plane | A few nearest-neighbour passes |
-| Nothing at all | ICP from many rotations spread over SO(3) | A few dozen ICPs |
-
-Without a rough pose, ICP slides into the nearest wrong answer. Starting it
-from rotations spread evenly over all of SO(3) and keeping the one that
-explains the most points finds the right one
-([global initialisation](ideas/method/global-initialisation.md)):
+*The local family on a toy spiral: pair each observed point (blue) with its
+nearest model point (red), move by the best fit of those pairs, repeat.*
 
 ![A local minimum, and the way out](docs/figures/local-minimum.svg)
 
-Outliers pull a least-squares fit toward them. A robust kernel lowers the
-weight of a pair as its distance grows, until outliers count for nothing
-([robustness](ideas/method/robustness.md)):
+*Without a guess, a local method slides into the nearest wrong answer; a
+global search starts it from rotations spread over all of SO(3).*
 
 ![Least squares against a robust kernel](docs/figures/outliers.svg)
+
+*Outliers pull least squares toward them; a robust kernel lowers the weight
+of a pair as its distance grows.*
+
+</details>
 
 Every figure on this page is computed by the library from a seeded
 scenario: `just figures` draws them again.
 
-## What it is not
+## Hypotheses, and dropping them
 
-- **Not a toolkit.** No viewer, no file formats zoo, no segmentation:
-  Open3D and PCL do that. congru does one thing.
-- **Not non-rigid.** Six numbers, a rotation and a translation; scale is the
-  first extension worth having.
-- **Not finished.** The core aligns and is tested against the truth; the
-  bindings, the benchmark and real recordings are next.
+Every hypothesis buys speed. congru states each one, is excellent under
+all of them first, then offers the next rung for when one fails; the
+[benchmark](docs/benchmark/protocol.md) has a situation that breaks each.
+
+| congru starts from | Which buys | The next rung |
+| --- | --- | --- |
+| A **rigid** object | Six numbers, closed forms | Bending modes, then kinematic chains |
+| Points **mostly on the object** (a mask or crop upstream) | Least squares, mild kernels | Robust kernels and trimming, then consensus over an outlier majority |
+| An object **mostly visible** | Reliable global shape | A motion prior, then local features |
+| A **guess** within about 20° | Fast, accurate local ICP | Multistart over all rotations |
+| A **calibrated** sensor | Points where the sensor says | Robust kernels, then distortion as an unknown |
+| **Enough** points | Reliable normals | Point-to-point, closed form, and a report of what is left free |
+
+The full ladder: [ideas/problem/hypothesis-ladder.md](ideas/problem/hypothesis-ladder.md).
+congru is not a toolkit: no viewer, no file format zoo, no segmentation;
+Open3D and PCL do that.
 
 ## Status
 
@@ -115,9 +140,12 @@ scenario: `just figures` draws them again.
 | Mesh targets, sampled with face normals | Done, tested |
 | Observability: which motions the data leaves free | Done, tested |
 | Simulated tracking demo: depth camera, degradations, projective tracking | Done, measured |
-| Python (NumPy) and C/C++ bindings, command line | In progress ([bindings](ideas/architecture/bindings.md)) |
+| Python bindings, NumPy in and out | Done ([bindings](docs/bindings.md)) |
+| C and C++ bindings, command line | Planned |
 | Real recordings, RGB-D and lidar | Milestone 2 ([milestones](ideas/milestones.md)) |
-| Benchmark of breaking points against Open3D and small_gicp | Planned ([benchmark](ideas/architecture/benchmark.md)) |
+| One contract for every method: the `Aligner` trait | Done ([contract](ideas/architecture/contract.md)) |
+| Benchmark: 7 one-shot methods, 3 trackers, 3 models, 19 situations | Done ([protocol](docs/benchmark/protocol.md), [results](docs/benchmark/results.md)) |
+| Comparison with Open3D and small_gicp | Planned |
 
 The questions still open are in [ideas/open.md](ideas/open.md).
 
@@ -129,6 +157,7 @@ Rust 1.89+ and [just](https://just.systems):
 just test      # every property, against the synthetic truth
 just figures   # recompute the figures of this page
 just demo      # run both demos, rewrite the animations, print the tables
+just bench     # every method on every situation: docs/benchmark/results.md
 ```
 
 ```rust
@@ -149,8 +178,11 @@ println!("{:?}", alignment.transform.to_row_major());
 | [crates/congru-synth/](crates/congru-synth/src/lib.rs) | The observation model: scenarios with a known answer |
 | [crates/congru-vision/](crates/congru-vision/src/lib.rs) | Depth cameras: projection, rendering, depth to points, support removal |
 | [crates/congru-sim/](crates/congru-sim/src/lib.rs) | The simulated cell: the part, its turntable, the sensor's flaws |
-| [crates/congru-demo/](crates/congru-demo/src/main.rs) | The tracker and the animation above |
-| [crates/congru-bench/](crates/congru-bench/src/main.rs) | The figures of this page, computed from real runs |
+| [crates/congru-track/](crates/congru-track/src/lib.rs) | Tracking: follow from frame to frame, find again after a jump |
+| [crates/congru-bench/](crates/congru-bench/src/main.rs) | The benchmark: every method, every situation, many seeds |
+| [crates/congru-python/](crates/congru-python/README.md) | The Python bindings, NumPy in and out |
+| [crates/congru-demo/](crates/congru-demo/src/main.rs) | The two animations above |
+| [crates/congru-figures/](crates/congru-figures/src/main.rs) | The figures of this page, computed from real runs |
 
 Agents working on this code read [AGENTS.md](AGENTS.md).
 

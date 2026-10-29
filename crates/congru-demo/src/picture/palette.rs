@@ -15,17 +15,24 @@ pub const PAPER: Tone = GREYS + 5;
 pub const MODEL: Tone = GREYS + 6;
 pub const OBSERVED: Tone = GREYS + 7;
 pub const TEXT: Tone = GREYS + 8;
+pub const CARD: Tone = GREYS + 9;
+pub const MUTED: Tone = GREYS + 10;
 
-const ACCENTS: [[u8; 3]; 9] = [
-    [16, 18, 22],
-    [64, 224, 120],
-    [64, 224, 120],
-    [250, 176, 5],
-    [240, 62, 62],
-    [0, 0, 0],
-    [0, 220, 255],
-    [255, 36, 36],
-    [240, 240, 240],
+/// A dark theme in the manner of a code editor's: the page, a slightly
+/// lighter card per tile, coral for what the sensor saw, a pale ice blue
+/// for the model, and soft green, amber and red for the state.
+const ACCENTS: [[u8; 3]; 11] = [
+    [13, 17, 23],
+    [126, 231, 135],
+    [63, 185, 80],
+    [210, 153, 34],
+    [248, 81, 73],
+    [13, 17, 23],
+    [165, 214, 255],
+    [255, 92, 87],
+    [230, 237, 243],
+    [22, 27, 34],
+    [125, 133, 144],
 ];
 
 /// RGB triples, laid out for a GIF colour table.
@@ -33,7 +40,7 @@ const ACCENTS: [[u8; 3]; 9] = [
 pub fn colours() -> Vec<u8> {
     let ramp = (0..GREYS).flat_map(|level| {
         let value =
-            u8::try_from(u32::from(level) * 235 / u32::from(GREYS - 1) + 10).unwrap_or(u8::MAX);
+            u8::try_from(u32::from(level) * 215 / u32::from(GREYS - 1) + 22).unwrap_or(u8::MAX);
         [value, value, value]
     });
     ramp.chain(ACCENTS.into_iter().flatten()).collect()

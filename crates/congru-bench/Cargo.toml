@@ -1,6 +1,6 @@
 [package]
 name = "congru-bench"
-description = "Figures and sweeps of congru against the synthetic truth."
+description = "The benchmark of congru: every method, every situation, many seeds, written as tables."
 publish = false
 version.workspace = true
 edition.workspace = true
@@ -9,9 +9,14 @@ license.workspace = true
 
 [dependencies]
 anyhow = "1.0.104"
-nalgebra.workspace = true
+congru-figures = { path = "../congru-figures" }
 congru.workspace = true
+congru-sim.workspace = true
 congru-synth.workspace = true
+congru-track.workspace = true
+nalgebra.workspace = true
+rand.workspace = true
+rayon.workspace = true
 
 [lints]
 workspace = true

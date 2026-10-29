@@ -1,25 +1,9 @@
-use congru::{Distance, Error, Icp, Kernel, Multistart, OrientedCloud, PointCloud};
+use congru::{Distance, Error, OrientedCloud, PointCloud};
 use congru_synth::sequence::Shot;
-use congru_track::{Agility, Gains, Health, SensorView, Tracker, Update};
+use congru_track::{SensorView, Settings, Tracker, Update};
 
 const SCAN_VOXEL: f64 = 0.005;
-const FIRST_KERNEL_SCALE: f64 = 0.01;
-const FIRST_GATE: f64 = 0.03;
-const ITERATIONS_PER_FRAME: u32 = 20;
-const STARTS: usize = 64;
-const NOISE_FLOOR: f64 = 0.002;
-const HEALTH: Health = Health {
-    min_inliers: 0.5,
-    max_noise_ratio: 2.0,
-};
-const AGILITY: Agility = Agility {
-    rotation: 0.08,
-    translation: 0.01,
-};
-const GAINS: Gains = Gains {
-    pose: 0.6,
-    velocity: 0.2,
-};
+const PART_SPAN: f64 = 0.2;
 
 /// A frame, and the tracker's answer to it.
 #[derive(Debug, Clone, PartialEq)]
@@ -53,31 +37,9 @@ pub fn follow(model: &OrientedCloud, shots: Vec<Shot>) -> Result<Vec<Record>, Er
 }
 
 fn tracker(model: &OrientedCloud) -> Result<Tracker<SensorView>, Error> {
-    let kernel = Kernel::Cauchy(Distance::new(FIRST_KERNEL_SCALE)?);
-    let follow = Icp {
-        kernel,
-        max_correspondence_distance: Some(Distance::new(FIRST_GATE)?),
-        convergence: congru::Convergence {
-            max_iterations: ITERATIONS_PER_FRAME,
-            ..congru::Convergence::default()
-        },
-        ..Icp::default()
-    };
-    let find = Multistart {
-        starts: STARTS,
-        icp: Icp {
-            kernel,
-            ..Icp::default()
-        },
-    };
-    let view = SensorView::new(model.clone())?;
     Ok(Tracker::new(
-        view,
-        follow,
-        find,
-        HEALTH,
-        AGILITY,
-        GAINS,
-        NOISE_FLOOR,
+        "tracker",
+        SensorView::new(model.clone())?,
+        Settings::for_part(PART_SPAN)?,
     ))
 }

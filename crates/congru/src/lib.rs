@@ -28,18 +28,19 @@
 //! # Ok::<(), congru::Error>(())
 //! ```
 
+mod aligner;
 mod error;
 mod fit;
 mod geometry;
-mod global;
 mod icp;
 mod search;
 
+pub use aligner::{Adaptive, Aligner, Annealed, Estimate, Frame, Guarded, Local, Search};
 pub use error::Error;
 pub use fit::{Fit, Kernel, MotionKind, Observability, Prior, WeakMotion, fit_rigid};
 pub use geometry::{
     Distance, Fraction, OrientedCloud, Point, PointCloud, RigidTransform, TriangleMesh, Vector,
 };
-pub use global::Multistart;
+pub use icp::Multistart;
 pub use icp::{Alignment, Convergence, Icp, Metric, StopReason, Target};
 pub use search::{NearestNeighbors, Neighbor};

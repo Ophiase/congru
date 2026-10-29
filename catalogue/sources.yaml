@@ -1,0 +1,65 @@
+# Where test models and scenes can be found, kept by agents so that none
+# searches the web from scratch. Add what you learn; say who judged and when.
+- name: congru procedural parts
+  url: crates/congru-sim/src/part.rs
+  holds: [bracket, turntable]
+  formats: [generated mesh]
+  licence: Apache-2.0, part of this repository
+  trust: high
+  use: the default; no download, no licence question
+  checked: 2026-10-29
+  by: agent
+- name: common-3d-test-models
+  url: https://github.com/alecjacobson/common-3d-test-models
+  holds: [fandisk, rocker-arm, teapot, and scanned statues and animals]
+  formats: [OBJ]
+  licence: none stated per model; sources named only
+  trust: medium
+  use: not shipped; a model may be fetched once its own licence is found
+  checked: 2026-10-29
+  by: agent
+- name: Smithsonian Open Access 3D
+  url: https://3d.si.edu
+  holds: [about 2,000 scanned objects, mostly artefacts]
+  formats: [OBJ, glTF]
+  licence: CC0 for the items marked so
+  trust: high
+  use: may be shipped when marked CC0; downloads are often archives, which AGENTS.md forbids, so only single-file meshes
+  checked: 2026-10-29
+  by: agent
+- name: Kitbash, Constantin Paschou
+  url: https://digitalproduction.com/2018/01/03/kitbash-200-kostenlose-3d-assets/
+  holds: [about 200 hard-surface assets, machine parts among them]
+  formats: [OBJ]
+  licence: CC0
+  trust: medium
+  use: not fetched; delivered as an archive through a store
+  checked: 2026-10-29
+  by: agent
+- name: 3DModelsCC0 industrial pack
+  url: https://3dmodelscc0.itch.io/free-cc0-industrial-3d-models
+  holds: [car jack, gas cylinder, pallet truck, industrial props]
+  formats: [archive of meshes]
+  licence: CC0
+  trust: medium
+  use: not fetched; one archive of 64 MB
+  checked: 2026-10-29
+  by: agent
+- name: KIT Aiax CAD dataset
+  url: https://service.tib.eu/ldmservice/vdataset/rdr-doi-10-35097-420
+  holds: [labelled mechanical-engineering parts]
+  formats: [STL]
+  licence: CC BY 4.0
+  trust: high
+  use: may be shipped with attribution; the best candidate for real CAD parts in milestone 2
+  checked: 2026-10-29
+  by: agent
+- name: Thingi10K and the Thingiverse corpus
+  url: https://doi.org/10.3390/DATA3010005
+  holds: [tens of thousands of printable parts]
+  formats: [STL]
+  licence: per model, chosen by each uploader
+  trust: medium
+  use: only models whose own licence allows it, recorded one by one
+  checked: 2026-10-29
+  by: agent

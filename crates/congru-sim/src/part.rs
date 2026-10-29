@@ -34,3 +34,25 @@ pub fn turntable() -> Result<TriangleMesh, Error> {
         .cylinder([0.0, 0.0, -0.015], 0.2, 0.015, SEGMENTS * 2)
         .build()
 }
+
+const TEETH: u32 = 12;
+
+/// A spur gear, about 11 cm across, its axis along z: twelve teeth make it
+/// look the same after a twelfth of a turn. A method cannot tell those
+/// poses apart from the shape alone, and should not claim it can.
+///
+/// # Errors
+/// As [`bracket`].
+pub fn gear() -> Result<TriangleMesh, Error> {
+    let outline: Vec<[f64; 2]> = (0..TEETH * 4)
+        .map(|step| {
+            let angle = std::f64::consts::TAU * f64::from(step) / f64::from(TEETH * 4);
+            let radius = if step % 4 < 2 { 0.055 } else { 0.045 };
+            [radius * angle.cos(), radius * angle.sin()]
+        })
+        .collect();
+    Solids::default()
+        .extrusion(&outline, 0.0, 0.02)
+        .cylinder([0.0, 0.0, 0.02], 0.018, 0.015, SEGMENTS)
+        .build()
+}

@@ -113,8 +113,13 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "congru",
+ "congru-figures",
+ "congru-sim",
  "congru-synth",
+ "congru-track",
  "nalgebra",
+ "rand",
+ "rayon",
 ]
 
 [[package]]
@@ -128,6 +133,16 @@ dependencies = [
  "congru-track",
  "congru-vision",
  "gif",
+ "nalgebra",
+]
+
+[[package]]
+name = "congru-figures"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "congru",
+ "congru-synth",
  "nalgebra",
 ]
 
