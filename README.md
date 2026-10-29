@@ -1,71 +1,80 @@
+# recalage
 
-<h1 align="center">Efficient Point Cloud Alignement
-</h1>
+*Working name, see [naming](ideas/naming.md).*
 
+Rigid registration you can ship: align a scan, or a handful of marked
+points, onto a point cloud or a mesh, robust to noise, outliers and partial
+views. One Rust core, called from Python, C and C++.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="Apache 2.0 License" />
-  <img src="https://img.shields.io/badge/Made_in-Rust-orange" alt="Made in Rust" />
-</p>
-</p>
+> **Status: research, pre-alpha.** The direction is written in
+> [ideas/](ideas/README.md); the questions it still waits on are in
+> [ideas/open.md](ideas/open.md). The code in `crates/` is a draft and may
+> be rewritten once they are answered.
 
-**Work In Progress**: \
-This project is under active development.\
-Comeback later when the first release will be available.
+## Why
 
-## Installation
+Aligning two views of a rigid object is solved in papers and unsolved in
+practice: teams rewrite ICP, tune it on their own data, and cannot put it on
+the robot. This project began with augmented-reality guidance for surgery,
+where **a dozen noisy marks** on a bone must land on a **preoperative mesh**
+from a **rough first pose**, the hardest corner of the problem
+([origin](ideas/origin.md)).
 
-## Theory
+## The problem
 
-### Problem Statement
+A model is observed through Gaussian resampling, scattered outliers, a
+partial view, then an unknown rigid motion; the task is to recover the
+motion ([observation model](ideas/problem/observation-model.md),
+[hypotheses](ideas/problem/hypotheses.md),
+[variants](ideas/problem/variants.md)). The same model generates test data
+with a known truth, so every method is **measured** against it
+([measuring success](ideas/problem/measuring-success.md)).
 
-Given an original point cloud $\mathcal{P} = \{p_1, p_2, \ldots, p_n\} \subset \mathbb{R}^3$, we observe a corrupted version through the following stochastic process:
+## The plan
 
-1. **Statistical Sampling**: For each point $p_i \in \mathcal{P}$, we sample $N_i$ points from a Gaussian distribution centered at $p_i$, where $N_i \sim \text{Poisson}(\lambda)$. Each sampled point follows $\mathcal{N}(p_i, \sigma^2 I)$.
-  - ![sampling](resources/math/sampling.png)
+The entry points follow what the caller already knows
+([what we know](ideas/problem/what-we-know.md)):
 
+| You know | Method | Idea |
+| --- | --- | --- |
+| Which point goes with which | Weighted Kabsch–Umeyama | [closed form](ideas/method/closed-form.md) |
+| A rough pose | ICP, robust kernels, trimming | [ICP family](ideas/method/icp-family.md) |
+| Nothing | ICP from rotations spread over SO(3) | [initialisation](ideas/method/global-initialisation.md) |
 
+Around them:
 
-2. **Uniform Noise Addition**: We add $U$ uniformly distributed noise points within a bounding box $\mathcal{B} \subset \mathbb{R}^3$, where $U$ follows some random distribution.
-  - ![uniform_noise](resources/math/uniform_noise.png)
+- **Typed**: a non-empty finite cloud, a proper rigid motion, a positive
+  distance; a misuse fails at the boundary
+  ([types](ideas/architecture/types.md)).
+- **Everywhere**: NumPy in, NumPy out; a C ABI with a header-only C++
+  wrapper; `no_std` and `f32` designed for, built later
+  ([bindings](ideas/architecture/bindings.md),
+  [embedded](ideas/architecture/embedded.md)).
+- **Fast where it counts**: the target indexed once and reused, queries in
+  parallel ([performance](ideas/architecture/performance.md)).
+- **A benchmark** of breaking points under each corruption, against Open3D
+  and small_gicp ([benchmark](ideas/architecture/benchmark.md)).
 
-3. **Rigid Transformation**: The entire corrupted point cloud is transformed by an unknown rotation matrix $R \in SO(3)$ and translation vector $t \in \mathbb{R}^3$.
-  - ![rigid_transformation](resources/math/rigid_transformation.png)
+## Layout
 
-The observed point cloud is formally:
-$$\mathcal{Q} = \{R(q_j) + t : q_j \in \mathcal{S} \cup \mathcal{N}\}$$
+| Path | What |
+| --- | --- |
+| [ideas/](ideas/README.md) | The project's thinking, one concept per file |
+| `crates/recalage` | The core (draft) |
+| `crates/recalage-synth` | The observation model, for tests (draft) |
+| [AGENTS.md](AGENTS.md) | How people and agents work here |
 
-where $\mathcal{S} = \bigcup_{i=1}^{n} \{s_{i,k} : k = 1, \ldots, N_i, s_{i,k} \sim \mathcal{N}(p_i, \sigma^2 I)\}$ and $\mathcal{N}$ represents the uniform noise points.
+## Development
 
-**Objective**: Recover the transformation $(R, t)$ and establish correspondence between $\mathcal{P}$ and the relevant points in $\mathcal{Q}$.
+[just](https://just.systems) and stable Rust 1.89 or newer:
 
-### Additional Hypotheses
+```sh
+just check    # format, pedantic clippy, tests, markdown
+just guards   # the repository's checks over the changed files
+```
 
-#### Hypothesis 1: Exterior Uniform Noise
-Uniform noise points are sampled exclusively outside the convex hull of the original point cloud $\mathcal{P}$.
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-#### Hypothesis 2: Bounded Isotropic Gaussian Noise (points identify their own distribution)
-All Gaussian distributions are isotropic, with standard deviation $\sigma \leq \alpha \cdot d_{\min}$, where $d_{\min}$ is the minimum pairwise distance between points in $\mathcal{P}$.
+## License
 
-#### Hypothesis 3: Limited Point Separation (the point cloud is not too sparse)
-The minimum distance between any two points in $\mathcal{P}$ is at most $\Delta$.
-
-
-### Problem Variants
-
-#### Variant 1: Minimal Sampling (Simplest Case)
-- **Constraints**: $N_i = 1$ for all $i$, and $U = 0$ (no uniform noise)
-- **Formulation**: Direct point-to-point correspondence problem
-- **Complexity**: Standard rigid registration with Gaussian observation noise
-
-#### Variant 2: Aggregated Sampling with Bounded Noise
-- **Constraints**: Known minimum distance $d_{\min}$ between points in $\mathcal{P}$
-- **Approach**: Points can be aggregated when their distance $< d_{\min}$, reducing to one representative per cluster
-- **Additional**: Allow bounded uniform noise $U \leq U_{\max}$
-- **Complexity**: Clustering-based registration with outlier rejection
-
-#### Variant 3: General Case
-- **Constraints**: Arbitrary $N_i$ distributions and unbounded uniform noise
-- **Complexity**: Full statistical inference problem requiring probabilistic alignment methods
-
-Each variant represents increasing complexity in both the observation model and the required algorithmic sophistication for robust point cloud alignment.
+[Apache-2.0](LICENSE).
