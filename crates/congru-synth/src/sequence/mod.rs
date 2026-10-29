@@ -4,11 +4,11 @@
 mod path;
 mod visibility;
 
+use congru::{Error, Point, PointCloud, RigidTransform};
 use nalgebra::Vector3;
 use rand::SeedableRng;
 use rand::rngs::ChaCha8Rng;
 use rand_distr::{Distribution, Normal};
-use congru::{Error, Point, PointCloud, RigidTransform};
 
 pub use path::{Drift, Jump};
 

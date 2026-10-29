@@ -1,7 +1,7 @@
+use congru::{OrientedCloud, PointCloud, TriangleMesh, Vector};
 use numpy::PyArray2;
 use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
-use congru::{OrientedCloud, PointCloud, TriangleMesh, Vector};
 
 use crate::align::distance;
 use crate::arrays::{Directions, Points, Triangles, cloud_array, vectors_array};

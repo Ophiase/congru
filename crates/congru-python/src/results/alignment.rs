@@ -1,6 +1,6 @@
+use congru::StopReason;
 use numpy::PyArray2;
 use pyo3::prelude::*;
-use congru::StopReason;
 
 use super::Observability;
 use crate::arrays::transform_array;

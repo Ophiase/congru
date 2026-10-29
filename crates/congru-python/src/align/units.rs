@@ -1,5 +1,5 @@
-use pyo3::PyResult;
 use congru::{Distance, Fraction};
+use pyo3::PyResult;
 
 use crate::error::registration_error;
 

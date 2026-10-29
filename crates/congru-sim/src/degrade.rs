@@ -1,7 +1,7 @@
+use congru_vision::DepthImage;
 use rand::rngs::ChaCha8Rng;
 use rand::{Rng, RngExt, SeedableRng};
 use rand_distr::{Distribution, Normal};
-use congru_vision::DepthImage;
 
 const HOLE_RADIUS: usize = 4;
 const EDGE_JUMP: f64 = 0.03;

@@ -1,5 +1,5 @@
-use nalgebra::{Rotation3, Vector3};
 use congru::Point;
+use nalgebra::{Rotation3, Vector3};
 
 const MARGIN: f64 = 22.0;
 const FAINTEST: f64 = 0.3;

@@ -1,6 +1,6 @@
+use congru::{MotionKind, RigidTransform, WeakMotion};
 use nalgebra::UnitQuaternion;
 use nalgebra::{Vector3, Vector6};
-use congru::{MotionKind, RigidTransform, WeakMotion};
 
 /// How far each correction moves the state toward the measurement.
 #[derive(Debug, Clone, Copy, PartialEq)]

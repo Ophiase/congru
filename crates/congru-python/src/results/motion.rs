@@ -1,6 +1,6 @@
+use congru::Vector;
 use numpy::PyArray1;
 use pyo3::prelude::*;
-use congru::Vector;
 
 use crate::arrays::vector_array;
 

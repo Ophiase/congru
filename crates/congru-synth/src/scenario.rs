@@ -1,8 +1,8 @@
+use congru::{Error, NearestNeighbors, Point, PointCloud, RigidTransform};
 use nalgebra::Vector3;
 use rand::rngs::ChaCha8Rng;
 use rand::{Rng, RngExt, SeedableRng};
 use rand_distr::{Distribution, Normal, Poisson};
-use congru::{Error, NearestNeighbors, Point, PointCloud, RigidTransform};
 
 use crate::casts::{as_count, as_float};
 use crate::motion::unit_vector;

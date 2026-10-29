@@ -1,7 +1,7 @@
 use std::f64::consts::TAU;
 
-use nalgebra::{UnitQuaternion, Vector3};
 use congru::RigidTransform;
+use nalgebra::{UnitQuaternion, Vector3};
 
 use crate::casts::as_float;
 

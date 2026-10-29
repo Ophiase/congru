@@ -1,6 +1,6 @@
-use nalgebra::Vector3;
 use congru::RigidTransform;
 use congru_vision::{DepthImage, Image};
+use nalgebra::Vector3;
 
 use super::stage::Stage;
 use crate::picture::palette::{EMPTY, ESTIMATE, Tone, grey};

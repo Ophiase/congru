@@ -1,6 +1,6 @@
+use congru::{PointCloud, RigidTransform, Vector};
 use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
-use congru::{PointCloud, RigidTransform, Vector};
 
 use super::shape::Shape;
 use crate::error::registration_error;

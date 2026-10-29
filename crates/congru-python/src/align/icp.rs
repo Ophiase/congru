@@ -1,5 +1,5 @@
-use pyo3::prelude::*;
 use congru::{Convergence, Distance};
+use pyo3::prelude::*;
 
 use super::units::{distance, fraction};
 use super::{Kernel, Metric};

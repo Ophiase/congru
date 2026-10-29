@@ -1,6 +1,6 @@
+use congru::{PointCloud, RigidTransform, Vector};
 use numpy::{PyArray1, PyArray2, PyArrayMethods};
 use pyo3::prelude::*;
-use congru::{PointCloud, RigidTransform, Vector};
 
 pub fn transform_array<'py>(
     py: Python<'py>,

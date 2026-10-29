@@ -3,8 +3,8 @@
 
 use std::f64::consts::{PI, TAU};
 
-use nalgebra::Vector3;
 use congru::{Error, Point, PointCloud, TriangleMesh};
+use nalgebra::Vector3;
 
 use crate::casts::as_float;
 

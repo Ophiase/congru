@@ -1,8 +1,8 @@
 use std::f64::consts::PI;
 
+use congru::RigidTransform;
 use nalgebra::{Unit, UnitQuaternion, Vector3};
 use rand::{Rng, RngExt};
-use congru::RigidTransform;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct MotionBounds {

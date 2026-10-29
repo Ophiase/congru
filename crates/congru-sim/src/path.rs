@@ -1,7 +1,7 @@
 use std::f64::consts::TAU;
 
-use nalgebra::{UnitQuaternion, Vector3};
 use congru::RigidTransform;
+use nalgebra::{UnitQuaternion, Vector3};
 
 const DISTANCE: f64 = 0.42;
 const LOOK_DOWN_DEGREES: f64 = 28.0;

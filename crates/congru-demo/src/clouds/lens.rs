@@ -1,7 +1,7 @@
-use nalgebra::{Rotation3, Vector3};
 use congru::Point;
 use congru_vision::Image;
 use congru_vision::pixel::{containing, coordinate};
+use nalgebra::{Rotation3, Vector3};
 
 use crate::picture::palette::{PAPER, Tone};
 

@@ -7,17 +7,17 @@ mod scenarios;
 
 use std::path::Path;
 
-use nalgebra::Vector3;
 use congru::{Distance, OrientedCloud, Point, RigidTransform};
 use congru_sim::bracket;
+use nalgebra::Vector3;
 
 use crate::Summary;
 use crate::picture::palette::{BAD, FAIR, GOOD, MODEL, OBSERVED, TEXT, Tone};
 use crate::picture::{self, Tile, font};
-use follow::{Record, follow};
-use lens::{Layer, Lens};
 use congru_track::Phase;
 use congru_vision::Image;
+use follow::{Record, follow};
+use lens::{Layer, Lens};
 use scenarios::{FRAMES, scenarios};
 
 const TILE_WIDTH: usize = 260;
