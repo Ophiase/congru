@@ -1,0 +1,43 @@
+name = "street corner"
+summary = "A car turning at a corner twenty metres away, half hidden by a parked one: far, sparse, partly seen."
+
+[camera]
+position = [2.0, -6.0, 2.2]
+look_at = [0.0, 15.0, 0.8]
+field_of_view = 60.0
+width = 360
+height = 240
+
+[ground]
+size = 80.0
+relief = 0.1
+wave = 10.0
+seed = 6
+
+[[objects]]
+kind = "car"
+size = [4.2, 1.8, 1.5]
+position = [-1.0, 15.0, 0.0]
+yaw = 45.0
+target = true
+
+[[objects]]
+kind = "car"
+size = [4.6, 1.9, 1.6]
+position = [2.5, 9.0, 0.0]
+yaw = 90.0
+
+[[objects]]
+kind = "building"
+size = [10.0, 8.0, 9.0]
+position = [-12.0, 24.0, 0.0]
+
+[[objects]]
+kind = "building"
+size = [8.0, 8.0, 6.0]
+position = [11.0, 26.0, 0.0]
+
+[[objects]]
+kind = "tree"
+size = [2.5, 2.5, 5.0]
+position = [5.0, 18.0, 0.0]

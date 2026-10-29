@@ -1,0 +1,48 @@
+name = "car on a road"
+summary = "A car twelve metres ahead on a bumpy road, another behind it, trees and houses along the side."
+
+[camera]
+position = [-1.5, -4.0, 1.5]
+look_at = [0.0, 8.0, 0.8]
+field_of_view = 70.0
+width = 360
+height = 240
+
+[ground]
+size = 60.0
+relief = 0.12
+wave = 8.0
+seed = 2
+
+[[objects]]
+kind = "car"
+size = [4.2, 1.8, 1.5]
+position = [0.0, 8.0, 0.0]
+yaw = 92.0
+target = true
+
+[[objects]]
+kind = "car"
+size = [4.5, 1.9, 1.6]
+position = [3.0, 16.0, 0.0]
+yaw = 85.0
+
+[[objects]]
+kind = "tree"
+size = [2.5, 2.5, 5.0]
+position = [-5.0, 10.0, 0.0]
+
+[[objects]]
+kind = "tree"
+size = [2.0, 2.0, 4.0]
+position = [-5.5, 18.0, 0.0]
+
+[[objects]]
+kind = "building"
+size = [8.0, 6.0, 7.0]
+position = [12.0, 14.0, 0.0]
+
+[[objects]]
+kind = "building"
+size = [6.0, 6.0, 5.0]
+position = [-13.0, 22.0, 0.0]

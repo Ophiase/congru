@@ -1,16 +1,15 @@
 mod catalogue;
 mod csv;
+mod gallery;
 mod leaderboard;
-mod png;
-mod scenes;
 mod tables;
 
 use std::fmt::Write;
 
 pub use catalogue::{catalogue, recommendations};
 pub use csv::csv;
+pub use gallery::{load_scenes, realistic, scenes, scenes_page};
 pub use leaderboard::leaderboard;
-pub use scenes::scenes;
 pub use tables::{registration_tables, tracking_tables};
 
 use crate::measure::Summary;

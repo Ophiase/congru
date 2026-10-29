@@ -1,0 +1,22 @@
+[package]
+name = "congru-scene"
+description = "Ordinary scenes for congru, written as short TOML files: a part on a table, a car on a road, a bin of parts."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+congru = { workspace = true, default-features = false }
+congru-sim.workspace = true
+congru-vision.workspace = true
+nalgebra.workspace = true
+serde = { version = "1.0.229", features = ["derive"] }
+thiserror.workspace = true
+toml = "1.1.8"
+
+[lints]
+workspace = true

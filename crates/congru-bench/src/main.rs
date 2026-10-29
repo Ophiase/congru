@@ -46,10 +46,7 @@ fn main() -> anyhow::Result<()> {
         })
         .map_or_else(|| PathBuf::from("docs/benchmark/results.md"), PathBuf::from);
     if flag("--scenes") {
-        let models = catalog::models()?;
-        let page = report::scenes(&models, std::path::Path::new("docs/benchmark/scenes"))?;
-        std::fs::write("docs/benchmark/scenes.md", page)?;
-        return Ok(());
+        return draw_scenes();
     }
     let cache = PathBuf::from(format!("target/bench/{pool:?}-{seeds}.tsv").to_lowercase());
     let mut session = Session::new(
@@ -60,4 +57,17 @@ fn main() -> anyhow::Result<()> {
         page,
     );
     session.run()
+}
+
+fn draw_scenes() -> anyhow::Result<()> {
+    let models = catalog::models()?;
+    let folder = std::path::Path::new("docs/benchmark/scenes");
+    let simple = report::scenes(&models, folder)?;
+    let scenes = report::load_scenes(std::path::Path::new("scenes"))?;
+    let realistic = report::realistic(&scenes, &folder.join("realistic.png"))?;
+    std::fs::write(
+        "docs/benchmark/scenes.md",
+        report::scenes_page(&realistic, &simple),
+    )?;
+    Ok(())
 }

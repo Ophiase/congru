@@ -11,3 +11,4 @@ pub use degrade::Degradation;
 pub use flex::flexed;
 pub use part::{bracket, gear, surroundings, turntable};
 pub use path::Turntable;
+pub use solids::Solids;
