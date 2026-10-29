@@ -1,7 +1,7 @@
 # Mesh targets
 
 **[sketch]** In the founding case, the target is a mesh: a model of the
-bone. Two ways to measure the distance of a point to it.
+part. Two ways to measure the distance of a point to it.
 
 | Way | How | For | Against |
 | --- | --- | --- | --- |
@@ -15,4 +15,4 @@ surface. The exact way, if the benchmark shows the spacing matters.
 ## [caution]
 
 The samples must be deterministic: the same mesh always gives the same
-points, or two runs of a surgical alignment disagree for no reason.
+points, or two runs of the same alignment disagree for no reason.

@@ -19,7 +19,7 @@ $t = \bar q - R \bar s$ (Kabsch, Umeyama).
 - **[sketch]** A refusal on collinear points, where the rotation about the
   line is free; never a silent arbitrary answer.
 - **[guess]** The predicted target registration error from the noise and the
-  layout of the marks (Fitzpatrick 1998), so a surgeon knows before trusting
+  layout of the marks (Fitzpatrick 1998), so an operator knows before trusting
   the result. This may be the most useful single feature for the founding
   case.
 

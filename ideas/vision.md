@@ -8,8 +8,8 @@ robot.
 - **Computer-vision engineers** who align a scan onto a model, a mesh onto a
   mesh, a depth frame onto the last one, and today glue Open3D or PCL into a
   pipeline they cannot ship.
-- **Medical and surgical navigation**: a handful of marked points onto a
-  preoperative model, where the error must be bounded and explained
+- **Augmented reality and calibration**: a handful of marked points onto a
+  CAD model, where the error must be bounded and explained
   ([origin.md](origin.md)).
 - **Small robots**: arms, drones, inspection crawlers, the micro-robots to
   come, with a weak CPU, no GPU, sometimes no operating system

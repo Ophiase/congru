@@ -2,21 +2,21 @@
 
 ## The need
 
-**[defined]** During an internship in medical computer vision, the author
-worked on augmented-reality guidance for a shoulder operation. A headset had
-to place a preoperative model of the bone over the real one. Two ways were
+**[defined]** The author first met the problem in augmented reality: a
+model had to be laid over a real object seen by a camera. Two ways were
 tried:
 
-- **The whole model against the camera**: fine in a demonstration, weak in
-  surgery, where only a small part of the bone is visible.
-- **A few marks**: the surgeon marks some points on the bone, the camera
-  finds them, and they are aligned rigidly onto the model. Practical, but
+- **The whole model against the image**: fine in a demonstration, weak in
+  practice, where only a small part of the object is visible.
+- **A few marks**: some points are marked on the object, the camera finds
+  them, and they are aligned rigidly onto the model. Practical, but
   sensitive to the first guess, to the noise of each mark, and to the
   viewpoint.
 
 The second way is a registration problem with **few points, noisy points,
 a partial view and a bad initial pose**: the hardest corner of the problem,
-and the one where an error has a cost.
+and the one where an error has a cost. Robots calibrating against a part,
+and headsets anchoring a model, share it.
 
 ## The 2025 attempt
 

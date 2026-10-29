@@ -10,9 +10,14 @@ correspondences known give the pose to the noise.
 points slide without leaving it; a plane lets them slide and spin; a
 cylinder lets them roll. The residual cannot see any of it.
 
-## What the library should say
+## What the library says
 
-**[sketch]** Point-to-plane already builds the 6×6 matrix
+**[defined]** Implemented as `Alignment::observability`. On the patch
+above it flags three weak rotations, the three a sphere leaves free, with
+axes as far from the marks as the radius of curvature; on a whole scan it
+flags none.
+
+Point-to-plane already builds the 6×6 matrix
 $H = \sum_i w_i\, J_i J_i^{\top}$ of the last step. Its eigenvectors with
 small eigenvalues are the motions the data does not constrain: a rotation
 about the centre of the patch, a slide along it. Returned with the

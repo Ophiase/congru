@@ -29,6 +29,6 @@ A Rust monorepo of the author, the most recent state of the conventions:
 
 ## Founding case
 
-The internship report this project was born from
-([origin](../ideas/origin.md)). It may hold confidential and medical
-content: read locally only, take the need, never the content.
+A private report where the need first appeared. It may hold confidential
+content: read locally only, take the need, never the content, and never
+link this project to it in a tracked file.

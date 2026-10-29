@@ -16,5 +16,5 @@
 correspondences, a rough pose, or nothing. V1 with unknown order is already
 V3.
 
-**[question]** Which to build first: the surgical case (few marks, a mesh, a
+**[question]** Which to build first: the marker case (few marks, a mesh, a
 rough pose) or the scan case (dense, no pose)? See [open](../open.md).

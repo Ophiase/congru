@@ -56,7 +56,7 @@ pub fn lumpy_sphere_mesh(rings: u32) -> Result<TriangleMesh, Error> {
 }
 
 /// An open, gently curved patch over the unit square, `side × side` points:
-/// the kind of surface a depth camera sees of a bone or a part.
+/// the kind of surface a depth camera sees of a machined part.
 ///
 /// # Errors
 /// [`Error::Empty`] for a zero side.

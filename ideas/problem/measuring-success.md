@@ -8,8 +8,8 @@ the same measures for every method.
 - **Rotation error**: angle of $\hat R^{\top} R$, in degrees.
 - **Translation error**: $\lVert \hat t - t \rVert$, in model units.
 - **Target registration error**: distance moved, under the error, by a point
-  of interest that was not used to align (the tip of a drill, the centre of
-  a glenoid). **[to check]** the surgical literature reports this one
+  of interest that was not used to align (the tip of a tool, the centre of
+  a bore). **[to check]** the fiducial literature reports this one
   ([prior art](../prior-art.md), Fitzpatrick 1998).
 - **Residual** (RMSE of kept pairs) is *not* a measure of success: a wrong
   local minimum can have a small residual.

@@ -3,7 +3,7 @@
 What the author settles before the code goes further. Each links to the
 file that argues it.
 
-1. **Which variant first?** The surgical case (few marks, rough pose, a
+1. **Which variant first?** The marker case (few marks, rough pose, a
    mesh) or the scan case (thousands of points, no pose)?
    [variants](problem/variants.md)
 2. **Is aggregation a contribution?** The 2025 idea of collapsing the

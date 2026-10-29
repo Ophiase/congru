@@ -28,7 +28,7 @@ which $p_i$.
 
 - **[sketch]** **Partial view**: before resampling, only the share of
   $\mathcal{P}$ on one side of a random plane is kept. Real sensors see one
-  side; the surgical case sees a few percent
+  side; the marker case sees a few percent
   ([origin](../origin.md)).
 - **[sketch]** **Mesh model**: $\mathcal{P}$ may be a surface rather than
   points; resampling then draws from the surface

@@ -21,6 +21,10 @@ pub fn figure() -> anyhow::Result<String> {
         .transform
         .rotation_error_to(&scenario.expected())
         .to_degrees();
+    let free = alignment
+        .observability
+        .as_ref()
+        .map_or(0, |report| report.weak_motions.len());
     let paired = fit_rigid(scenario.observed.points(), truth.points(), None)?;
     let nearby = surroundings(&truth)?;
     let mut figure = Figure::new(View::facing(&nearby, &truth.centroid().coords));
@@ -30,7 +34,7 @@ pub fn figure() -> anyhow::Result<String> {
             scenario.observed.clone(),
         ),
         (
-            format!("ICP: on the surface, yet {slid:.0}° off"),
+            format!("ICP: {slid:.0}° off, {free} free motions flagged"),
             scenario.observed.transformed(&alignment.transform),
         ),
         (

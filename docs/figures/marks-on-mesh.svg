@@ -384,7 +384,7 @@
 <circle class="faint fill" opacity="0.77" cx="180.8" cy="152.9" r="2.6"/>
 <circle class="faint fill" opacity="0.77" cx="194.1" cy="143.7" r="2.6"/>
 <circle class="faint fill" opacity="0.77" cx="192.1" cy="159.7" r="2.6"/>
-<text class="caption" x="450" y="317" text-anchor="middle">ICP: on the surface, yet 74° off</text>
+<text class="caption" x="450" y="317" text-anchor="middle">ICP: 74° off, 3 free motions flagged</text>
 <circle class="observed fill" opacity="0.48" cx="365.1" cy="22.4" r="2.6"/>
 <circle class="observed fill" opacity="0.50" cx="336.5" cy="73.4" r="2.6"/>
 <circle class="observed fill" opacity="0.50" cx="321.3" cy="126.6" r="2.6"/>

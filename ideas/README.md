@@ -28,14 +28,16 @@ views is **measured against a known truth**, not hoped for.
       │
   architecture/ ── how one core reaches every language and device
       │
-  open.md ──── the questions the author settles before code
+  demo/ ────── a simulated robot tracking a part, the proof of M1
+      │
+  open.md ──── the questions still open
 ```
 
 ## Files
 
 - [vision.md](vision.md) · [origin.md](origin.md) ·
-  [naming.md](naming.md) · [open.md](open.md) ·
-  [prior-art.md](prior-art.md)
+  [milestones.md](milestones.md) · [naming.md](naming.md) ·
+  [open.md](open.md) · [prior-art.md](prior-art.md)
 - **problem/**:
   [observation-model](problem/observation-model.md) ·
   [hypotheses](problem/hypotheses.md) ·
@@ -58,3 +60,5 @@ views is **measured against a known truth**, not hoped for.
   [performance](architecture/performance.md) ·
   [benchmark](architecture/benchmark.md) ·
   [stack](architecture/stack.md)
+- **demo/**: [README](demo/README.md) — scene, sensor, degradations,
+  perception, tracking, video

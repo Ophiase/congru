@@ -6,9 +6,9 @@
 [![Status: research](https://img.shields.io/badge/status-research-blue.svg)](ideas/open.md)
 
 Put a scan back where it belongs. Given two views of the same rigid object
-(a depth frame and a CAD model, a dozen marks and a bone, two passes of a
-lidar), recalage finds the rotation and translation that bring one onto the
-other, says how sure it is, and runs wherever the robot runs.
+(a depth frame and a CAD model, a few marks and the part they sit on, two
+passes of a lidar), recalage finds the rotation and translation that bring
+one onto the other, says how sure it is, and runs wherever the robot runs.
 
 *Recalage* is the French word for registration.
 
@@ -22,25 +22,26 @@ pairs again.*
 ## Why this project exists
 
 Registration is in every pipeline that looks at the 3D world: a robot
-grasping a part, a drone mapping a building, a surgeon's headset laying a
-model of the bone over the real one. It is solved in papers and unsolved in
-practice: each team rewrites ICP, tunes it on its own data, and finds out in
-the field where it breaks.
+grasping a part, a drone mapping a building, a headset laying a model over
+the real object. It is solved in papers and unsolved in practice: each team
+rewrites ICP, tunes it on its own data, and finds out in the field where it
+breaks.
 
-I met it during an internship in surgical augmented reality. A few marks
-detected on a bone had to land on a preoperative model, from a rough first
-guess. The difficulty is not speed. It is this:
+The hardest corner is the one I met first: a camera finds a few marks on an
+object, and they must land on its model from a rough first guess. The
+difficulty is not speed. It is this:
 
 ![On the surface is not in the right place](docs/figures/marks-on-mesh.svg)
 
-*Twelve noisy marks on a smooth, rounded patch of a bone model. ICP brings
+*Twelve noisy marks on a smooth, rounded patch of a model. ICP brings
 every mark onto the surface, and the residual is tiny, yet the pose is far
 off: on a rounded surface, a dozen points can slide without leaving it. The
 same marks, numbered so each one knows its place, give the pose at once.*
 
 A small residual is not a correct answer. A library that only returns the
-residual lets that error through silently; recalage aims to say, every time,
-which motions the data actually pinned down
+residual lets that error through silently; recalage says, with every
+alignment, which motions the data left free: here, three turns about axes
+as far away as the curvature of the surface
 ([observability](ideas/method/observability.md)).
 
 ## The problem, in three pictures
@@ -97,7 +98,7 @@ scenario: `just figures` draws them again.
 - **Not non-rigid.** Six numbers, a rotation and a translation; scale is the
   first extension worth having.
 - **Not finished.** The core aligns and is tested against the truth; the
-  bindings, the benchmark and the observability report are next.
+  bindings, the benchmark and the video demonstration are next.
 
 ## Status
 
@@ -107,7 +108,7 @@ scenario: `just figures` draws them again.
 | ICP: point-to-point, point-to-plane, robust kernels, trimming | Done, tested |
 | Multistart over SO(3) (super-Fibonacci spirals) | Done, tested |
 | Mesh targets, sampled with face normals | Done, tested |
-| Observability: which motions the data pins down | Next |
+| Observability: which motions the data leaves free | Done, tested |
 | Python (NumPy) and C/C++ bindings, command line | Planned ([bindings](ideas/architecture/bindings.md)) |
 | Benchmark of breaking points against Open3D and small_gicp | Planned ([benchmark](ideas/architecture/benchmark.md)) |
 
@@ -148,7 +149,7 @@ Agents working on this code read [AGENTS.md](AGENTS.md).
   point-to-point and point-to-plane.
 - **Kabsch** (1976) and **Umeyama** (1991): the closed form.
 - **Fitzpatrick, West and Maurer** (1998): what fiducial noise does to the
-  error where it matters, the reference for the surgical case.
+  error where it matters, the reference for marker-based alignment.
 - **Yang, Shi and Carlone** (2021), TEASER++: registration that certifies
   its own answer, the horizon.
 - **Alexa** (2022): super-Fibonacci spirals, even samples of rotations.

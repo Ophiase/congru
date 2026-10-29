@@ -10,7 +10,7 @@ again before the paper cites them.
 - Umeyama, *IEEE TPAMI*, 1991: the reflection fix, and scale.
 - Fitzpatrick, West and Maurer, *IEEE TMI*, 1998: predicting the target
   registration error from fiducial noise and layout; the reference for the
-  surgical case.
+  marker case.
 
 ## Local refinement
 

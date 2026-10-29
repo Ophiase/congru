@@ -24,7 +24,7 @@ everywhere, and point-to-plane makes sense.
 
 ## [caution] Real data
 
-- **H1** fails for a sensor: background, the table, the surgeon's glove sit
+- **H1** fails for a sensor: background, the table, the operator's hand sit
   next to the surface. The robust methods must not need it.
 - **H2** fails for a scan denser than its noise (most depth cameras): use
   it only for aggregation ([aggregation](../method/aggregation.md)).

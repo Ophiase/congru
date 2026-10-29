@@ -1,4 +1,4 @@
-use nalgebra::{Matrix6, Unit, Vector6};
+use nalgebra::{Matrix6, SymmetricEigen, U6, Unit, Vector6};
 
 use super::Match;
 use super::plane::normal_equations;
@@ -60,38 +60,41 @@ pub(crate) fn observe(matches: &[Match]) -> Option<Observability> {
         return None;
     }
     let (hessian, _) = normal_equations(matches, &centre).ok()?;
-    let scale = Matrix6::from_diagonal(&Vector6::new(
-        1.0 / radius,
-        1.0 / radius,
-        1.0 / radius,
-        1.0,
-        1.0,
-        1.0,
-    ));
+    let arc = Vector6::new(1.0 / radius, 1.0 / radius, 1.0 / radius, 1.0, 1.0, 1.0);
+    let scale = Matrix6::from_diagonal(&arc);
     let eigen = (scale * hessian * scale).symmetric_eigen();
     let stiffest = eigen.eigenvalues.max();
     if stiffest <= 0.0 {
         return None;
     }
-    let mut weak_motions: Vec<WeakMotion> = eigen
+    Some(Observability {
+        conditioning: (eigen.eigenvalues.min() / stiffest).max(0.0),
+        weak_motions: weak_motions(&eigen, stiffest, &centre, radius),
+    })
+}
+
+fn weak_motions(
+    eigen: &SymmetricEigen<f64, U6>,
+    stiffest: f64,
+    centre: &Point,
+    radius: f64,
+) -> Box<[WeakMotion]> {
+    let mut motions: Vec<WeakMotion> = eigen
         .eigenvalues
         .iter()
         .zip(eigen.eigenvectors.column_iter())
         .filter(|(value, _)| **value < WEAK_SHARE * stiffest)
         .filter_map(|(value, vector)| {
-            let rotation = vector.fixed_rows::<3>(0) / radius;
+            let rotation = vector.fixed_rows::<3>(0).into_owned() / radius;
             let translation = vector.fixed_rows::<3>(3).into_owned();
             Some(WeakMotion {
                 stiffness: (value / stiffest).max(0.0),
-                kind: classify(rotation.into_owned(), translation, &centre, radius)?,
+                kind: classify(rotation, translation, centre, radius)?,
             })
         })
         .collect();
-    weak_motions.sort_by(|weaker, stronger| weaker.stiffness.total_cmp(&stronger.stiffness));
-    Some(Observability {
-        conditioning: (eigen.eigenvalues.min() / stiffest).max(0.0),
-        weak_motions: weak_motions.into_boxed_slice(),
-    })
+    motions.sort_by(|weaker, stronger| weaker.stiffness.total_cmp(&stronger.stiffness));
+    motions.into_boxed_slice()
 }
 
 /// A small motion `p ↦ p + ω × (p − c) + t` is a pure slide when `ω` is

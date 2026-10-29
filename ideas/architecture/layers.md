@@ -20,7 +20,7 @@ algorithm.
 ## Rules
 
 - **[sketch]** The core reads no file and prints nothing: a robot has no
-  terminal, a surgeon's headset no file system to spare.
+  terminal, a headset no file system to spare.
 - **[sketch]** A skin never re-implements a default: defaults live in the
   core and are read from it.
 - **[sketch]** The synthetic generator is a crate of its own: the benchmark,
