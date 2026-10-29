@@ -16,9 +16,32 @@ phases.
 (inlier share) and its residual stays near the noise. Otherwise the next
 frame is found again. A jump costs one expensive frame, not the track.
 
+## The prior
+
+**[defined]** A followed frame is not aligned from the prediction only; it
+is aligned **toward** it. The local ICP adds to its cost the squared
+distance of the pose from the prediction, weighed by how far the pose may
+plausibly move in one frame. When an occluder hides half the part, the
+remaining points can no longer drag the pose along what they do not
+constrain: this is the measurement update of a Kalman filter, written
+inside the least squares.
+
+## Find within the frame
+
+**[defined]** When a followed frame fails its health check, the search
+runs on that same frame, not the next one: a knock costs one expensive
+frame, and no frame goes without a pose unless the search fails too.
+
+## The noise, learned
+
+**[defined]** The tracker keeps a running estimate of the residual of the
+frames it trusts. The robust kernel's scale, the correspondence gate and
+the health check's residual bound are multiples of it: the same tracker
+works on a clean scan and on a noisy one without retuning.
+
 ## The filter
 
-**[sketch]** The prediction is an alpha-beta filter on rigid motions, the
+**[defined]** The prediction is an alpha-beta filter on rigid motions, the
 steady-state Kalman filter of a constant-velocity model: the pose and the
 velocity are corrected toward each measurement by fixed gains.
 
@@ -31,3 +54,15 @@ machinery.
 **[question]** A full Kalman filter on SE(3), with the point-to-plane
 Hessian as the measurement information, is the principled version; worth it
 once the benchmark shows where the alpha-beta filter falls short.
+
+## What each piece bought
+
+**[defined]** Measured on demo A, six sequences of 120 frames, a few
+hundred points, 5 mm of noise on a 20 cm part:
+
+| Change | Effect |
+| --- | --- |
+| Align onto the side facing the sensor, not the whole model | Points of a thin plate no longer pair with its far face: a single frame's floor from 1.4° to 0.85° |
+| Learn the noise from the median distance, not the residual | A ball in front no longer inflates the gates: the occluder run from 0 to 112 frames of 120 within 2° |
+| Pull the local alignment toward the prediction | Half-hidden frames no longer slide |
+| Search within the failed frame | A knock costs one frame |

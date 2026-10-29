@@ -20,11 +20,12 @@ use follow::{Record, follow};
 use lens::{Layer, Lens};
 use scenarios::{FRAMES, scenarios};
 
-const TILE_WIDTH: usize = 260;
-const TILE_HEIGHT: usize = 200;
+const TILE_WIDTH: usize = 240;
+const TILE_HEIGHT: usize = 190;
 const MODEL_SPACING: f64 = 0.003;
-const DRAWN_MODEL_STRIDE: usize = 7;
+const DRAWN_MODEL_STRIDE: usize = 3;
 const SEED: u64 = 7;
+const PART_SPAN: f64 = 0.2;
 const STANDING_ANGLE: f64 = 118.0;
 
 pub fn run(target: &Path) -> anyhow::Result<Vec<Summary>> {
@@ -32,30 +33,37 @@ pub fn run(target: &Path) -> anyhow::Result<Vec<Summary>> {
     let runs = scenarios()
         .into_iter()
         .map(|scenario| {
-            let shots = scenario.sequence.shoot(model.cloud(), SEED)?;
-            Ok((scenario.name, follow(&model, shots)?))
+            let shots = scenario.sequence.shoot(model.cloud(), PART_SPAN, SEED)?;
+            let records = follow(&model, shots)?;
+            if std::env::var_os("CONGRU_TRACE").is_some_and(|wanted| wanted == scenario.name) {
+                trace(&records);
+            }
+            Ok((scenario.name, records))
         })
         .collect::<anyhow::Result<Vec<_>>>()?;
     let frames: Vec<Vec<Tile>> = (0..FRAMES)
         .map(|frame| {
             runs.iter()
-                .map(|(name, records)| tile(name, &records[frame], &model))
+                .map(|(name, records)| {
+                    let centre = Point::from(records[0].shot.truth.translation());
+                    tile(
+                        name,
+                        &records[frame],
+                        &model,
+                        &Lens::around(&centre, TILE_WIDTH, TILE_HEIGHT),
+                    )
+                })
                 .collect()
         })
         .collect();
-    picture::write(target, &frames, 2)?;
+    picture::write(target, &frames, 3)?;
     Ok(runs
         .iter()
         .map(|(name, records)| Summary::of(name, records.iter().map(Record::error_degrees)))
         .collect())
 }
 
-fn tile(name: &str, record: &Record, model: &OrientedCloud) -> Tile {
-    let lens = Lens::around(
-        &Point::from(record.shot.truth.translation()),
-        TILE_WIDTH,
-        TILE_HEIGHT,
-    );
+fn tile(name: &str, record: &Record, model: &OrientedCloud, lens: &Lens) -> Tile {
     let placed: Vec<Point> = record.update.as_ref().map_or_else(Vec::new, |update| {
         model
             .cloud()
@@ -67,13 +75,13 @@ fn tile(name: &str, record: &Record, model: &OrientedCloud) -> Tile {
     });
     let mut picture = lens.draw(&[
         Layer {
-            points: record.shot.cloud.points(),
-            tone: OBSERVED,
-            size: 2,
-        },
-        Layer {
             points: &placed,
             tone: MODEL,
+            size: 1,
+        },
+        Layer {
+            points: record.shot.cloud.points(),
+            tone: OBSERVED,
             size: 2,
         },
     ]);
@@ -115,4 +123,26 @@ fn label(picture: &mut Image<Tone>, name: &str, record: &Record) -> f64 {
         tone,
     );
     error
+}
+
+fn trace(records: &[Record]) {
+    use std::io::Write;
+    let mut output = std::io::stderr().lock();
+    for (frame, record) in records.iter().enumerate() {
+        let detail = record.update.as_ref().map(|update| {
+            (
+                update.phase,
+                update.trusted,
+                update.alignment.inlier_fraction,
+                update.alignment.rmse,
+                update.alignment.iterations,
+            )
+        });
+        let _ = writeln!(
+            output,
+            "{frame:3} {:6.2} {} {detail:?}",
+            record.error_degrees(),
+            record.shot.cloud.count()
+        );
+    }
 }

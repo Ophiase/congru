@@ -7,20 +7,33 @@ writes them again and prints the tables below.
 
 ![Demo A](figures/clouds.gif)
 
-*Demo A: point clouds only. A machined bracket moves in front of a sensor;
-the blue points are what the sensor returns, noisy and partly hidden; the
-red points are the model, placed at the pose congru finds, frame after
-frame. The text says which phase ran (follow from the last pose, or find
-again from nothing) and the rotation error against the truth. Top left:
-noise. Top right: a ball crossing in front. Bottom left: lens distortion.
-Bottom right: two knocks, after which the model is found again.*
+A machined bracket moves in front of a sensor, in six generated sequences
+of 120 frames. The red particles are what the sensor returns; the cyan
+points are the model, placed at the pose congru finds, frame after frame.
+Each tile says which phase ran (follow from the last pose, or find again
+from nothing) and the rotation error against the truth; the bar below
+turns amber past 1° and red past 5°.
 
-| Run | Median error | Frames within 2° |
-| --- | --- | --- |
-| Noise | 0.72° | 120 / 120 |
-| A ball crossing in front | 0.19° | 98 / 120 |
-| Lens distortion | 0.63° | 120 / 120 |
-| Two knocks | 0.11° | 118 / 120 |
+Every sequence is already hard: a few hundred points per frame, 5 mm of
+noise on a 20 cm part, and 40 points of clutter. Each adds one trouble:
+
+| Run | Added | Median error | Frames within 2° |
+| --- | --- | --- | --- |
+| Noise | nothing | 0.91° | 114 / 120 |
+| Shake | the sensor jolts every frame, 0.6° and 4 mm | 1.00° | 111 / 120 |
+| Bend | the part flexes by up to 4 mm | 1.07° | 112 / 120 |
+| Occluder | a ball crosses in front | 0.94° | 112 / 120 |
+| Lens | radial distortion | 1.17° | 103 / 120 |
+| Knocks | two abrupt turns of 70° and 60° | 0.95° | 113 / 120 |
+
+For scale: aligning one such frame alone, from the true pose, already
+leaves about 0.85° of error. What tracking adds is holding on: through the
+ball, the jolts and the knocks, the pose never drifts away.
+
+How it works: the follow phase aligns each frame onto the side of the model
+facing the sensor, pulled toward the predicted pose, with a robust kernel
+scaled by the noise it has learned; a frame it cannot explain is searched
+again at once ([tracking](../ideas/method/tracking.md)).
 
 ## B — a simulated depth camera
 

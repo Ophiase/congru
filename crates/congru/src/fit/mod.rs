@@ -2,6 +2,7 @@ mod kabsch;
 mod kernel;
 mod observability;
 mod plane;
+mod prior;
 
 use nalgebra::Unit;
 
@@ -13,6 +14,7 @@ pub use kernel::Kernel;
 pub(crate) use observability::observe;
 pub use observability::{MotionKind, Observability, WeakMotion};
 pub(crate) use plane::point_to_plane;
+pub use prior::Prior;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub(crate) struct Match {

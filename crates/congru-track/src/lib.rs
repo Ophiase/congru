@@ -4,10 +4,13 @@
 
 mod filter;
 mod health;
+mod noise;
+mod sensor;
 mod tracker;
 mod view;
 
 pub use filter::{Gains, MotionFilter};
 pub use health::Health;
-pub use tracker::{Phase, Tracker, Update};
+pub use sensor::SensorView;
+pub use tracker::{Agility, Phase, Tracker, Update};
 pub use view::{ModelView, WholeModel};

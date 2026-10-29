@@ -14,6 +14,7 @@ nalgebra.workspace = true
 rand.workspace = true
 rand_distr.workspace = true
 congru = { workspace = true, default-features = false }
+congru-vision.workspace = true
 thiserror.workspace = true
 
 [lints]

@@ -1,4 +1,4 @@
-use crate::{Distance, Fraction, Kernel};
+use crate::{Distance, Fraction, Kernel, Prior};
 
 /// What a correspondence's residual measures.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -50,4 +50,7 @@ pub struct Icp {
     /// nothing.
     pub overlap: Fraction,
     pub convergence: Convergence,
+    /// Point-to-plane only: keeps the pose near the initial one, as a
+    /// tracker keeps it near its prediction.
+    pub prior: Option<Prior>,
 }

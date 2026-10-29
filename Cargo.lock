@@ -156,6 +156,7 @@ name = "congru-synth"
 version = "0.1.0"
 dependencies = [
  "congru",
+ "congru-vision",
  "nalgebra",
  "rand",
  "rand_distr",
@@ -168,6 +169,7 @@ version = "0.1.0"
 dependencies = [
  "congru",
  "congru-synth",
+ "congru-vision",
  "nalgebra",
 ]
 

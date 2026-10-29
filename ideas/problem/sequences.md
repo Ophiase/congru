@@ -15,6 +15,14 @@ every claim about it is measured.
 | **Occluder** | A ball crosses between sensor and model: what it hides vanishes, its own surface appears |
 | **Distortion** | A smooth warp of the observed points: a miscalibrated or rolling sensor |
 | **Jump** | The pose changes abruptly between two frames: a knock, a dropped frame, a re-grasp |
+| **Shake** | A small random jolt of rotation and position every frame: a hand-held or vibrating sensor |
+| **Bend** | A slow, smooth flexing of the part itself: real parts are never perfectly rigid |
+| **Sparsity** | Only a share of the visible surface comes back, as from a cheap sensor |
+| **Clutter** | Points scattered around the part every frame |
+
+**[defined]** The baseline of every demo sequence is already hard: sparse
+(a few hundred points), noisy (a few percent of the part's size), with
+clutter. Each event is added on top of it.
 
 Each event is off by default and has one strength, so a sequence turns one
 up at a time, like the sweeps of [measuring success](measuring-success.md).

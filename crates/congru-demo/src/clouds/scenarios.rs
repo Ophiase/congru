@@ -1,10 +1,10 @@
-use congru_synth::sequence::{Drift, Jump, Sequence};
+use congru_synth::sequence::{Drift, Jump, Sequence, Shake};
 
 pub const FRAMES: usize = 120;
 
 const DRIFT: Drift = Drift {
     distance: 0.5,
-    turns: 0.6,
+    turns: 0.5,
     sway: 0.04,
 };
 
@@ -28,43 +28,61 @@ pub struct Scenario {
     pub sequence: Sequence,
 }
 
-pub fn scenarios() -> [Scenario; 4] {
-    let calm = Sequence {
-        frames: FRAMES,
-        drift: DRIFT,
-        jumps: Vec::new(),
-        noise: 0.002,
-        occluder: 0.0,
-        distortion: 0.0,
-    };
+/// Sparse, noisy and cluttered already; each scenario adds one more
+/// trouble on top.
+fn baseline() -> Sequence {
+    Sequence {
+        density: 0.1,
+        noise: 0.005,
+        clutter: 40,
+        ..Sequence::still(FRAMES, DRIFT)
+    }
+}
+
+const SHAKE: Shake = Shake {
+    angle: 0.010_5,
+    shift: 0.004,
+};
+
+pub fn scenarios() -> [Scenario; 6] {
+    let base = baseline();
+    let with = |name, sequence| Scenario { name, sequence };
     [
-        Scenario {
-            name: "noise",
-            sequence: Sequence {
-                noise: 0.004,
-                ..calm.clone()
+        with("noise", base.clone()),
+        with(
+            "shake",
+            Sequence {
+                shake: SHAKE,
+                ..base.clone()
             },
-        },
-        Scenario {
-            name: "occluder",
-            sequence: Sequence {
+        ),
+        with(
+            "bend",
+            Sequence {
+                bend: 0.004,
+                ..base.clone()
+            },
+        ),
+        with(
+            "occluder",
+            Sequence {
                 occluder: 0.06,
-                ..calm.clone()
+                ..base.clone()
             },
-        },
-        Scenario {
-            name: "lens",
-            sequence: Sequence {
+        ),
+        with(
+            "lens",
+            Sequence {
                 distortion: 1.0,
-                ..calm.clone()
+                ..base.clone()
             },
-        },
-        Scenario {
-            name: "knocks",
-            sequence: Sequence {
+        ),
+        with(
+            "knocks",
+            Sequence {
                 jumps: KNOCKS.to_vec(),
-                ..calm
+                ..base
             },
-        },
+        ),
     ]
 }

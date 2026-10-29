@@ -20,7 +20,8 @@ impl Icp {
         }
         let mut pose = *initial;
         for iteration in 1..=self.convergence.max_iterations {
-            let step = self.solve(&correspond(source, target, &pose, self))?;
+            let deviation = initial.inverse().then(&pose);
+            let step = self.solve(&correspond(source, target, &pose, self), &deviation)?;
             pose = pose.then(&step);
             if self.is_settled(&step) {
                 return self.finish(source, target, pose, iteration, StopReason::Converged);
@@ -35,10 +36,16 @@ impl Icp {
         )
     }
 
-    fn solve(&self, matches: &[Match]) -> Result<RigidTransform, Error> {
+    fn solve(
+        &self,
+        matches: &[Match],
+        deviation: &RigidTransform,
+    ) -> Result<RigidTransform, Error> {
         match self.metric {
             Metric::PointToPoint => kabsch(matches),
-            Metric::PointToPlane => point_to_plane(matches),
+            Metric::PointToPlane => {
+                point_to_plane(matches, self.prior.as_ref().map(|prior| (prior, deviation)))
+            }
         }
     }
 

@@ -1,3 +1,9 @@
+mod plane;
+mod visibility;
+
+pub use plane::without_support;
+pub use visibility::visible_from_origin;
+
 use congru::Point;
 
 use crate::{Camera, DepthImage};

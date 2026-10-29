@@ -61,7 +61,8 @@ views is **measured against a known truth**, not hoped for.
   [embedded](architecture/embedded.md) ·
   [performance](architecture/performance.md) ·
   [benchmark](architecture/benchmark.md) ·
-  [stack](architecture/stack.md)
+  [stack](architecture/stack.md) ·
+  [extension-points](architecture/extension-points.md)
 - **demo/**: [README](demo/README.md) — A: point clouds over time;
   B: a depth camera (scene, sensor, degradations, perception, tracking,
   video)

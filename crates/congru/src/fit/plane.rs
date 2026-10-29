@@ -1,6 +1,6 @@
 use nalgebra::{Matrix6, UnitQuaternion, Vector6};
 
-use super::Match;
+use super::{Match, Prior};
 use crate::geometry::{count_as_float, mean};
 use crate::{Error, Point, RigidTransform};
 
@@ -12,7 +12,12 @@ const DAMPING: f64 = 1e-4;
 /// source centroid so the normal equations stay well conditioned. The step
 /// is damped: along a motion the pairs leave free (a slide over a plane),
 /// it stays near zero, keeping the initial pose there instead of failing.
-pub(crate) fn point_to_plane(matches: &[Match]) -> Result<RigidTransform, Error> {
+/// With an anchor, the step is also pulled back toward the initial pose,
+/// `deviation` away from the current one.
+pub(crate) fn point_to_plane(
+    matches: &[Match],
+    anchor: Option<(&Prior, &RigidTransform)>,
+) -> Result<RigidTransform, Error> {
     if matches.len() < MINIMUM_PAIRS {
         return Err(Error::TooFewCorrespondences {
             found: matches.len(),
@@ -21,7 +26,12 @@ pub(crate) fn point_to_plane(matches: &[Match]) -> Result<RigidTransform, Error>
     }
     let sources: Vec<Point> = matches.iter().map(|pair| pair.source).collect();
     let centre = mean(&sources);
-    let (hessian, gradient) = normal_equations(matches, &centre)?;
+    let (mut hessian, mut gradient) = normal_equations(matches, &centre)?;
+    if let Some((prior, deviation)) = anchor {
+        let (stiffness, pull) = prior.pull(matches.len(), deviation, &centre);
+        hessian += stiffness;
+        gradient += pull;
+    }
     let stiffest = hessian.symmetric_eigenvalues().max();
     if stiffest.is_nan() || stiffest <= 0.0 {
         return Err(Error::Degenerate);

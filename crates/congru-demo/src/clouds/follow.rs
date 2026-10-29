@@ -1,19 +1,24 @@
-use congru::{Distance, Error, Icp, Kernel, Multistart, OrientedCloud, PointCloud, Target};
+use congru::{Distance, Error, Icp, Kernel, Multistart, OrientedCloud, PointCloud};
 use congru_synth::sequence::Shot;
-use congru_track::{Gains, Health, Tracker, Update, WholeModel};
+use congru_track::{Agility, Gains, Health, SensorView, Tracker, Update};
 
 const SCAN_VOXEL: f64 = 0.005;
-const KERNEL_SCALE: f64 = 0.006;
-const CORRESPONDENCE_LIMIT: f64 = 0.025;
-const ITERATIONS_PER_FRAME: u32 = 15;
+const FIRST_KERNEL_SCALE: f64 = 0.01;
+const FIRST_GATE: f64 = 0.03;
+const ITERATIONS_PER_FRAME: u32 = 20;
 const STARTS: usize = 64;
+const NOISE_FLOOR: f64 = 0.002;
 const HEALTH: Health = Health {
-    min_inliers: 0.6,
-    max_rmse: 0.01,
+    min_inliers: 0.5,
+    max_noise_ratio: 2.0,
+};
+const AGILITY: Agility = Agility {
+    rotation: 0.08,
+    translation: 0.01,
 };
 const GAINS: Gains = Gains {
-    pose: 1.0,
-    velocity: 0.5,
+    pose: 0.6,
+    velocity: 0.2,
 };
 
 /// A frame, and the tracker's answer to it.
@@ -25,9 +30,12 @@ pub struct Record {
 
 impl Record {
     pub fn error_degrees(&self) -> f64 {
-        self.update.as_ref().map_or(f64::INFINITY, |update| {
-            update.pose.rotation_error_to(&self.shot.truth).to_degrees()
-        })
+        self.update
+            .as_ref()
+            .filter(|update| update.trusted)
+            .map_or(f64::INFINITY, |update| {
+                update.pose.rotation_error_to(&self.shot.truth).to_degrees()
+            })
     }
 }
 
@@ -44,11 +52,11 @@ pub fn follow(model: &OrientedCloud, shots: Vec<Shot>) -> Result<Vec<Record>, Er
         .collect())
 }
 
-fn tracker(model: &OrientedCloud) -> Result<Tracker<WholeModel>, Error> {
-    let kernel = Kernel::Cauchy(Distance::new(KERNEL_SCALE)?);
+fn tracker(model: &OrientedCloud) -> Result<Tracker<SensorView>, Error> {
+    let kernel = Kernel::Cauchy(Distance::new(FIRST_KERNEL_SCALE)?);
     let follow = Icp {
         kernel,
-        max_correspondence_distance: Some(Distance::new(CORRESPONDENCE_LIMIT)?),
+        max_correspondence_distance: Some(Distance::new(FIRST_GATE)?),
         convergence: congru::Convergence {
             max_iterations: ITERATIONS_PER_FRAME,
             ..congru::Convergence::default()
@@ -62,6 +70,14 @@ fn tracker(model: &OrientedCloud) -> Result<Tracker<WholeModel>, Error> {
             ..Icp::default()
         },
     };
-    let view = WholeModel(Target::from_oriented(model.clone())?);
-    Ok(Tracker::new(view, follow, find, HEALTH, GAINS))
+    let view = SensorView::new(model.clone())?;
+    Ok(Tracker::new(
+        view,
+        follow,
+        find,
+        HEALTH,
+        AGILITY,
+        GAINS,
+        NOISE_FLOOR,
+    ))
 }
