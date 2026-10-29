@@ -1,0 +1,21 @@
+[package]
+name = "congru-demo"
+description = "A simulated robot tracking a machined part through a degraded depth camera, written as an animation."
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow = "1.0.104"
+gif = "0.14.2"
+nalgebra.workspace = true
+congru.workspace = true
+congru-sim.workspace = true
+congru-synth.workspace = true
+congru-track.workspace = true
+congru-vision.workspace = true
+
+[lints]
+workspace = true

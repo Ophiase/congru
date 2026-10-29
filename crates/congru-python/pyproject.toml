@@ -1,0 +1,59 @@
+[build-system]
+requires = ["maturin>=1.15,<2"]
+build-backend = "maturin"
+
+[project]
+name = "congru"
+description = "Fast, robust rigid registration of point clouds and meshes."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.12"
+dependencies = ["numpy>=2.1"]
+dynamic = ["version"]
+keywords = [
+  "point-cloud",
+  "registration",
+  "icp",
+  "robotics",
+  "computer-vision",
+]
+classifiers = [
+  "Programming Language :: Rust",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Typing :: Typed",
+]
+
+[dependency-groups]
+dev = [
+  "maturin>=1.15,<2",
+  "pytest>=8.4",
+  "ruff>=0.14",
+]
+
+[tool.maturin]
+python-source = "python"
+module-name = "congru._congru"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests"]
+addopts = ["--strict-markers", "--strict-config"]
+xfail_strict = true
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+src = ["python", "tests"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "COM812",
+  "CPY001",
+  "D1",
+  "D203",
+  "D213",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["INP001", "S101"]

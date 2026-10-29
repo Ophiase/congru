@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: If you use congru in research, please cite it as below.
+title: "congru: rigid registration you can ship"
+type: software
+authors:
+  - alias: ophiase
+license: Apache-2.0
+version: 0.1.0
+keywords:
+  - point cloud registration
+  - iterative closest point
+  - robotics

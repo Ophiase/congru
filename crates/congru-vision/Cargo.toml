@@ -1,0 +1,16 @@
+[package]
+name = "congru-vision"
+description = "Depth cameras for congru: pinhole projection, depth images, and the step from pixels to point clouds."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+congru = { workspace = true, default-features = false }
+
+[lints]
+workspace = true

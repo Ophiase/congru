@@ -1,0 +1,23 @@
+[package]
+name = "congru-python"
+description = "Python bindings of congru: NumPy arrays in, NumPy arrays out."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[lib]
+name = "_congru"
+crate-type = ["cdylib"]
+test = false
+doctest = false
+
+[dependencies]
+numpy.workspace = true
+pyo3.workspace = true
+congru.workspace = true
+
+[lints]
+workspace = true

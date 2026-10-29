@@ -1,0 +1,22 @@
+[package]
+name = "congru-bench"
+description = "The benchmark of congru: every method, every situation, many seeds, written as tables."
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow = "1.0.104"
+congru-figures = { path = "../congru-figures" }
+congru.workspace = true
+congru-sim.workspace = true
+congru-synth.workspace = true
+congru-track.workspace = true
+nalgebra.workspace = true
+rand.workspace = true
+rayon.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,21 @@
+[package]
+name = "congru-track"
+description = "Tracking with congru: follow a model from frame to frame, find it again after a jump."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+nalgebra.workspace = true
+congru.workspace = true
+congru-vision.workspace = true
+
+[dev-dependencies]
+congru-synth.workspace = true
+
+[lints]
+workspace = true

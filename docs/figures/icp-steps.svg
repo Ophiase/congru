@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="334" viewBox="0 0 1200 334" font-family="system-ui, sans-serif">
+<style>
+.caption { font-size: 13px; fill: #3e4c59; }
+.stroke { fill: none; stroke-width: 1.8; stroke-linecap: round; }
+.model { stroke: #e03131; fill: #e03131; }
+.observed { stroke: #1c7ed6; fill: #1c7ed6; }
+.outlier { stroke: #2f9e44; fill: #2f9e44; }
+.faint { stroke: #adb5bd; fill: #adb5bd; }
+.link { stroke: #868e96; stroke-width: 0.8; stroke-dasharray: 2 2; }
+.label { font-size: 9px; fill: #1c7ed6; }
+.ring { fill: #e03131; fill-opacity: 0.08; stroke: #e03131; stroke-opacity: 0.7; stroke-width: 1.1; stroke-dasharray: 4 3; }
+@media (prefers-color-scheme: dark) {
+  .caption { fill: #ced4da; }
+  .model { stroke: #ff8787; fill: #ff8787; }
+  .observed { stroke: #4dabf7; fill: #4dabf7; }
+  .outlier { stroke: #69db7c; fill: #69db7c; }
+  .faint { stroke: #495057; fill: #495057; }
+  .link { stroke: #868e96; }
+  .label { fill: #4dabf7; }
+  .ring { fill: #ff8787; stroke: #ff8787; }
+}
+</style>
+<text class="caption" x="150" y="317" text-anchor="middle">1. the observation, moved</text>
+<path class="model stroke" opacity="1.00" d="M135.7 105.8L144.7 114.8M135.7 114.8L144.7 105.8"/>
+<path class="model stroke" opacity="1.00" d="M138.7 92.8L147.7 101.8M138.7 101.8L147.7 92.8"/>
+<path class="model stroke" opacity="1.00" d="M136.4 78.1L145.4 87.1M136.4 87.1L145.4 78.1"/>
+<path class="model stroke" opacity="1.00" d="M128.1 63.8L137.1 72.8M128.1 72.8L137.1 63.8"/>
+<path class="model stroke" opacity="1.00" d="M114.0 52.4L123.0 61.4M114.0 61.4L123.0 52.4"/>
+<path class="model stroke" opacity="1.00" d="M95.2 46.1L104.2 55.1M95.2 55.1L104.2 46.1"/>
+<path class="model stroke" opacity="1.00" d="M73.7 46.8L82.7 55.8M73.7 55.8L82.7 46.8"/>
+<path class="model stroke" opacity="1.00" d="M52.2 55.5L61.2 64.5M52.2 64.5L61.2 55.5"/>
+<path class="model stroke" opacity="1.00" d="M33.8 72.2L42.8 81.2M33.8 81.2L42.8 72.2"/>
+<path class="model stroke" opacity="1.00" d="M21.4 95.7L30.4 104.7M21.4 104.7L30.4 95.7"/>
+<path class="model stroke" opacity="1.00" d="M17.5 123.6L26.5 132.6M17.5 132.6L26.5 123.6"/>
+<path class="model stroke" opacity="1.00" d="M23.6 152.9L32.6 161.9M23.6 161.9L32.6 152.9"/>
+<path class="model stroke" opacity="1.00" d="M40.2 179.9L49.2 188.9M40.2 188.9L49.2 179.9"/>
+<path class="model stroke" opacity="1.00" d="M66.1 200.8L75.1 209.8M66.1 209.8L75.1 200.8"/>
+<path class="model stroke" opacity="1.00" d="M99.2 212.3L108.2 221.3M99.2 221.3L108.2 212.3"/>
+<path class="model stroke" opacity="1.00" d="M136.0 212.0L145.0 221.0M136.0 221.0L145.0 212.0"/>
+<circle class="observed fill" opacity="1.00" cx="133.2" cy="112.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="119.5" cy="135.0" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="147.4" cy="97.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="114.4" cy="154.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="171.0" cy="96.5" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="189.9" cy="89.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="120.8" cy="181.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="201.3" cy="100.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="134.7" cy="207.0" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="213.6" cy="113.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="213.6" cy="122.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="155.8" cy="222.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="182.4" cy="243.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="214.5" cy="249.4" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="249.2" cy="232.3" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="278.0" cy="212.0" r="2.6"/>
+<text class="caption" x="450" y="317" text-anchor="middle">2. pair each dot with its nearest cross</text>
+<line class="link" x1="433.2" y1="112.1" x2="440.2" y2="110.3"/>
+<line class="link" x1="419.5" y1="135.0" x2="440.2" y2="110.3"/>
+<line class="link" x1="447.4" y1="97.6" x2="443.2" y2="97.3"/>
+<line class="link" x1="414.4" y1="154.1" x2="440.2" y2="110.3"/>
+<line class="link" x1="471.0" y1="96.5" x2="443.2" y2="97.3"/>
+<line class="link" x1="489.9" y1="89.6" x2="443.2" y2="97.3"/>
+<line class="link" x1="420.8" y1="181.8" x2="403.7" y2="216.8"/>
+<line class="link" x1="501.3" y1="100.7" x2="443.2" y2="97.3"/>
+<line class="link" x1="434.7" y1="207.0" x2="440.5" y2="216.5"/>
+<line class="link" x1="513.6" y1="113.7" x2="443.2" y2="97.3"/>
+<line class="link" x1="513.6" y1="122.8" x2="440.2" y2="110.3"/>
+<line class="link" x1="455.8" y1="222.7" x2="440.5" y2="216.5"/>
+<line class="link" x1="482.4" y1="243.7" x2="440.5" y2="216.5"/>
+<line class="link" x1="514.5" y1="249.4" x2="440.5" y2="216.5"/>
+<line class="link" x1="549.2" y1="232.3" x2="440.5" y2="216.5"/>
+<line class="link" x1="578.0" y1="212.0" x2="440.5" y2="216.5"/>
+<path class="model stroke" opacity="1.00" d="M435.7 105.8L444.7 114.8M435.7 114.8L444.7 105.8"/>
+<path class="model stroke" opacity="1.00" d="M438.7 92.8L447.7 101.8M438.7 101.8L447.7 92.8"/>
+<path class="model stroke" opacity="1.00" d="M436.4 78.1L445.4 87.1M436.4 87.1L445.4 78.1"/>
+<path class="model stroke" opacity="1.00" d="M428.1 63.8L437.1 72.8M428.1 72.8L437.1 63.8"/>
+<path class="model stroke" opacity="1.00" d="M414.0 52.4L423.0 61.4M414.0 61.4L423.0 52.4"/>
+<path class="model stroke" opacity="1.00" d="M395.2 46.1L404.2 55.1M395.2 55.1L404.2 46.1"/>
+<path class="model stroke" opacity="1.00" d="M373.7 46.8L382.7 55.8M373.7 55.8L382.7 46.8"/>
+<path class="model stroke" opacity="1.00" d="M352.2 55.5L361.2 64.5M352.2 64.5L361.2 55.5"/>
+<path class="model stroke" opacity="1.00" d="M333.8 72.2L342.8 81.2M333.8 81.2L342.8 72.2"/>
+<path class="model stroke" opacity="1.00" d="M321.4 95.7L330.4 104.7M321.4 104.7L330.4 95.7"/>
+<path class="model stroke" opacity="1.00" d="M317.5 123.6L326.5 132.6M317.5 132.6L326.5 123.6"/>
+<path class="model stroke" opacity="1.00" d="M323.6 152.9L332.6 161.9M323.6 161.9L332.6 152.9"/>
+<path class="model stroke" opacity="1.00" d="M340.2 179.9L349.2 188.9M340.2 188.9L349.2 179.9"/>
+<path class="model stroke" opacity="1.00" d="M366.1 200.8L375.1 209.8M366.1 209.8L375.1 200.8"/>
+<path class="model stroke" opacity="1.00" d="M399.2 212.3L408.2 221.3M399.2 221.3L408.2 212.3"/>
+<path class="model stroke" opacity="1.00" d="M436.0 212.0L445.0 221.0M436.0 221.0L445.0 212.0"/>
+<circle class="observed fill" opacity="1.00" cx="433.2" cy="112.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="419.5" cy="135.0" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="447.4" cy="97.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="414.4" cy="154.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="471.0" cy="96.5" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="489.9" cy="89.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="420.8" cy="181.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="501.3" cy="100.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="434.7" cy="207.0" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="513.6" cy="113.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="513.6" cy="122.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="455.8" cy="222.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="482.4" cy="243.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="514.5" cy="249.4" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="549.2" cy="232.3" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="578.0" cy="212.0" r="2.6"/>
+<text class="caption" x="750" y="317" text-anchor="middle">3. move by the best fit, pair again</text>
+<line class="link" x1="705.9" y1="96.0" x2="740.2" y2="110.3"/>
+<line class="link" x1="687.7" y1="115.5" x2="740.2" y2="110.3"/>
+<line class="link" x1="722.8" y1="84.7" x2="740.9" y2="82.6"/>
+<line class="link" x1="678.7" y1="133.1" x2="628.1" y2="157.4"/>
+<line class="link" x1="746.1" y1="88.6" x2="740.9" y2="82.6"/>
+<line class="link" x1="766.0" y1="85.8" x2="740.9" y2="82.6"/>
+<line class="link" x1="679.2" y1="161.4" x2="644.7" y2="184.4"/>
+<line class="link" x1="774.8" y1="99.1" x2="743.2" y2="97.3"/>
+<line class="link" x1="687.5" y1="189.1" x2="670.6" y2="205.3"/>
+<line class="link" x1="784.2" y1="114.4" x2="740.2" y2="110.3"/>
+<line class="link" x1="782.2" y1="123.2" x2="740.2" y2="110.3"/>
+<line class="link" x1="704.8" y1="208.8" x2="703.7" y2="216.8"/>
+<line class="link" x1="726.4" y1="235.0" x2="740.5" y2="216.5"/>
+<line class="link" x1="756.5" y1="247.2" x2="740.5" y2="216.5"/>
+<line class="link" x1="794.1" y1="237.8" x2="740.5" y2="216.5"/>
+<line class="link" x1="826.5" y1="223.9" x2="740.5" y2="216.5"/>
+<path class="model stroke" opacity="1.00" d="M735.7 105.8L744.7 114.8M735.7 114.8L744.7 105.8"/>
+<path class="model stroke" opacity="1.00" d="M738.7 92.8L747.7 101.8M738.7 101.8L747.7 92.8"/>
+<path class="model stroke" opacity="1.00" d="M736.4 78.1L745.4 87.1M736.4 87.1L745.4 78.1"/>
+<path class="model stroke" opacity="1.00" d="M728.1 63.8L737.1 72.8M728.1 72.8L737.1 63.8"/>
+<path class="model stroke" opacity="1.00" d="M714.0 52.4L723.0 61.4M714.0 61.4L723.0 52.4"/>
+<path class="model stroke" opacity="1.00" d="M695.2 46.1L704.2 55.1M695.2 55.1L704.2 46.1"/>
+<path class="model stroke" opacity="1.00" d="M673.7 46.8L682.7 55.8M673.7 55.8L682.7 46.8"/>
+<path class="model stroke" opacity="1.00" d="M652.2 55.5L661.2 64.5M652.2 64.5L661.2 55.5"/>
+<path class="model stroke" opacity="1.00" d="M633.8 72.2L642.8 81.2M633.8 81.2L642.8 72.2"/>
+<path class="model stroke" opacity="1.00" d="M621.4 95.7L630.4 104.7M621.4 104.7L630.4 95.7"/>
+<path class="model stroke" opacity="1.00" d="M617.5 123.6L626.5 132.6M617.5 132.6L626.5 123.6"/>
+<path class="model stroke" opacity="1.00" d="M623.6 152.9L632.6 161.9M623.6 161.9L632.6 152.9"/>
+<path class="model stroke" opacity="1.00" d="M640.2 179.9L649.2 188.9M640.2 188.9L649.2 179.9"/>
+<path class="model stroke" opacity="1.00" d="M666.1 200.8L675.1 209.8M666.1 209.8L675.1 200.8"/>
+<path class="model stroke" opacity="1.00" d="M699.2 212.3L708.2 221.3M699.2 221.3L708.2 212.3"/>
+<path class="model stroke" opacity="1.00" d="M736.0 212.0L745.0 221.0M736.0 221.0L745.0 212.0"/>
+<circle class="observed fill" opacity="1.00" cx="705.9" cy="96.0" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="687.7" cy="115.5" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="722.8" cy="84.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="678.7" cy="133.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="746.1" cy="88.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="766.0" cy="85.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="679.2" cy="161.4" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="774.8" cy="99.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="687.5" cy="189.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="784.2" cy="114.4" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="782.2" cy="123.2" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="704.8" cy="208.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="726.4" cy="235.0" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="756.5" cy="247.2" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="794.1" cy="237.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="826.5" cy="223.9" r="2.6"/>
+<text class="caption" x="1050" y="317" text-anchor="middle">4. repeat until nothing moves</text>
+<path class="model stroke" opacity="1.00" d="M1035.7 105.8L1044.7 114.8M1035.7 114.8L1044.7 105.8"/>
+<path class="model stroke" opacity="1.00" d="M1038.7 92.8L1047.7 101.8M1038.7 101.8L1047.7 92.8"/>
+<path class="model stroke" opacity="1.00" d="M1036.4 78.1L1045.4 87.1M1036.4 87.1L1045.4 78.1"/>
+<path class="model stroke" opacity="1.00" d="M1028.1 63.8L1037.1 72.8M1028.1 72.8L1037.1 63.8"/>
+<path class="model stroke" opacity="1.00" d="M1014.0 52.4L1023.0 61.4M1014.0 61.4L1023.0 52.4"/>
+<path class="model stroke" opacity="1.00" d="M995.2 46.1L1004.2 55.1M995.2 55.1L1004.2 46.1"/>
+<path class="model stroke" opacity="1.00" d="M973.7 46.8L982.7 55.8M973.7 55.8L982.7 46.8"/>
+<path class="model stroke" opacity="1.00" d="M952.2 55.5L961.2 64.5M952.2 64.5L961.2 55.5"/>
+<path class="model stroke" opacity="1.00" d="M933.8 72.2L942.8 81.2M933.8 81.2L942.8 72.2"/>
+<path class="model stroke" opacity="1.00" d="M921.4 95.7L930.4 104.7M921.4 104.7L930.4 95.7"/>
+<path class="model stroke" opacity="1.00" d="M917.5 123.6L926.5 132.6M917.5 132.6L926.5 123.6"/>
+<path class="model stroke" opacity="1.00" d="M923.6 152.9L932.6 161.9M923.6 161.9L932.6 152.9"/>
+<path class="model stroke" opacity="1.00" d="M940.2 179.9L949.2 188.9M940.2 188.9L949.2 179.9"/>
+<path class="model stroke" opacity="1.00" d="M966.1 200.8L975.1 209.8M966.1 209.8L975.1 200.8"/>
+<path class="model stroke" opacity="1.00" d="M999.2 212.3L1008.2 221.3M999.2 221.3L1008.2 212.3"/>
+<path class="model stroke" opacity="1.00" d="M1036.0 212.0L1045.0 221.0M1036.0 221.0L1045.0 212.0"/>
+<circle class="observed fill" opacity="1.00" cx="960.4" cy="63.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="940.0" cy="81.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="978.5" cy="54.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="929.1" cy="97.5" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="1001.2" cy="61.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="1021.3" cy="60.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="926.3" cy="125.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="1028.5" cy="74.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="931.3" cy="154.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="1036.0" cy="91.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="1033.1" cy="99.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="946.2" cy="175.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="964.7" cy="204.2" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="993.2" cy="219.9" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="1031.6" cy="214.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="1065.4" cy="204.8" r="2.6"/>
+</svg>

@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="334" viewBox="0 0 900 334" font-family="system-ui, sans-serif">
+<style>
+.caption { font-size: 13px; fill: #3e4c59; }
+.stroke { fill: none; stroke-width: 1.8; stroke-linecap: round; }
+.model { stroke: #e03131; fill: #e03131; }
+.observed { stroke: #1c7ed6; fill: #1c7ed6; }
+.outlier { stroke: #2f9e44; fill: #2f9e44; }
+.faint { stroke: #adb5bd; fill: #adb5bd; }
+.link { stroke: #868e96; stroke-width: 0.8; stroke-dasharray: 2 2; }
+.label { font-size: 9px; fill: #1c7ed6; }
+.ring { fill: #e03131; fill-opacity: 0.08; stroke: #e03131; stroke-opacity: 0.7; stroke-width: 1.1; stroke-dasharray: 4 3; }
+@media (prefers-color-scheme: dark) {
+  .caption { fill: #ced4da; }
+  .model { stroke: #ff8787; fill: #ff8787; }
+  .observed { stroke: #4dabf7; fill: #4dabf7; }
+  .outlier { stroke: #69db7c; fill: #69db7c; }
+  .faint { stroke: #495057; fill: #495057; }
+  .link { stroke: #868e96; }
+  .label { fill: #4dabf7; }
+  .ring { fill: #ff8787; stroke: #ff8787; }
+}
+</style>
+<text class="caption" x="150" y="317" text-anchor="middle">observed, with outliers</text>
+<path class="model stroke" opacity="1.00" d="M145.0 84.6L154.0 93.6M145.0 93.6L154.0 84.6"/>
+<path class="model stroke" opacity="1.00" d="M148.2 70.6L157.2 79.6M148.2 79.6L157.2 70.6"/>
+<path class="model stroke" opacity="1.00" d="M145.7 54.7L154.7 63.7M145.7 63.7L154.7 54.7"/>
+<path class="model stroke" opacity="1.00" d="M136.8 39.3L145.8 48.3M136.8 48.3L145.8 39.3"/>
+<path class="model stroke" opacity="1.00" d="M121.6 26.9L130.6 35.9M121.6 35.9L130.6 26.9"/>
+<path class="model stroke" opacity="1.00" d="M101.3 20.2L110.3 29.2M101.3 29.2L110.3 20.2"/>
+<path class="model stroke" opacity="1.00" d="M78.1 20.9L87.1 29.9M78.1 29.9L87.1 20.9"/>
+<path class="model stroke" opacity="1.00" d="M55.0 30.3L64.0 39.3M55.0 39.3L64.0 30.3"/>
+<path class="model stroke" opacity="1.00" d="M35.1 48.3L44.1 57.3M35.1 57.3L44.1 48.3"/>
+<path class="model stroke" opacity="1.00" d="M21.7 73.7L30.7 82.7M21.7 82.7L30.7 73.7"/>
+<path class="model stroke" opacity="1.00" d="M17.5 103.8L26.5 112.8M17.5 112.8L26.5 103.8"/>
+<path class="model stroke" opacity="1.00" d="M24.1 135.4L33.1 144.4M24.1 144.4L33.1 135.4"/>
+<path class="model stroke" opacity="1.00" d="M42.0 164.5L51.0 173.5M42.0 173.5L51.0 164.5"/>
+<path class="model stroke" opacity="1.00" d="M70.0 187.0L79.0 196.0M70.0 196.0L79.0 187.0"/>
+<path class="model stroke" opacity="1.00" d="M105.7 199.4L114.7 208.4M105.7 208.4L114.7 199.4"/>
+<path class="model stroke" opacity="1.00" d="M145.3 199.1L154.3 208.1M145.3 208.1L154.3 199.1"/>
+<circle class="observed fill" opacity="1.00" cx="198.3" cy="67.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="173.9" cy="69.4" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="214.2" cy="75.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="155.6" cy="78.9" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="230.4" cy="88.2" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="136.2" cy="93.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="236.3" cy="101.0" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="237.0" cy="114.4" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="123.2" cy="118.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="118.6" cy="145.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="125.9" cy="175.3" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="141.4" cy="203.4" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="278.0" cy="219.2" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="169.3" cy="223.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="240.0" cy="236.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="206.8" cy="236.6" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="243.1" cy="243.7" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="243.4" cy="85.8" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="174.6" cy="275.3" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="147.2" cy="160.3" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="153.6" cy="245.8" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="209.6" cy="146.5" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="164.1" cy="222.7" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="210.1" cy="39.4" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="202.3" cy="58.9" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="195.1" cy="177.5" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="148.9" cy="263.1" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="186.2" cy="227.6" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="198.8" cy="92.2" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="140.4" cy="238.1" r="2.6"/>
+<text class="caption" x="450" y="317" text-anchor="middle">least squares: dragged by outliers</text>
+<path class="model stroke" opacity="1.00" d="M445.0 84.6L454.0 93.6M445.0 93.6L454.0 84.6"/>
+<path class="model stroke" opacity="1.00" d="M448.2 70.6L457.2 79.6M448.2 79.6L457.2 70.6"/>
+<path class="model stroke" opacity="1.00" d="M445.7 54.7L454.7 63.7M445.7 63.7L454.7 54.7"/>
+<path class="model stroke" opacity="1.00" d="M436.8 39.3L445.8 48.3M436.8 48.3L445.8 39.3"/>
+<path class="model stroke" opacity="1.00" d="M421.6 26.9L430.6 35.9M421.6 35.9L430.6 26.9"/>
+<path class="model stroke" opacity="1.00" d="M401.3 20.2L410.3 29.2M401.3 29.2L410.3 20.2"/>
+<path class="model stroke" opacity="1.00" d="M378.1 20.9L387.1 29.9M378.1 29.9L387.1 20.9"/>
+<path class="model stroke" opacity="1.00" d="M355.0 30.3L364.0 39.3M355.0 39.3L364.0 30.3"/>
+<path class="model stroke" opacity="1.00" d="M335.1 48.3L344.1 57.3M335.1 57.3L344.1 48.3"/>
+<path class="model stroke" opacity="1.00" d="M321.7 73.7L330.7 82.7M321.7 82.7L330.7 73.7"/>
+<path class="model stroke" opacity="1.00" d="M317.5 103.8L326.5 112.8M317.5 112.8L326.5 103.8"/>
+<path class="model stroke" opacity="1.00" d="M324.1 135.4L333.1 144.4M324.1 144.4L333.1 135.4"/>
+<path class="model stroke" opacity="1.00" d="M342.0 164.5L351.0 173.5M342.0 173.5L351.0 164.5"/>
+<path class="model stroke" opacity="1.00" d="M370.0 187.0L379.0 196.0M370.0 196.0L379.0 187.0"/>
+<path class="model stroke" opacity="1.00" d="M405.7 199.4L414.7 208.4M405.7 208.4L414.7 199.4"/>
+<path class="model stroke" opacity="1.00" d="M445.3 199.1L454.3 208.1M445.3 208.1L454.3 199.1"/>
+<circle class="observed fill" opacity="1.00" cx="404.4" cy="28.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="380.0" cy="30.9" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="420.5" cy="36.2" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="362.0" cy="40.9" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="436.9" cy="48.4" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="342.8" cy="56.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="443.1" cy="61.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="444.1" cy="74.5" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="330.4" cy="81.3" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="326.4" cy="108.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="334.4" cy="137.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="350.5" cy="165.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="487.4" cy="178.4" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="378.8" cy="185.2" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="449.8" cy="196.8" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="416.7" cy="197.3" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="453.0" cy="203.6" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="449.9" cy="45.7" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="385.3" cy="236.8" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="355.4" cy="122.4" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="363.7" cy="207.7" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="417.4" cy="107.2" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="373.7" cy="184.4" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="415.5" cy="0.1" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="408.2" cy="19.8" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="403.6" cy="138.6" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="359.4" cy="225.2" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="395.8" cy="188.8" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="405.5" cy="53.2" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="350.3" cy="200.3" r="2.6"/>
+<text class="caption" x="750" y="317" text-anchor="middle">then Tukey: outliers weigh nothing</text>
+<path class="model stroke" opacity="1.00" d="M745.0 84.6L754.0 93.6M745.0 93.6L754.0 84.6"/>
+<path class="model stroke" opacity="1.00" d="M748.2 70.6L757.2 79.6M748.2 79.6L757.2 70.6"/>
+<path class="model stroke" opacity="1.00" d="M745.7 54.7L754.7 63.7M745.7 63.7L754.7 54.7"/>
+<path class="model stroke" opacity="1.00" d="M736.8 39.3L745.8 48.3M736.8 48.3L745.8 39.3"/>
+<path class="model stroke" opacity="1.00" d="M721.6 26.9L730.6 35.9M721.6 35.9L730.6 26.9"/>
+<path class="model stroke" opacity="1.00" d="M701.3 20.2L710.3 29.2M701.3 29.2L710.3 20.2"/>
+<path class="model stroke" opacity="1.00" d="M678.1 20.9L687.1 29.9M678.1 29.9L687.1 20.9"/>
+<path class="model stroke" opacity="1.00" d="M655.0 30.3L664.0 39.3M655.0 39.3L664.0 30.3"/>
+<path class="model stroke" opacity="1.00" d="M635.1 48.3L644.1 57.3M635.1 57.3L644.1 48.3"/>
+<path class="model stroke" opacity="1.00" d="M621.7 73.7L630.7 82.7M621.7 82.7L630.7 73.7"/>
+<path class="model stroke" opacity="1.00" d="M617.5 103.8L626.5 112.8M617.5 112.8L626.5 103.8"/>
+<path class="model stroke" opacity="1.00" d="M624.1 135.4L633.1 144.4M624.1 144.4L633.1 135.4"/>
+<path class="model stroke" opacity="1.00" d="M642.0 164.5L651.0 173.5M642.0 173.5L651.0 164.5"/>
+<path class="model stroke" opacity="1.00" d="M670.0 187.0L679.0 196.0M670.0 196.0L679.0 187.0"/>
+<path class="model stroke" opacity="1.00" d="M705.7 199.4L714.7 208.4M705.7 208.4L714.7 199.4"/>
+<path class="model stroke" opacity="1.00" d="M745.3 199.1L754.3 208.1M745.3 208.1L754.3 199.1"/>
+<circle class="observed fill" opacity="1.00" cx="703.5" cy="29.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="679.0" cy="31.0" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="719.4" cy="37.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="660.8" cy="40.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="735.6" cy="49.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="641.4" cy="55.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="741.6" cy="62.3" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="742.3" cy="75.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="628.6" cy="80.6" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="624.1" cy="107.7" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="631.6" cy="137.2" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="647.2" cy="165.2" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="783.9" cy="180.3" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="675.2" cy="185.3" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="746.0" cy="198.1" r="2.6"/>
+<circle class="observed fill" opacity="1.00" cx="712.8" cy="198.1" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="749.0" cy="205.0" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="748.6" cy="47.1" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="680.8" cy="237.0" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="652.8" cy="122.1" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="659.6" cy="207.5" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="715.1" cy="107.9" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="670.0" cy="184.4" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="715.1" cy="0.9" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="707.4" cy="20.4" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="700.8" cy="139.1" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="655.0" cy="224.9" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="692.1" cy="189.2" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="704.1" cy="53.7" r="2.6"/>
+<circle class="outlier fill" opacity="1.00" cx="646.4" cy="199.9" r="2.6"/>
+</svg>
