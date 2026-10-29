@@ -26,6 +26,12 @@ this on its own; it never pushes.
    new version in `CHANGELOG.md`, the top of `Unreleased` moved there. Keep
    each release short.
 4. **Merge**: `git switch main && git merge --no-ff dev/<topic>`, the
-   message naming the topic.
+   message naming the topic. When a background job is rewriting tracked
+   files and the working tree must not move, and `main` is an ancestor of
+   the branch, build the same merge without switching:
+   `git commit-tree HEAD^{tree} -p main -p HEAD -m "<message>"`, then
+   `git update-ref refs/heads/main <commit>`.
 5. **Tag**: `git tag -a v<version> -m "<the topic, one line>"`.
-6. **Clean up**: `git branch -d dev/<topic>`.
+6. **Clean up**: `git branch -d dev/<topic>`, and start the next topic from
+   `main`. Merge small and often: the author pushes `main` whenever it
+   holds clean versions, so a version is never more than a topic away.

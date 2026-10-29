@@ -23,3 +23,23 @@ file that argues it.
 8. **A paper?** The benchmark against the observation model, with breaking
    points per method, may be the publishable part
    ([benchmark](architecture/benchmark.md)).
+
+## Next, from the author's review of 0.1.1
+
+**[defined]** Presentation is not done; these come before any new method.
+
+1. **Colours**: the dark background with vivid particles reads harsh. Move
+   the animations and figures to a light pastel palette, one shared theme.
+2. **Demo B**:
+   - the outline still drifts above the part on some frames: find out why
+     (render offset, or a real pose error the tables hide) and fix it;
+   - the background must be a real one, noisy at every scale: fractal
+     noise, a sum of Perlin octaves of growing frequency and shrinking
+     amplitude, on the wall and the bench;
+   - the camera shake must be visible and tested, not only a jolt of the
+     pose.
+3. **Scenes**: the gallery shows too many simple synthetic variations.
+   What matters is a few ordinary scenes, found free online with a clear
+   licence, with one object to cut out of them; and the tooling that makes
+   adding such a scene one command (fetch a single file, check its sum,
+   record it in [catalogue/sources.yaml](../catalogue/sources.yaml)).

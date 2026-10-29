@@ -35,7 +35,9 @@ mod geometry;
 mod icp;
 mod search;
 
-pub use aligner::{Adaptive, Aligner, Annealed, Estimate, Frame, Guarded, Local, Search};
+pub use aligner::{
+    Adaptive, Aligner, Annealed, Consensus, Estimate, Frame, Guarded, Local, Search,
+};
 pub use error::Error;
 pub use fit::{Fit, Kernel, MotionKind, Observability, Prior, WeakMotion, fit_rigid};
 pub use geometry::{

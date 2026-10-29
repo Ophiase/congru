@@ -4,14 +4,15 @@
 mod conditions;
 mod overlay;
 mod stage;
-mod tracking;
+mod view;
 
 use std::path::Path;
 
-use congru_sim::{Turntable, bracket, turntable};
+use congru_sim::{Turntable, bracket, surroundings, turntable};
 use congru_vision::Camera;
 
-use crate::picture::{self, Tile};
+use crate::picture::palette::{MUTED, TEXT};
+use crate::picture::{self, Tile, font};
 use conditions::CONDITIONS;
 use stage::{Stage, Step};
 
@@ -19,10 +20,12 @@ pub fn run(target: &Path) -> anyhow::Result<Vec<crate::Summary>> {
     let stage = Stage {
         part: bracket()?,
         turntable: turntable()?,
+        surroundings: surroundings()?,
         camera: Camera::with_field_of_view(240, 180, 60.0),
         path: Turntable {
             frames: 90,
             turns: 0.75,
+            shake_degrees: 0.0,
         },
     };
     let runs: Vec<Vec<Step>> = CONDITIONS
@@ -31,12 +34,14 @@ pub fn run(target: &Path) -> anyhow::Result<Vec<crate::Summary>> {
         .collect::<anyhow::Result<_>>()?;
     let frames: Vec<Vec<Tile>> = (0..stage.path.frames)
         .map(|frame| {
-            runs.iter()
-                .map(|steps| tile(&stage, &steps[frame]))
+            CONDITIONS
+                .iter()
+                .zip(&runs)
+                .map(|(condition, steps)| tile(&stage, condition.name, &steps[frame]))
                 .collect()
         })
         .collect();
-    picture::write(target, &frames, 2)?;
+    picture::write(target, &frames, 3)?;
     Ok(CONDITIONS
         .iter()
         .zip(&runs)
@@ -46,16 +51,21 @@ pub fn run(target: &Path) -> anyhow::Result<Vec<crate::Summary>> {
         .collect())
 }
 
-fn tile(stage: &Stage, step: &Step) -> Tile {
-    let pose = step.estimate.as_ref().map(|estimate| estimate.pose);
+fn tile(stage: &Stage, name: &str, step: &Step) -> Tile {
+    let pose = step.update.as_ref().map(|update| update.pose);
+    let mut picture = overlay::panel(stage, &step.depth, pose.as_ref());
+    let error = error_degrees(step);
+    let bottom = picture.height() - 22;
+    font::write(&mut picture, 8, 8, name, MUTED);
+    font::write(&mut picture, 8, bottom, &format!("{error:.1}°"), TEXT);
     Tile {
-        picture: overlay::panel(stage, &step.depth, pose.as_ref()),
-        error_degrees: error_degrees(step),
+        picture,
+        error_degrees: error,
     }
 }
 
 fn error_degrees(step: &Step) -> f64 {
-    step.estimate.as_ref().map_or(f64::INFINITY, |estimate| {
-        estimate.pose.rotation_error_to(&step.truth).to_degrees()
+    step.update.as_ref().map_or(f64::INFINITY, |update| {
+        update.pose.rotation_error_to(&step.truth).to_degrees()
     })
 }

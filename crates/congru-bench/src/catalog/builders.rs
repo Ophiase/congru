@@ -1,6 +1,6 @@
 use congru::{
-    Adaptive, Aligner, Annealed, Distance, Error, Guarded, Icp, Kernel, Local, Metric, Multistart,
-    Search, Target,
+    Adaptive, Aligner, Annealed, Consensus, Distance, Error, Guarded, Icp, Kernel, Local, Metric,
+    Multistart, Search, Target,
 };
 
 use super::Model;
@@ -82,4 +82,14 @@ pub fn adaptive(model: &Model) -> Result<Box<dyn Aligner>, Error> {
         stages: 4,
         target: Target::from_oriented(model.target.clone())?,
     }))
+}
+
+pub fn consensus(model: &Model) -> Result<Box<dyn Aligner>, Error> {
+    Ok(Box::new(Consensus::new(
+        String::new(),
+        &model.target,
+        Distance::new(model.span / 30.0)?,
+        48,
+        tukey(model.span)?,
+    )?))
 }

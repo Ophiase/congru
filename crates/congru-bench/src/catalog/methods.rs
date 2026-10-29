@@ -2,7 +2,9 @@ use congru::{Aligner, Error, Icp, Target};
 use congru_track::{SensorView, Settings, Tracker, WholeModel};
 
 use super::Model;
-use super::builders::{adaptive, annealed, guarded, local, point, search, trimmed, tukey};
+use super::builders::{
+    adaptive, annealed, consensus, guarded, local, point, search, trimmed, tukey,
+};
 
 /// Whether a method answers one frame alone, or follows a sequence.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -24,7 +26,7 @@ pub struct Method {
 }
 
 /// Every method compared. Adding one is adding a line here.
-pub const METHODS: [Method; 11] = [
+pub const METHODS: [Method; 12] = [
     one_shot("icp-point", "point-to-point ICP, least squares", |model| {
         local(model, point())
     }),
@@ -55,6 +57,11 @@ pub const METHODS: [Method; 11] = [
         "search",
         "multistart over 32 rotations, Cauchy kernel",
         search,
+    ),
+    one_shot(
+        "consensus",
+        "FPFH descriptors, mutual matches, RANSAC, checked on the whole shape, refined by Tukey ICP",
+        consensus,
     ),
     baseline(
         "guarded",
