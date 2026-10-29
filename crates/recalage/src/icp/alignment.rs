@@ -1,4 +1,4 @@
-use crate::RigidTransform;
+use crate::{Observability, RigidTransform};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum StopReason {
@@ -6,7 +6,7 @@ pub enum StopReason {
     IterationLimit,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Alignment {
     /// The motion taking the source onto the target.
     pub transform: RigidTransform,
@@ -17,4 +17,7 @@ pub struct Alignment {
     pub inlier_fraction: f64,
     pub iterations: u32,
     pub stop: StopReason,
+    /// Which motions the final pairs leave free; `None` without target
+    /// normals. Read it before trusting a small residual.
+    pub observability: Option<Observability>,
 }

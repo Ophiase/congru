@@ -18,6 +18,10 @@ fmt:
 doc:
     cargo doc --workspace --no-deps --open
 
+[doc("Recompute the figures of the documentation from real runs, into docs/figures/")]
+figures:
+    cargo run --release -q -p recalage-bench -- docs/figures
+
 [doc("Everything that must pass before declaring work done")]
 check: lint test rumdl
 

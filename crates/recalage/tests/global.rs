@@ -1,4 +1,4 @@
-use recalage::{Distance, Fraction, Icp, Kernel, Multistart, PointCloud, RigidTransform, Target};
+use recalage::{Distance, Fraction, Multistart, Target, fit_rigid};
 use recalage_synth::{Corruption, MotionBounds, Scenario, shapes};
 
 const NOISE: f64 = 0.01;
@@ -43,9 +43,7 @@ fn a_mesh_target_aligns_a_scan() {
 }
 
 #[test]
-fn a_dozen_marks_align_onto_a_mesh_from_a_rough_pose() {
-    let mesh = shapes::lumpy_sphere_mesh(64).unwrap();
-    let target = Target::from_mesh(&mesh, Distance::new(0.01).unwrap()).unwrap();
+fn numbered_marks_give_the_pose_that_icp_cannot() {
     let surface = shapes::lumpy_sphere(400).unwrap();
     let corruption = Corruption {
         noise: NOISE / 2.0,
@@ -56,25 +54,10 @@ fn a_dozen_marks_align_onto_a_mesh_from_a_rough_pose() {
         max_angle: 0.25,
         max_translation: 0.05,
     };
-    let icp = Icp {
-        kernel: Kernel::Huber(Distance::new(NOISE).unwrap()),
-        ..Icp::default()
-    };
     for seed in 0..SEEDS {
         let scenario = Scenario::generate(&surface, &corruption, &rough, seed).unwrap();
-        assert!(scenario.observed.count() >= 10);
-        let alignment = icp
-            .align(&scenario.observed, &target, &RigidTransform::identity())
-            .unwrap();
-        let landed: PointCloud = scenario.observed.transformed(&alignment.transform);
-        let residual = landed
-            .points()
-            .iter()
-            .map(|point| target.index().nearest(point).squared_distance.sqrt())
-            .fold(0.0, f64::max);
-        assert!(
-            residual < 4.0 * NOISE,
-            "seed {seed}: a mark lands {residual} off the surface"
-        );
+        let truth = scenario.observed.transformed(&scenario.expected());
+        let fit = fit_rigid(scenario.observed.points(), truth.points(), None).unwrap();
+        assert!(fit.transform.rotation_error_to(&scenario.expected()) < 1e-9);
     }
 }

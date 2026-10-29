@@ -1,0 +1,17 @@
+[package]
+name = "recalage-bench"
+description = "Figures and sweeps of recalage against the synthetic truth."
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow = "1.0.104"
+nalgebra.workspace = true
+recalage.workspace = true
+recalage-synth.workspace = true
+
+[lints]
+workspace = true

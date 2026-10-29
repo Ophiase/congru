@@ -1,5 +1,6 @@
 mod kabsch;
 mod kernel;
+mod observability;
 mod plane;
 
 use nalgebra::Unit;
@@ -9,6 +10,8 @@ use crate::{Error, Point, RigidTransform, Vector};
 
 pub(crate) use kabsch::kabsch;
 pub use kernel::Kernel;
+pub(crate) use observability::observe;
+pub use observability::{MotionKind, Observability, WeakMotion};
 pub(crate) use plane::point_to_plane;
 
 #[derive(Debug, Clone, Copy, PartialEq)]

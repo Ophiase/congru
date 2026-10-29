@@ -48,11 +48,13 @@ views is **measured against a known truth**, not hoped for.
   [robustness](method/robustness.md) ·
   [global-initialisation](method/global-initialisation.md) ·
   [aggregation](method/aggregation.md) ·
-  [mesh-targets](method/mesh-targets.md)
+  [mesh-targets](method/mesh-targets.md) ·
+  [observability](method/observability.md)
 - **architecture/**:
   [layers](architecture/layers.md) ·
   [types](architecture/types.md) ·
   [bindings](architecture/bindings.md) ·
   [embedded](architecture/embedded.md) ·
   [performance](architecture/performance.md) ·
-  [benchmark](architecture/benchmark.md)
+  [benchmark](architecture/benchmark.md) ·
+  [stack](architecture/stack.md)

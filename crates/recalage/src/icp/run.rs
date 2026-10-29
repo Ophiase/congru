@@ -1,5 +1,5 @@
 use super::correspond::{correspond, residual};
-use crate::fit::{Match, kabsch, point_to_plane};
+use crate::fit::{Match, kabsch, observe, point_to_plane};
 use crate::geometry::count_as_float;
 use crate::{Alignment, Error, Icp, Metric, PointCloud, RigidTransform, StopReason, Target};
 
@@ -72,6 +72,7 @@ impl Icp {
             inlier_fraction: count_as_float(matches.len()) / count_as_float(source.count()),
             iterations,
             stop,
+            observability: observe(&matches),
         })
     }
 }

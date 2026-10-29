@@ -3,6 +3,7 @@ resolver = "3"
 members = [
   "crates/recalage",
   "crates/recalage-synth",
+  "crates/recalage-bench",
 ]
 
 [workspace.package]
@@ -26,6 +27,7 @@ categories = [
 
 [workspace.dependencies]
 recalage = { path = "crates/recalage", version = "0.1.0" }
+recalage-synth = { path = "crates/recalage-synth", version = "0.1.0" }
 kiddo = { version = "6.3.0", default-features = false }
 nalgebra = "0.35.0"
 rayon = "1.12.0"
@@ -56,3 +58,9 @@ module_name_repetitions = "allow"
 [profile.release]
 lto = "thin"
 codegen-units = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.test]
+opt-level = 2

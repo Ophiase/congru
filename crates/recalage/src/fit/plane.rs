@@ -38,7 +38,7 @@ pub(crate) fn point_to_plane(matches: &[Match]) -> Result<RigidTransform, Error>
     ))
 }
 
-fn normal_equations(
+pub(super) fn normal_equations(
     matches: &[Match],
     centre: &Point,
 ) -> Result<(Matrix6<f64>, Vector6<f64>), Error> {
