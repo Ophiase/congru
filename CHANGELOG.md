@@ -5,6 +5,13 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.2 — 2026-10-29
+
+- **A camera in a hand**: both demos' shake now wanders slowly and widely,
+  octaves of smooth noise, up to 6° and 2.5 cm over two seconds, with the
+  jolts on top; tracking holds 109 of 120 frames and 90 of 90 within 2°.
+- **Demo B's tiles** name their condition and show their error.
+
 ## 0.1.1 — 2026-10-29
 
 More methods, a resumable benchmark, a harder demo B.

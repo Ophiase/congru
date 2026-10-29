@@ -39,6 +39,7 @@ impl Stage {
         let (centre, reach) = extent(&self.part);
         let path = Turntable {
             shake_degrees: condition.shake,
+            handheld: condition.handheld,
             ..self.path
         };
         let mut last: Option<RigidTransform> = None;

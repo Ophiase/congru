@@ -97,7 +97,7 @@ checksum = "3d7b894f5411737b7867f4827955924d7c254fc9f4d91a6aad6b097804b1018b"
 
 [[package]]
 name = "congru"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "congru-sim",
  "congru-synth",
@@ -110,7 +110,7 @@ dependencies = [
 
 [[package]]
 name = "congru-bench"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "anyhow",
  "congru",
@@ -125,7 +125,7 @@ dependencies = [
 
 [[package]]
 name = "congru-demo"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "anyhow",
  "congru",
@@ -139,7 +139,7 @@ dependencies = [
 
 [[package]]
 name = "congru-figures"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "anyhow",
  "congru",
@@ -149,7 +149,7 @@ dependencies = [
 
 [[package]]
 name = "congru-python"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "congru",
  "numpy",
@@ -158,9 +158,10 @@ dependencies = [
 
 [[package]]
 name = "congru-sim"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "congru",
+ "congru-synth",
  "congru-vision",
  "nalgebra",
  "rand",
@@ -169,7 +170,7 @@ dependencies = [
 
 [[package]]
 name = "congru-synth"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "congru",
  "congru-vision",
@@ -181,7 +182,7 @@ dependencies = [
 
 [[package]]
 name = "congru-track"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "congru",
  "congru-synth",
@@ -191,7 +192,7 @@ dependencies = [
 
 [[package]]
 name = "congru-vision"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "congru",
 ]

@@ -15,7 +15,8 @@ every claim about it is measured.
 | **Occluder** | A ball crosses between sensor and model: what it hides vanishes, its own surface appears |
 | **Distortion** | A smooth warp of the observed points: a miscalibrated or rolling sensor |
 | **Jump** | The pose changes abruptly between two frames: a knock, a dropped frame, a re-grasp |
-| **Shake** | A small random jolt of rotation and position every frame: a hand-held or vibrating sensor |
+| **Shake** | A small random jolt of rotation and position every frame: a vibrating mount |
+| **Handheld** | A slow, wide wander of the sensor, several degrees and centimetres over a second or two: a camera in a child's hands; smooth noise, octaves of sines whose amplitude halves as their frequency doubles |
 | **Bend** | A slow, smooth flexing of the part itself: real parts are never perfectly rigid |
 | **Sparsity** | Only a share of the visible surface comes back, as from a cheap sensor |
 | **Clutter** | Points scattered around the part every frame |

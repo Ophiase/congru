@@ -26,6 +26,7 @@ pub fn run(target: &Path) -> anyhow::Result<Vec<crate::Summary>> {
             frames: 90,
             turns: 0.75,
             shake_degrees: 0.0,
+            handheld: congru_synth::sequence::Handheld::default(),
         },
     };
     let runs: Vec<Vec<Step>> = CONDITIONS

@@ -1,4 +1,5 @@
 use congru_sim::Degradation;
+use congru_synth::sequence::Handheld;
 
 /// What else the camera sees besides the part.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -19,7 +20,16 @@ pub struct Condition {
     pub flex: f64,
     /// Largest jolt of the camera per frame, in degrees.
     pub shake: f64,
+    pub handheld: Handheld,
 }
+
+/// A camera in a child's hands: several degrees and centimetres of slow
+/// wander, over about two seconds.
+const HANDHELD: Handheld = Handheld {
+    angle: 0.07,
+    shift: 0.02,
+    period: 45.0,
+};
 
 /// A consumer depth camera at half a metre: noise, a little blur, a few
 /// holes, flying pixels at edges. Every condition starts from it.
@@ -37,6 +47,11 @@ const BASE: Condition = Condition {
     clutter: Clutter::Nothing,
     flex: 0.0,
     shake: 0.0,
+    handheld: Handheld {
+        angle: 0.0,
+        shift: 0.0,
+        period: 0.0,
+    },
 };
 
 pub const CONDITIONS: [Condition; 6] = [
@@ -44,6 +59,7 @@ pub const CONDITIONS: [Condition; 6] = [
     Condition {
         name: "shake",
         shake: 1.0,
+        handheld: HANDHELD,
         ..BASE
     },
     Condition {
@@ -75,5 +91,6 @@ pub const CONDITIONS: [Condition; 6] = [
         clutter: Clutter::Room,
         flex: 0.004,
         shake: 1.0,
+        handheld: HANDHELD,
     },
 ];
