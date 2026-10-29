@@ -5,6 +5,11 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.6 — 2026-10-29
+
+- **The animations in pastel**, on warm paper; demo B in a room whose wall
+  and bench have fractal relief.
+
 ## 0.1.5 — 2026-10-29
 
 - **Realistic scenes**: six ordinary scenes in short TOML files (a part on

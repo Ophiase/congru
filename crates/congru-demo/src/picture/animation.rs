@@ -13,6 +13,7 @@ const FULL_BAR_DEGREES: f64 = 20.0;
 const DELAY_HUNDREDTHS: u16 = 7;
 
 /// A tracked panel and its rotation error, drawn as a bar below it.
+#[derive(Clone)]
 pub struct Tile {
     pub picture: Image<Tone>,
     pub error_degrees: f64,
