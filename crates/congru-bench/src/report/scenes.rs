@@ -11,6 +11,7 @@ use crate::suite::{SITUATIONS, Situation};
 
 const SEED: u64 = 1_000_000;
 const COLUMNS: usize = 4;
+const SCALE: f32 = 0.75;
 const CELL: [f64; 2] = [300.0, 334.0];
 const DRAWN_MODEL_POINTS: usize = 300;
 const DRAWN_SCAN_POINTS: usize = 400;
@@ -38,8 +39,8 @@ pub fn scenes(models: &[Model], folder: &Path) -> anyhow::Result<String> {
             .iter()
             .map(|situation| draw(model, situation))
             .collect::<anyhow::Result<Vec<String>>>()?;
-        let name = format!("{}.svg", model.name);
-        std::fs::write(folder.join(&name), sheet(&figures, COLUMNS, CELL))?;
+        let name = format!("{}.png", model.name);
+        super::png::write_png(&sheet(&figures, COLUMNS, CELL), &folder.join(&name), SCALE)?;
         writeln!(
             page,
             "![Every situation on the {0}](scenes/{name})\n",

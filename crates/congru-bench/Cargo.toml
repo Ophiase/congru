@@ -10,6 +10,7 @@ license.workspace = true
 [dependencies]
 anyhow = "1.0.104"
 congru-figures = { path = "../congru-figures" }
+resvg = "0.49.0"
 congru.workspace = true
 congru-sim.workspace = true
 congru-synth.workspace = true
