@@ -57,6 +57,15 @@ with every parameter explicit:
 | Motion | A rotation uniform over SO(3), a translation in a ball of one size | — |
 | Guess | The truth turned about the model's centre on a random axis, and shifted in a random direction | Angle, shift |
 
+## Realistic scenes
+
+Each scene of [scenes/](../../scenes/) is rendered by a simulated depth
+camera, degraded as by a consumer sensor (noise growing with depth, holes,
+flying pixels), stripped of the largest plane wider than the target (the
+table, the road, the shelf board), and cropped around a detector's guess,
+ten degrees and three percent of the target's size off. The methods then
+find the target in what is left: clutter, neighbours, partial views.
+
 ## Situations
 
 One trouble at a time on top of a nominal frame, then all together.

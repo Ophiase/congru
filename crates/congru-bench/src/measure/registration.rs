@@ -24,7 +24,7 @@ pub fn register(
         .collect()
 }
 
-const FAILED: Trial = Trial {
+pub(super) const FAILED: Trial = Trial {
     rotation_degrees: f64::INFINITY,
     translation: f64::INFINITY,
     trusted: false,
@@ -108,7 +108,7 @@ fn thinned(model: &Model, density: f64) -> Result<PointCloud, Error> {
 
 /// The truth moved by a turn of the situation's angle about the model's
 /// centre, on a random axis, and a shift of its size in a random direction.
-fn perturbed(
+pub(super) fn perturbed(
     truth: &RigidTransform,
     centre: &Point,
     situation: &Situation,

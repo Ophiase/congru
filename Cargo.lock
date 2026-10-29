@@ -176,6 +176,7 @@ version = "0.1.4"
 dependencies = [
  "anyhow",
  "congru",
+ "congru-scene",
  "congru-sim",
  "congru-synth",
  "congru-track",

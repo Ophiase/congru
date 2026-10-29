@@ -10,7 +10,7 @@ pub use catalogue::{catalogue, recommendations};
 pub use csv::csv;
 pub use gallery::{load_scenes, realistic, scenes, scenes_page};
 pub use leaderboard::leaderboard;
-pub use tables::{registration_tables, tracking_tables};
+pub use tables::{registration_tables, scene_tables, tracking_tables};
 
 use crate::measure::Summary;
 
@@ -20,6 +20,7 @@ pub struct Results {
     pub seeds: u64,
     pub registration: Vec<Row>,
     pub tracking: Vec<Row>,
+    pub scenes: Vec<Row>,
 }
 
 /// One cell of the tables: a method on a model in one situation.
@@ -56,6 +57,7 @@ pub fn page(
     page.push_str(&leaderboard(results)?);
     page.push_str(&recommendations(&results.registration)?);
     page.push_str(&catalogue(models)?);
+    page.push_str(&scene_tables(&results.scenes)?);
     page.push_str(&registration_tables(&results.registration)?);
     page.push_str(&tracking_tables(&results.tracking)?);
     Ok(format!("{}\n", page.trim_end()))

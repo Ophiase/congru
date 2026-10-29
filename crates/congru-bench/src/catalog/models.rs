@@ -22,7 +22,7 @@ pub struct Model {
 }
 
 impl Model {
-    fn sampled(
+    pub fn sampled(
         name: &'static str,
         summary: &'static str,
         mesh: &TriangleMesh,

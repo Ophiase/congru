@@ -3,12 +3,13 @@
 
 mod conditions;
 mod overlay;
+mod room;
 mod stage;
 mod view;
 
 use std::path::Path;
 
-use congru_sim::{Turntable, bracket, surroundings, turntable};
+use congru_sim::{Turntable, bracket, turntable};
 use congru_vision::Camera;
 
 use crate::picture::palette::{MUTED, TEXT};
@@ -20,7 +21,7 @@ pub fn run(target: &Path) -> anyhow::Result<Vec<crate::Summary>> {
     let stage = Stage {
         part: bracket()?,
         turntable: turntable()?,
-        surroundings: surroundings()?,
+        surroundings: room::room()?,
         camera: Camera::with_field_of_view(240, 180, 60.0),
         path: Turntable {
             frames: 90,

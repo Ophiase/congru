@@ -10,6 +10,14 @@ pub fn registration_tables(rows: &[Row]) -> Result<String, std::fmt::Error> {
     grid("Registration, one frame", rows)
 }
 
+/// One table: a row per realistic scene, a column per method.
+///
+/// # Errors
+/// Never in practice; writing to a string cannot fail.
+pub fn scene_tables(rows: &[Row]) -> Result<String, std::fmt::Error> {
+    grid("Realistic scenes, from a detector's guess", rows)
+}
+
 /// One table per model: a row per sequence, a column per method; a trial is
 /// a frame.
 ///

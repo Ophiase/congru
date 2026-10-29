@@ -1,7 +1,9 @@
+mod realistic;
 mod registration;
 mod stats;
 mod tracking;
 
+pub use realistic::spot;
 pub use registration::{register, scene};
 pub use stats::Summary;
 pub use tracking::track;

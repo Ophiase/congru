@@ -2,7 +2,7 @@
 //! in every situation of the suites, over many seeds; written as the tables
 //! of `docs/benchmark/results.md`.
 //!
-//! `congru-bench [--tuning] [--seeds N] [--fresh] [results.md]`, or
+//! `congru-bench [--tuning] [--seeds N] [--fresh] [--realistic] [results.md]`, or
 //! `congru-bench --scenes` to draw every situation into `docs/benchmark/`: the tuning
 //! seeds are for trying ideas, the evaluation seeds for the published
 //! tables. Every finished cell is kept in `target/bench/`, and the page is
@@ -56,7 +56,7 @@ fn main() -> anyhow::Result<()> {
         Store::open(cache, flag("--fresh"))?,
         page,
     );
-    session.run()
+    session.run(flag("--realistic"))
 }
 
 fn draw_scenes() -> anyhow::Result<()> {

@@ -12,6 +12,7 @@ pub fn csv(results: &Results) -> Result<String, std::fmt::Error> {
         "suite,model,method,situation,class,trials,success,success_low,success_high,confidently_wrong,median_degrees,worst_tenth_degrees,median_milliseconds\n",
     );
     for (suite, rows) in [
+        ("scenes", &results.scenes),
         ("registration", &results.registration),
         ("tracking", &results.tracking),
     ] {
