@@ -592,6 +592,8 @@ dependencies = [
  "nalgebra",
  "recalage",
  "recalage-sim",
+ "recalage-synth",
+ "recalage-track",
  "recalage-vision",
 ]
 
@@ -624,6 +626,15 @@ dependencies = [
  "rand_distr",
  "recalage",
  "thiserror",
+]
+
+[[package]]
+name = "recalage-track"
+version = "0.1.0"
+dependencies = [
+ "nalgebra",
+ "recalage",
+ "recalage-synth",
 ]
 
 [[package]]

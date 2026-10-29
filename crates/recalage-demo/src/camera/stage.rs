@@ -2,8 +2,8 @@ use recalage::{RigidTransform, TriangleMesh};
 use recalage_sim::Turntable;
 use recalage_vision::{Camera, DepthImage, Frame, back_project, render};
 
-use crate::conditions::Condition;
-use crate::tracking::{Estimate, Tracker};
+use super::conditions::Condition;
+use super::tracking::{Estimate, Tracker};
 
 /// The scene every condition is run on: the part, its turntable, the
 /// camera, the path.

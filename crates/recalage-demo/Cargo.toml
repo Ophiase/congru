@@ -13,6 +13,8 @@ gif = "0.14.2"
 nalgebra.workspace = true
 recalage.workspace = true
 recalage-sim.workspace = true
+recalage-synth.workspace = true
+recalage-track.workspace = true
 recalage-vision.workspace = true
 
 [lints]

@@ -43,7 +43,8 @@ views is **measured against a known truth**, not hoped for.
   [hypotheses](problem/hypotheses.md) ·
   [variants](problem/variants.md) ·
   [what-we-know](problem/what-we-know.md) ·
-  [measuring-success](problem/measuring-success.md)
+  [measuring-success](problem/measuring-success.md) ·
+  [sequences](problem/sequences.md)
 - **method/**:
   [closed-form](method/closed-form.md) ·
   [icp-family](method/icp-family.md) ·
@@ -51,7 +52,8 @@ views is **measured against a known truth**, not hoped for.
   [global-initialisation](method/global-initialisation.md) ·
   [aggregation](method/aggregation.md) ·
   [mesh-targets](method/mesh-targets.md) ·
-  [observability](method/observability.md)
+  [observability](method/observability.md) ·
+  [tracking](method/tracking.md)
 - **architecture/**:
   [layers](architecture/layers.md) ·
   [types](architecture/types.md) ·
@@ -60,5 +62,6 @@ views is **measured against a known truth**, not hoped for.
   [performance](architecture/performance.md) ·
   [benchmark](architecture/benchmark.md) ·
   [stack](architecture/stack.md)
-- **demo/**: [README](demo/README.md) — scene, sensor, degradations,
-  perception, tracking, video
+- **demo/**: [README](demo/README.md) — A: point clouds over time;
+  B: a depth camera (scene, sensor, degradations, perception, tracking,
+  video)

@@ -12,14 +12,20 @@ pub const GOOD: Tone = GREYS + 2;
 pub const FAIR: Tone = GREYS + 3;
 pub const BAD: Tone = GREYS + 4;
 pub const PAPER: Tone = GREYS + 5;
+pub const MODEL: Tone = GREYS + 6;
+pub const OBSERVED: Tone = GREYS + 7;
+pub const TEXT: Tone = GREYS + 8;
 
-const ACCENTS: [[u8; 3]; 6] = [
+const ACCENTS: [[u8; 3]; 9] = [
     [16, 18, 22],
     [64, 224, 120],
     [64, 224, 120],
     [250, 176, 5],
     [240, 62, 62],
     [26, 28, 34],
+    [255, 107, 107],
+    [77, 171, 247],
+    [233, 236, 239],
 ];
 
 /// RGB triples, laid out for a GIF colour table.

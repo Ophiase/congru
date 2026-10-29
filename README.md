@@ -12,9 +12,26 @@ one onto the other, says how sure it is, and runs wherever the robot runs.
 
 *Recalage* is the French word for registration.
 
+![A noisy, moving point cloud, and the model that holds on to it](docs/figures/clouds.gif)
+
+*Demo A: point clouds only. A machined bracket moves in front of a sensor;
+the blue points are what the sensor returns, noisy and partly hidden; the
+red points are the model, placed at the pose recalage finds, frame after
+frame. The text says which phase ran (follow from the last pose, or find
+again from nothing) and the rotation error against the truth. Top left:
+noise. Top right: a ball crossing in front. Bottom left: lens distortion.
+Bottom right: two knocks, after which the model is found again.*
+
+| Run | Median error | Frames within 2° |
+| --- | --- | --- |
+| Noise | 0.72° | 120 / 120 |
+| A ball crossing in front | 0.19° | 98 / 120 |
+| Lens distortion | 0.63° | 120 / 120 |
+| Two knocks | 0.11° | 118 / 120 |
+
 ![A machined part tracked through a degraded depth camera](docs/figures/tracking.gif)
 
-*A simulated robot cell: a machined bracket turns on a turntable under a
+*Demo B: a simulated robot cell. A machined bracket turns on a turntable under a
 depth camera. Each panel is what the camera returns, shaded by its surface
 normals; the green outline is the part's model drawn at the pose recalage
 found; the bar below is the rotation error (green under 1°, amber under 5°).
@@ -144,7 +161,7 @@ Rust 1.89+ and [just](https://just.systems):
 ```sh
 just test      # every property, against the synthetic truth
 just figures   # recompute the figures of this page
-just demo      # run the tracking demo, rewrite the animation
+just demo      # run both demos, rewrite the animations, print the tables
 ```
 
 ```rust

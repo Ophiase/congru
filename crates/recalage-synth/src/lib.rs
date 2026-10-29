@@ -9,6 +9,7 @@ mod casts;
 mod corruption;
 mod motion;
 mod scenario;
+pub mod sequence;
 pub mod shapes;
 
 pub use corruption::{Corruption, Outliers, Resampling};

@@ -2,8 +2,8 @@ use nalgebra::Vector3;
 use recalage::RigidTransform;
 use recalage_vision::{DepthImage, Image};
 
-use super::palette::{EMPTY, ESTIMATE, Tone, grey};
-use crate::sequence::Stage;
+use super::stage::Stage;
+use crate::picture::palette::{EMPTY, ESTIMATE, Tone, grey};
 
 const AMBIENT: f64 = 0.15;
 
