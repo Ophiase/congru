@@ -35,6 +35,19 @@ rumdl:
 rumdl-fmt:
     rumdl fmt .
 
+[doc("Build the Python bindings into crates/recalage-python/.venv")]
+[working-directory("crates/recalage-python")]
+python-dev:
+    uv sync --no-install-project
+    uv run --no-sync maturin develop --uv
+
+[doc("Lint, format-check and test the Python bindings, rebuilt first")]
+[working-directory("crates/recalage-python")]
+python-test: python-dev
+    uv run --no-sync ruff check
+    uv run --no-sync ruff format --check
+    uv run --no-sync pytest
+
 [doc("Run the project's and the portable checks over every changed file")]
 [script("bash")]
 guards:
