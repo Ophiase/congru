@@ -28,4 +28,5 @@ workspace = true
 
 [dev-dependencies]
 rand.workspace = true
+congru-sim = { path = "../congru-sim" }
 congru-synth = { path = "../congru-synth" }

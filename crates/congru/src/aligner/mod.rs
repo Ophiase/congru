@@ -1,5 +1,6 @@
 mod adaptive;
 mod annealed;
+mod consensus;
 mod guarded;
 mod local;
 mod search;
@@ -8,6 +9,7 @@ use crate::{Alignment, Error, Observability, PointCloud, RigidTransform};
 
 pub use adaptive::Adaptive;
 pub use annealed::Annealed;
+pub use consensus::Consensus;
 pub use guarded::Guarded;
 pub use local::Local;
 pub use search::Search;
