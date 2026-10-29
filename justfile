@@ -20,12 +20,12 @@ doc:
 
 [doc("Recompute the figures of the documentation from real runs, into docs/figures/")]
 figures:
-    cargo run --release -q -p recalage-bench -- docs/figures
+    cargo run --release -q -p congru-bench -- docs/figures
 
 [doc("Run both demos: writes docs/figures/clouds.gif and tracking.gif, prints their tables")]
 demo:
-    cargo run --release -q -p recalage-demo -- clouds docs/figures/clouds.gif
-    cargo run --release -q -p recalage-demo -- camera docs/figures/tracking.gif
+    cargo run --release -q -p congru-demo -- clouds docs/figures/clouds.gif
+    cargo run --release -q -p congru-demo -- camera docs/figures/tracking.gif
 
 [doc("Everything that must pass before declaring work done")]
 check: lint test rumdl
@@ -36,14 +36,14 @@ rumdl:
 rumdl-fmt:
     rumdl fmt .
 
-[doc("Build the Python bindings into crates/recalage-python/.venv")]
-[working-directory("crates/recalage-python")]
+[doc("Build the Python bindings into crates/congru-python/.venv")]
+[working-directory("crates/congru-python")]
 python-dev:
     uv sync --no-install-project
     uv run --no-sync maturin develop --uv
 
 [doc("Lint, format-check and test the Python bindings, rebuilt first")]
-[working-directory("crates/recalage-python")]
+[working-directory("crates/congru-python")]
 python-test: python-dev
     uv run --no-sync ruff check
     uv run --no-sync ruff format --check

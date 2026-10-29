@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-message: If you use recalage in research, please cite it as below.
-title: "recalage: rigid registration you can ship"
+message: If you use congru in research, please cite it as below.
+title: "congru: rigid registration you can ship"
 type: software
 authors:
   - alias: ophiase

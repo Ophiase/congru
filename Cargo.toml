@@ -1,14 +1,14 @@
 [workspace]
 resolver = "3"
 members = [
-  "crates/recalage",
-  "crates/recalage-synth",
-  "crates/recalage-bench",
-  "crates/recalage-vision",
-  "crates/recalage-sim",
-  "crates/recalage-demo",
-  "crates/recalage-python",
-  "crates/recalage-track",
+  "crates/congru",
+  "crates/congru-synth",
+  "crates/congru-bench",
+  "crates/congru-vision",
+  "crates/congru-sim",
+  "crates/congru-demo",
+  "crates/congru-python",
+  "crates/congru-track",
 ]
 
 [workspace.package]
@@ -16,7 +16,7 @@ version = "0.1.0"
 edition = "2024"
 rust-version = "1.89"
 license = "Apache-2.0"
-repository = "https://github.com/ophiase/recalage"
+repository = "https://github.com/ophiase/congru"
 keywords = [
   "point-cloud",
   "registration",
@@ -31,11 +31,11 @@ categories = [
 ]
 
 [workspace.dependencies]
-recalage = { path = "crates/recalage", version = "0.1.0" }
-recalage-synth = { path = "crates/recalage-synth", version = "0.1.0" }
-recalage-vision = { path = "crates/recalage-vision", version = "0.1.0" }
-recalage-sim = { path = "crates/recalage-sim", version = "0.1.0" }
-recalage-track = { path = "crates/recalage-track", version = "0.1.0" }
+congru = { path = "crates/congru", version = "0.1.0" }
+congru-synth = { path = "crates/congru-synth", version = "0.1.0" }
+congru-vision = { path = "crates/congru-vision", version = "0.1.0" }
+congru-sim = { path = "crates/congru-sim", version = "0.1.0" }
+congru-track = { path = "crates/congru-track", version = "0.1.0" }
 kiddo = { version = "6.3.0", default-features = false }
 nalgebra = "0.35.0"
 numpy = "0.30.0"

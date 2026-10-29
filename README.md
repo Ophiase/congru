@@ -1,4 +1,4 @@
-# recalage
+# congru
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
 [![Rust 1.89+](https://img.shields.io/badge/Rust-1.89%2B-orange.svg)](https://www.rust-lang.org/)
@@ -7,48 +7,15 @@
 
 Put a scan back where it belongs. Given two views of the same rigid object
 (a depth frame and a CAD model, a few marks and the part they sit on, two
-passes of a lidar), recalage finds the rotation and translation that bring
+passes of a lidar), congru finds the rotation and translation that bring
 one onto the other, says how sure it is, and runs wherever the robot runs.
 
-*Recalage* is the French word for registration.
+<p align="center">
+  <img src="docs/figures/clouds.gif" alt="A noisy point cloud in motion, and the model holding on to it" width="49%">
+  <img src="docs/figures/tracking.gif" alt="A machined part tracked through a simulated depth camera" width="49%">
+</p>
 
-![A noisy, moving point cloud, and the model that holds on to it](docs/figures/clouds.gif)
-
-*Demo A: point clouds only. A machined bracket moves in front of a sensor;
-the blue points are what the sensor returns, noisy and partly hidden; the
-red points are the model, placed at the pose recalage finds, frame after
-frame. The text says which phase ran (follow from the last pose, or find
-again from nothing) and the rotation error against the truth. Top left:
-noise. Top right: a ball crossing in front. Bottom left: lens distortion.
-Bottom right: two knocks, after which the model is found again.*
-
-| Run | Median error | Frames within 2° |
-| --- | --- | --- |
-| Noise | 0.72° | 120 / 120 |
-| A ball crossing in front | 0.19° | 98 / 120 |
-| Lens distortion | 0.63° | 120 / 120 |
-| Two knocks | 0.11° | 118 / 120 |
-
-![A machined part tracked through a degraded depth camera](docs/figures/tracking.gif)
-
-*Demo B: a simulated robot cell. A machined bracket turns on a turntable under a
-depth camera. Each panel is what the camera returns, shaded by its surface
-normals; the green outline is the part's model drawn at the pose recalage
-found; the bar below is the rotation error (green under 1°, amber under 5°).
-Top left: exact depth. Top right: noise and blur. Bottom left: holes and
-flying pixels. Bottom right: all of it, with the turntable in view.*
-
-| Condition | Median error | Frames within 2° |
-| --- | --- | --- |
-| Exact depth | 0.05° | 90 / 90 |
-| Noise and blur | 0.48° | 86 / 90 |
-| Holes and flying pixels | 0.22° | 81 / 90 |
-| Everything, and the turntable | 0.71° | 90 / 90 |
-
-Computed offline, frame by frame, by `just demo`; the pipeline (support
-plane removed, scan cropped, aligned onto the part of the model visible
-from the predicted pose) is real-time by design
-([the demo](ideas/demo/README.md)).
+<p align="center"><a href="docs/demos.md">What the demos show, and how well they do</a></p>
 
 ## Why this project exists
 
@@ -70,7 +37,7 @@ off: on a rounded surface, a dozen points can slide without leaving it. The
 same marks, numbered so each one knows its place, give the pose at once.*
 
 A small residual is not a correct answer. A library that only returns the
-residual lets that error through silently; recalage says, with every
+residual lets that error through silently; congru says, with every
 alignment, which motions the data left free: here, three turns about axes
 as far away as the curvature of the surface
 ([observability](ideas/method/observability.md)).
@@ -107,7 +74,7 @@ pairs again.*
 What to do depends on what is known beforehand
 ([what we know](ideas/problem/what-we-know.md)).
 
-| You know | recalage uses | Cost |
+| You know | congru uses | Cost |
 | --- | --- | --- |
 | Which point goes with which | The closed form of Kabsch and Umeyama | One 3×3 SVD |
 | A rough pose, within about 20° | ICP, point-to-point or point-to-plane | A few nearest-neighbour passes |
@@ -132,7 +99,7 @@ scenario: `just figures` draws them again.
 ## What it is not
 
 - **Not a toolkit.** No viewer, no file formats zoo, no segmentation:
-  Open3D and PCL do that. recalage does one thing.
+  Open3D and PCL do that. congru does one thing.
 - **Not non-rigid.** Six numbers, a rotation and a translation; scale is the
   first extension worth having.
 - **Not finished.** The core aligns and is tested against the truth; the
@@ -165,7 +132,7 @@ just demo      # run both demos, rewrite the animations, print the tables
 ```
 
 ```rust
-use recalage::{Icp, PointCloud, RigidTransform, Target};
+use congru::{Icp, PointCloud, RigidTransform, Target};
 
 let target = Target::with_estimated_normals(PointCloud::from_xyz(&model)?, 10)?;
 let source = PointCloud::from_xyz(&scan)?;
@@ -178,12 +145,12 @@ println!("{:?}", alignment.transform.to_row_major());
 | Folder | What it is |
 | --- | --- |
 | [ideas/](ideas/README.md) | Every concept, one per file, with its status: start here |
-| [crates/recalage/](crates/recalage/src/lib.rs) | The library: geometry, search, closed form, ICP, multistart |
-| [crates/recalage-synth/](crates/recalage-synth/src/lib.rs) | The observation model: scenarios with a known answer |
-| [crates/recalage-vision/](crates/recalage-vision/src/lib.rs) | Depth cameras: projection, rendering, depth to points, support removal |
-| [crates/recalage-sim/](crates/recalage-sim/src/lib.rs) | The simulated cell: the part, its turntable, the sensor's flaws |
-| [crates/recalage-demo/](crates/recalage-demo/src/main.rs) | The tracker and the animation above |
-| [crates/recalage-bench/](crates/recalage-bench/src/main.rs) | The figures of this page, computed from real runs |
+| [crates/congru/](crates/congru/src/lib.rs) | The library: geometry, search, closed form, ICP, multistart |
+| [crates/congru-synth/](crates/congru-synth/src/lib.rs) | The observation model: scenarios with a known answer |
+| [crates/congru-vision/](crates/congru-vision/src/lib.rs) | Depth cameras: projection, rendering, depth to points, support removal |
+| [crates/congru-sim/](crates/congru-sim/src/lib.rs) | The simulated cell: the part, its turntable, the sensor's flaws |
+| [crates/congru-demo/](crates/congru-demo/src/main.rs) | The tracker and the animation above |
+| [crates/congru-bench/](crates/congru-bench/src/main.rs) | The figures of this page, computed from real runs |
 
 Agents working on this code read [AGENTS.md](AGENTS.md).
 

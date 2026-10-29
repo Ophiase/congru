@@ -7,7 +7,7 @@ set -uo pipefail
 
 portable=$(realpath "$(dirname "${BASH_SOURCE[0]}")/../portable")
 
-markers='recalage|registration|point.cloud|ideas/'
+markers='congru|registration|point.cloud|ideas/'
 markers="$markers|\\.agents/(rules|checks)/"
 
 report=""

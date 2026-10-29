@@ -9,8 +9,8 @@
   copy when the array is already contiguous `float64`.
 - The interpreter lock is released during an alignment.
 - Type stubs shipped, so an editor completes the parameters.
-- **[sketch]** `crates/recalage-python`: a native `recalage._recalage` under
-  a pure-Python `recalage`. A wrong array shape is a `ValueError`; anything
+- **[sketch]** `crates/congru-python`: a native `congru._congru` under
+  a pure-Python `congru`. A wrong array shape is a `ValueError`; anything
   the core refuses is a `RegistrationError`, a `ValueError` carrying the
   core's message. A weak motion's kind is a `Rotation` or a `Translation`,
   matched with `match`.

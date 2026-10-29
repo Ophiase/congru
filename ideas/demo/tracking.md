@@ -1,6 +1,6 @@
 # Tracking
 
-**[defined]** As built in `crates/recalage-demo`, and measured on the
+**[defined]** As built in `crates/congru-demo`, and measured on the
 simulated turntable.
 
 1. **First frame**: no pose. The support plane is removed, the scan is

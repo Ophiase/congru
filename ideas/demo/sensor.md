@@ -6,7 +6,7 @@ nearest depth. Linear in triangles and pixels, fast enough for hundreds of
 frames on a laptop, and exact, so every error that follows comes from the
 degradations, never from the renderer.
 
-The renderer lives with the camera in `recalage-vision`, not in the
+The renderer lives with the camera in `congru-vision`, not in the
 simulator: the tracker uses it too, to know which part of the model a
 pose shows.
 

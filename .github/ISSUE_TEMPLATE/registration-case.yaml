@@ -1,5 +1,5 @@
 name: A registration case
-description: Data or a setting where recalage fails, or where you would need it
+description: Data or a setting where congru fails, or where you would need it
 body:
   - type: textarea
     id: setting
