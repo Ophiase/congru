@@ -15,3 +15,6 @@ __pycache__/
 # Benchmark output and rendered figures
 /out/
 /docs/paper/*.pdf
+
+# Agent worktrees
+/.claude/worktrees/

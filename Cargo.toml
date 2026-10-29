@@ -4,6 +4,9 @@ members = [
   "crates/recalage",
   "crates/recalage-synth",
   "crates/recalage-bench",
+  "crates/recalage-vision",
+  "crates/recalage-sim",
+  "crates/recalage-demo",
 ]
 
 [workspace.package]
@@ -28,6 +31,8 @@ categories = [
 [workspace.dependencies]
 recalage = { path = "crates/recalage", version = "0.1.0" }
 recalage-synth = { path = "crates/recalage-synth", version = "0.1.0" }
+recalage-vision = { path = "crates/recalage-vision", version = "0.1.0" }
+recalage-sim = { path = "crates/recalage-sim", version = "0.1.0" }
 kiddo = { version = "6.3.0", default-features = false }
 nalgebra = "0.35.0"
 rayon = "1.12.0"

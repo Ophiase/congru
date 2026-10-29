@@ -1,0 +1,20 @@
+[package]
+name = "recalage-sim"
+description = "A simulated depth camera for recalage: a machined part on a turntable, rendered, degraded like a real sensor."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+nalgebra.workspace = true
+rand.workspace = true
+rand_distr.workspace = true
+recalage = { workspace = true, default-features = false }
+recalage-vision.workspace = true
+
+[lints]
+workspace = true

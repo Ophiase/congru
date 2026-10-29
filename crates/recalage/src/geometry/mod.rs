@@ -3,6 +3,7 @@ mod mesh;
 mod oriented;
 mod transform;
 mod units;
+mod voxel;
 
 pub use cloud::PointCloud;
 pub(crate) use cloud::{count_as_float, mean};

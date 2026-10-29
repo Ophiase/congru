@@ -90,6 +90,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0c9ea0ac24bc397ab3c98583a3c9ba74fa56b09a4449bbe172b9b1ddb016027a"
 
 [[package]]
+name = "color_quant"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3d7b894f5411737b7867f4827955924d7c254fc9f4d91a6aad6b097804b1018b"
+
+[[package]]
 name = "cpufeatures"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -179,6 +185,16 @@ dependencies = [
  "cfg-if",
  "libc",
  "r-efi",
+]
+
+[[package]]
+name = "gif"
+version = "0.14.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ee8cfcc411d9adbbaba82fb72661cc1bcca13e8bba98b364e62b2dba8f960159"
+dependencies = [
+ "color_quant",
+ "weezl",
 ]
 
 [[package]]
@@ -459,6 +475,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "recalage-demo"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "gif",
+ "nalgebra",
+ "recalage",
+ "recalage-sim",
+ "recalage-vision",
+]
+
+[[package]]
+name = "recalage-sim"
+version = "0.1.0"
+dependencies = [
+ "nalgebra",
+ "rand",
+ "rand_distr",
+ "recalage",
+ "recalage-vision",
+]
+
+[[package]]
 name = "recalage-synth"
 version = "0.1.0"
 dependencies = [
@@ -467,6 +506,13 @@ dependencies = [
  "rand_distr",
  "recalage",
  "thiserror",
+]
+
+[[package]]
+name = "recalage-vision"
+version = "0.1.0"
+dependencies = [
+ "recalage",
 ]
 
 [[package]]
@@ -592,6 +638,12 @@ name = "unicode-ident"
 version = "1.0.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a2c754d6c33795a1c324727428e5a7dedb5b06195f9890bdbcba760d3e246563"
+
+[[package]]
+name = "weezl"
+version = "0.1.12"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a28ac98ddc8b9274cb41bb4d9d4d5c425b6020c50c46f25559911905610b4a88"
 
 [[package]]
 name = "wide"

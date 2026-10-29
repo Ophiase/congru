@@ -1,0 +1,19 @@
+[package]
+name = "recalage-demo"
+description = "A simulated robot tracking a machined part through a degraded depth camera, written as an animation."
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow = "1.0.104"
+gif = "0.14.2"
+nalgebra.workspace = true
+recalage.workspace = true
+recalage-sim.workspace = true
+recalage-vision.workspace = true
+
+[lints]
+workspace = true

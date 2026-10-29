@@ -22,6 +22,10 @@ doc:
 figures:
     cargo run --release -q -p recalage-bench -- docs/figures
 
+[doc("Run the simulated tracking demo: writes docs/figures/tracking.gif and prints the errors")]
+demo:
+    cargo run --release -q -p recalage-demo -- docs/figures/tracking.gif
+
 [doc("Everything that must pass before declaring work done")]
 check: lint test rumdl
 

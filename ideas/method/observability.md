@@ -36,3 +36,12 @@ layout of the marks, the error to expect at a point of interest.
 A test that checks only the residual passes on this failure. Tests of the
 library check the pose against the truth, or check that the free motions
 are reported.
+
+## What the solver does about it
+
+**[defined]** The point-to-plane step is damped by a ten-thousandth of its
+stiffest direction. Along a free motion it stays near zero: the initial
+pose is kept there, instead of the solver failing or wandering. A tracker
+thus keeps its prediction for what the frame cannot see, and corrects the
+rest. Measured on the simulated turntable: without damping, tracking was
+lost the moment the part showed one flat face.

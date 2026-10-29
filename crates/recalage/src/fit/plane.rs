@@ -5,11 +5,13 @@ use crate::geometry::{count_as_float, mean};
 use crate::{Error, Point, RigidTransform};
 
 const MINIMUM_PAIRS: usize = 6;
-const CONDITION_FLOOR: f64 = 1e-12;
+const DAMPING: f64 = 1e-4;
 
 /// One Gauss–Newton step of point-to-plane: the small motion minimising
 /// `Σ wᵢ (nᵢ · (R sᵢ + t − tᵢ))²` with `R ≈ I + [ω]×`, solved about the
-/// source centroid so the normal equations stay well conditioned.
+/// source centroid so the normal equations stay well conditioned. The step
+/// is damped: along a motion the pairs leave free (a slide over a plane),
+/// it stays near zero, keeping the initial pose there instead of failing.
 pub(crate) fn point_to_plane(matches: &[Match]) -> Result<RigidTransform, Error> {
     if matches.len() < MINIMUM_PAIRS {
         return Err(Error::TooFewCorrespondences {
@@ -20,13 +22,12 @@ pub(crate) fn point_to_plane(matches: &[Match]) -> Result<RigidTransform, Error>
     let sources: Vec<Point> = matches.iter().map(|pair| pair.source).collect();
     let centre = mean(&sources);
     let (hessian, gradient) = normal_equations(matches, &centre)?;
-    let eigenvalues = hessian.symmetric_eigenvalues();
-    if eigenvalues.iter().any(|value| value.is_nan())
-        || eigenvalues.min() <= CONDITION_FLOOR * eigenvalues.max().max(f64::MIN_POSITIVE)
-    {
+    let stiffest = hessian.symmetric_eigenvalues().max();
+    if stiffest.is_nan() || stiffest <= 0.0 {
         return Err(Error::Degenerate);
     }
-    let step = hessian
+    let damped = hessian + Matrix6::identity() * (DAMPING * stiffest);
+    let step = damped
         .cholesky()
         .ok_or(Error::Degenerate)?
         .solve(&-gradient);

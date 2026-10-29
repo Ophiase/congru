@@ -12,12 +12,26 @@ one onto the other, says how sure it is, and runs wherever the robot runs.
 
 *Recalage* is the French word for registration.
 
-![Iterative closest point, step by step](docs/figures/icp-steps.svg)
+![A machined part tracked through a degraded depth camera](docs/figures/tracking.gif)
 
-*Iterative closest point on a toy spiral. Red crosses are the model, blue
-dots a noisy observation of it, moved. Each step pairs every dot with its
-nearest cross, moves the dots by the motion that best fits those pairs, and
-pairs again.*
+*A simulated robot cell: a machined bracket turns on a turntable under a
+depth camera. Each panel is what the camera returns, shaded by its surface
+normals; the green outline is the part's model drawn at the pose recalage
+found; the bar below is the rotation error (green under 1°, amber under 5°).
+Top left: exact depth. Top right: noise and blur. Bottom left: holes and
+flying pixels. Bottom right: all of it, with the turntable in view.*
+
+| Condition | Median error | Frames within 2° |
+| --- | --- | --- |
+| Exact depth | 0.05° | 90 / 90 |
+| Noise and blur | 0.48° | 86 / 90 |
+| Holes and flying pixels | 0.22° | 81 / 90 |
+| Everything, and the turntable | 0.71° | 90 / 90 |
+
+Computed offline, frame by frame, by `just demo`; the pipeline (support
+plane removed, scan cropped, aligned onto the part of the model visible
+from the predicted pose) is real-time by design
+([the demo](ideas/demo/README.md)).
 
 ## Why this project exists
 
@@ -66,6 +80,13 @@ eyeballed ([measuring success](ideas/problem/measuring-success.md)).
 
 ## How it is solved
 
+![Iterative closest point, step by step](docs/figures/icp-steps.svg)
+
+*Iterative closest point on a toy spiral. Red crosses are the model, blue
+dots a noisy observation of it, moved. Each step pairs every dot with its
+nearest cross, moves the dots by the motion that best fits those pairs, and
+pairs again.*
+
 What to do depends on what is known beforehand
 ([what we know](ideas/problem/what-we-know.md)).
 
@@ -98,7 +119,7 @@ scenario: `just figures` draws them again.
 - **Not non-rigid.** Six numbers, a rotation and a translation; scale is the
   first extension worth having.
 - **Not finished.** The core aligns and is tested against the truth; the
-  bindings, the benchmark and the video demonstration are next.
+  bindings, the benchmark and real recordings are next.
 
 ## Status
 
@@ -109,7 +130,9 @@ scenario: `just figures` draws them again.
 | Multistart over SO(3) (super-Fibonacci spirals) | Done, tested |
 | Mesh targets, sampled with face normals | Done, tested |
 | Observability: which motions the data leaves free | Done, tested |
-| Python (NumPy) and C/C++ bindings, command line | Planned ([bindings](ideas/architecture/bindings.md)) |
+| Simulated tracking demo: depth camera, degradations, projective tracking | Done, measured |
+| Python (NumPy) and C/C++ bindings, command line | In progress ([bindings](ideas/architecture/bindings.md)) |
+| Real recordings, RGB-D and lidar | Milestone 2 ([milestones](ideas/milestones.md)) |
 | Benchmark of breaking points against Open3D and small_gicp | Planned ([benchmark](ideas/architecture/benchmark.md)) |
 
 The questions still open are in [ideas/open.md](ideas/open.md).
@@ -121,6 +144,7 @@ Rust 1.89+ and [just](https://just.systems):
 ```sh
 just test      # every property, against the synthetic truth
 just figures   # recompute the figures of this page
+just demo      # run the tracking demo, rewrite the animation
 ```
 
 ```rust
@@ -139,6 +163,9 @@ println!("{:?}", alignment.transform.to_row_major());
 | [ideas/](ideas/README.md) | Every concept, one per file, with its status: start here |
 | [crates/recalage/](crates/recalage/src/lib.rs) | The library: geometry, search, closed form, ICP, multistart |
 | [crates/recalage-synth/](crates/recalage-synth/src/lib.rs) | The observation model: scenarios with a known answer |
+| [crates/recalage-vision/](crates/recalage-vision/src/lib.rs) | Depth cameras: projection, rendering, depth to points, support removal |
+| [crates/recalage-sim/](crates/recalage-sim/src/lib.rs) | The simulated cell: the part, its turntable, the sensor's flaws |
+| [crates/recalage-demo/](crates/recalage-demo/src/main.rs) | The tracker and the animation above |
 | [crates/recalage-bench/](crates/recalage-bench/src/main.rs) | The figures of this page, computed from real runs |
 
 Agents working on this code read [AGENTS.md](AGENTS.md).
