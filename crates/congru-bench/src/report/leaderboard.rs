@@ -23,6 +23,7 @@ pub fn leaderboard(results: &Results) -> Result<String, std::fmt::Error> {
     )?;
     writeln!(text, "| --- | --- | --- | --- | --- | --- |")?;
     for (suite, rows) in [
+        ("scenes", &results.scenes),
         ("registration", &results.registration),
         ("tracking", &results.tracking),
     ] {

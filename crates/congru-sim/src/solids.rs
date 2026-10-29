@@ -1,6 +1,6 @@
 use std::f64::consts::TAU;
 
-use congru::{Error, Point, PointCloud, TriangleMesh};
+use congru::{Error, Point, PointCloud, RigidTransform, TriangleMesh};
 
 /// Closed solids gathered into one mesh. They may overlap: a depth buffer
 /// only keeps the nearest surface, so no boolean union is needed.
@@ -126,6 +126,22 @@ impl Solids {
                 .push([centres, bottom + next, bottom + corner]);
             self.triangles.push([centres + 1, top + corner, top + next]);
         }
+        self
+    }
+
+    /// Another mesh, every vertex moved by `pose`.
+    pub fn merge(&mut self, mesh: &TriangleMesh, pose: &RigidTransform) -> &mut Self {
+        let start = self.push_vertices(
+            mesh.vertices()
+                .points()
+                .iter()
+                .map(|point| pose.apply(point)),
+        );
+        self.triangles.extend(
+            mesh.triangles()
+                .iter()
+                .map(|corners| corners.map(|corner| start + corner)),
+        );
         self
     }
 

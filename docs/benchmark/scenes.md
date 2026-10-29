@@ -1,5 +1,24 @@
 # Scenes
 
+## Realistic scenes
+
+Ordinary scenes written as short TOML files in
+[scenes/](../../scenes/), rendered by a simulated depth camera; the
+target is tinted. Adding one is writing one file.
+
+![The realistic scenes](scenes/realistic.png)
+
+| Scene, left to right | What it tests |
+| --- | --- |
+| bin of parts | A gear on top of a jumble of brackets in an open bin, seen from above: the picking problem. |
+| car on a road | A car twelve metres ahead on a bumpy road, another behind it, trees and houses along the side. |
+| gear on a bench | A gear lying among a bracket, a mug and crates on a workbench: twelve teeth, twelve near-answers. |
+| part on a table | A machined bracket on a table, a mug and a crate beside it, a wall behind. |
+| shelf of mugs | A row of mugs on a shelf, one of them the target, all alike but for their handles. |
+| street corner | A car turning at a corner twenty metres away, half hidden by a parked one: far, sparse, partly seen. |
+
+## Simple situations
+
 Every situation of the [protocol](protocol.md), drawn exactly as the
 methods receive it, for the first evaluation seed: the scan in blue,
 its outliers in green, the model at the starting guess in red. A

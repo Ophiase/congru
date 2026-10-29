@@ -24,7 +24,7 @@ const DRAWN_SCAN_POINTS: usize = 400;
 pub fn scenes(models: &[Model], folder: &Path) -> anyhow::Result<String> {
     std::fs::create_dir_all(folder)?;
     let mut page = String::new();
-    writeln!(page, "# Scenes\n")?;
+
     writeln!(
         page,
         "Every situation of the [protocol](protocol.md), drawn exactly as the\n\
@@ -95,4 +95,15 @@ fn placed(model: &Model, pose: &RigidTransform, stride: usize) -> Vec<Point> {
 fn thinned(points: &[Point]) -> Vec<Point> {
     let stride = points.len().div_ceil(DRAWN_SCAN_POINTS).max(1);
     points.iter().step_by(stride).copied().collect()
+}
+
+/// The whole page: realistic scenes first, then every simple situation.
+#[must_use]
+pub fn scenes_page(realistic: &str, simple: &str) -> String {
+    format!(
+        "# Scenes\n\n## Realistic scenes\n\nOrdinary scenes written as short TOML files in\n\
+         [scenes/](../../scenes/), rendered by a simulated depth camera; the\n\
+         target is tinted. Adding one is writing one file.\n\n\
+         ![The realistic scenes](scenes/realistic.png)\n\n{realistic}\n## Simple situations\n\n{simple}"
+    )
 }

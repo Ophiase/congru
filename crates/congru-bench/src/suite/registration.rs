@@ -34,6 +34,15 @@ const NOMINAL: Situation = Situation {
     shift: 0.02,
 };
 
+/// The guess a detector gives in a realistic scene: 10° and 3 % off.
+pub const DETECTOR: Situation = Situation {
+    name: "detector guess",
+    class: "realistic",
+    turn: 10.0,
+    shift: 0.03,
+    ..NOMINAL
+};
+
 /// One trouble at a time on top of the nominal situation.
 pub const SITUATIONS: [Situation; 13] = [
     NOMINAL,

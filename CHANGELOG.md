@@ -5,6 +5,17 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.5 — 2026-10-29
+
+- **Realistic scenes**: six ordinary scenes in short TOML files (a part on
+  a table, a car on a road, a bin of parts, a shelf of mugs, a gear on a
+  bench, a street corner), built from a parametric prop library and a
+  fractal ground, rendered in the gallery.
+- **A realistic suite** in the benchmark: support plane removed, a
+  detector's crop, every one-shot method on every scene.
+- **A pastel palette** for the animations, a fractal room for demo B.
+- **The roadmap** to a reference library, in `ideas/milestones.md`.
+
 ## 0.1.4 — 2026-10-29
 
 - **Scene sheets as small PNGs** on pale paper, a few hundred kilobytes each.

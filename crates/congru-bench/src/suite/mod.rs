@@ -1,7 +1,7 @@
 mod registration;
 mod tracking;
 
-pub use registration::{SITUATIONS, Situation};
+pub use registration::{DETECTOR, SITUATIONS, Situation};
 pub use tracking::{Sequence, sequences};
 
 /// Seeds the methods may be tuned on, and seeds the published tables use:

@@ -2,7 +2,7 @@
 //! in every situation of the suites, over many seeds; written as the tables
 //! of `docs/benchmark/results.md`.
 //!
-//! `congru-bench [--tuning] [--seeds N] [--fresh] [results.md]`, or
+//! `congru-bench [--tuning] [--seeds N] [--fresh] [--realistic] [results.md]`, or
 //! `congru-bench --scenes` to draw every situation into `docs/benchmark/`: the tuning
 //! seeds are for trying ideas, the evaluation seeds for the published
 //! tables. Every finished cell is kept in `target/bench/`, and the page is
@@ -46,10 +46,7 @@ fn main() -> anyhow::Result<()> {
         })
         .map_or_else(|| PathBuf::from("docs/benchmark/results.md"), PathBuf::from);
     if flag("--scenes") {
-        let models = catalog::models()?;
-        let page = report::scenes(&models, std::path::Path::new("docs/benchmark/scenes"))?;
-        std::fs::write("docs/benchmark/scenes.md", page)?;
-        return Ok(());
+        return draw_scenes();
     }
     let cache = PathBuf::from(format!("target/bench/{pool:?}-{seeds}.tsv").to_lowercase());
     let mut session = Session::new(
@@ -59,5 +56,18 @@ fn main() -> anyhow::Result<()> {
         Store::open(cache, flag("--fresh"))?,
         page,
     );
-    session.run()
+    session.run(flag("--realistic"))
+}
+
+fn draw_scenes() -> anyhow::Result<()> {
+    let models = catalog::models()?;
+    let folder = std::path::Path::new("docs/benchmark/scenes");
+    let simple = report::scenes(&models, folder)?;
+    let scenes = report::load_scenes(std::path::Path::new("scenes"))?;
+    let realistic = report::realistic(&scenes, &folder.join("realistic.png"))?;
+    std::fs::write(
+        "docs/benchmark/scenes.md",
+        report::scenes_page(&realistic, &simple),
+    )?;
+    Ok(())
 }

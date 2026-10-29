@@ -47,6 +47,10 @@ pub fn recommendations(rows: &[Row]) -> Result<String, std::fmt::Error> {
         "The best one-shot method for each class of situation, by mean success,\nties broken by time.\n"
     )?;
     let models = distinct(rows.iter().map(|row| row.model));
+    if models.is_empty() {
+        writeln!(text, "Not computed yet.\n")?;
+        return Ok(text);
+    }
     writeln!(
         text,
         "| Class | {} |\n| --- |{}",
