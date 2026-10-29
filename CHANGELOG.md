@@ -5,6 +5,11 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.4 — 2026-10-29
+
+- **Scene sheets as small PNGs** on pale paper, a few hundred kilobytes each.
+- **Dependencies**: actions/checkout 7, extractions/setup-just 4.
+
 ## 0.1.3 — 2026-10-29
 
 - **Scenes as sheets**: one image per model, every situation in a grid.

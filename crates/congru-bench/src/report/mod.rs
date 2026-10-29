@@ -1,6 +1,7 @@
 mod catalogue;
 mod csv;
 mod leaderboard;
+mod png;
 mod scenes;
 mod tables;
 
