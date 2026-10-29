@@ -20,7 +20,7 @@ noise on a 20 cm part, and 40 points of clutter. Each adds one trouble:
 | Run | Added | Median error | Frames within 2° |
 | --- | --- | --- | --- |
 | Noise | nothing | 0.91° | 114 / 120 |
-| Shake | the sensor jolts every frame, 0.6° and 4 mm | 1.00° | 111 / 120 |
+| Shake | the sensor wanders as in a hand, up to 6° and 2.5 cm over two seconds, and jolts every frame | 1.07° | 109 / 120 |
 | Bend | the part flexes by up to 4 mm | 1.07° | 112 / 120 |
 | Occluder | a ball crosses in front | 0.94° | 112 / 120 |
 | Lens | radial distortion | 1.17° | 103 / 120 |
@@ -39,19 +39,19 @@ again at once ([tracking](../ideas/method/tracking.md)).
 
 ![Demo B](figures/tracking.gif)
 
-*Demo B: a simulated robot cell. A machined bracket turns on a turntable under a
-depth camera. Each panel is what the camera returns, shaded by its surface
-normals; the green outline is the part's model drawn at the pose congru
-found; the bar below is the rotation error (green under 1°, amber under 5°).
-Top left: exact depth. Top right: noise and blur. Bottom left: holes and
-flying pixels. Bottom right: all of it, with the turntable in view.*
+*Demo B: a simulated robot cell. A machined bracket turns on a turntable
+under a depth camera. Each tile is what the camera returns, shaded by its
+surface normals; the green outline is the model drawn at the pose congru
+finds; the number is the rotation error against the truth.*
 
-| Condition | Median error | Frames within 2° |
-| --- | --- | --- |
-| Exact depth | 0.05° | 90 / 90 |
-| Noise and blur | 0.48° | 86 / 90 |
-| Holes and flying pixels | 0.22° | 81 / 90 |
-| Everything, and the turntable | 0.71° | 90 / 90 |
+| Condition | Added to an imperfect sensor | Median error | Frames within 2° |
+| --- | --- | --- | --- |
+| Sensor | noise, blur, holes, flying pixels | 0.12° | 90 / 90 |
+| Shake | a camera in a hand: slow wander and jolts | 0.51° | 90 / 90 |
+| Lens | radial distortion of the depth image | 0.32° | 90 / 90 |
+| Flex | the part flexes by up to 4 mm | 0.36° | 90 / 90 |
+| Room | a wall, a bench, a box, a can and the turntable in view | 0.34° | 90 / 90 |
+| Everything | all of it, twice the noise, three times the holes | 0.82° | 89 / 90 |
 
 Computed offline, frame by frame, by `just demo`; the pipeline (support
 plane removed, scan cropped, aligned onto the part of the model visible

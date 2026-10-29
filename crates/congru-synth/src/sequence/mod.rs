@@ -2,6 +2,7 @@
 //! kept at every frame: the test sets of tracking.
 
 mod disturb;
+mod handheld;
 mod path;
 
 use congru::{Error, Point, PointCloud, RigidTransform};
@@ -11,6 +12,7 @@ use rand::rngs::ChaCha8Rng;
 use rand_distr::{Distribution, Normal};
 
 pub use disturb::Shake;
+pub use handheld::Handheld;
 pub use path::{Drift, Jump};
 
 use crate::shapes;
@@ -28,6 +30,7 @@ pub struct Sequence {
     pub drift: Drift,
     pub jumps: Vec<Jump>,
     pub shake: Shake,
+    pub handheld: Handheld,
     /// Largest displacement of the part's own flexing; zero for a rigid part.
     pub bend: f64,
     /// Share of the visible surface the sensor returns.
@@ -61,6 +64,7 @@ impl Sequence {
             drift,
             jumps: Vec::new(),
             shake: Shake::default(),
+            handheld: Handheld::default(),
             bend: 0.0,
             density: 1.0,
             noise: 0.0,
@@ -88,6 +92,7 @@ impl Sequence {
                 let truth = self
                     .drift
                     .pose(frame, &self.jumps)
+                    .then(&self.handheld.pose(frame))
                     .then(&self.shake.jolt(&mut random));
                 let observed = self.observe(frame, model, span, &ball, &truth, &mut random);
                 let observed: Vec<Point> = observed

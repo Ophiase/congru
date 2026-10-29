@@ -1,6 +1,7 @@
 use std::f64::consts::TAU;
 
 use congru::RigidTransform;
+use congru_synth::sequence::Handheld;
 use nalgebra::{UnitQuaternion, Vector3};
 
 const DISTANCE: f64 = 0.42;
@@ -17,6 +18,8 @@ pub struct Turntable {
     /// A jolt of the camera every frame: a rotation about it of this many
     /// degrees at most, on an axis that changes from frame to frame.
     pub shake_degrees: f64,
+    /// The slow, wide wander of a camera held in a hand.
+    pub handheld: Handheld,
 }
 
 impl Turntable {
@@ -50,6 +53,8 @@ impl Turntable {
             0.04,
             DISTANCE + 0.04 * (TAU * progress * 2.0).cos(),
         );
-        RigidTransform::from_parts(look_down * upright * spin, sway).then(&self.jolt(frame))
+        RigidTransform::from_parts(look_down * upright * spin, sway)
+            .then(&self.handheld.pose(frame))
+            .then(&self.jolt(frame))
     }
 }

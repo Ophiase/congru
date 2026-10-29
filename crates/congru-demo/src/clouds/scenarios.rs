@@ -1,4 +1,4 @@
-use congru_synth::sequence::{Drift, Jump, Sequence, Shake};
+use congru_synth::sequence::{Drift, Handheld, Jump, Sequence, Shake};
 
 pub const FRAMES: usize = 120;
 
@@ -44,18 +44,20 @@ const SHAKE: Shake = Shake {
     shift: 0.004,
 };
 
+/// A camera in a child's hands: several degrees and centimetres of slow
+/// wander, over about two seconds.
+const HANDHELD: Handheld = Handheld {
+    angle: 0.1,
+    shift: 0.025,
+    period: 50.0,
+};
+
 pub fn scenarios() -> [Scenario; 6] {
     let base = baseline();
     let with = |name, sequence| Scenario { name, sequence };
     [
         with("noise", base.clone()),
-        with(
-            "shake",
-            Sequence {
-                shake: SHAKE,
-                ..base.clone()
-            },
-        ),
+        with("shake", shaken(&base)),
         with(
             "bend",
             Sequence {
@@ -85,4 +87,13 @@ pub fn scenarios() -> [Scenario; 6] {
             },
         ),
     ]
+}
+
+/// The sensor jolting every frame, and wandering as in a hand.
+fn shaken(base: &Sequence) -> Sequence {
+    Sequence {
+        shake: SHAKE,
+        handheld: HANDHELD,
+        ..base.clone()
+    }
 }

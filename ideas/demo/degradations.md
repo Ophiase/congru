@@ -14,7 +14,7 @@ lost in round holes, and flying pixels mixing both sides of a depth edge.
 
 | Condition | What it imitates |
 | --- | --- |
-| **Shake** | The camera's mount vibrates: a jolt of up to 1° about the camera every frame |
+| **Shake** | A camera in a hand: a slow wander of up to 4° and 2 cm over two seconds, and a jolt of up to 1° every frame on top |
 | **Lens** | Radial distortion of the depth image, `k = 0.08` over the half-width |
 | **Flex** | The part itself flexes by up to 4 mm, with no rigid part to first order |
 | **Room** | A wall, a bench, a box, a can and the turntable all in view: the depth is never clean around the part |
