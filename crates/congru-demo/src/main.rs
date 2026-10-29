@@ -6,6 +6,7 @@ mod camera;
 mod clouds;
 mod picture;
 mod summary;
+mod tour;
 
 use std::io::Write;
 use std::path::PathBuf;
@@ -25,7 +26,10 @@ fn main() -> anyhow::Result<()> {
         Some("camera") => {
             camera::run(&target.unwrap_or_else(|| PathBuf::from("docs/figures/tracking.gif")))?
         }
-        _ => bail!("usage: congru-demo clouds|camera [animation.gif]"),
+        Some("tour") => {
+            tour::run(&target.unwrap_or_else(|| PathBuf::from("docs/figures/scenes.gif")))?
+        }
+        _ => bail!("usage: congru-demo clouds|camera|tour [animation.gif]"),
     };
     let mut output = std::io::stdout().lock();
     writeln!(

@@ -5,7 +5,7 @@ mod conditions;
 mod overlay;
 mod room;
 mod stage;
-mod view;
+pub(crate) mod view;
 
 use std::path::Path;
 
