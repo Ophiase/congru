@@ -35,6 +35,10 @@ is missing, ask for the paths and offer to write it from
 - Every claim carries its tag: **[defined]**, **[sketch]**, **[guess]**,
   **[to check]**, **[question]**, **[caution]**.
 - A reference to the literature is **[to check]** until read again.
+- A known method, algorithm or concept is a link, to Wikipedia or to the
+  paper (its DOI or arXiv page), at its first mention in a file: the reader
+  delegates its understanding to the source instead of to our paraphrase.
+  Reference-style links at the end of the section keep tables readable.
 
 ## Layout and languages
 

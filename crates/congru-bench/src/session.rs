@@ -119,6 +119,7 @@ impl Session {
 
     fn publish(&self) -> anyhow::Result<()> {
         std::fs::write(&self.page, report::page(&self.results, &self.models)?)?;
+        std::fs::write(self.page.with_extension("csv"), report::csv(&self.results)?)?;
         Ok(())
     }
 }

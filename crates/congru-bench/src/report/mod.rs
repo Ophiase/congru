@@ -1,4 +1,5 @@
 mod catalogue;
+mod csv;
 mod leaderboard;
 mod scenes;
 mod tables;
@@ -6,6 +7,7 @@ mod tables;
 use std::fmt::Write;
 
 pub use catalogue::{catalogue, recommendations};
+pub use csv::csv;
 pub use leaderboard::leaderboard;
 pub use scenes::scenes;
 pub use tables::{registration_tables, tracking_tables};
@@ -42,8 +44,11 @@ pub fn page(
     writeln!(page, "# Benchmark results\n")?;
     writeln!(
         page,
-        "Written by `just bench` from the evaluation seeds, {} per situation; the\n\
-         protocol, the situations and the metrics are defined in\n\
+        "Written by `just bench` from the evaluation seeds, {} per situation. The
+\
+         source of truth is [results.csv](results.csv): this page only lays it
+\
+         out. The protocol, the situations and the metrics are defined in\n\
          [protocol.md](protocol.md). A cell reads *success rate · median\n\
          rotation error*; times are from the machine that wrote this page.\n",
         results.seeds
