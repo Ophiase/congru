@@ -5,6 +5,12 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.3 — 2026-10-29
+
+- **Scenes as sheets**: one image per model, every situation in a grid.
+- **results.csv** is the benchmark's source of truth; the page lays it out.
+- **Every method a link**, to Wikipedia or to its paper; a rule for agents.
+
 ## 0.1.2 — 2026-10-29
 
 - **A camera in a hand**: both demos' shake now wanders slowly and widely,

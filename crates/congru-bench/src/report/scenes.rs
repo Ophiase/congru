@@ -2,7 +2,7 @@ use std::fmt::Write;
 use std::path::Path;
 
 use congru::{Point, RigidTransform};
-use congru_figures::{Figure, Ink, View};
+use congru_figures::{Figure, Ink, View, sheet};
 use nalgebra::Vector3;
 
 use crate::catalog::Model;
@@ -10,8 +10,10 @@ use crate::measure::scene;
 use crate::suite::{SITUATIONS, Situation};
 
 const SEED: u64 = 1_000_000;
-const COLUMNS: usize = 3;
-const DRAWN_MODEL_POINTS: usize = 500;
+const COLUMNS: usize = 4;
+const CELL: [f64; 2] = [300.0, 334.0];
+const DRAWN_MODEL_POINTS: usize = 300;
+const DRAWN_SCAN_POINTS: usize = 400;
 
 /// Draws every situation on every model as the methods receive it, into
 /// `folder`, and returns the page that shows them.
@@ -32,11 +34,17 @@ pub fn scenes(models: &[Model], folder: &Path) -> anyhow::Result<String> {
     )?;
     for model in models {
         writeln!(page, "## {}\n\n{}.\n", model.name, model.summary)?;
-        let cells = SITUATIONS
+        let figures = SITUATIONS
             .iter()
-            .map(|situation| draw(model, situation, folder))
+            .map(|situation| draw(model, situation))
             .collect::<anyhow::Result<Vec<String>>>()?;
-        page.push_str(&grid(&cells)?);
+        let name = format!("{}.svg", model.name);
+        std::fs::write(folder.join(&name), sheet(&figures, COLUMNS, CELL))?;
+        writeln!(
+            page,
+            "![Every situation on the {0}](scenes/{name})\n",
+            model.name
+        )?;
     }
     writeln!(
         page,
@@ -49,7 +57,7 @@ pub fn scenes(models: &[Model], folder: &Path) -> anyhow::Result<String> {
     Ok(page)
 }
 
-fn draw(model: &Model, situation: &Situation, folder: &Path) -> anyhow::Result<String> {
+fn draw(model: &Model, situation: &Situation) -> anyhow::Result<String> {
     let frame = scene(model, situation, SEED)?;
     let stride = model
         .observed
@@ -60,16 +68,16 @@ fn draw(model: &Model, situation: &Situation, folder: &Path) -> anyhow::Result<S
     let guessed: Vec<Point> = placed(model, &frame.guess, stride);
     let split = frame.observed.count() - frame.outliers;
     let (scan, outliers) = frame.observed.points().split_at(split);
+    let scan = thinned(scan);
+    let outliers = thinned(outliers);
     let everything: Vec<Point> = scan.iter().chain(&guessed).copied().collect();
     let mut figure = Figure::new(View::facing(&everything, &Vector3::new(0.5, -0.6, 1.0)));
     figure
         .panel(situation.name)
         .dots(&guessed, Ink::Model)
-        .dots(scan, Ink::Observed)
-        .dots(outliers, Ink::Outlier);
-    let name = format!("{}-{}.svg", model.name, slug(situation.name));
-    std::fs::write(folder.join(&name), figure.render()?)?;
-    Ok(format!("![{}](scenes/{name})", situation.name))
+        .dots(&scan, Ink::Observed)
+        .dots(&outliers, Ink::Outlier);
+    Ok(figure.render()?)
 }
 
 fn placed(model: &Model, pose: &RigidTransform, stride: usize) -> Vec<Point> {
@@ -83,27 +91,7 @@ fn placed(model: &Model, pose: &RigidTransform, stride: usize) -> Vec<Point> {
         .collect()
 }
 
-fn grid(cells: &[String]) -> Result<String, std::fmt::Error> {
-    let mut text = String::new();
-    writeln!(text, "|{}", " |".repeat(COLUMNS))?;
-    writeln!(text, "|{}", " --- |".repeat(COLUMNS))?;
-    for row in cells.chunks(COLUMNS) {
-        let mut padded: Vec<&str> = row.iter().map(String::as_str).collect();
-        padded.resize(COLUMNS, "");
-        writeln!(text, "| {} |", padded.join(" | "))?;
-    }
-    writeln!(text)?;
-    Ok(text)
-}
-
-fn slug(name: &str) -> String {
-    name.replace('%', "pct")
-        .replace('°', "deg")
-        .chars()
-        .filter_map(|character| match character {
-            'a'..='z' | '0'..='9' => Some(character),
-            ' ' => Some('-'),
-            _ => None,
-        })
-        .collect()
+fn thinned(points: &[Point]) -> Vec<Point> {
+    let stride = points.len().div_ceil(DRAWN_SCAN_POINTS).max(1);
+    points.iter().step_by(stride).copied().collect()
 }

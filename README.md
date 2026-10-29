@@ -75,11 +75,28 @@ depends on what is known beforehand and on what the data does
 
 | Family | Needs | Methods | In congru |
 | --- | --- | --- | --- |
-| Correspondences | Which point goes with which | Kabsch, Umeyama, RANSAC, TEASER++ | Closed form; RANSAC next |
-| Local, no correspondences | A guess within about 20° | ICP point-to-point and point-to-plane, robust, trimmed, annealed, adaptive; NDT, CPD | The ICP family |
-| Global | Nothing | Multistart, FPFH with RANSAC, Go-ICP | Multistart; FPFH next |
-| Tracking | The last frames | Any of the above inside a motion filter | Two-phase tracker |
-| Learned | Training data | PointNet, Deep Closest Point, GeoTransformer | Out of the core |
+| Correspondences | Which point goes with which | [Kabsch], [Umeyama], [RANSAC], [TEASER++] | Closed form; RANSAC inside `Consensus` |
+| Local, no correspondences | A guess within about 20° | [ICP] point-to-point and [point-to-plane], [robust kernels], trimmed, annealed, adaptive; [NDT], [CPD] | The ICP family |
+| Global | Nothing | Multistart over SO(3), [FPFH] with RANSAC, [Go-ICP] | `Search`, `Guarded`, `Consensus` |
+| Tracking | The last frames | Any of the above inside a motion filter ([alpha-beta], [Kalman]) | Two-phase tracker |
+| Learned | Training data | [PointNet], [Deep Closest Point], [GeoTransformer] | Out of the core |
+
+[Kabsch]: https://en.wikipedia.org/wiki/Kabsch_algorithm
+[Umeyama]: https://doi.org/10.1109/34.88573
+[RANSAC]: https://en.wikipedia.org/wiki/Random_sample_consensus
+[TEASER++]: https://arxiv.org/abs/2001.07715
+[ICP]: https://en.wikipedia.org/wiki/Iterative_closest_point
+[point-to-plane]: https://doi.org/10.1016/0262-8856(92)90066-C
+[robust kernels]: https://en.wikipedia.org/wiki/M-estimator
+[NDT]: https://en.wikipedia.org/wiki/Normal_distributions_transform
+[CPD]: https://arxiv.org/abs/0905.2635
+[FPFH]: https://doi.org/10.1109/ROBOT.2009.5152473
+[Go-ICP]: https://arxiv.org/abs/1605.03344
+[alpha-beta]: https://en.wikipedia.org/wiki/Alpha_beta_filter
+[Kalman]: https://en.wikipedia.org/wiki/Kalman_filter
+[PointNet]: https://arxiv.org/abs/1612.00593
+[Deep Closest Point]: https://arxiv.org/abs/1905.03304
+[GeoTransformer]: https://arxiv.org/abs/2202.06688
 
 Every method is one [`Aligner`](ideas/architecture/contract.md) and goes
 through the same [benchmark](docs/benchmark/protocol.md): three families of
