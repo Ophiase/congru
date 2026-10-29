@@ -2,6 +2,7 @@ use congru::RigidTransform;
 use congru_vision::{DepthImage, Image};
 use nalgebra::Vector3;
 
+use super::conditions::Clutter;
 use super::stage::Stage;
 use crate::picture::palette::{EMPTY, ESTIMATE, Tone, grey};
 
@@ -12,7 +13,10 @@ const AMBIENT: f64 = 0.15;
 pub fn panel(stage: &Stage, depth: &DepthImage, estimate: Option<&RigidTransform>) -> Image<Tone> {
     let mut picture = relief(depth, stage.camera.focal);
     if let Some(pose) = estimate {
-        let silhouette = stage.shoot(pose, false).depth.map(f64::is_finite);
+        let silhouette = stage
+            .shoot(&stage.part, pose, Clutter::Nothing)
+            .depth
+            .map(f64::is_finite);
         for (column, row) in silhouette.positions() {
             if on_outline(&silhouette, column, row) {
                 picture.set(column, row, ESTIMATE);

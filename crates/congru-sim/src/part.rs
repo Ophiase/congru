@@ -56,3 +56,17 @@ pub fn gear() -> Result<TriangleMesh, Error> {
         .cylinder([0.0, 0.0, 0.02], 0.018, 0.015, SEGMENTS)
         .build()
 }
+
+/// What sits around the turntable, fixed in the camera's frame: a wall
+/// behind, a bench top below, a box and a can beside the part.
+///
+/// # Errors
+/// As [`bracket`].
+pub fn surroundings() -> Result<TriangleMesh, Error> {
+    Solids::default()
+        .cuboid([-0.6, -0.5, 0.75], [0.6, 0.4, 0.78])
+        .cuboid([-0.6, 0.13, 0.1], [0.6, 0.16, 0.9])
+        .cuboid([-0.28, 0.0, 0.42], [-0.18, 0.13, 0.52])
+        .cylinder([0.2, 0.3, 0.45], 0.035, 0.12, SEGMENTS)
+        .build()
+}

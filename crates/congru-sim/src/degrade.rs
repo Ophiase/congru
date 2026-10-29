@@ -19,13 +19,16 @@ pub struct Degradation {
     pub holes: f64,
     /// Whether pixels across a depth edge mix both sides, floating between.
     pub flying_pixels: bool,
+    /// Radial lens distortion `k`: a pixel at `r` half-widths from the
+    /// centre shows what lies at `r (1 + k r²)`.
+    pub lens: f64,
 }
 
 impl Degradation {
     #[must_use]
     pub fn apply(&self, exact: &DepthImage, seed: u64) -> DepthImage {
         let mut random = ChaCha8Rng::seed_from_u64(seed);
-        let mut depth = blur(exact, self.blur);
+        let mut depth = blur(&distort(exact, self.lens), self.blur);
         if self.flying_pixels {
             depth = mix_edges(&depth);
         }
@@ -125,4 +128,29 @@ fn window(
         let columns = column.saturating_sub(radius)..(column + radius + 1).min(depth.width());
         columns.map(move |other_column| depth.get(other_column, other_row))
     })
+}
+
+fn distort(depth: &DepthImage, strength: f64) -> DepthImage {
+    if strength == 0.0 {
+        return depth.clone();
+    }
+    let half = congru_vision::pixel::coordinate(depth.width()) / 2.0;
+    let centre = [half, congru_vision::pixel::coordinate(depth.height()) / 2.0];
+    let mut warped = DepthImage::filled(depth.width(), depth.height(), f64::NAN);
+    for (column, row) in depth.positions() {
+        let offset = [
+            congru_vision::pixel::coordinate(column) + 0.5 - centre[0],
+            congru_vision::pixel::coordinate(row) + 0.5 - centre[1],
+        ];
+        let scale =
+            1.0 + strength * (offset[0] * offset[0] + offset[1] * offset[1]) / (half * half);
+        let source = (
+            congru_vision::pixel::containing(centre[0] + offset[0] * scale, depth.width()),
+            congru_vision::pixel::containing(centre[1] + offset[1] * scale, depth.height()),
+        );
+        if let (Some(source_column), Some(source_row)) = source {
+            warped.set(column, row, depth.get(source_column, source_row));
+        }
+    }
+    warped
 }

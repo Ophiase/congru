@@ -2,10 +2,12 @@
 //! its path, and what a real sensor does to the depth.
 
 mod degrade;
+mod flex;
 mod part;
 mod path;
 mod solids;
 
 pub use degrade::Degradation;
-pub use part::{bracket, gear, turntable};
+pub use flex::flexed;
+pub use part::{bracket, gear, surroundings, turntable};
 pub use path::Turntable;

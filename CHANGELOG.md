@@ -5,6 +5,21 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.1 — 2026-10-29
+
+More methods, a resumable benchmark, a harder demo B.
+
+- **Consensus**, a global method from the shape: FPFH descriptors, mutual
+  matches, RANSAC over triples, a check on the whole shape, then ICP.
+- **Adaptive ICP**: kernel and gate follow the noise measured at each stage.
+- **The benchmark resumes** where it stopped and rewrites its tables as
+  cells finish; every scene is drawn as the methods receive it.
+- **Demo B on the shared tracker**, with camera shake, lens distortion, a
+  flexing part and a whole room in view.
+- **The method landscape** in the README: ICP is one family among several.
+- **Still open**: the palette, demo B's background and outline, and real
+  scenes; see `ideas/open.md`.
+
 ## 0.1.0 — 2026-10-29
 
 The restart: from a problem statement to a measured library.
