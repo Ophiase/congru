@@ -60,6 +60,25 @@ rules and checks go to `.agents/rules/` and `.agents/checks/`.
 `.agents/checks/run.sh <check> <file>...` runs one; `just guards` runs them
 all over the changed files.
 
+## Any agent, not only Claude Code
+
+The harness is the recipes and the checks, never one tool's events.
+`just agent gate` runs `just check` then `just guards`; `.agents/checks/run.sh
+<check> <file>...` runs one check directly. An agent that can run a shell runs
+the same gate.
+
+Cline and Kilo Code read this file. Their own rule folders (`.clinerules/`,
+`.kilocode/rules/`) hold one pointer each, never a copy. Neither exposes a
+project hook like Claude Code: Cline's hooks are SDK plugins for its CLI, SDK
+and Kanban, not the VS Code extension, and Kilo documents no lifecycle hook.
+So the tool-neutral adapter is a git hook: `just install-hooks` once, then
+every commit runs `just guards` locally.
+
+`.claude/` is one adapter. Its `settings.json` permissions and its `hooks/`
+fire only in Claude Code; elsewhere they are inert. `.claude/CLAUDE.md`
+imports this file with `@`, a Claude Code convention; for every other tool,
+this file is the source. See [docs/agent-hooks.md](docs/agent-hooks.md).
+
 ## Tests
 
 A test checks an algorithmic property against the truth of the synthetic

@@ -4,6 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "congru"
+authors = [{ name = "Phorcys" }]
 description = "Fast, robust rigid registration of point clouds and meshes."
 readme = "README.md"
 license = "Apache-2.0"

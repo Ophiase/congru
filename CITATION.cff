@@ -3,7 +3,8 @@ message: If you use congru in research, please cite it as below.
 title: "congru: rigid registration you can ship"
 type: software
 authors:
-  - alias: ophiase
+  - alias: "Phorcys"
+    website: "https://github.com/Ophiase"
 repository-code: "https://github.com/Ophiase/congru"
 license: Apache-2.0
 version: 0.1.16

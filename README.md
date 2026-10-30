@@ -241,8 +241,8 @@ The full list, with what each brings: [ideas/prior-art.md](ideas/prior-art.md).
 
 ## Contributors
 
-- **Ophiase**: author; the observation model and its variants date from 2025.
-- **Harmostes**: the AI agent working with Ophiase. In Greek, the
+- **Phorcys** ([Ophiase](https://github.com/Ophiase)): author
+- **Harmostes**: the AI agent working with Phorcys. In Greek, the
   *harmostēs* is the one who fits things together.
 
 ## Licence

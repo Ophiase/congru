@@ -1,5 +1,7 @@
+mod agent
+
 default:
-    @just --list
+    @just --list --list-submodules
 
 [doc("Formatting and pedantic clippy, warnings as errors")]
 lint:
@@ -89,13 +91,6 @@ _guard check:
 deny:
     cargo deny check --config deny.toml
 
-[doc("The longest files of code, tests left out: green to 100 lines, yellow to 200, red past")]
-[script("bash")]
-longest count="20":
-    set -euo pipefail
-    git ls-files --cached --others --exclude-standard -- '*.rs' | while read -r file; do
-        awk '/^#\[cfg\(test\)\]/ { exit } { lines++ } END { print lines + 0 }' "$file" | sed "s|\$| $file|"
-    done | sort -rn | head -n "{{ count }}" | while read -r lines file; do
-        if ((lines > 200)); then colour=31; elif ((lines > 100)); then colour=33; else colour=32; fi
-        printf '\e[%sm%5d\e[0m  %s\n' "$colour" "$lines" "$file"
-    done
+[doc("Run the project's checks on every commit: git config core.hooksPath .githooks")]
+install-hooks:
+    git config core.hooksPath .githooks
