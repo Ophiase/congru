@@ -5,8 +5,18 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
-- **The scene tour's animation** is not rendered yet: about five seconds a
-  frame, to profile before it is worth running.
+- **The scene tour's animation** renders in half a minute now, but the
+  tracker turns most targets over and the file weighs 31 MB: kept out until
+  both are fixed.
+
+## 0.1.8 — 2026-10-30
+
+- **C ABI and C++20 header**, unstable until 1.0: a reusable target, ICP,
+  the closed form; `just capi-example` runs a C++ program against it.
+- **A `congru` command** printing JSON: align, track a folder of frames,
+  describe a file, list the methods; `.xyz` and `.ply`.
+- **The scene tour 200 times faster**: the model's sampling follows its
+  size, so a car is no longer sampled every 3 mm.
 
 ## 0.1.7 — 2026-10-30
 

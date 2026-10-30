@@ -44,6 +44,12 @@ bench-fresh:
 bench-tuning seeds="6":
     cargo run --release -q -p congru-bench -- --tuning --seeds {{ seeds }} target/bench-tuning.md
 
+[doc("Build the C ABI and run the C++ example against it")]
+capi-example:
+    cargo build --release -q -p congru-capi
+    g++ -std=c++20 -O2 -I crates/congru-capi/include crates/congru-capi/examples/align.cpp target/release/libcongru_capi.a -lpthread -ldl -lm -o target/release/congru-example
+    target/release/congru-example
+
 [doc("Everything that must pass before declaring work done")]
 check: lint test rumdl
 

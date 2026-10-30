@@ -158,7 +158,7 @@ Open3D and PCL do that.
 | Observability: which motions the data leaves free | Done, tested |
 | Simulated tracking demo: depth camera, degradations, projective tracking | Done, measured |
 | Python bindings, NumPy in and out | Done ([bindings](docs/bindings.md)) |
-| C and C++ bindings, command line | Planned |
+| C ABI and C++ header (unstable), command line printing JSON | Done ([bindings](docs/bindings.md)) |
 | Real recordings, RGB-D and lidar | Milestone 2 ([milestones](ideas/milestones.md)) |
 | One contract for every method: the `Aligner` trait | Done ([contract](ideas/architecture/contract.md)) |
 | Benchmark: 7 one-shot methods, 3 trackers, 3 models, 19 situations | Done ([protocol](docs/benchmark/protocol.md), [results](docs/benchmark/results.md)) |

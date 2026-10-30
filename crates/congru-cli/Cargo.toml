@@ -1,0 +1,28 @@
+[package]
+name = "congru-cli"
+description = "The congru command: align, track and describe point clouds, every answer one JSON object."
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "congru"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.104"
+clap = { version = "4.6.7", features = ["derive"] }
+congru.workspace = true
+congru-track.workspace = true
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+
+[dev-dependencies]
+congru-synth.workspace = true
+nalgebra.workspace = true
+
+[lints]
+workspace = true

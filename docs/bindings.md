@@ -8,8 +8,9 @@ own ([bindings](../ideas/architecture/bindings.md)).
 | --- | --- | --- |
 | Rust | The library itself | [crates/congru](../crates/congru/src/lib.rs) |
 | Python | Working, tested | [crates/congru-python](../crates/congru-python/README.md) |
-| C | Planned, unstable until 1.0 | — |
-| C++ | Planned, a header-only wrapper over the C ABI | — |
+| C | Working, **unstable** until 1.0 | [congru.h](../crates/congru-capi/include/congru.h) |
+| C++ | Working, header-only, **unstable** | [congru.hpp](../crates/congru-capi/include/congru.hpp) |
+| Command line | Working, JSON on stdout | [congru-cli](../crates/congru-cli/src/main.rs) |
 
 ## Conventions shared by every language
 
@@ -63,7 +64,23 @@ exposed yet.
 
 ## C and C++
 
-**[sketch]** A C ABI with plain option structs, status codes and an opaque
-handle for a reusable target; a header-only C++20 wrapper with `std::span`
-in and RAII for the handle. It stays explicitly unstable until the project
-declares 1.0.
+The C ABI is a static or dynamic library, `congru_capi`, and one header.
+Names, structs and values may change in any release until 1.0.
+
+```cpp
+#include "congru.hpp"
+
+const congru::target target(model_xyz);           // std::span<const double>
+const congru_alignment found = target.align(scan_xyz);
+// found.transform: 16 doubles, row-major; found.converged, found.rmse
+```
+
+`just capi-example` builds the library and runs
+[examples/align.cpp](../crates/congru-capi/examples/align.cpp) with g++.
+Every pointer is checked, a panic never crosses the boundary, and a failure
+returns a `congru_status` with its detail in `congru_last_error_message`.
+
+## Command line
+
+`congru align`, `congru track`, `congru describe` and `congru methods` read
+`.xyz` and `.ply` files and print JSON, for scripts and agents.
