@@ -1,0 +1,23 @@
+spec: 1
+
+identity:
+  name: congru
+  author: Phorcys
+  holder: Phorcys
+  nature: open-source
+  visibility: public
+
+audience:
+  - computer-vision engineers
+  - robotics
+  - embedded systems
+
+lifecycle:
+  stage: research
+  registries:
+    crates.io: not-yet
+    pypi: not-yet
+    c-abi: unstable
+  ci:
+    mode: manual
+    activation: consent
