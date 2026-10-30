@@ -5,6 +5,10 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.15 — 2026-10-30
+
+- **Lint fixed** in the breakdown drawing; `CONGRU_SCENE` picks the scene.
+
 ## 0.1.14 — 2026-10-30
 
 - **One frame, step by step**: an image of every layer (depth, points,
