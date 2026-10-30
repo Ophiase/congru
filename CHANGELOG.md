@@ -5,6 +5,11 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.13 — 2026-10-30
+
+- **CI runs only when started by hand**, as a rule in `AGENTS.md`: nothing
+  runs or is paid for on a push.
+
 ## 0.1.12 — 2026-10-30
 
 - **In plain words** at the top of the README, for anyone.

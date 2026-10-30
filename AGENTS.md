@@ -71,6 +71,12 @@ Never a number copied from a run.
 A topic is done when the [review](.claude/skills/review/SKILL.md) skill
 returns **ready**: the publication first, the code second.
 
+## Continuous integration
+
+Workflows live in `.github/workflows/` and run **only when started by
+hand** (`workflow_dispatch`): nothing runs, and nothing is paid for, on a
+push or a pull request. The same `just` recipes run on a laptop.
+
 ## Branches
 
 Work on `dev/<topic>`, never on `main`. When a topic is done and every check
