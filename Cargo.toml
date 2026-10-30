@@ -20,7 +20,7 @@ version = "0.1.16"
 edition = "2024"
 rust-version = "1.89"
 license = "Apache-2.0"
-repository = "https://github.com/ophiase/congru"
+repository = "https://github.com/Ophiase/congru"
 keywords = [
   "point-cloud",
   "registration",
@@ -35,12 +35,12 @@ categories = [
 ]
 
 [workspace.dependencies]
-congru = { path = "crates/congru", version = "0.1.0" }
-congru-synth = { path = "crates/congru-synth", version = "0.1.0" }
-congru-vision = { path = "crates/congru-vision", version = "0.1.0" }
-congru-sim = { path = "crates/congru-sim", version = "0.1.0" }
-congru-track = { path = "crates/congru-track", version = "0.1.0" }
-congru-scene = { path = "crates/congru-scene", version = "0.1.0" }
+congru = { path = "crates/congru", version = "0.1.16" }
+congru-synth = { path = "crates/congru-synth", version = "0.1.16" }
+congru-vision = { path = "crates/congru-vision", version = "0.1.16" }
+congru-sim = { path = "crates/congru-sim", version = "0.1.16" }
+congru-track = { path = "crates/congru-track", version = "0.1.16" }
+congru-scene = { path = "crates/congru-scene", version = "0.1.16" }
 kiddo = { version = "6.3.0", default-features = false }
 nalgebra = "0.35.0"
 numpy = "0.30.0"

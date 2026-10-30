@@ -13,6 +13,11 @@ if [[ $version != "$cargo" ]]; then
   printf 'VERSION says %s, Cargo.toml says %s: bump both together.\n' "$version" "$cargo"
   status=1
 fi
+citation=$(awk '/^version:/ { print $2; exit }' "$root/CITATION.cff")
+if [[ $version != "$citation" ]]; then
+  printf 'VERSION says %s, CITATION.cff says %s: bump both together.\n' "$version" "$citation"
+  status=1
+fi
 if ! grep -q "^## $version " "$root/CHANGELOG.md"; then
   printf 'CHANGELOG.md has no section for %s.\n' "$version"
   status=1

@@ -4,8 +4,10 @@ title: "congru: rigid registration you can ship"
 type: software
 authors:
   - alias: ophiase
+repository-code: "https://github.com/Ophiase/congru"
 license: Apache-2.0
-version: 0.1.0
+version: 0.1.16
+date-released: "2026-10-30"
 keywords:
   - point cloud registration
   - iterative closest point
