@@ -2,6 +2,11 @@
 
 ## Realistic scenes
 
+![One frame, step by step](../figures/breakdown.gif)
+
+*How one frame is processed: depth, points, table removed, region around
+the detector's guess, voxels, model aligned ([the pipeline](../pipeline.md)).*
+
 Ordinary scenes written as short TOML files in
 [scenes/](../../scenes/), rendered by a simulated depth camera; the
 target is tinted. Adding one is writing one file.

@@ -1,6 +1,7 @@
 //! The realistic scenes filmed by a camera in a hand: in each, the tracker
 //! finds the target and holds on to it while the view wanders.
 
+mod breakdown;
 mod film;
 
 use std::io::Write;
@@ -10,6 +11,7 @@ use congru_scene::Scene;
 
 use crate::Summary;
 use crate::picture::{self, Tile};
+pub use breakdown::breakdown;
 use film::film;
 
 const FRAMES: usize = 72;
@@ -52,7 +54,7 @@ pub fn run(target: &Path) -> anyhow::Result<Vec<Summary>> {
         .collect())
 }
 
-fn load(folder: &Path) -> anyhow::Result<Vec<Scene>> {
+pub fn load(folder: &Path) -> anyhow::Result<Vec<Scene>> {
     let mut paths: Vec<PathBuf> = std::fs::read_dir(folder)?
         .filter_map(|entry| entry.ok().map(|entry| entry.path()))
         .filter(|path| {
