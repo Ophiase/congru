@@ -9,9 +9,9 @@ use crate::camera::view::CameraView;
 use crate::picture::palette::{MUTED, TEXT};
 use crate::picture::{Tile, font, outlined};
 
-const WIDTH: usize = 320;
-const HEIGHT: usize = 240;
-const SENSOR: Degradation = Degradation {
+pub(super) const WIDTH: usize = 320;
+pub(super) const HEIGHT: usize = 240;
+pub(super) const SENSOR: Degradation = Degradation {
     blur: 0,
     noise: 0.005,
     holes: 0.02,
@@ -23,14 +23,14 @@ const HANDHELD: Handheld = Handheld {
     shift: 0.0,
     period: 40.0,
 };
-const CROP: f64 = 0.75;
-const SUPPORT_TOLERANCE: f64 = 0.02;
-const SUPPORT_WIDER: f64 = 1.5;
-const VOXEL_SHARE: f64 = 1.0 / 60.0;
+pub(super) const CROP: f64 = 0.75;
+pub(super) const SUPPORT_TOLERANCE: f64 = 0.02;
+pub(super) const SUPPORT_WIDER: f64 = 1.5;
+pub(super) const VOXEL_SHARE: f64 = 1.0 / 60.0;
 const TURN_PER_FRAME: f64 = 0.006;
-const SEARCH_STARTS: usize = 12;
-const SAMPLE_SHARE: f64 = 1.0 / 80.0;
-const SEARCH_ITERATIONS: u32 = 15;
+pub(super) const SEARCH_STARTS: usize = 12;
+pub(super) const SAMPLE_SHARE: f64 = 1.0 / 80.0;
+pub(super) const SEARCH_ITERATIONS: u32 = 15;
 const CREEP_PER_FRAME: f64 = 0.004;
 
 /// The scene filmed for `frames` frames by a wandering camera, the target
@@ -73,7 +73,7 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Tile>> {
 
 /// What the wandering camera sees at `frame`, degraded, and the target's
 /// true pose in its frame; the target moves too.
-fn shoot(
+pub(super) fn shoot(
     scene: &Scene,
     camera: &Camera,
     frame: usize,
@@ -150,7 +150,7 @@ fn tile(
 }
 
 /// The centre of the target's bounding box, and its diagonal.
-fn extent(mesh: &TriangleMesh) -> (Point, f64) {
+pub(super) fn extent(mesh: &TriangleMesh) -> (Point, f64) {
     let points = mesh.vertices().points();
     let (lowest, highest) = points.iter().fold(
         (points[0].coords, points[0].coords),
@@ -163,6 +163,6 @@ fn extent(mesh: &TriangleMesh) -> (Point, f64) {
 }
 
 /// A detector's guess of the first pose: the truth, a few degrees off.
-fn detected(truth: &RigidTransform) -> RigidTransform {
+pub(super) fn detected(truth: &RigidTransform) -> RigidTransform {
     RigidTransform::from_axis_angle(congru::Vector::new(0.05, 0.08, 0.03), [0.0; 3]).then(truth)
 }

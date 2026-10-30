@@ -1,5 +1,12 @@
 # The pipeline, layer by layer
 
+![One frame of the part on a table, step by step](figures/breakdown.gif)
+
+*One frame, step by step: the depth the camera returns; the same as 3D
+points; the table taken away; only the region around the detector's guess
+(green outline); the voxels; the model aligned (green outline). `just
+demo` draws it again.*
+
 What happens between a camera frame and a pose, in the demos and the
 realistic scenes. Each layer is its own function; the table says where it
 lives and what is still missing.

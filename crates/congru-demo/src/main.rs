@@ -26,6 +26,18 @@ fn main() -> anyhow::Result<()> {
         Some("camera") => {
             camera::run(&target.unwrap_or_else(|| PathBuf::from("docs/figures/tracking.gif")))?
         }
+        Some("breakdown") => {
+            let scenes = tour::load(std::path::Path::new("scenes"))?;
+            let scene = scenes
+                .iter()
+                .find(|scene| scene.name == "part on a table")
+                .ok_or_else(|| anyhow::anyhow!("no table scene"))?;
+            tour::breakdown(
+                scene,
+                &target.unwrap_or_else(|| PathBuf::from("docs/figures/breakdown.gif")),
+            )?;
+            Vec::new()
+        }
         Some("tour") => {
             tour::run(&target.unwrap_or_else(|| PathBuf::from("docs/figures/scenes.gif")))?
         }

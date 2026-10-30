@@ -27,6 +27,7 @@ demo:
     cargo run --release -q -p congru-demo -- clouds docs/figures/clouds.gif
     cargo run --release -q -p congru-demo -- camera docs/figures/tracking.gif
     cargo run --release -q -p congru-demo -- tour docs/figures/scenes.gif
+    cargo run --release -q -p congru-demo -- breakdown docs/figures/breakdown.gif
 
 [doc("The published benchmark, on the evaluation seeds: resumes where it stopped, rewrites docs/benchmark/results.md as cells finish")]
 bench:

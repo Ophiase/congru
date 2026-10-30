@@ -5,6 +5,12 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.14 — 2026-10-30
+
+- **One frame, step by step**: an image of every layer (depth, points,
+  support removed, region, voxels, aligned) at the top of the pipeline page
+  and of the scene gallery.
+
 ## 0.1.13 — 2026-10-30
 
 - **CI runs only when started by hand**, as a rule in `AGENTS.md`: nothing
