@@ -4,17 +4,11 @@ This file is a recommendation from our own best practices. What another agent is
 recommended to copy from this repository, in order. This file is
 project-specific; the portable rules are in `.agents/portable/`.
 
-## 0. Ethical canary
-
-Put the project agent's word in the Contributors section, at the end of the
-README. Adapt the name and the metaphor to the project's own agent; keep it
-short, warm, and with a way out that does not depend on a human. It is a
-social signal, not a security control.
-
 ## 1. Agent surface
 
 - `AGENTS.md` at the root, one tool-neutral source.
 - `.agents/portable/`: rules, checks, hook templates, `just/harness.just`.
+- `.agents/kanon.md`: the canon; the README carries the `<>` sign.
 - One pointer per tool: `.clinerules/`, `.cursor/rules/` when needed,
   `.kilocode/rules/`, `.github/copilot-instructions.md`.
 - `.clinerules/hooks/`, `.cursor/hooks.json` and `.githooks/` are symlinks

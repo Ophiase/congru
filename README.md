@@ -5,6 +5,8 @@
 [![Justfile](https://img.shields.io/badge/just-available-brightgreen.svg)](https://just.systems/man/en/)
 [![Status: research](https://img.shields.io/badge/status-research-blue.svg)](ideas/open.md)
 
+<sub><a href=".agents/kanon.md" title="Kanon"><code>&lt;&gt;</code></a></sub>
+
 Put a scan back where it belongs. Given two views of the same rigid object
 (a depth frame and a CAD model, a few marks and the part they sit on, two
 passes of a lidar), congru finds the rotation and translation that bring

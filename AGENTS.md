@@ -38,7 +38,8 @@ The project's own order of what to copy first is in
 [.agents/masterclass-bootstrap.md](.agents/masterclass-bootstrap.md); the
 portable rules stay in `.agents/portable/`. Before reusing another project,
 read its `.agents/guard.yaml` and then `.agents/local/guard.yaml`
-([guards](.agents/portable/rules/guards.md)).
+([guards](.agents/portable/rules/guards.md)). The canon is
+[.agents/kanon.md](.agents/kanon.md); the `<>` in the README is its sign.
 
 ## Ideas
 
