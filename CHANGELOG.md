@@ -5,6 +5,18 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.16 — 2026-10-30
+
+- **Shortcuts removed.** The demos no longer take their first pose from
+  the truth, nor remove a supporting plane. The 0.1.15 entry claimed
+  `CONGRU_SCENE` while it did not exist; it does now.
+- **`Finder`**: a known object searched in a depth frame by point pair
+  features, each candidate checked against the depth inside and just
+  outside its silhouette. Tested on a clean frame. The 2D box it searches
+  in is simulated from the truth, and said so.
+- **[caution] The realistic scenes fail**: 0 of 72 frames within 2° on
+  every scene; the turntable demo's table is to measure again.
+
 ## 0.1.15 — 2026-10-30
 
 - **Lint fixed** in the breakdown drawing; `CONGRU_SCENE` picks the scene.

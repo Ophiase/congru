@@ -1,18 +1,16 @@
 use congru::{Distance, Point, PointCloud, RigidTransform, TriangleMesh};
 use congru_sim::{Turntable, flexed};
 use congru_track::{Settings, Tracker, Update};
-use congru_vision::{Camera, DepthImage, Frame, back_project, render, within, without_support};
+use congru_vision::{Camera, DepthImage, Frame, back_project, render, within};
 
 use super::conditions::{Clutter, Condition};
+use super::detect::Detector;
 use super::view::CameraView;
 
 const PART_SPAN: f64 = 0.25;
 const MODEL_SPACING: f64 = 0.003;
 const SCAN_VOXEL: f64 = 0.004;
-const SUPPORT_TOLERANCE: f64 = 0.004;
 const CROP_MARGIN: f64 = 0.015;
-/// How far from the truth a detector places the part on the first frame.
-const FIRST_FOCUS_ERROR: [f64; 3] = [0.02, -0.015, 0.01];
 
 /// The scene every condition is run on.
 #[derive(Debug)]
@@ -43,6 +41,7 @@ impl Stage {
             handheld: condition.handheld,
             ..self.path
         };
+        let detector = Detector::new(&self.part, PART_SPAN)?;
         let mut last: Option<RigidTransform> = None;
         (0..path.frames)
             .map(|frame| {
@@ -50,20 +49,19 @@ impl Stage {
                 let part = flexed(&self.part, condition.flex, PART_SPAN, frame)?;
                 let exact = self.shoot(&part, &truth, condition.clutter);
                 let depth = condition.degradation.apply(&exact.depth, frame as u64);
-                let focus = last.unwrap_or_else(|| truth.then(&nudge())).apply(&centre);
-                let seen = without_support(
-                    &back_project(&depth, &self.camera),
-                    SUPPORT_TOLERANCE,
-                    2.0 * reach,
-                );
-                let scan = PointCloud::new(within(&seen, &focus, reach))?
-                    .voxel_downsample(Distance::new(SCAN_VOXEL)?);
-                let update = tracker.update(&scan).ok();
+                let points = back_project(&depth, &self.camera);
+                let update = last
+                    .or_else(|| detector.find(&depth, &self.camera))
+                    .and_then(|start| {
+                        let scan = PointCloud::new(within(&points, &start.apply(&centre), reach))
+                            .ok()?
+                            .voxel_downsample(Distance::new(SCAN_VOXEL).ok()?);
+                        tracker.update_from(&scan, Some(start)).ok()
+                    });
                 last = update
                     .as_ref()
                     .filter(|update| update.trusted)
-                    .map(|update| update.pose)
-                    .or(last);
+                    .map(|update| update.pose);
                 Ok(Step {
                     depth,
                     truth,
@@ -81,10 +79,6 @@ impl Stage {
         }
         render(&self.camera, &scene)
     }
-}
-
-fn nudge() -> RigidTransform {
-    RigidTransform::from_parts(nalgebra::UnitQuaternion::identity(), FIRST_FOCUS_ERROR)
 }
 
 /// The centre of the part's bounding box, and how far from it its points

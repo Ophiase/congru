@@ -30,8 +30,12 @@ fn main() -> anyhow::Result<()> {
             let scenes = tour::load(std::path::Path::new("scenes"))?;
             let scene = scenes
                 .iter()
-                .find(|scene| scene.name == "part on a table")
-                .ok_or_else(|| anyhow::anyhow!("no table scene"))?;
+                .find(|scene| {
+                    scene.name
+                        == std::env::var("CONGRU_SCENE")
+                            .unwrap_or_else(|_| "bin of parts".to_owned())
+                })
+                .ok_or_else(|| anyhow::anyhow!("no such scene"))?;
             tour::breakdown(
                 scene,
                 &target.unwrap_or_else(|| PathBuf::from("docs/figures/breakdown.gif")),

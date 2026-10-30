@@ -55,7 +55,8 @@ views is **measured against a known truth**, not hoped for.
   [aggregation](method/aggregation.md) ·
   [mesh-targets](method/mesh-targets.md) ·
   [observability](method/observability.md) ·
-  [tracking](method/tracking.md)
+  [tracking](method/tracking.md) ·
+  [detection](method/detection.md)
 - **architecture/**:
   [layers](architecture/layers.md) ·
   [types](architecture/types.md) ·
