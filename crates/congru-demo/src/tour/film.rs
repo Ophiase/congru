@@ -9,7 +9,6 @@ use crate::camera::view::CameraView;
 use crate::picture::palette::{MUTED, TEXT};
 use crate::picture::{Tile, font, outlined};
 
-pub const FRAMES: usize = 72;
 const WIDTH: usize = 320;
 const HEIGHT: usize = 240;
 const SENSOR: Degradation = Degradation {
@@ -29,11 +28,13 @@ const SUPPORT_TOLERANCE: f64 = 0.02;
 const SUPPORT_WIDER: f64 = 1.5;
 const VOXEL_SHARE: f64 = 1.0 / 60.0;
 const TURN_PER_FRAME: f64 = 0.006;
+const SEARCH_STARTS: usize = 12;
+const SEARCH_ITERATIONS: u32 = 15;
 const CREEP_PER_FRAME: f64 = 0.004;
 
-/// The scene filmed for `FRAMES` frames by a wandering camera, the target
+/// The scene filmed for `frames` frames by a wandering camera, the target
 /// tracked from a detector's first crop, one tile per frame.
-pub fn film(scene: &Scene) -> anyhow::Result<Vec<Tile>> {
+pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Tile>> {
     let scale = congru_vision::pixel::coordinate(WIDTH)
         / congru_vision::pixel::coordinate(scene.camera.width);
     let camera = Camera {
@@ -49,7 +50,7 @@ pub fn film(scene: &Scene) -> anyhow::Result<Vec<Tile>> {
         Settings::for_part(span)?,
     );
     let mut last: Option<RigidTransform> = None;
-    (0..FRAMES)
+    (0..frames)
         .map(|frame| {
             let (depth, truth) = shoot(scene, &camera, frame);
             let focus = last.unwrap_or(truth).apply(&centre);

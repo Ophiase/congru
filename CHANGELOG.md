@@ -5,6 +5,17 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+- **The scene tour's animation** is not rendered yet: about five seconds a
+  frame, to profile before it is worth running.
+
+## 0.1.7 — 2026-10-30
+
+- **Scene tour** (`congru-demo tour`): every realistic scene filmed by a
+  wandering camera while its target moves, tracked from a detector's crop;
+  `CONGRU_FRAMES` sets the length.
+- **Faster support removal**: the plane is searched on 3,000 points at
+  most.
+
 ## 0.1.6 — 2026-10-29
 
 - **The animations in pastel**, on warm paper; demo B in a room whose wall

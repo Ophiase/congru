@@ -3,27 +3,44 @@
 
 mod film;
 
+use std::io::Write;
 use std::path::{Path, PathBuf};
 
 use congru_scene::Scene;
 
 use crate::Summary;
 use crate::picture::{self, Tile};
-use film::{FRAMES, film};
+use film::film;
+
+const FRAMES: usize = 72;
 
 pub fn run(target: &Path) -> anyhow::Result<Vec<Summary>> {
+    let frames = std::env::var("CONGRU_FRAMES")
+        .ok()
+        .and_then(|value| value.parse().ok())
+        .unwrap_or(FRAMES);
     let scenes = load(Path::new("scenes"))?;
     let runs: Vec<(String, Vec<Tile>)> = scenes
         .iter()
-        .map(|scene| Ok((scene.name.clone(), film(scene)?)))
+        .map(|scene| {
+            let started = std::time::Instant::now();
+            let tiles = film(scene, frames)?;
+            let _ = writeln!(
+                std::io::stderr().lock(),
+                "{}: {:.1} s",
+                scene.name,
+                started.elapsed().as_secs_f64()
+            );
+            Ok((scene.name.clone(), tiles))
+        })
         .collect::<anyhow::Result<_>>()?;
-    let mut frames: Vec<Vec<Tile>> = (0..FRAMES).map(|_| Vec::new()).collect();
+    let mut grid: Vec<Vec<Tile>> = (0..frames).map(|_| Vec::new()).collect();
     for (_, tiles) in &runs {
-        for (frame, tile) in frames.iter_mut().zip(tiles) {
+        for (frame, tile) in grid.iter_mut().zip(tiles) {
             frame.push(tile.clone());
         }
     }
-    picture::write(target, &frames, 3)?;
+    picture::write(target, &grid, 3)?;
     Ok(runs
         .iter()
         .map(|(name, tiles)| {
