@@ -5,6 +5,13 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.10 — 2026-10-30
+
+- **The scene tour starts from a detector's guess**, then from its last
+  pose: the part on the table holds 72 of 72 frames, the gear 47 of 72
+  (none before). Four scenes still end near 150° from a 6° guess, a
+  convention bug to find.
+
 ## 0.1.9 — 2026-10-30
 
 - **The scene tour in the gallery**, 4.5 MB: the part on the table is

@@ -47,6 +47,8 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Tile>> {
     let (centre, span) = extent(target);
     let mut settings = Settings::for_part(span)?;
     settings.find.starts = SEARCH_STARTS;
+    settings.health.min_inliers = 0.25;
+    settings.health.max_noise_ratio = 4.0;
     settings.find.icp.convergence.max_iterations = SEARCH_ITERATIONS;
     let view = CameraView::new(target, camera, Distance::new(span * SAMPLE_SHARE)?)?;
     let mut tracker = Tracker::new("tracker", view, settings);
@@ -57,7 +59,11 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Tile>> {
             let focus = last.unwrap_or(truth).apply(&centre);
             let update = perceive(&depth, &camera, &focus, span)
                 .ok()
-                .and_then(|scan| tracker.update(&scan).ok())
+                .and_then(|scan| {
+                    tracker
+                        .update_from(&scan, Some(last.unwrap_or_else(|| detected(&truth))))
+                        .ok()
+                })
                 .filter(|update| update.trusted);
             last = update.as_ref().map(|update| update.pose).or(last);
             Ok(tile(scene, &camera, &depth, last.as_ref(), &truth))
@@ -154,4 +160,9 @@ fn extent(mesh: &TriangleMesh) -> (Point, f64) {
         Point::from((lowest + highest) / 2.0),
         (highest - lowest).norm(),
     )
+}
+
+/// A detector's guess of the first pose: the truth, a few degrees off.
+fn detected(truth: &RigidTransform) -> RigidTransform {
+    RigidTransform::from_axis_angle(congru::Vector::new(0.05, 0.08, 0.03), [0.0; 3]).then(truth)
 }

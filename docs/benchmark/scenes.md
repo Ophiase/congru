@@ -10,9 +10,10 @@ target is tinted. Adding one is writing one file.
 
 *Each scene filmed by a wandering camera while its target moves; the green
 outline is where the tracker puts the target, the number its rotation
-error. Today it holds the part on the table; on the others the global
-search picks a turned-over pose (about 180°, the gear's symmetry among
-them): the next thing to fix. `just demo` films them again.*
+error. The tracker starts from a detector's guess: it holds the part on
+the table on every frame and the gear on two frames in three; on the bin,
+the car, the shelf and the street it ends near 150° from a guess 6° off,
+which a local method cannot do: a convention to find, the next fix. `just demo` films them again.*
 
 ![The realistic scenes](scenes/realistic.png)
 
