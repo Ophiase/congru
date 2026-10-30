@@ -30,17 +30,25 @@ It calls the project's `check` and `guards`; it defines no project command.
 ## The adapters
 
 - A tool with lifecycle events gets a hook that runs `guards` and reports
-  the failure: a Cline `PostToolUse` and `TaskComplete`, a Claude Code
-  `PostToolUse` and `Stop`.
+  the failure: a Cline `PostToolUse` and `TaskComplete`, a Cursor `stop`, a
+  Claude Code `PostToolUse` and `Stop`.
 - A tool with only rules gets a pointer to the repository's instructions
   and the git hook.
 - The git pre-commit is the floor: every tool gets it, and it needs no
   event API.
 
+## Permissions
+
+The deny half travels: Cline `PreToolUse`, Cursor `beforeShellExecution`,
+Kilo `permission` in `.kilo/kilo.jsonc`. The allow and ask halves are each
+tool's UI, not a file to copy.
+
 ## Using the templates
 
-- Cline: link `hooks/cline/PostToolUse` and `TaskComplete` into
-  `.clinerules/hooks/`.
+- Cline: link `hooks/cline/PostToolUse`, `TaskComplete` and `PreToolUse`
+  into `.clinerules/hooks/`.
+- Cursor: link `hooks/cursor/beforeShellExecution` and `stop` into
+  `.cursor/hooks/`, and point `.cursor/hooks.json` at them.
 - Git: link `hooks/git/pre-commit` into `.githooks/`, then run
   `just install-hooks` once.
 - Claude Code: its `settings.json` hooks call the same commands; keep them

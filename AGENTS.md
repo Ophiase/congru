@@ -69,12 +69,12 @@ The harness is the recipes and the checks, never one tool's events.
 `.agents/portable/just/harness.just`, which calls the project's `check` and
 `guards`. An agent that can run a shell runs the same gate.
 
-Cline and Kilo Code read this file. Their own rule folders (`.clinerules/`,
-`.kilocode/rules/`) hold one pointer each, never a copy. Cline's extension
-runs `.clinerules/hooks/<Event>` (`TaskStart`, `TaskComplete`, `PreToolUse`,
-`PostToolUse`, ...); the public Hooks page points at the SDK plugins and is
-behind the installed extension. Kilo documents no lifecycle hook. So the
-adapters are the two Cline hooks, the existing Claude Code hooks, and a git
+Cline, Cursor, Kilo Code and Copilot read this file. Their own rule folders
+(`.clinerules/`, `.cursor/rules/`, `.kilocode/rules/`, `.github/`) hold one
+pointer each, never a copy. Cline runs `.clinerules/hooks/<Event>` and Cursor
+runs `.cursor/hooks.json`; Kilo documents no lifecycle hook but takes
+permissions from `.kilo/kilo.jsonc`. So the adapters are the Cline and Cursor
+hooks, the existing Claude Code hooks, a Kilo permission file, and a git
 hook: `just install-hooks` once, then every commit runs `just guards`.
 
 `.claude/` is one adapter. Its `settings.json` permissions and its `hooks/`
