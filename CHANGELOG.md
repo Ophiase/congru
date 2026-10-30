@@ -5,6 +5,12 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.12 — 2026-10-30
+
+- **In plain words** at the top of the README, for anyone.
+- **Beyond** (`ideas/beyond.md`): certificates, a commons of hard cases,
+  cheap enough for everyone, understood not only used.
+
 ## 0.1.11 — 2026-10-30
 
 - **The pipeline, layer by layer** (`docs/pipeline.md`): from a depth frame
