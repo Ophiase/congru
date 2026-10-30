@@ -5,6 +5,17 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.17 — 2026-10-30
+
+- **Agent portability.** The root justfile has a module `agent`; `agent.just`
+  imports the portable `just/harness.just`, and `just agent gate` is the one
+  command to declare work done.
+- **Hooks and permissions.** Cline `.clinerules/hooks/`, Cursor
+  `.cursor/hooks.json`, the git pre-commit and the Kilo `.kilo/kilo.jsonc`
+  permissions call the same checks; the portable templates are symlinks.
+- **Sharing standard.** `.agents/guard.yaml` and the local overrides; the
+  Kanon and its `<>` sign.
+
 ## 0.1.16 — 2026-10-30
 
 - **Shortcuts removed.** The demos no longer take their first pose from
