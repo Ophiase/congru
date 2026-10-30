@@ -5,9 +5,11 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
-- **The scene tour's animation** renders in half a minute now, but the
-  tracker turns most targets over and the file weighs 31 MB: kept out until
-  both are fixed.
+## 0.1.9 — 2026-10-30
+
+- **The scene tour in the gallery**, 4.5 MB: the part on the table is
+  held; elsewhere the global search turns the target over, the next thing
+  to fix.
 
 ## 0.1.8 — 2026-10-30
 
