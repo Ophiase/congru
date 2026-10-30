@@ -64,20 +64,25 @@ all over the changed files.
 
 The harness is the recipes and the checks, never one tool's events.
 `just agent gate` runs `just check` then `just guards`; `.agents/checks/run.sh
-<check> <file>...` runs one check directly. An agent that can run a shell runs
-the same gate.
+<check> <file>...` runs one check directly. The root justfile has a module
+`agent`; `agent.just` imports the portable harness from
+`.agents/portable/just/harness.just`, which calls the project's `check` and
+`guards`. An agent that can run a shell runs the same gate.
 
 Cline and Kilo Code read this file. Their own rule folders (`.clinerules/`,
-`.kilocode/rules/`) hold one pointer each, never a copy. Neither exposes a
-project hook like Claude Code: Cline's hooks are SDK plugins for its CLI, SDK
-and Kanban, not the VS Code extension, and Kilo documents no lifecycle hook.
-So the tool-neutral adapter is a git hook: `just install-hooks` once, then
-every commit runs `just guards` locally.
+`.kilocode/rules/`) hold one pointer each, never a copy. Cline's extension
+runs `.clinerules/hooks/<Event>` (`TaskStart`, `TaskComplete`, `PreToolUse`,
+`PostToolUse`, ...); the public Hooks page points at the SDK plugins and is
+behind the installed extension. Kilo documents no lifecycle hook. So the
+adapters are the two Cline hooks, the existing Claude Code hooks, and a git
+hook: `just install-hooks` once, then every commit runs `just guards`.
 
 `.claude/` is one adapter. Its `settings.json` permissions and its `hooks/`
 fire only in Claude Code; elsewhere they are inert. `.claude/CLAUDE.md`
 imports this file with `@`, a Claude Code convention; for every other tool,
-this file is the source. See [docs/agent-hooks.md](docs/agent-hooks.md).
+this file is the source. The portable contract is in
+[.agents/portable/rules/agent-harness.md](.agents/portable/rules/agent-harness.md);
+the project matrix is in [docs/agent-hooks.md](docs/agent-hooks.md).
 
 ## Tests
 

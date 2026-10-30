@@ -32,7 +32,7 @@ before any file lands in `data/`.
 | --- | --- | --- |
 | **Scenes** | A scene description and a library of ordinary scenes: a part on a table, a car on a road, a shelf, a bin of parts; fractal ground noise; free meshes with their licence | Every situation of the benchmark also exists as a realistic scene, drawn on one sheet |
 | **Presentation** | One pastel theme for every figure and animation; demo B's background and outline fixed | The author reviews it without a remark |
-| **Agents** | A `congru` command printing JSON (align, track a folder of frames, bench), an `agent.just`, a skill an agent follows, a container image | An agent tracks an object in a recording with nothing but the skill |
+| **Agents** | A `congru` command printing JSON (align, track a folder of frames, bench), a portable harness imported by `agent.just`, a skill an agent follows, a container image | An agent tracks an object in a recording with nothing but the skill |
 | **Credibility** | The same frames written to disk and run through Open3D and small_gicp; a Typst report with every table from the CSV | A reader can check every claim from a command |
 | **Real data** | Public RGB-D and lidar recordings with ground truth and a clear licence | Milestone 2 |
 | **Industry** | C ABI and C++ header, `f32` and `no_std`, latency percentiles, fuzzing of every input | A firmware team can link it and bound its time |

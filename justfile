@@ -1,7 +1,7 @@
 mod agent
 
 default:
-    @just --list --list-submodules
+    @just --list # --list-submodules
 
 [doc("Formatting and pedantic clippy, warnings as errors")]
 lint:
@@ -91,6 +91,4 @@ _guard check:
 deny:
     cargo deny check --config deny.toml
 
-[doc("Run the project's checks on every commit: git config core.hooksPath .githooks")]
-install-hooks:
-    git config core.hooksPath .githooks
+
