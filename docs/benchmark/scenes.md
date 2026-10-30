@@ -6,6 +6,14 @@ Ordinary scenes written as short TOML files in
 [scenes/](../../scenes/), rendered by a simulated depth camera; the
 target is tinted. Adding one is writing one file.
 
+![The realistic scenes, filmed by a camera in a hand](../figures/scenes.gif)
+
+*Each scene filmed by a wandering camera while its target moves; the green
+outline is where the tracker puts the target, the number its rotation
+error. Today it holds the part on the table; on the others the global
+search picks a turned-over pose (about 180°, the gear's symmetry among
+them): the next thing to fix. `just demo` films them again.*
+
 ![The realistic scenes](scenes/realistic.png)
 
 | Scene, left to right | What it tests |
