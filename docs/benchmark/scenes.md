@@ -4,8 +4,9 @@
 
 ![One frame, step by step](../figures/breakdown.gif)
 
-*How one frame is processed: depth, points, table removed, region around
-the detector's guess, voxels, model aligned ([the pipeline](../pipeline.md)).*
+*How one frame is processed: depth, the 2D detector's box (simulated),
+the model found by shape, region, voxels, model tracked
+([the pipeline](../pipeline.md)).*
 
 Ordinary scenes written as short TOML files in
 [scenes/](../../scenes/), rendered by a simulated depth camera; the
@@ -15,12 +16,13 @@ target is tinted. Adding one is writing one file.
 
 *Each scene filmed by a wandering camera while its target moves; the green
 outline is where the tracker puts the target, the number its rotation
-error. The tracker starts from a detector's guess: it holds the part on
-the table on every frame and the gear on two frames in three; on the bin,
-the car, the shelf and the street it ends near 150° from a guess 6° off,
-which a local method cannot do: a convention to find, the next fix.
-`just demo` films them again; each layer is explained in
-[the pipeline](../pipeline.md).*
+error. **[caution] Every scene fails today: 0 of 72 frames within 2°.**
+Until 0.1.15 the first pose came from the truth nudged by a few degrees
+and the supporting plane was removed; both were shortcuts a headset does
+not have, and are gone. The target is now found by its shape inside a
+simulated 2D box: on a clean frame that works (a test checks it), in the
+simulated sensor's noise it does not yet, and the car and the street
+corner, far away, are not found at all. `just demo` films them again.*
 
 ![The realistic scenes](scenes/realistic.png)
 

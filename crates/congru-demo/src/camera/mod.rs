@@ -2,6 +2,7 @@
 //! tracked through degraded frames.
 
 mod conditions;
+pub(crate) mod detect;
 mod overlay;
 mod room;
 mod stage;

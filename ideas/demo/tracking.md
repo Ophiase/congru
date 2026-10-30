@@ -3,10 +3,9 @@
 **[defined]** As built in `crates/congru-demo`, and measured on the
 simulated turntable.
 
-1. **First frame**: no pose. The support plane is removed, the scan is
-   cropped around its centroid, and
-   [multistart](../method/global-initialisation.md) aligns it onto the
-   whole model.
+1. **First frame**: no pose. The model is searched in the frame by its
+   shape ([detection](../method/detection.md)), the scan cropped around
+   what was found.
 2. **Every later frame**: the pose is predicted from the last one and the
    last velocity; the scan is cropped around the predicted part.
 3. **Only the visible model**: the model is rendered at the predicted pose,

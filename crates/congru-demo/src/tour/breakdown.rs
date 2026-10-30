@@ -1,54 +1,47 @@
 use std::path::Path;
 
-use congru::{Distance, Point, PointCloud, RigidTransform};
+use congru::{Point, RigidTransform};
 use congru_scene::Scene;
-use congru_track::{Settings, Tracker};
-use congru_vision::pixel::{containing, coordinate};
-use congru_vision::{Camera, DepthImage, back_project, render, within, without_support};
+use congru_vision::pixel::containing;
+use congru_vision::{Camera, DepthImage, back_project, render, within};
 
-use super::film::{
-    CROP, HEIGHT, SAMPLE_SHARE, SUPPORT_TOLERANCE, SUPPORT_WIDER, VOXEL_SHARE, WIDTH, detected,
-    extent, shoot,
-};
-use crate::camera::view::CameraView;
+use super::film::{CROP, around, camera_of, extent, shoot, tracker_for};
+use crate::camera::detect::{Detector, boxed};
 use crate::picture::palette::TEXT;
 use crate::picture::{self, Tile, font, outlined};
 
-/// One frame of `scene`, step by step: what the camera returns, the points,
-/// the support taken away, the region kept, the voxels, and the model
-/// aligned onto them.
+/// The first frame of `scene`, step by step: what the camera returns, the
+/// points, the target found by its shape, the region kept around it, the
+/// voxels, and the model tracked onto them.
 pub fn breakdown(scene: &Scene, target: &Path) -> anyhow::Result<()> {
-    let scale = coordinate(WIDTH) / coordinate(scene.camera.width);
-    let camera = Camera {
-        width: WIDTH,
-        height: HEIGHT,
-        focal: scene.camera.focal * scale,
-    };
+    let camera = camera_of(scene);
     let model = &scene.target().mesh;
     let (centre, span) = extent(model);
     let (depth, truth) = shoot(scene, &camera, 0);
+    let seen = boxed(&depth, &camera, model, &truth);
     let points = back_project(&depth, &camera);
-    let ground_free = without_support(&points, SUPPORT_TOLERANCE * span, SUPPORT_WIDER * span);
-    let guess = detected(&truth);
-    let region = within(&ground_free, &guess.apply(&centre), CROP * span);
-    let voxels =
-        PointCloud::new(region.clone())?.voxel_downsample(Distance::new(VOXEL_SHARE * span)?);
-    let view = CameraView::new(model, camera, Distance::new(span * SAMPLE_SHARE)?)?;
-    let mut tracker = Tracker::new("tracker", view, Settings::for_part(span)?);
-    let pose = tracker.update_from(&voxels, Some(guess))?.pose;
+    let found = Detector::new(model, span)?
+        .find(&seen, &camera)
+        .ok_or_else(|| anyhow::anyhow!("the target was not found in {}", scene.name))?;
+    let focus = found.apply(&centre);
+    let region = within(&points, &focus, CROP * span);
+    let voxels = around(&points, &focus, span)?;
+    let pose = tracker_for(model, camera, span)?
+        .update_from(&voxels, Some(found))?
+        .pose;
     let silhouette = |pose: &RigidTransform| outline_of(model, &camera, pose);
     let steps = [
         ("1 depth frame", depth.clone(), None),
-        ("2 points", splat(&points, &camera), None),
-        ("3 support removed", splat(&ground_free, &camera), None),
+        ("2 detector box", seen.clone(), None),
         (
-            "4 region of interest",
-            splat(&region, &camera),
-            Some(silhouette(&guess)),
+            "3 found by shape",
+            splat(&points, &camera),
+            Some(silhouette(&found)),
         ),
+        ("4 region kept", splat(&region, &camera), None),
         ("5 voxels", splat(voxels.points(), &camera), None),
         (
-            "6 aligned",
+            "6 tracked",
             splat(voxels.points(), &camera),
             Some(silhouette(&pose)),
         ),

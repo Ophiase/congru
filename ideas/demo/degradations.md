@@ -22,7 +22,7 @@ lost in round holes, and flying pixels mixing both sides of a depth edge.
 
 ## [caution]
 
-The first frame's crop comes from a detector, simulated by the truth moved
-by about 3 cm: without it, a room full of surfaces leaves the global search
-nothing to tell the part from. Dropping that help is the *mostly the
-object* rung of the [ladder](../problem/hypothesis-ladder.md).
+Until 0.1.15 the first frame's crop came from the truth moved by about
+3 cm, and the supporting plane was removed. Both are gone
+([detection](../method/detection.md)); the numbers measured with them, in
+the demo's table, are to measure again.

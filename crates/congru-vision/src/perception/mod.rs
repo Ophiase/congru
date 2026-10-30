@@ -1,6 +1,8 @@
+mod find;
 mod plane;
 mod visibility;
 
+pub use find::{Finder, Found};
 pub use plane::without_support;
 pub use visibility::visible_from_origin;
 

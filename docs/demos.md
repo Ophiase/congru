@@ -53,7 +53,10 @@ finds; the number is the rotation error against the truth.*
 | Room | a wall, a bench, a box, a can and the turntable in view | 0.34° | 90 / 90 |
 | Everything | all of it, twice the noise, three times the holes | 0.82° | 89 / 90 |
 
-Computed offline, frame by frame, by `just demo`; the pipeline (support
-plane removed, scan cropped, aligned onto the part of the model visible
+**[caution]** These numbers were measured in 0.1.15, with a first crop
+taken from the truth and the support plane removed; both are gone, and
+the table is to measure again. Computed offline, frame by frame, by `just
+demo`; the pipeline (found by shape, scan cropped, aligned onto the part
+of the model visible
 from the predicted pose) is real-time by design
 ([the demo](../ideas/demo/README.md)).

@@ -66,6 +66,22 @@ impl NearestNeighbors {
             })
             .collect()
     }
+
+    /// Every indexed point within `radius`, in no order.
+    #[must_use]
+    pub fn within(&self, query: &Point, radius: f64) -> Vec<Neighbor> {
+        self.tree
+            .query(&query.coords.into())
+            .within::<SquaredEuclidean<f64>>(radius * radius)
+            .unsorted()
+            .execute()
+            .into_iter()
+            .map(|found| Neighbor {
+                index: found.item as usize,
+                squared_distance: found.distance,
+            })
+            .collect()
+    }
 }
 
 impl std::fmt::Debug for NearestNeighbors {

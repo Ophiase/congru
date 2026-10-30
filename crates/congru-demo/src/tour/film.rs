@@ -3,14 +3,16 @@ use congru_scene::Scene;
 use congru_sim::Degradation;
 use congru_synth::sequence::Handheld;
 use congru_track::{Settings, Tracker};
-use congru_vision::{Camera, back_project, render, within, without_support};
+use congru_vision::{Camera, back_project, render, within};
+
+use crate::camera::detect::{Detector, boxed};
 
 use crate::camera::view::CameraView;
 use crate::picture::palette::{MUTED, TEXT};
 use crate::picture::{Tile, font, outlined};
 
-pub(super) const WIDTH: usize = 320;
-pub(super) const HEIGHT: usize = 240;
+const WIDTH: usize = 320;
+const HEIGHT: usize = 240;
 pub(super) const SENSOR: Degradation = Degradation {
     blur: 0,
     noise: 0.005,
@@ -23,52 +25,66 @@ const HANDHELD: Handheld = Handheld {
     shift: 0.0,
     period: 40.0,
 };
-pub(super) const CROP: f64 = 0.75;
-pub(super) const SUPPORT_TOLERANCE: f64 = 0.02;
-pub(super) const SUPPORT_WIDER: f64 = 1.5;
-pub(super) const VOXEL_SHARE: f64 = 1.0 / 60.0;
+pub(super) const CROP: f64 = 0.6;
+const VOXEL_SHARE: f64 = 1.0 / 60.0;
 const TURN_PER_FRAME: f64 = 0.006;
-pub(super) const SEARCH_STARTS: usize = 12;
-pub(super) const SAMPLE_SHARE: f64 = 1.0 / 80.0;
-pub(super) const SEARCH_ITERATIONS: u32 = 15;
+const SEARCH_STARTS: usize = 12;
+const SAMPLE_SHARE: f64 = 1.0 / 80.0;
+const SEARCH_ITERATIONS: u32 = 15;
 const CREEP_PER_FRAME: f64 = 0.004;
 
 /// The scene filmed for `frames` frames by a wandering camera, the target
-/// tracked from a detector's first crop, one tile per frame.
+/// found by its shape and then tracked, one tile per frame. The truth only
+/// scores the tiles.
 pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Tile>> {
+    let camera = camera_of(scene);
+    let target = &scene.target().mesh;
+    let (centre, span) = extent(target);
+    let mut tracker = tracker_for(target, camera, span)?;
+    let detector = Detector::new(target, span)?;
+    let mut last: Option<RigidTransform> = None;
+    (0..frames)
+        .map(|frame| {
+            let (depth, truth) = shoot(scene, &camera, frame);
+            let points = back_project(&depth, &camera);
+            let update = last
+                .or_else(|| detector.find(&boxed(&depth, &camera, target, &truth), &camera))
+                .and_then(|start| {
+                    let region = around(&points, &start.apply(&centre), span).ok()?;
+                    tracker.update_from(&region, Some(start)).ok()
+                })
+                .filter(|update| update.trusted);
+            last = update.map(|update| update.pose);
+            Ok(tile(scene, &camera, &depth, last.as_ref(), &truth))
+        })
+        .collect()
+}
+
+/// The scene's camera, at the tour's resolution.
+pub(super) fn camera_of(scene: &Scene) -> Camera {
     let scale = congru_vision::pixel::coordinate(WIDTH)
         / congru_vision::pixel::coordinate(scene.camera.width);
-    let camera = Camera {
+    Camera {
         width: WIDTH,
         height: HEIGHT,
         focal: scene.camera.focal * scale,
-    };
-    let target = &scene.target().mesh;
-    let (centre, span) = extent(target);
+    }
+}
+
+/// The tracker of the tour: searches are cut short, and a frame is trusted
+/// with a quarter of its points on the model, for the clutter around it.
+pub(super) fn tracker_for(
+    model: &TriangleMesh,
+    camera: Camera,
+    span: f64,
+) -> anyhow::Result<Tracker<CameraView>> {
     let mut settings = Settings::for_part(span)?;
     settings.find.starts = SEARCH_STARTS;
     settings.health.min_inliers = 0.25;
     settings.health.max_noise_ratio = 4.0;
     settings.find.icp.convergence.max_iterations = SEARCH_ITERATIONS;
-    let view = CameraView::new(target, camera, Distance::new(span * SAMPLE_SHARE)?)?;
-    let mut tracker = Tracker::new("tracker", view, settings);
-    let mut last: Option<RigidTransform> = None;
-    (0..frames)
-        .map(|frame| {
-            let (depth, truth) = shoot(scene, &camera, frame);
-            let focus = last.unwrap_or(truth).apply(&centre);
-            let update = perceive(&depth, &camera, &focus, span)
-                .ok()
-                .and_then(|scan| {
-                    tracker
-                        .update_from(&scan, Some(last.unwrap_or_else(|| detected(&truth))))
-                        .ok()
-                })
-                .filter(|update| update.trusted);
-            last = update.as_ref().map(|update| update.pose).or(last);
-            Ok(tile(scene, &camera, &depth, last.as_ref(), &truth))
-        })
-        .collect()
+    let view = CameraView::new(model, camera, Distance::new(span * SAMPLE_SHARE)?)?;
+    Ok(Tracker::new("tracker", view, settings))
 }
 
 /// What the wandering camera sees at `frame`, degraded, and the target's
@@ -110,20 +126,10 @@ fn drive(target: &congru_scene::Placed, frame: usize) -> RigidTransform {
     )
 }
 
-/// The frame's points without the support plane, cropped around `focus`
-/// and thinned.
-fn perceive(
-    depth: &congru_vision::DepthImage,
-    camera: &Camera,
-    focus: &Point,
-    span: f64,
-) -> anyhow::Result<PointCloud> {
-    let points = without_support(
-        &back_project(depth, camera),
-        SUPPORT_TOLERANCE * span,
-        SUPPORT_WIDER * span,
-    );
-    Ok(PointCloud::new(within(&points, focus, CROP * span))?
+/// The frame's points near `focus`, thinned: one point per voxel, so the
+/// density no longer depends on the distance.
+pub(super) fn around(points: &[Point], focus: &Point, span: f64) -> anyhow::Result<PointCloud> {
+    Ok(PointCloud::new(within(points, focus, CROP * span))?
         .voxel_downsample(Distance::new(VOXEL_SHARE * span)?))
 }
 
@@ -160,9 +166,4 @@ pub(super) fn extent(mesh: &TriangleMesh) -> (Point, f64) {
         Point::from((lowest + highest) / 2.0),
         (highest - lowest).norm(),
     )
-}
-
-/// A detector's guess of the first pose: the truth, a few degrees off.
-pub(super) fn detected(truth: &RigidTransform) -> RigidTransform {
-    RigidTransform::from_axis_angle(congru::Vector::new(0.05, 0.08, 0.03), [0.0; 3]).then(truth)
 }
