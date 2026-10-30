@@ -5,6 +5,11 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.11 — 2026-10-30
+
+- **The pipeline, layer by layer** (`docs/pipeline.md`): from a depth frame
+  to a pose, what each layer does, where it lives, what milestone 2 adds.
+
 ## 0.1.10 — 2026-10-30
 
 - **The scene tour starts from a detector's guess**, then from its last

@@ -17,6 +17,7 @@ one onto the other, says how sure it is, and runs wherever the robot runs.
 
 <p align="center">
   <a href="docs/demos.md">The demos</a> ·
+  <a href="docs/pipeline.md">The pipeline, layer by layer</a> ·
   <a href="docs/benchmark/protocol.md">How methods are tested</a> ·
   <a href="docs/benchmark/scenes.md">The scenes they are tested on</a> ·
   <a href="docs/benchmark/results.md">The results, method by method</a>
