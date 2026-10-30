@@ -1,6 +1,8 @@
 use congru::{Point, Vector};
 
 const TRIALS: usize = 200;
+/// The plane is searched on at most this many points, spread evenly.
+const SAMPLE: usize = 3000;
 
 /// The points left once the largest plane is taken away, when that plane
 /// spreads wider than `wider_than`: a table or a turntable is wider than
@@ -9,7 +11,9 @@ const TRIALS: usize = 200;
 /// within `tolerance` of the plane belong to it.
 #[must_use]
 pub fn without_support(points: &[Point], tolerance: f64, wider_than: f64) -> Vec<Point> {
-    let Some((normal, offset, _)) = largest_plane(points, tolerance) else {
+    let stride = points.len().div_ceil(SAMPLE).max(1);
+    let sample: Vec<Point> = points.iter().step_by(stride).copied().collect();
+    let Some((normal, offset, _)) = largest_plane(&sample, tolerance) else {
         return points.to_vec();
     };
     let on_plane = |point: &&Point| (normal.dot(&point.coords) - offset).abs() <= tolerance;

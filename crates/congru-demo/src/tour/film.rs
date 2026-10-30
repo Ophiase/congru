@@ -9,7 +9,6 @@ use crate::camera::view::CameraView;
 use crate::picture::palette::{MUTED, TEXT};
 use crate::picture::{Tile, font, outlined};
 
-pub const FRAMES: usize = 72;
 const WIDTH: usize = 320;
 const HEIGHT: usize = 240;
 const SENSOR: Degradation = Degradation {
@@ -28,10 +27,14 @@ const CROP: f64 = 0.75;
 const SUPPORT_TOLERANCE: f64 = 0.02;
 const SUPPORT_WIDER: f64 = 1.5;
 const VOXEL_SHARE: f64 = 1.0 / 60.0;
+const TURN_PER_FRAME: f64 = 0.006;
+const SEARCH_STARTS: usize = 12;
+const SEARCH_ITERATIONS: u32 = 15;
+const CREEP_PER_FRAME: f64 = 0.004;
 
-/// The scene filmed for `FRAMES` frames by a wandering camera, the target
+/// The scene filmed for `frames` frames by a wandering camera, the target
 /// tracked from a detector's first crop, one tile per frame.
-pub fn film(scene: &Scene) -> anyhow::Result<Vec<Tile>> {
+pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Tile>> {
     let scale = congru_vision::pixel::coordinate(WIDTH)
         / congru_vision::pixel::coordinate(scene.camera.width);
     let camera = Camera {
@@ -47,13 +50,13 @@ pub fn film(scene: &Scene) -> anyhow::Result<Vec<Tile>> {
         Settings::for_part(span)?,
     );
     let mut last: Option<RigidTransform> = None;
-    (0..FRAMES)
+    (0..frames)
         .map(|frame| {
             let (depth, truth) = shoot(scene, &camera, frame);
             let focus = last.unwrap_or(truth).apply(&centre);
-            let update = tracker
-                .update(&perceive(&depth, &camera, &focus, span)?)
+            let update = perceive(&depth, &camera, &focus, span)
                 .ok()
+                .and_then(|scan| tracker.update(&scan).ok())
                 .filter(|update| update.trusted);
             last = update.as_ref().map(|update| update.pose).or(last);
             Ok(tile(scene, &camera, &depth, last.as_ref(), &truth))
@@ -62,21 +65,41 @@ pub fn film(scene: &Scene) -> anyhow::Result<Vec<Tile>> {
 }
 
 /// What the wandering camera sees at `frame`, degraded, and the target's
-/// true pose in its frame.
+/// true pose in its frame; the target moves too.
 fn shoot(
     scene: &Scene,
     camera: &Camera,
     frame: usize,
 ) -> (congru_vision::DepthImage, RigidTransform) {
     let view = scene.view.then(&HANDHELD.pose(frame));
+    let target = scene.target();
+    let moving = drive(target, frame).then(&target.pose);
     let placed: Vec<(&TriangleMesh, RigidTransform)> = scene
         .objects
         .iter()
-        .map(|object| (&object.mesh, object.pose.then(&view)))
+        .map(|object| {
+            let pose = if std::ptr::eq(object, target) {
+                moving
+            } else {
+                object.pose
+            };
+            (&object.mesh, pose.then(&view))
+        })
         .collect();
     (
         SENSOR.apply(&render(camera, &placed).depth, frame as u64),
-        scene.target().pose.then(&view),
+        moving.then(&view),
+    )
+}
+
+/// The target's own motion at `frame`, in its frame: it creeps forward along
+/// its length and turns slowly, as a car pulling out or a part on a belt.
+fn drive(target: &congru_scene::Placed, frame: usize) -> RigidTransform {
+    let (_, span) = extent(&target.mesh);
+    let time = congru_vision::pixel::coordinate(frame);
+    RigidTransform::from_axis_angle(
+        congru::Vector::z() * (TURN_PER_FRAME * time),
+        [CREEP_PER_FRAME * span * time, 0.0, 0.0],
     )
 }
 
