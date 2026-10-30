@@ -23,6 +23,16 @@ one onto the other, says how sure it is, and runs wherever the robot runs.
   <a href="docs/benchmark/results.md">The results, method by method</a>
 </p>
 
+## In plain words
+
+A robot, a headset or a scanner sees an object as a cloud of points: a few
+thousand dots, noisy, partly hidden. It also knows what the object looks
+like, from a 3D model. congru finds how the model must be turned and moved
+to sit exactly on the dots, says whether it is sure, and keeps doing it
+frame after frame while the object or the camera moves. The rest of this
+page is how, how well, and why it matters
+([where it could go](ideas/beyond.md)).
+
 ## Why this project exists
 
 Registration is in every pipeline that looks at the 3D world: a robot

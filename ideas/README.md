@@ -37,7 +37,8 @@ views is **measured against a known truth**, not hoped for.
 
 - [vision.md](vision.md) · [origin.md](origin.md) ·
   [milestones.md](milestones.md) · [naming.md](naming.md) ·
-  [open.md](open.md) · [prior-art.md](prior-art.md)
+  [open.md](open.md) · [prior-art.md](prior-art.md) ·
+  [beyond.md](beyond.md)
 - **problem/**:
   [observation-model](problem/observation-model.md) ·
   [hypotheses](problem/hypotheses.md) ·
