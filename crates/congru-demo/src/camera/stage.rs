@@ -7,6 +7,7 @@ use super::conditions::{Clutter, Condition};
 use super::view::CameraView;
 
 const PART_SPAN: f64 = 0.25;
+const MODEL_SPACING: f64 = 0.003;
 const SCAN_VOXEL: f64 = 0.004;
 const SUPPORT_TOLERANCE: f64 = 0.004;
 const CROP_MARGIN: f64 = 0.015;
@@ -34,7 +35,7 @@ pub struct Step {
 
 impl Stage {
     pub fn run(&self, condition: &Condition) -> anyhow::Result<Vec<Step>> {
-        let view = CameraView::new(&self.part, self.camera)?;
+        let view = CameraView::new(&self.part, self.camera, Distance::new(MODEL_SPACING)?)?;
         let mut tracker = Tracker::new("tracker", view, Settings::for_part(PART_SPAN)?);
         let (centre, reach) = extent(&self.part);
         let path = Turntable {

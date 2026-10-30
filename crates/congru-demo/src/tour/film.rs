@@ -29,6 +29,7 @@ const SUPPORT_WIDER: f64 = 1.5;
 const VOXEL_SHARE: f64 = 1.0 / 60.0;
 const TURN_PER_FRAME: f64 = 0.006;
 const SEARCH_STARTS: usize = 12;
+const SAMPLE_SHARE: f64 = 1.0 / 80.0;
 const SEARCH_ITERATIONS: u32 = 15;
 const CREEP_PER_FRAME: f64 = 0.004;
 
@@ -44,11 +45,11 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Tile>> {
     };
     let target = &scene.target().mesh;
     let (centre, span) = extent(target);
-    let mut tracker = Tracker::new(
-        "tracker",
-        CameraView::new(target, camera)?,
-        Settings::for_part(span)?,
-    );
+    let mut settings = Settings::for_part(span)?;
+    settings.find.starts = SEARCH_STARTS;
+    settings.find.icp.convergence.max_iterations = SEARCH_ITERATIONS;
+    let view = CameraView::new(target, camera, Distance::new(span * SAMPLE_SHARE)?)?;
+    let mut tracker = Tracker::new("tracker", view, settings);
     let mut last: Option<RigidTransform> = None;
     (0..frames)
         .map(|frame| {

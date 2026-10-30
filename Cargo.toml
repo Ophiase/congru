@@ -11,10 +11,12 @@ members = [
   "crates/congru-python",
   "crates/congru-track",
   "crates/congru-scene",
+  "crates/congru-cli",
+  "crates/congru-capi",
 ]
 
 [workspace.package]
-version = "0.1.7"
+version = "0.1.8"
 edition = "2024"
 rust-version = "1.89"
 license = "Apache-2.0"

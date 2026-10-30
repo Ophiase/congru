@@ -1,0 +1,27 @@
+[package]
+name = "congru-capi"
+description = "An unstable C ABI over congru, with a header-only C++20 wrapper."
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lib]
+name = "congru_capi"
+crate-type = [
+  "cdylib",
+  "staticlib",
+]
+doctest = false
+
+[dependencies]
+congru.workspace = true
+
+[dev-dependencies]
+congru-synth.workspace = true
+nalgebra.workspace = true
+
+[lints]
+workspace = true

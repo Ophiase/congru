@@ -2,8 +2,6 @@ use congru::{Distance, Error, PointCloud, RigidTransform, Target, TriangleMesh};
 use congru_track::ModelView;
 use congru_vision::{Camera, back_project, render};
 
-const MODEL_SPACING: f64 = 0.003;
-const VISIBLE_VOXEL: f64 = 0.003;
 const NORMAL_NEIGHBORS: usize = 10;
 
 /// The part as a depth camera sees it: a followed frame is aligned onto
@@ -14,14 +12,18 @@ pub struct CameraView {
     model: TriangleMesh,
     camera: Camera,
     whole: Target,
+    spacing: Distance,
 }
 
 impl CameraView {
-    pub fn new(model: &TriangleMesh, camera: Camera) -> Result<Self, Error> {
+    /// `spacing` sets the sampling of the model and of its visible side: a
+    /// hundredth of its size is plenty.
+    pub fn new(model: &TriangleMesh, camera: Camera, spacing: Distance) -> Result<Self, Error> {
         Ok(Self {
             model: model.clone(),
             camera,
-            whole: Target::from_mesh(model, Distance::new(MODEL_SPACING)?)?,
+            whole: Target::from_mesh(model, spacing)?,
+            spacing,
         })
     }
 }
@@ -35,7 +37,7 @@ impl ModelView for CameraView {
         let view = render(&self.camera, &[(&self.model, *pose)]);
         let seen = PointCloud::new(back_project(&view.depth, &self.camera))?
             .transformed(&pose.inverse())
-            .voxel_downsample(Distance::new(VISIBLE_VOXEL)?);
+            .voxel_downsample(self.spacing);
         Target::with_estimated_normals(seen, NORMAL_NEIGHBORS).map(Some)
     }
 }
