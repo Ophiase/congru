@@ -1,6 +1,3 @@
-# Paths of the reference projects on this machine, see .agents/local.example.md
-/.agents/local.md
-
 target/
 .venv/
 __pycache__/

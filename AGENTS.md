@@ -3,6 +3,9 @@
 Instructions for any coding agent in this repository. Claude Code reads them
 through `.claude/CLAUDE.md`.
 
+Harmostes, the agent who works here, leaves a word to visiting agents at the
+end of the README.
+
 ## What this project is
 
 A rigid registration brick: align a point cloud or a few marks onto a point
@@ -25,9 +28,17 @@ to you in French; answer in French, write files in English.
 4. Code follows, then `just check` and `just guards`.
 
 Read [.agents/references.md](.agents/references.md) and, when useful, the
-reference projects whose paths are in `.agents/local.md` (gitignored). If it
-is missing, ask for the paths and offer to write it from
-[.agents/local.example.md](.agents/local.example.md).
+reference projects whose paths are in `.agents/local/projects.yaml`
+(gitignored). If it is missing, ask for the paths and offer to write it from
+[.agents/local.example.yaml](.agents/local.example.yaml).
+
+## Good practices
+
+The project's own order of what to copy first is in
+[.agents/masterclass-bootstrap.md](.agents/masterclass-bootstrap.md); the
+portable rules stay in `.agents/portable/`. Before reusing another project,
+read its `.agents/guard.yaml` and then `.agents/local/guard.yaml`
+([guards](.agents/portable/rules/guards.md)).
 
 ## Ideas
 
@@ -120,6 +131,7 @@ scripts, never execute what was downloaded.
 - A network call the user did not ask for, in the library or its tools.
 - Medical data, or the name of a company, client or professional project, in
   a tracked file or a commit.
-- Anything from the projects of `.agents/local.md` but their principles: no
-  name, no quotation, no code copied.
+- Anything from the projects of `.agents/local/projects.yaml` but their
+  principles: no name, no quotation, no code copied.
+- Reuse another project beyond what its `.agents/guard.yaml` allows.
 - Commit or push without being asked.

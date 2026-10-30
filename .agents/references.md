@@ -1,9 +1,9 @@
 # Reference projects — how the author works
 
 Read these before proposing a structure, a convention or a style. Their
-paths are in `.agents/local.md` (gitignored; template:
-[local.example.md](local.example.md)). Read only; take the **method**, never
-the content.
+paths are in `.agents/local/projects.yaml` (gitignored; template:
+[local.example.yaml](local.example.yaml)). Read only; take the **method**,
+never the content.
 
 **Absolute rule**: these projects are private. Never name them, quote them
 or describe their content in a tracked file or a commit. Refer to them by
@@ -32,3 +32,9 @@ A Rust monorepo of the author, the most recent state of the conventions:
 A private report where the need first appeared. It may hold confidential
 content: read locally only, take the need, never the content, and never
 link this project to it in a tracked file.
+
+## Before reusing
+
+Each project's `.agents/guard.yaml`, then `.agents/local/guard.yaml`, says
+what may be reused, attributed or published; read them first. A missing
+guard is permissive, never confidential.
