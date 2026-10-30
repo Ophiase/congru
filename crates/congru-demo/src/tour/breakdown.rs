@@ -36,8 +36,7 @@ pub fn breakdown(scene: &Scene, target: &Path) -> anyhow::Result<()> {
     let view = CameraView::new(model, camera, Distance::new(span * SAMPLE_SHARE)?)?;
     let mut tracker = Tracker::new("tracker", view, Settings::for_part(span)?);
     let pose = tracker.update_from(&voxels, Some(guess))?.pose;
-    let silhouette =
-        |pose: &RigidTransform| render(&camera, &[(model, *pose)]).depth.map(f64::is_finite);
+    let silhouette = |pose: &RigidTransform| outline_of(model, &camera, pose);
     let steps = [
         ("1 depth frame", depth.clone(), None),
         ("2 points", splat(&points, &camera), None),
