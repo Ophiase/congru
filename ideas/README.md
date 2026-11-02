@@ -10,27 +10,25 @@ author decides), **[caution]** (known trap).
 
 ## Thesis
 
-Aligning two views of the same rigid object is a solved problem in papers
-and an unsolved one in practice: every team rewrites ICP, tunes it on its
-own data, and cannot ship it to the robot. The project is **one small,
-typed, fast registration brick**, written once in Rust and called from
-Python, C++ or firmware, whose behaviour under noise, outliers and partial
-views is **measured against a known truth**, not hoped for.
+Aligning two views of the same rigid object is solved in papers, not in
+practice: every team rewrites ICP, tunes it on its own data, and cannot
+ship it to the robot. The project is:
+
+- **one small, typed, fast registration brick**, written once in Rust;
+- called from Python, C++ or firmware;
+- **measured against a known truth** under noise, outliers and partial
+  views, not hoped for.
 
 ## The path
 
-```text
-  origin.md ── what the author needed, and the 2025 attempt
-      │
-  problem/ ─── what is observed, under which hypotheses, in which variants
-      │
-  method/ ──── which algorithm answers which variant, and what is open
-      │
-  architecture/ ── how one core reaches every language and device
-      │
-  demo/ ────── a simulated robot tracking a part, the proof of M1
-      │
-  open.md ──── the questions still open
+```mermaid
+flowchart TD
+  O["origin.md<br/>the need, the 2025 attempt"] --> P
+  P["problem/<br/>what is observed, hypotheses, variants"]
+  P --> M["method/<br/>which algorithm answers which variant"]
+  M --> A["architecture/<br/>one core, every language and device"]
+  A --> D["demo/<br/>a simulated robot tracking a part"]
+  D --> Q["open.md<br/>the questions still open"]
 ```
 
 ## Files

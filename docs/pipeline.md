@@ -33,12 +33,27 @@ What happens between a camera frame and a pose, in the demos and the
 realistic scenes. Each layer is its own function; the table says where it
 lives and what is still missing.
 
-```text
- depth frame ─► 2D box ─► found ─► region ─► thinned ─► tracker ─► pose
- (depth only)   (colour   by shape  around    voxel     predict,    + trust
-                detector, (first    the last  grid      follow,     + free
-                simulated) frame,   pose                find        motions
-                           or lost)
+```mermaid
+flowchart TD
+  subgraph R0[" "]
+    direction LR
+    A --> B
+    B --> C
+  end
+  subgraph R1[" "]
+    direction LR
+    D --> E
+    E --> F
+    F --> G
+  end
+  R0 --> R1
+  A["depth frame<br/>depth only"]
+  B["2D box<br/>colour detector, simulated"]
+  C["found by shape<br/>first frame, or lost"]
+  D["region<br/>around the last pose"]
+  E["thinned<br/>voxel grid"]
+  F["tracker<br/>predict, follow, find"]
+  G["pose<br/>+ trust + free motions"]
 ```
 
 | Layer | What it does | Where | Today |

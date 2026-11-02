@@ -10,13 +10,18 @@ const AMBIENT: f64 = 0.15;
 pub fn outlined(depth: &DepthImage, focal: f64, silhouette: Option<&Image<bool>>) -> Image<Tone> {
     let mut picture = relief(depth, focal);
     if let Some(silhouette) = silhouette {
-        for (column, row) in silhouette.positions() {
-            if on_outline(silhouette, column, row) {
-                picture.set(column, row, ESTIMATE);
-            }
-        }
+        outline(&mut picture, silhouette);
     }
     picture
+}
+
+/// The outline of `silhouette` drawn over `picture`.
+pub fn outline(picture: &mut Image<Tone>, silhouette: &Image<bool>) {
+    for (column, row) in silhouette.positions() {
+        if on_outline(silhouette, column, row) {
+            picture.set(column, row, ESTIMATE);
+        }
+    }
 }
 
 /// Shaded by the surface normal the depth itself implies, lit from the

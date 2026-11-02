@@ -17,6 +17,8 @@ pub const OBSERVED: Tone = GREYS + 7;
 pub const TEXT: Tone = GREYS + 8;
 pub const CARD: Tone = GREYS + 9;
 pub const MUTED: Tone = GREYS + 10;
+const HUES_START: Tone = GREYS + 11;
+const HUES: u8 = 40;
 
 /// A light theme on warm paper: a slightly lighter card per tile, coral
 /// for what the sensor saw, slate blue for the model, soft green, amber and
@@ -43,7 +45,47 @@ pub fn colours() -> Vec<u8> {
             u8::try_from(u32::from(level) * 150 / u32::from(GREYS - 1) + 95).unwrap_or(u8::MAX);
         [value, value, value]
     });
-    ramp.chain(ACCENTS.into_iter().flatten()).collect()
+    let hues = (0..HUES).flat_map(|step| rainbow(f64::from(step) / f64::from(HUES - 1)));
+    ramp.chain(ACCENTS.into_iter().flatten())
+        .chain(hues)
+        .collect()
+}
+
+/// Stops of a rainbow from far, blue, to near, red, as depth maps are drawn.
+const RAINBOW: [[f64; 3]; 6] = [
+    [59.0, 76.0, 192.0],
+    [64.0, 160.0, 230.0],
+    [80.0, 200.0, 160.0],
+    [200.0, 220.0, 90.0],
+    [245.0, 160.0, 60.0],
+    [200.0, 50.0, 40.0],
+];
+
+#[expect(
+    clippy::cast_possible_truncation,
+    clippy::cast_sign_loss,
+    reason = "the stops are within [0, 255]"
+)]
+fn rainbow(nearness: f64) -> [u8; 3] {
+    let scaled = nearness.clamp(0.0, 1.0) * 5.0;
+    let floor = scaled.floor().min(4.0);
+    let low = floor as usize;
+    let share = scaled - floor;
+    let mix = |channel: usize| {
+        (RAINBOW[low][channel] * (1.0 - share) + RAINBOW[low + 1][channel] * share).round() as u8
+    };
+    [mix(0), mix(1), mix(2)]
+}
+
+/// The rainbow tone for a nearness in `[0, 1]`, 1 nearest, clamped.
+#[expect(
+    clippy::cast_possible_truncation,
+    clippy::cast_sign_loss,
+    reason = "clamped to the hues before the cast"
+)]
+#[must_use]
+pub fn hue(nearness: f64) -> Tone {
+    HUES_START + (nearness.clamp(0.0, 1.0) * f64::from(HUES - 1)).round() as Tone
 }
 
 /// The grey for a brightness in `[0, 1]`, clamped.
