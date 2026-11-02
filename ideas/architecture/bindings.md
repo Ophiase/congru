@@ -15,7 +15,7 @@
   core's message. A weak motion's kind is a `Rotation` or a `Translation`,
   matched with `match`.
 - **[sketch]** Built against the stable ABI of Python 3.10, so `cargo clippy`
-  works with any interpreter from 3.10 on; the package itself asks for 3.12.
+  works with any interpreter from 3.10 on; the package itself asks for 3.14.
 - **[question]** one wheel per platform through CI, from the first release?
 
 ## C and C++

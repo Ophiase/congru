@@ -69,6 +69,7 @@ hundred lines per file. Read `.agents/portable/rules/comments.md` and
 `.agents/portable/` is copied as is from the author's other repositories and
 stays project-agnostic (`.agents/checks/portable.sh` guards it). Project
 rules and checks go to `.agents/rules/` and `.agents/checks/`.
+A job longer than a few seconds follows `.agents/rules/long-jobs.md`.
 `.agents/checks/run.sh <check> <file>...` runs one; `just guards` runs them
 all over the changed files.
 

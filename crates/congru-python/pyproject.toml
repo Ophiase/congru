@@ -8,7 +8,7 @@ authors = [{ name = "Phorcys" }]
 description = "Fast, robust rigid registration of point clouds and meshes."
 readme = "README.md"
 license = "Apache-2.0"
-requires-python = ">=3.12"
+requires-python = ">=3.14"
 dependencies = ["numpy>=2.1"]
 dynamic = ["version"]
 keywords = [

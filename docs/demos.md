@@ -46,17 +46,16 @@ finds; the number is the rotation error against the truth.*
 
 | Condition | Added to an imperfect sensor | Median error | Frames within 2° |
 | --- | --- | --- | --- |
-| Sensor | noise, blur, holes, flying pixels | 0.12° | 90 / 90 |
-| Shake | a camera in a hand: slow wander and jolts | 0.51° | 90 / 90 |
-| Lens | radial distortion of the depth image | 0.32° | 90 / 90 |
-| Flex | the part flexes by up to 4 mm | 0.36° | 90 / 90 |
-| Room | a wall, a bench, a box, a can and the turntable in view | 0.34° | 90 / 90 |
-| Everything | all of it, twice the noise, three times the holes | 0.82° | 89 / 90 |
+| Sensor | noise, blur, holes, flying pixels | 0.10° | 90 / 90 |
+| Shake | a camera in a hand: slow wander and jolts | 0.52° | 90 / 90 |
+| Lens | radial distortion of the depth image | 0.28° | 87 / 90 |
+| Flex | the part flexes by up to 4 mm | 0.16° | 90 / 90 |
+| Room | a wall, a bench, a box, a can and the turntable in view | 49.74° | 0 / 90 |
+| Everything | all of it, twice the noise, three times the holes | 15.47° | 2 / 90 |
 
-**[caution]** These numbers were measured in 0.1.15, with a first crop
-taken from the truth and the support plane removed; both are gone, and
-the table is to measure again. Computed offline, frame by frame, by `just
-demo`; the pipeline (found by shape, scan cropped, aligned onto the part
-of the model visible
-from the predicted pose) is real-time by design
-([the demo](../ideas/demo/README.md)).
+**[caution]** Measured in 0.1.17, without the crop from the truth and
+without removing the support plane: the part alone is tracked, but a room
+around it still breaks the search ([open](../ideas/open.md)). Computed
+offline, frame by frame, by `just demo`; the pipeline (found by shape, scan
+cropped, aligned onto the part of the model visible from the predicted pose)
+is real-time by design ([the demo](../ideas/demo/README.md)).

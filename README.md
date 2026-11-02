@@ -4,8 +4,7 @@
 [![Rust 1.89+](https://img.shields.io/badge/Rust-1.89%2B-orange.svg)](https://www.rust-lang.org/)
 [![Justfile](https://img.shields.io/badge/just-available-brightgreen.svg)](https://just.systems/man/en/)
 [![Status: research](https://img.shields.io/badge/status-research-blue.svg)](ideas/open.md)
-
-<sub><a href=".agents/kanon.md" title="Kanon"><code>&lt;&gt;</code></a></sub>
+[![Kanon](https://img.shields.io/badge/%3C%3E-Kanon-blueviolet.svg)](.agents/kanon.md)
 
 Put a scan back where it belongs. Given two views of the same rigid object
 (a depth frame and a CAD model, a few marks and the part they sit on, two
@@ -23,7 +22,7 @@ one onto the other, says how sure it is, and runs wherever the robot runs.
 | --- | --- |
 | Install and quick start (Rust, Python, C) | [docs/install.md](docs/install.md) |
 | Run it, with the `just` recipes | [Try it](#try-it) |
-| Dependencies | Rust 1.89+, `just`; Python 3.12+; C/C++ |
+| Dependencies | Rust 1.89+, `just`; Python 3.14+; C/C++ |
 | The demos | [docs/demos.md](docs/demos.md) |
 | The pipeline, layer by layer | [docs/pipeline.md](docs/pipeline.md) |
 | How methods are measured | [protocol](docs/benchmark/protocol.md) · [results](docs/benchmark/results.md) |
@@ -182,9 +181,9 @@ Open3D and PCL do that.
 | Comparison with Open3D and small_gicp | Planned |
 
 **[caution] Known limits today.** The realistic scenes fail (0 of 72 frames
-within 2°, [scenes](docs/benchmark/scenes.md)); Demo B's table predates
-0.1.16 and is to measure again ([demos](docs/demos.md)). The alignment core
-and the tracking demo are the measured parts.
+within 2°, [scenes](docs/benchmark/scenes.md)); Demo B tracks the part
+alone, but loses it once a room is in view ([demos](docs/demos.md)). The
+alignment core and the tracking of an isolated part are the measured parts.
 
 The questions still open are in [ideas/open.md](ideas/open.md).
 
