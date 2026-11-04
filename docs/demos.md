@@ -53,23 +53,23 @@ the second the same in a room. Each row:
 
 | Condition | Added to an imperfect sensor | Median error | Frames within 2° |
 | --- | --- | --- | --- |
-| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.73° | 79 / 90 |
-| All in a room | the same, with a wall, a bench, a box and the turntable in view | 78.63° | 0 / 90 |
+| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.67° | 84 / 90 |
+| All in a room | the same, with a wall, a bench, a box and the turntable in view | 148.26° | 0 / 90 |
 | Sensor | about 5 mm of noise, blur, holes, flying pixels | 0.19° | 90 / 90 |
-| Shake | a camera in a hand: slow wander and jolts | 0.58° | 87 / 90 |
-| Lens | radial distortion of the depth image | 0.29° | 90 / 90 |
+| Shake | a camera in a hand: slow wander and jolts | 0.57° | 90 / 90 |
+| Lens | radial distortion of the depth image | 0.30° | 90 / 90 |
 | Flex | the part flexes by up to 4 mm | 0.26° | 90 / 90 |
-| Room | the room alone | 179.57° | 0 / 90 |
+| Room | the room alone | 49.86° | 0 / 90 |
 
 One effect at a time: [sensor](figures/tracking-sensor.gif),
 [shake](figures/tracking-shake.gif), [lens](figures/tracking-lens.gif),
 [flex](figures/tracking-flex.gif), [room](figures/tracking-room.gif).
 
-**[caution]** Measured in 0.1.18:
+**[caution]** Measured in 0.1.19:
 
 - no crop from the truth, no support plane removed;
-- the part alone is tracked; a room around it still breaks the search
-  ([open](../ideas/open.md));
+- the part alone is tracked; a room still breaks both the search and the
+  tracker ([evidence along rays](../ideas/method/ray-evidence.md));
 - computed offline by `just demo`, real-time by design
   ([the demo](../ideas/demo/README.md)).
 

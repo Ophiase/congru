@@ -35,12 +35,17 @@ worse still, and slower (42 s on the table).
 
 ## [sketch] Each candidate checked against the depth
 
-The best voted poses are rendered with the camera and compared with the
-frame, pixel by pixel: a pixel *agrees* when the frame is at the model's
-depth, *violates* when the frame sees behind where the model would stand.
-The candidate with most agreement, net of violations, is kept, only past a
-threshold: a frame without the object answers *not found*. The check
-needs nothing but the depth and the model.
+Every voted pose is refined, rendered with the camera and compared with the
+frame, pixel by pixel.
+
+- A pixel *agrees* when the frame is at the model's depth.
+- A pixel *violates* when the frame sees behind where the model would stand.
+- The candidate with most agreement, net of violations, is kept past a
+  threshold: a frame without the object answers *not found*.
+- The check needs nothing but the depth and the model.
+
+**[defined]** Its score is multiplied by the share of the model inside the image.
+The room still fails, for other reasons ([evidence along rays](ray-evidence.md)).
 
 ## [caution]
 

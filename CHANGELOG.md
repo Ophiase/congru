@@ -5,6 +5,16 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.19 — 2026-11-04
+
+- **Detection judges every vote**, refined along rays and weighted by the share
+  of the model in the image: all effects 84 / 90, shake 90 / 90. A room stays at
+  0 / 90.
+- **The failure is located**: votes favour planes, and the tracker undoes a right
+  start while still trusting it ([evidence](ideas/method/ray-evidence.md)).
+- **Visibility and a ladder of clouds**: what a ray says, and eight 2D steps, each
+  measured against a naive fit ([ladder](ideas/problem/cloud-ladder.md)).
+
 ## 0.1.18 — 2026-11-04
 
 - **Demo B made rougher and legible.** A cheap sensor as rough as demo A's,
