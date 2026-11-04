@@ -38,6 +38,9 @@ file that argues it.
      amplitude, on the wall and the bench;
    - the camera shake must be visible and tested, not only a jolt of the
      pose.
+   - **[defined]** In a room, the region kept is centred on a wrong pose
+     found on the turntable, so the part itself is never given to the
+     tracker, while the depth shows it plainly: detection is what fails.
 3. **Scenes**: the gallery shows too many simple synthetic variations.
    What matters is a few ordinary scenes, found free online with a clear
    licence, with one object to cut out of them; and the tooling that makes

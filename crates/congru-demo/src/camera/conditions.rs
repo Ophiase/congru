@@ -35,12 +35,13 @@ const HANDHELD: Handheld = Handheld {
     period: 45.0,
 };
 
-/// A consumer depth camera at half a metre: noise, a little blur, a few
-/// holes, flying pixels at edges. Every condition starts from it.
+/// A cheap depth camera at half a metre, as rough as demo A: about 5 mm of
+/// noise on the part, a little blur, holes, flying pixels at edges. Every
+/// condition starts from it.
 const SENSOR: Degradation = Degradation {
     blur: 1,
-    noise: 0.01,
-    holes: 0.04,
+    noise: 0.025,
+    holes: 0.08,
     flying_pixels: true,
     lens: 0.0,
 };
@@ -79,7 +80,7 @@ const ALL: Condition = Condition {
 pub const CONDITIONS: [Condition; 7] = [
     ALL,
     Condition {
-        name: "all in a room",
+        name: "in a room",
         clutter: Clutter::Room,
         ..ALL
     },

@@ -47,19 +47,19 @@ the second the same in a room. Each row:
 - **image**: the scene undegraded, where a colour camera would be;
 - **depth**: the degraded depth, coloured from near (red) to far (blue),
   holes left empty;
-- **points tracked**: what the tracker was given after the crop;
+- **points**: what the tracker was given after the crop;
 - **green outline**: the model at the pose congru finds, the same on all
   three; the number is the rotation error.
 
 | Condition | Added to an imperfect sensor | Median error | Frames within 2° |
 | --- | --- | --- | --- |
-| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.67° | 89 / 90 |
-| All in a room | the same, with a wall, a bench, a box and the turntable in view | 158.78° | 0 / 90 |
-| Sensor | noise, blur, holes, flying pixels | 0.10° | 90 / 90 |
-| Shake | a camera in a hand: slow wander and jolts | 0.52° | 90 / 90 |
-| Lens | radial distortion of the depth image | 0.28° | 87 / 90 |
-| Flex | the part flexes by up to 4 mm | 0.16° | 90 / 90 |
-| Room | the room alone | 177.74° | 0 / 90 |
+| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.73° | 79 / 90 |
+| All in a room | the same, with a wall, a bench, a box and the turntable in view | 78.63° | 0 / 90 |
+| Sensor | about 5 mm of noise, blur, holes, flying pixels | 0.19° | 90 / 90 |
+| Shake | a camera in a hand: slow wander and jolts | 0.58° | 87 / 90 |
+| Lens | radial distortion of the depth image | 0.29° | 90 / 90 |
+| Flex | the part flexes by up to 4 mm | 0.26° | 90 / 90 |
+| Room | the room alone | 179.57° | 0 / 90 |
 
 One effect at a time: [sensor](figures/tracking-sensor.gif),
 [shake](figures/tracking-shake.gif), [lens](figures/tracking-lens.gif),

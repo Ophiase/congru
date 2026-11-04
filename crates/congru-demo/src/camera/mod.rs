@@ -26,7 +26,7 @@ pub fn run(target: &Path) -> anyhow::Result<Vec<crate::Summary>> {
         occluder: Solids::default()
             .cylinder([0.0, 0.0, -0.04], 0.035, 0.08, 16)
             .build()?,
-        camera: Camera::with_field_of_view(240, 180, 60.0),
+        camera: Camera::with_field_of_view(160, 120, 60.0),
         path: Turntable {
             frames: 90,
             turns: 0.75,
@@ -91,7 +91,7 @@ fn tiles(stage: &Stage, name: &str, step: &Step) -> [Tile; 3] {
     [
         (name.to_owned(), image),
         ("depth".to_owned(), depth),
-        ("points tracked".to_owned(), cloud),
+        ("points".to_owned(), cloud),
     ]
     .map(|(label, mut picture)| {
         font::write(&mut picture, 8, 8, &label, MUTED);
