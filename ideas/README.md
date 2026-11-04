@@ -22,49 +22,20 @@ ship it to the robot. The project is:
 ## The path
 
 ```mermaid
-flowchart TD
-  O["origin.md<br/>the need, the 2025 attempt"] --> P
-  P["problem/<br/>what is observed, hypotheses, variants"]
-  P --> M["method/<br/>which algorithm answers which variant"]
-  M --> A["architecture/<br/>one core, every language and device"]
-  A --> D["demo/<br/>a simulated robot tracking a part"]
-  D --> Q["open.md<br/>the questions still open"]
+graph TD
+  O["origin: the need"] --> P["problem: what is observed"]
+  P --> M["method: which algorithm"]
+  M --> A["architecture: one core"]
+  A --> D["demo: a tracked part"]
+  D --> Q["open: what remains"]
 ```
 
 ## Files
 
-- [vision.md](vision.md) · [origin.md](origin.md) ·
-  [milestones.md](milestones.md) · [naming.md](naming.md) ·
-  [open.md](open.md) · [prior-art.md](prior-art.md) ·
-  [beyond.md](beyond.md)
-- **problem/**:
-  [observation-model](problem/observation-model.md) ·
-  [hypotheses](problem/hypotheses.md) ·
-  [hypothesis-ladder](problem/hypothesis-ladder.md) ·
-  [variants](problem/variants.md) ·
-  [what-we-know](problem/what-we-know.md) ·
-  [measuring-success](problem/measuring-success.md) ·
-  [sequences](problem/sequences.md)
-- **method/**:
-  [closed-form](method/closed-form.md) ·
-  [icp-family](method/icp-family.md) ·
-  [robustness](method/robustness.md) ·
-  [global-initialisation](method/global-initialisation.md) ·
-  [aggregation](method/aggregation.md) ·
-  [mesh-targets](method/mesh-targets.md) ·
-  [observability](method/observability.md) ·
-  [tracking](method/tracking.md) ·
-  [detection](method/detection.md)
-- **architecture/**:
-  [layers](architecture/layers.md) ·
-  [types](architecture/types.md) ·
-  [bindings](architecture/bindings.md) ·
-  [embedded](architecture/embedded.md) ·
-  [performance](architecture/performance.md) ·
-  [benchmark](architecture/benchmark.md) ·
-  [stack](architecture/stack.md) ·
-  [extension-points](architecture/extension-points.md) ·
-  [contract](architecture/contract.md)
-- **demo/**: [README](demo/README.md) — A: point clouds over time;
-  B: a depth camera (scene, sensor, degradations, perception, tracking,
-  video)
+| Part | Files |
+| --- | --- |
+| Root | [vision.md](vision.md) · [origin.md](origin.md) · [milestones.md](milestones.md) · [naming.md](naming.md) · [open.md](open.md) · [prior-art.md](prior-art.md) · [beyond.md](beyond.md) |
+| Problem | [observation-model](problem/observation-model.md) · [hypotheses](problem/hypotheses.md) · [hypothesis-ladder](problem/hypothesis-ladder.md) · [variants](problem/variants.md) · [what-we-know](problem/what-we-know.md) · [measuring-success](problem/measuring-success.md) · [sequences](problem/sequences.md) |
+| Method | [closed-form](method/closed-form.md) · [landscape](method/landscape.md) · [icp-family](method/icp-family.md) · [robustness](method/robustness.md) · [global-initialisation](method/global-initialisation.md) · [aggregation](method/aggregation.md) · [mesh-targets](method/mesh-targets.md) · [observability](method/observability.md) · [tracking](method/tracking.md) · [detection](method/detection.md) |
+| Architecture | [layers](architecture/layers.md) · [types](architecture/types.md) · [bindings](architecture/bindings.md) · [embedded](architecture/embedded.md) · [performance](architecture/performance.md) · [benchmark](architecture/benchmark.md) · [stack](architecture/stack.md) · [extension-points](architecture/extension-points.md) · [contract](architecture/contract.md) |
+| Demo | [README](demo/README.md): A, point clouds over time; B, a depth camera |

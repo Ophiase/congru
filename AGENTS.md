@@ -27,10 +27,14 @@ to you in French; answer in French, write files in English.
 3. An open question waits for the author; do not settle it in code.
 4. Code follows, then `just check` and `just guards`.
 
-Read [.agents/references.md](.agents/references.md) and, when useful, the
-reference projects whose paths are in `.agents/local/projects.yaml`
-(gitignored). If it is missing, ask for the paths and offer to write it from
+Read [.agents/references.md](.agents/references.md). The reference projects
+are in `.agents/local/projects.yaml` (gitignored), the catalog in the file it
+names; if it is missing, offer to write it from
 [.agents/local.example.yaml](.agents/local.example.yaml).
+
+- `consent: granted`: read it when useful.
+- `consent: ask`, or nothing: ask the author first, then record the answer.
+- `consent: denied`: never read it, whatever its `why` says.
 
 ## Good practices
 
@@ -39,7 +43,10 @@ The project's own order of what to copy first is in
 portable rules stay in `.agents/portable/`. Before reusing another project,
 read its `.agents/guard.yaml` and then `.agents/local/guard.yaml`
 ([guards](.agents/portable/rules/guards.md)). The canon is
-[.agents/kanon.md](.agents/kanon.md); the `<>` in the README is its sign.
+[.agents/kanon.md](.agents/kanon.md); the `<>` in the README is its sign. Its
+source is the `kanon` entry of the local file: compare against it before saying
+this project is up to date, and cite the Kanon and the sign, never the project
+a practice came from.
 
 ## Ideas
 
@@ -62,7 +69,8 @@ Rust follows `.agents/portable/rules/rust.md`; Python follows
 `.agents/portable/rules/python.md`. Folders of code follow
 `.agents/rules/layout.md`: one concept each, seven entries at most, two
 hundred lines per file. Read `.agents/portable/rules/comments.md` and
-`.agents/rules/rust-docs.md` before writing code.
+`.agents/rules/rust-docs.md` before writing code, and
+`.agents/portable/rules/markdown.md` before writing a document or a diagram.
 
 ## Rules and checks
 

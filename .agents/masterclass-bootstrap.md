@@ -8,7 +8,8 @@ project-specific; the portable rules are in `.agents/portable/`.
 
 - `AGENTS.md` at the root, one tool-neutral source.
 - `.agents/portable/`: rules, checks, hook templates, `just/harness.just`.
-- `.agents/kanon.md`: the canon; the README carries the `<>` sign.
+- `.agents/kanon.md`, verbatim: the canon; the README carries the `<>` sign.
+  The transfer is anonymous: cite the Kanon and the sign, never the project.
 - One pointer per tool: `.clinerules/`, `.cursor/rules/` when needed,
   `.kilocode/rules/`, `.github/copilot-instructions.md`.
 - `.clinerules/hooks/`, `.cursor/hooks.json` and `.githooks/` are symlinks
@@ -62,6 +63,9 @@ project-specific; the portable rules are in `.agents/portable/`.
 
 ## 8. Reuse
 
+- Classify the Kanon catalog against the project's needs, propose a shortlist,
+  ask before reading, and record each answer as `consent` in the project's own
+  `.agents/local/projects.yaml`.
 - Read the source project's `.agents/guard.yaml`, then its
   `.agents/local/guard.yaml`.
 - A missing guard is permissive; `code`, `ideas`, `attribution` and

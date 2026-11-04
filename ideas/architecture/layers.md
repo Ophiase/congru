@@ -4,15 +4,16 @@
 algorithm.
 
 ```mermaid
-flowchart TD
-  PY["Python, NumPy"] --> CORE
-  C["C / C++ header"] --> CORE
+graph TD
+  PY["Python, NumPy"] --> CORE["core crate"]
+  C["C and C++ header"] --> CORE
   CLI["CLI, files to JSON"] --> CORE
-  CORE["core crate<br/>geometry, search, fit, ICP, global<br/>no I/O, no threads"]
-  SYNTH["synth crate<br/>observation model, truth<br/>tests only"] --> CORE
+  SYNTH["synth crate"] --> CORE
 ```
 
-The skins only convert, validate and call.
+- **Core**: geometry, search, fit, ICP, global; no I/O, no threads.
+- **Synth**: the observation model and its truth, for tests only.
+- **Skins**: they only convert, validate and call.
 
 ## Rules
 

@@ -9,8 +9,8 @@ please avoid this kind of situations:
 ## The self-explanatory code for Einstein
 
 ```python
-def _parse_sum_equality(
-    formula: Sequence[dict[str, Any]],
+def _parse_rule(
+    entries: Sequence[dict[str, Any]],
 ) -> tuple[str, tuple[str, ...]] | None:
 ```
 
@@ -39,8 +39,8 @@ is often needed.
 ## Weird function signature
 
 ```python
-def _parse_zip_examples(
-    zip_bytes: bytes,
+def _decode_payload(
+    payload: bytes,
 ) -> list[tuple[list[str], dict[str, Any], bool]]:
 ```
 

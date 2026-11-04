@@ -34,26 +34,13 @@ realistic scenes. Each layer is its own function; the table says where it
 lives and what is still missing.
 
 ```mermaid
-flowchart TD
-  subgraph R0[" "]
-    direction LR
-    A --> B
-    B --> C
-  end
-  subgraph R1[" "]
-    direction LR
-    D --> E
-    E --> F
-    F --> G
-  end
-  R0 --> R1
-  A["depth frame<br/>depth only"]
-  B["2D box<br/>colour detector, simulated"]
-  C["found by shape<br/>first frame, or lost"]
-  D["region<br/>around the last pose"]
-  E["thinned<br/>voxel grid"]
-  F["tracker<br/>predict, follow, find"]
-  G["pose<br/>+ trust + free motions"]
+graph TD
+  A["depth frame"] --> B["2D box, simulated"]
+  B --> C["found by shape"]
+  C --> D["region around the pose"]
+  D --> E["thinned on a voxel grid"]
+  E --> F["tracker: predict, follow, find"]
+  F --> G["pose, trust, free motions"]
 ```
 
 | Layer | What it does | Where | Today |

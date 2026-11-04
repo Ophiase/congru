@@ -20,24 +20,12 @@ like a real sensor's. Each stage is its own algorithm, so the video also
 shows which stage breaks first.
 
 ```mermaid
-flowchart TD
-  subgraph R0[" "]
-    direction LR
-    S --> SE
-    SE --> DG
-  end
-  subgraph R1[" "]
-    direction LR
-    P --> T
-    T --> V
-  end
-  R0 --> R1
-  S["scene<br/>part and its path"]
-  SE["sensor<br/>depth frames"]
-  DG["degradations<br/>noise, blur, holes"]
-  P["perception<br/>depth image to points"]
-  T["tracking<br/>pose per frame"]
-  V["video<br/>outline over frame"]
+graph TD
+  S["scene: part and path"] --> SE["sensor: depth frames"]
+  SE --> DG["degradations: noise, holes"]
+  DG --> P["perception: pixels to points"]
+  P --> T["tracking: pose per frame"]
+  T --> V["video: outline over frame"]
 ```
 
 | Stage | Idea |

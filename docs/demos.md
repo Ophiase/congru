@@ -65,7 +65,7 @@ One effect at a time: [sensor](figures/tracking-sensor.gif),
 [shake](figures/tracking-shake.gif), [lens](figures/tracking-lens.gif),
 [flex](figures/tracking-flex.gif), [room](figures/tracking-room.gif).
 
-**[caution]** Measured in 0.1.17:
+**[caution]** Measured in 0.1.18:
 
 - no crop from the truth, no support plane removed;
 - the part alone is tracked; a room around it still breaks the search

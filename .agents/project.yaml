@@ -21,3 +21,9 @@ lifecycle:
   ci:
     mode: manual
     activation: consent
+
+agent:
+  autonomy:
+    commit: when-asked
+    push: never
+    version-bump: allowed
