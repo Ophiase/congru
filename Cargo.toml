@@ -16,7 +16,7 @@ members = [
 ]
 
 [workspace.package]
-version = "0.1.17"
+version = "0.1.18"
 edition = "2024"
 rust-version = "1.89"
 license = "Apache-2.0"
@@ -35,12 +35,12 @@ categories = [
 ]
 
 [workspace.dependencies]
-congru = { path = "crates/congru", version = "0.1.17" }
-congru-synth = { path = "crates/congru-synth", version = "0.1.17" }
-congru-vision = { path = "crates/congru-vision", version = "0.1.17" }
-congru-sim = { path = "crates/congru-sim", version = "0.1.17" }
-congru-track = { path = "crates/congru-track", version = "0.1.17" }
-congru-scene = { path = "crates/congru-scene", version = "0.1.17" }
+congru = { path = "crates/congru", version = "0.1.18" }
+congru-synth = { path = "crates/congru-synth", version = "0.1.18" }
+congru-vision = { path = "crates/congru-vision", version = "0.1.18" }
+congru-sim = { path = "crates/congru-sim", version = "0.1.18" }
+congru-track = { path = "crates/congru-track", version = "0.1.18" }
+congru-scene = { path = "crates/congru-scene", version = "0.1.18" }
 kiddo = { version = "6.3.0", default-features = false }
 nalgebra = "0.35.0"
 numpy = "0.30.0"

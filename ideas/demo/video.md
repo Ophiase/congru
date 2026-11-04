@@ -11,3 +11,13 @@
 
 Written as GIF from Rust, like the figures: no plotting stack, nothing drawn
 by hand. The same frames, at full rate, show it runs in real time.
+
+## [defined] Three layers side by side
+
+The algorithm sees a point cloud, so a failure cannot be understood without
+it. Every tracking GIF shows, for each frame, one row:
+
+- the image;
+- the depth, coloured by distance;
+- the points the tracker was given, after the box and the crop;
+- over all three, the same outline of the model at the pose found.

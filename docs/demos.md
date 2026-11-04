@@ -8,11 +8,12 @@ writes them again and prints the tables below.
 ![Demo A](figures/clouds.gif)
 
 A machined bracket moves in front of a sensor, in six generated sequences
-of 120 frames. The red particles are what the sensor returns; the cyan
-points are the model, placed at the pose congru finds, frame after frame.
-Each tile says which phase ran (follow from the last pose, or find again
-from nothing) and the rotation error against the truth; the bar below
-turns amber past 1° and red past 5°.
+of 120 frames.
+
+- **Red particles**: what the sensor returns.
+- **Blue points**: the model, at the pose congru finds, frame after frame.
+- **Each tile**: which phase ran (follow, or find again) and the rotation
+  error; the bar below turns amber past 1° and red past 5°.
 
 Every sequence is already hard: a few hundred points per frame, 5 mm of
 noise on a 20 cm part, and 40 points of clutter. Each adds one trouble:
@@ -39,24 +40,37 @@ again at once ([tracking](../ideas/method/tracking.md)).
 
 ![Demo B](figures/tracking.gif)
 
-*Demo B: a simulated robot cell. A machined bracket turns on a turntable
-under a depth camera. Each tile is what the camera returns, shaded by its
-surface normals; the green outline is the model drawn at the pose congru
-finds; the number is the rotation error against the truth.*
+A machined bracket turns on a turntable under a depth camera; the camera,
+not the part, carries the shake. The first row has every effect of demo A,
+the second the same in a room. Each row:
+
+- **image**: the scene undegraded, where a colour camera would be;
+- **depth**: the degraded depth, coloured from near (red) to far (blue),
+  holes left empty;
+- **points**: what the tracker was given after the crop;
+- **green outline**: the model at the pose congru finds, the same on all
+  three; the number is the rotation error.
 
 | Condition | Added to an imperfect sensor | Median error | Frames within 2° |
 | --- | --- | --- | --- |
-| Sensor | noise, blur, holes, flying pixels | 0.12° | 90 / 90 |
-| Shake | a camera in a hand: slow wander and jolts | 0.51° | 90 / 90 |
-| Lens | radial distortion of the depth image | 0.32° | 90 / 90 |
-| Flex | the part flexes by up to 4 mm | 0.36° | 90 / 90 |
-| Room | a wall, a bench, a box, a can and the turntable in view | 0.34° | 90 / 90 |
-| Everything | all of it, twice the noise, three times the holes | 0.82° | 89 / 90 |
+| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.73° | 79 / 90 |
+| All in a room | the same, with a wall, a bench, a box and the turntable in view | 78.63° | 0 / 90 |
+| Sensor | about 5 mm of noise, blur, holes, flying pixels | 0.19° | 90 / 90 |
+| Shake | a camera in a hand: slow wander and jolts | 0.58° | 87 / 90 |
+| Lens | radial distortion of the depth image | 0.29° | 90 / 90 |
+| Flex | the part flexes by up to 4 mm | 0.26° | 90 / 90 |
+| Room | the room alone | 179.57° | 0 / 90 |
 
-**[caution]** These numbers were measured in 0.1.15, with a first crop
-taken from the truth and the support plane removed; both are gone, and
-the table is to measure again. Computed offline, frame by frame, by `just
-demo`; the pipeline (found by shape, scan cropped, aligned onto the part
-of the model visible
-from the predicted pose) is real-time by design
-([the demo](../ideas/demo/README.md)).
+One effect at a time: [sensor](figures/tracking-sensor.gif),
+[shake](figures/tracking-shake.gif), [lens](figures/tracking-lens.gif),
+[flex](figures/tracking-flex.gif), [room](figures/tracking-room.gif).
+
+**[caution]** Measured in 0.1.18:
+
+- no crop from the truth, no support plane removed;
+- the part alone is tracked; a room around it still breaks the search
+  ([open](../ideas/open.md));
+- computed offline by `just demo`, real-time by design
+  ([the demo](../ideas/demo/README.md)).
+
+The realistic scenes have their own tour: [scenes](benchmark/scenes.md).

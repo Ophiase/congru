@@ -20,6 +20,8 @@ pub struct Turntable {
     pub shake_degrees: f64,
     /// The slow, wide wander of a camera held in a hand.
     pub handheld: Handheld,
+    /// Two abrupt turns of the table, a third and two thirds of the way.
+    pub knock_degrees: f64,
 }
 
 impl Turntable {
@@ -42,19 +44,54 @@ impl Turntable {
 
     #[must_use]
     pub fn pose(&self, frame: usize) -> RigidTransform {
-        let progress = congru_vision::pixel::coordinate(frame)
-            / congru_vision::pixel::coordinate(self.frames.max(1));
-        let spin = UnitQuaternion::from_axis_angle(&Vector3::z_axis(), TAU * self.turns * progress);
-        let upright = UnitQuaternion::from_axis_angle(&Vector3::x_axis(), TAU / 4.0);
-        let look_down =
-            UnitQuaternion::from_axis_angle(&Vector3::x_axis(), LOOK_DOWN_DEGREES.to_radians());
+        let knocks = [self.frames / 3, 2 * self.frames / 3]
+            .iter()
+            .filter(|knock| frame >= **knock)
+            .count();
+        let knocked = if knocks == 2 {
+            2.0
+        } else {
+            f64::from(u8::from(knocks == 1))
+        };
+        let spin =
+            TAU * self.turns * self.progress(frame) + knocked * self.knock_degrees.to_radians();
+        RigidTransform::from_axis_angle(Vector3::z() * spin, [0.0; 3]).then(&self.mount(frame))
+    }
+
+    /// Where the room, still in the world, appears at `frame`: the camera's
+    /// own motion from where it stands at rest.
+    #[must_use]
+    pub fn room(&self, frame: usize) -> RigidTransform {
+        Self::mount_at_rest().inverse().then(&self.mount(frame))
+    }
+
+    fn progress(&self, frame: usize) -> f64 {
+        congru_vision::pixel::coordinate(frame)
+            / congru_vision::pixel::coordinate(self.frames.max(1))
+    }
+
+    fn mount_at_rest() -> RigidTransform {
+        Self::looking(Vector3::new(0.0, 0.04, DISTANCE + 0.04))
+    }
+
+    /// The turntable seen from the camera: fixed, but for the camera's sway,
+    /// its wander in a hand and its jolts.
+    fn mount(&self, frame: usize) -> RigidTransform {
+        let progress = self.progress(frame);
         let sway = Vector3::new(
             0.03 * (TAU * progress).sin(),
             0.04,
             DISTANCE + 0.04 * (TAU * progress * 2.0).cos(),
         );
-        RigidTransform::from_parts(look_down * upright * spin, sway)
+        Self::looking(sway)
             .then(&self.handheld.pose(frame))
             .then(&self.jolt(frame))
+    }
+
+    fn looking(position: Vector3<f64>) -> RigidTransform {
+        let upright = UnitQuaternion::from_axis_angle(&Vector3::x_axis(), TAU / 4.0);
+        let look_down =
+            UnitQuaternion::from_axis_angle(&Vector3::x_axis(), LOOK_DOWN_DEGREES.to_radians());
+        RigidTransform::from_parts(look_down * upright, position)
     }
 }

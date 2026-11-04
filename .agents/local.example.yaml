@@ -1,3 +1,7 @@
+catalog: /path/to/kanon/.agents/local/projects.yaml
+
 projects:
-  sibling-rust: /path/to/sibling
-  research: /path/to/research
+  sibling-rust:
+    path: /path/to/sibling
+    consent: ask
+    why: what its newest conventions teach, and what not to copy

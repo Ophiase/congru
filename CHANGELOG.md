@@ -5,6 +5,15 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.18 — 2026-11-04
+
+- **Demo B made rougher and legible.** A cheap sensor as rough as demo A's,
+  one animation per effect, a real fractal background, and a room that visibly
+  still breaks the search.
+- **Long jobs** have a rule; the Python skin moves to 3.14.
+- **Kanon resynced.** The canon, the portable layer and the markdown check;
+  every diagram follows the rule; reference projects carry a recorded consent.
+
 ## 0.1.17 — 2026-10-30
 
 - **Agent portability.** The root justfile has a module `agent`; `agent.just`

@@ -1,9 +1,10 @@
 # Reference projects — how the author works
 
-Read these before proposing a structure, a convention or a style. Their
-paths are in `.agents/local/projects.yaml` (gitignored; template:
-[local.example.yaml](local.example.yaml)). Read only; take the **method**,
-never the content.
+The Kanon is the central source of the practices; the projects below are where
+to look when a rule needs its example. Their paths and the author's `consent`
+are in `.agents/local/projects.yaml` (gitignored; template:
+[local.example.yaml](local.example.yaml)). Read only what is granted; take the
+**method**, never the content.
 
 **Absolute rule**: these projects are private. Never name them, quote them
 or describe their content in a tracked file or a commit. Refer to them by

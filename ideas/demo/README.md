@@ -5,12 +5,13 @@ computed from real runs ([milestones](../milestones.md)).
 
 ## A — point clouds over time
 
-Generated [sequences](../problem/sequences.md): a model moving in the
-sensor's space, noisy, partly hidden by itself and by a ball that crosses
-in front, sometimes distorted, sometimes knocked. No camera, no image: the
-tracker sees point clouds only. The animation shows the two
-[phases](../method/tracking.md) at work: follow when the motion is smooth,
-find again after a jump.
+Generated [sequences](../problem/sequences.md), point clouds only:
+
+- a model moving in the sensor's space, noisy;
+- partly hidden by itself and by a ball crossing in front;
+- sometimes distorted, sometimes knocked;
+- the two [phases](../method/tracking.md) at work: follow when the motion
+  is smooth, find again after a jump.
 
 ## B — a simulated depth camera
 
@@ -18,10 +19,13 @@ A machined part on a turntable under a depth camera, the frames degraded
 like a real sensor's. Each stage is its own algorithm, so the video also
 shows which stage breaks first.
 
-```text
- scene ──► sensor ──► degradations ──► perception ──► tracking ──► video
- part and   depth      noise, blur,     depth image    pose per     outline
- its path   frames     holes, edges     to points      frame        over frame
+```mermaid
+graph TD
+  S["scene: part and path"] --> SE["sensor: depth frames"]
+  SE --> DG["degradations: noise, holes"]
+  DG --> P["perception: pixels to points"]
+  P --> T["tracking: pose per frame"]
+  T --> V["video: outline over frame"]
 ```
 
 | Stage | Idea |

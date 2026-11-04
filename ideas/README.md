@@ -10,63 +10,32 @@ author decides), **[caution]** (known trap).
 
 ## Thesis
 
-Aligning two views of the same rigid object is a solved problem in papers
-and an unsolved one in practice: every team rewrites ICP, tunes it on its
-own data, and cannot ship it to the robot. The project is **one small,
-typed, fast registration brick**, written once in Rust and called from
-Python, C++ or firmware, whose behaviour under noise, outliers and partial
-views is **measured against a known truth**, not hoped for.
+Aligning two views of the same rigid object is solved in papers, not in
+practice: every team rewrites ICP, tunes it on its own data, and cannot
+ship it to the robot. The project is:
+
+- **one small, typed, fast registration brick**, written once in Rust;
+- called from Python, C++ or firmware;
+- **measured against a known truth** under noise, outliers and partial
+  views, not hoped for.
 
 ## The path
 
-```text
-  origin.md ── what the author needed, and the 2025 attempt
-      │
-  problem/ ─── what is observed, under which hypotheses, in which variants
-      │
-  method/ ──── which algorithm answers which variant, and what is open
-      │
-  architecture/ ── how one core reaches every language and device
-      │
-  demo/ ────── a simulated robot tracking a part, the proof of M1
-      │
-  open.md ──── the questions still open
+```mermaid
+graph TD
+  O["origin: the need"] --> P["problem: what is observed"]
+  P --> M["method: which algorithm"]
+  M --> A["architecture: one core"]
+  A --> D["demo: a tracked part"]
+  D --> Q["open: what remains"]
 ```
 
 ## Files
 
-- [vision.md](vision.md) · [origin.md](origin.md) ·
-  [milestones.md](milestones.md) · [naming.md](naming.md) ·
-  [open.md](open.md) · [prior-art.md](prior-art.md) ·
-  [beyond.md](beyond.md)
-- **problem/**:
-  [observation-model](problem/observation-model.md) ·
-  [hypotheses](problem/hypotheses.md) ·
-  [hypothesis-ladder](problem/hypothesis-ladder.md) ·
-  [variants](problem/variants.md) ·
-  [what-we-know](problem/what-we-know.md) ·
-  [measuring-success](problem/measuring-success.md) ·
-  [sequences](problem/sequences.md)
-- **method/**:
-  [closed-form](method/closed-form.md) ·
-  [icp-family](method/icp-family.md) ·
-  [robustness](method/robustness.md) ·
-  [global-initialisation](method/global-initialisation.md) ·
-  [aggregation](method/aggregation.md) ·
-  [mesh-targets](method/mesh-targets.md) ·
-  [observability](method/observability.md) ·
-  [tracking](method/tracking.md) ·
-  [detection](method/detection.md)
-- **architecture/**:
-  [layers](architecture/layers.md) ·
-  [types](architecture/types.md) ·
-  [bindings](architecture/bindings.md) ·
-  [embedded](architecture/embedded.md) ·
-  [performance](architecture/performance.md) ·
-  [benchmark](architecture/benchmark.md) ·
-  [stack](architecture/stack.md) ·
-  [extension-points](architecture/extension-points.md) ·
-  [contract](architecture/contract.md)
-- **demo/**: [README](demo/README.md) — A: point clouds over time;
-  B: a depth camera (scene, sensor, degradations, perception, tracking,
-  video)
+| Part | Files |
+| --- | --- |
+| Root | [vision.md](vision.md) · [origin.md](origin.md) · [milestones.md](milestones.md) · [naming.md](naming.md) · [open.md](open.md) · [prior-art.md](prior-art.md) · [beyond.md](beyond.md) |
+| Problem | [observation-model](problem/observation-model.md) · [hypotheses](problem/hypotheses.md) · [hypothesis-ladder](problem/hypothesis-ladder.md) · [variants](problem/variants.md) · [what-we-know](problem/what-we-know.md) · [measuring-success](problem/measuring-success.md) · [sequences](problem/sequences.md) |
+| Method | [closed-form](method/closed-form.md) · [landscape](method/landscape.md) · [icp-family](method/icp-family.md) · [robustness](method/robustness.md) · [global-initialisation](method/global-initialisation.md) · [aggregation](method/aggregation.md) · [mesh-targets](method/mesh-targets.md) · [observability](method/observability.md) · [tracking](method/tracking.md) · [detection](method/detection.md) |
+| Architecture | [layers](architecture/layers.md) · [types](architecture/types.md) · [bindings](architecture/bindings.md) · [embedded](architecture/embedded.md) · [performance](architecture/performance.md) · [benchmark](architecture/benchmark.md) · [stack](architecture/stack.md) · [extension-points](architecture/extension-points.md) · [contract](architecture/contract.md) |
+| Demo | [README](demo/README.md): A, point clouds over time; B, a depth camera |
