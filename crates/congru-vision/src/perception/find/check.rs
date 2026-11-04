@@ -1,6 +1,6 @@
-use congru::{RigidTransform, TriangleMesh};
+use congru::{Point, RigidTransform, TriangleMesh};
 
-use crate::pixel::coordinate;
+use crate::pixel::{containing, coordinate};
 use crate::{Camera, DepthImage, render};
 
 /// How far outside the silhouette its edge is read, in pixels.
@@ -42,6 +42,27 @@ pub(super) fn agreement(
     let inside = (coordinate(agree) - coordinate(behind)) / coordinate(covered.max(1));
     let outline = coordinate(standing) / coordinate((standing + flush).max(1));
     inside * outline
+}
+
+/// The share of `points`, carried by `pose`, that the camera sees inside its
+/// image: a pose mostly out of the frame is not judged on what remains.
+pub(super) fn share_in_frame<'a>(
+    camera: &Camera,
+    pose: &RigidTransform,
+    points: impl ExactSizeIterator<Item = &'a Point>,
+) -> f64 {
+    let total = points.len();
+    let inside = points
+        .filter(|point| {
+            camera
+                .project(&pose.apply(point))
+                .is_some_and(|[across, down]| {
+                    containing(across, camera.width).is_some()
+                        && containing(down, camera.height).is_some()
+                })
+        })
+        .count();
+    coordinate(inside) / coordinate(total.max(1))
 }
 
 /// The model's depth at a silhouette pixel a few pixels from this one.

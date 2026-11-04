@@ -46,3 +46,19 @@ file that argues it.
    licence, with one object to cut out of them; and the tooling that makes
    adding such a scene one command (fetch a single file, check its sum,
    record it in [catalogue/sources.yaml](../catalogue/sources.yaml)).
+
+## Next, from the author's review of demo B
+
+**[defined]** Demo A is solved; what fails in a room is not missing data. The
+frame says more than points ([visibility](problem/visibility.md)).
+
+1. **[question]** Keep the detector as measured: every vote judged, refined along
+   rays, share in frame? Room stays at 0 / 90, and it costs time
+   ([evidence along rays](method/ray-evidence.md)).
+2. **[question]** Move the tracker to rays with a budget of K points, and to three
+   verdicts: supported, hidden, refuted. It breaks a right start in one update.
+3. **[question]** Is a physical prior allowed, that a part neither sinks nor floats?
+   The sensor alone leaves it open.
+4. **[question]** Should the answer be a set of poses when several survive?
+5. **[question]** How to detect in clutter without a 2D box? Without one, the room
+   still gives none, then 160° off.
