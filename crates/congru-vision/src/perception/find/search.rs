@@ -3,7 +3,7 @@ use congru::{NearestNeighbors, RigidTransform, Vector};
 use super::faces::{frame_patches, model_faces, placements};
 use super::pairs::Oriented;
 use super::{Finder, Found};
-use crate::{Camera, DepthImage, Information, Observed, render};
+use crate::{Camera, DepthImage, Information, Observed, ViewScore, render};
 
 /// The votes scored best at the finder's step, refined along rays and scored
 /// again, closer to the noise.
@@ -126,6 +126,25 @@ impl Finder {
             }
         }
         pose
+    }
+
+    /// The share of the model's pixels at `pose` whose ray went through it.
+    #[must_use]
+    pub fn through_share(
+        &self,
+        depth: &DepthImage,
+        camera: &Camera,
+        pose: &RigidTransform,
+        tolerance: f64,
+    ) -> f64 {
+        let rendered = render(camera, &[(&self.model, *pose)]).depth;
+        let view = ViewScore::of(depth, &rendered, camera, tolerance);
+        let total = view.support + view.violation + view.occluded;
+        if total > 0.0 {
+            view.violation / total
+        } else {
+            0.0
+        }
     }
 
     /// As [`Finder::confirmed`], reading `depth` first.

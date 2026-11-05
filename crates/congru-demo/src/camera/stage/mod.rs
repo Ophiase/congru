@@ -8,10 +8,12 @@ use congru_vision::pixel::coordinate;
 use congru_vision::{Camera, DepthImage, Frame, render};
 
 mod crop;
+mod hold;
 
 use super::conditions::{Clutter, Condition};
 use super::detect::{Detector, region_of_interest};
 use super::view::CameraView;
+use hold::Hold;
 
 const PART_SPAN: f64 = 0.25;
 const MODEL_SPACING: f64 = 0.003;
@@ -85,7 +87,9 @@ impl Stage {
         let mut tracker = Tracker::new("tracker", view, Settings::for_part(PART_SPAN)?);
         let path = self.path_for(condition);
         let detector = Detector::new(&self.part, PART_SPAN)?;
-        let mut last: Option<RigidTransform> = None;
+        let settings = Settings::for_part(PART_SPAN)?;
+        let mut hold = Hold::new(settings.gains);
+        let mut latest: Option<Update> = None;
         (0..path.frames)
             .map(|frame| {
                 let truth = path.pose(frame);
@@ -95,21 +99,29 @@ impl Stage {
                 let depth = condition.degradation.apply(&exact.depth, frame as u64);
                 let region =
                     region_of_interest(&depth, &self.camera, &self.part, &truth, frame as u64);
+                let last = hold.forecast();
                 let scan = last
                     .or_else(|| start(&detector, &region))
                     .and_then(|start| self.scan_for(&detector, &depth, &region, &start));
                 let crowded = last.is_some_and(|pose| self.is_crowded(&depth, &pose));
-                let update = scan
+                let fresh = scan
                     .as_ref()
                     .and_then(|(start, cloud)| tracker.update_from(cloud, Some(*start)).ok())
                     .map(|update| {
                         along_rays_when(crowded, update, scan.as_ref().map(|found| found.0))
                     });
-                last = update
+                let measured = fresh
                     .as_ref()
                     .filter(|update| update.trusted)
-                    .map(|update| update.pose)
-                    .filter(|pose| !detector.refuted(&depth, &self.camera, pose));
+                    .map(|update| update.pose);
+                let answer = hold.judge(&detector, &self.camera, (&depth, &region), measured);
+                latest = fresh.or_else(|| latest.take());
+                let update = answer.and_then(|pose| {
+                    latest.as_ref().map(|update| Update {
+                        pose,
+                        ..update.clone()
+                    })
+                });
                 Ok(Step {
                     image: camera_noise(condition).apply(&exact.depth, frame as u64 + 1),
                     depth,
