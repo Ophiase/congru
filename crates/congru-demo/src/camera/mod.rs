@@ -1,11 +1,11 @@
 //! Demo B: a machined part on a turntable under a simulated depth camera,
 //! tracked through degraded frames.
 
-mod conditions;
+pub(crate) mod conditions;
 pub(crate) mod detect;
 mod overlay;
 mod room;
-mod stage;
+pub(crate) mod stage;
 pub(crate) mod view;
 
 use std::path::{Path, PathBuf};
@@ -18,8 +18,9 @@ use crate::picture::{self, Tile, font};
 use conditions::CONDITIONS;
 use stage::{Stage, Step};
 
-pub fn run(target: &Path) -> anyhow::Result<Vec<crate::Summary>> {
-    let stage = Stage {
+/// The turntable under its camera, as every condition sees it.
+pub(crate) fn stage() -> anyhow::Result<Stage> {
+    Ok(Stage {
         part: bracket()?,
         turntable: turntable()?,
         surroundings: room::room()?,
@@ -34,7 +35,11 @@ pub fn run(target: &Path) -> anyhow::Result<Vec<crate::Summary>> {
             handheld: congru_synth::sequence::Handheld::default(),
             knock_degrees: 0.0,
         },
-    };
+    })
+}
+
+pub fn run(target: &Path) -> anyhow::Result<Vec<crate::Summary>> {
+    let stage = stage()?;
     let runs: Vec<Vec<Step>> = CONDITIONS
         .iter()
         .map(|condition| stage.run(condition))

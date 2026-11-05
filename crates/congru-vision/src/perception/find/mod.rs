@@ -4,7 +4,7 @@ mod rays;
 
 use congru::{Distance, Error, NearestNeighbors, PointCloud, RigidTransform, Target, TriangleMesh};
 
-use crate::{Camera, DepthImage, back_project};
+use crate::{Camera, DepthImage, Information, Observed, ViewScore, back_project, render};
 use check::{agreement, share_in_frame};
 use pairs::{ANGLE_BINS, Oriented, PairTable, key, local_frame, turn, turn_bin, turn_of};
 use rays::along_rays;
@@ -81,29 +81,71 @@ impl Finder {
     /// `least` of the frame; `None` says the object was not found.
     #[must_use]
     pub fn find(&self, depth: &DepthImage, camera: &Camera, least: f64) -> Option<Found> {
-        let step = Distance::new(self.table.step).ok()?;
-        let thinned = PointCloud::new(back_project(depth, camera))
-            .ok()?
-            .voxel_downsample(step);
-        let scene = Target::with_estimated_normals(thinned, NORMAL_NEIGHBORS).ok()?;
-        let frame: Vec<Oriented> = facing_camera(&scene).ok()?;
-        let index = NearestNeighbors::new(scene.cloud()).ok()?;
+        self.proposals(depth, camera)
+            .into_iter()
+            .map(|pose| Found {
+                pose,
+                agreement: self.agreement(depth, camera, &pose),
+            })
+            .max_by(|left, right| left.agreement.total_cmp(&right.agreement))
+            .filter(|found| found.agreement >= least)
+    }
+
+    /// Every vote, refined along its rays, for measuring what the search
+    /// can offer.
+    #[must_use]
+    pub fn proposals(&self, depth: &DepthImage, camera: &Camera) -> Vec<RigidTransform> {
+        let Some((frame, index)) = self.frame_of(depth, camera) else {
+            return Vec::new();
+        };
         frame
             .iter()
             .step_by(REFERENCE_STRIDE)
             .map(|reference| self.vote(reference, &frame, &index))
             .map(|pose| self.refined(depth, camera, &pose))
-            .map(|pose| Found {
+            .collect()
+    }
+
+    /// The frame's oriented points, thinned to the step, with their index.
+    fn frame_of(
+        &self,
+        depth: &DepthImage,
+        camera: &Camera,
+    ) -> Option<(Vec<Oriented>, NearestNeighbors)> {
+        let step = Distance::new(self.table.step).ok()?;
+        let thinned = PointCloud::new(back_project(depth, camera))
+            .ok()?
+            .voxel_downsample(step);
+        let scene = Target::with_estimated_normals(thinned, NORMAL_NEIGHBORS).ok()?;
+        let frame = facing_camera(&scene).ok()?;
+        let index = NearestNeighbors::new(scene.cloud()).ok()?;
+        Some((frame, index))
+    }
+
+    /// What the frame says of `pose`: the information of what it confirms,
+    /// less the area it refutes. An absolute amount, for comparing poses.
+    #[must_use]
+    pub fn score(
+        &self,
+        seen: &Observed,
+        camera: &Camera,
+        pose: &RigidTransform,
+        tolerance: f64,
+    ) -> f64 {
+        let rendered = render(camera, &[(&self.model, *pose)]).depth;
+        Information::of(seen, &rendered, camera, tolerance).mean()
+            - ViewScore::of(&seen.depth, &rendered, camera, tolerance).violation
+    }
+
+    /// The score of today's detector, for comparison.
+    #[must_use]
+    pub fn agreement(&self, depth: &DepthImage, camera: &Camera, pose: &RigidTransform) -> f64 {
+        agreement(depth, camera, &self.model, pose, self.table.step)
+            * share_in_frame(
+                camera,
                 pose,
-                agreement: agreement(depth, camera, &self.model, &pose, self.table.step)
-                    * share_in_frame(
-                        camera,
-                        &pose,
-                        self.points.iter().map(|oriented| &oriented.point),
-                    ),
-            })
-            .max_by(|left, right| left.agreement.total_cmp(&right.agreement))
-            .filter(|found| found.agreement >= least)
+                self.points.iter().map(|oriented| &oriented.point),
+            )
     }
 
     /// A voted pose, known only to a bin, brought onto the frame along its

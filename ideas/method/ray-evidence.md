@@ -124,7 +124,8 @@ the one above, except the last, which removes the box.
 - **[question]** How to detect in clutter without a box: unknown yet.
 - **[question]** Is "no flat face flush with a wall" a sensor fact, by the
   contour, or a physical prior? Sampling the contour with K points did not work
-  yet.
+  yet. **[sketch]** A sensor fact, by [the information of the
+  hits](pose-information.md).
 - With a can in front, K points stay near 3° where every pixel gives 0.7°.
 - The proposal is unmeasured: random starts find no right pose, since one random
   rotation in 450 is within 20°. That says nothing about point pair features.

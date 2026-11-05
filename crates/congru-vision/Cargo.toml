@@ -10,6 +10,7 @@ keywords.workspace = true
 categories.workspace = true
 
 [dependencies]
+nalgebra.workspace = true
 congru = { workspace = true, default-features = false }
 
 [lints]

@@ -40,12 +40,37 @@ pub struct Step {
 }
 
 impl Stage {
+    /// What the sensor returns at `frame`, and the truth to score it by.
+    pub fn sensed(
+        &self,
+        condition: &Condition,
+        frame: usize,
+    ) -> anyhow::Result<(DepthImage, RigidTransform)> {
+        let path = self.path_for(condition);
+        let truth = path.pose(frame);
+        let part = flexed(&self.part, condition.flex, PART_SPAN, frame)?;
+        let exact = self.shoot(&part, &truth, &self.around(condition, &path, &truth, frame));
+        Ok((
+            condition.degradation.apply(&exact.depth, frame as u64),
+            truth,
+        ))
+    }
+
     pub fn run(&self, condition: &Condition) -> anyhow::Result<Vec<Step>> {
+        let detector = Detector::new(&self.part, PART_SPAN)?;
+        self.run_from(condition, |depth| detector.find(depth, &self.camera))
+    }
+
+    /// Runs the tracker, asking `start` for a pose whenever it has none.
+    pub fn run_from(
+        &self,
+        condition: &Condition,
+        mut start: impl FnMut(&DepthImage) -> Option<RigidTransform>,
+    ) -> anyhow::Result<Vec<Step>> {
         let view = CameraView::new(&self.part, self.camera, Distance::new(MODEL_SPACING)?)?;
         let mut tracker = Tracker::new("tracker", view, Settings::for_part(PART_SPAN)?);
         let (centre, reach) = extent(&self.part);
         let path = self.path_for(condition);
-        let detector = Detector::new(&self.part, PART_SPAN)?;
         let mut last: Option<RigidTransform> = None;
         (0..path.frames)
             .map(|frame| {
@@ -55,11 +80,9 @@ impl Stage {
                     self.shoot(&part, &truth, &self.around(condition, &path, &truth, frame));
                 let depth = condition.degradation.apply(&exact.depth, frame as u64);
                 let points = back_project(&depth, &self.camera);
-                let scan = last
-                    .or_else(|| detector.find(&depth, &self.camera))
-                    .and_then(|start| {
-                        Some((start, scan_around(&points, &start.apply(&centre), reach)?))
-                    });
+                let scan = last.or_else(|| start(&depth)).and_then(|start| {
+                    Some((start, scan_around(&points, &start.apply(&centre), reach)?))
+                });
                 let update = scan
                     .as_ref()
                     .and_then(|(start, cloud)| tracker.update_from(cloud, Some(*start)).ok());
@@ -102,7 +125,7 @@ impl Stage {
 
     /// What else is in view at `frame`: the room, still in the world, and
     /// the can, crossing in front twice.
-    fn around(
+    pub(super) fn around(
         &self,
         condition: &Condition,
         path: &Turntable,

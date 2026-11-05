@@ -302,6 +302,8 @@ dependencies = [
  "congru-vision",
  "gif",
  "nalgebra",
+ "rand",
+ "rayon",
 ]
 
 [[package]]
@@ -375,6 +377,7 @@ name = "congru-vision"
 version = "0.1.19"
 dependencies = [
  "congru",
+ "nalgebra",
 ]
 
 [[package]]

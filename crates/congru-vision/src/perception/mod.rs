@@ -1,9 +1,15 @@
 mod find;
+mod gate;
+mod information;
 mod plane;
+mod shadow;
 mod visibility;
 
 pub use find::{Finder, Found};
+pub use gate::in_view;
+pub use information::{Information, Observed};
 pub use plane::without_support;
+pub use shadow::ViewScore;
 pub use visibility::visible_from_origin;
 
 use congru::Point;

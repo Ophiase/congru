@@ -8,6 +8,8 @@ rust-version.workspace = true
 license.workspace = true
 
 [dependencies]
+rand.workspace = true
+rayon.workspace = true
 anyhow = "1.0.104"
 gif = "0.14.2"
 nalgebra.workspace = true
