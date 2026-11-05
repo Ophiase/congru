@@ -56,8 +56,16 @@ frame says more than points ([visibility](problem/visibility.md)).
 keep or not: [what a pose is worth](method/pose-information.md). Questions 3 and 4
 stay open, and [step 7 of the ladder](problem/cloud-ladder.md) shows why they matter.
 
-**[question]** Far scenes: the simulated sensor has about 1 m of noise at 14 m,
-close to a car's height, so even the truth scores zero. Give them a lidar's noise?
+**[sketch]** Far scenes: a stereo sensor has about 1 m of noise at 14 m, close to
+a car's height, so they are given a lidar's noise in their files.
+
+**[sketch]** To pick up, in order:
+
+- **Crate among crates fell from 72 to 0**: since the tolerance reads the noise
+  and the search judges on the whole frame. Not understood yet.
+- **A contour term**, on branch `dev/contour-term`: gear from above 29 to 72 of
+  72, but demo B in a room 68 to 16, wrong poses confirming positive.
+- **It wants using only where faces leave the pose free.**
 
 **[question]** A new one: the author's intuition is a person reads surfaces, not
 points. Segments work in 2D without any start; faces help in 3D but not yet in a

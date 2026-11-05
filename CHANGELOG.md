@@ -5,6 +5,14 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.23 — 2026-11-06
+
+- **One film per scene**, as demo B draws them, 14 scenes
+  ([films](docs/scene-films.md)); the simple situations apart.
+- **The tolerance reads the noise**, and a search votes in the box but judges on
+  the whole frame: the room reaches 81 of 90, a car close by 39 of 72.
+- **A crate among crates falls from 72 to 0**, not understood yet.
+
 ## 0.1.22 — 2026-11-05
 
 - **The realistic scenes run the new pipeline**: four of six hold, from 0 of 72.

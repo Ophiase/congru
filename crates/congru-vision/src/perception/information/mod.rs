@@ -1,11 +1,9 @@
-mod contour;
 mod observed;
 
 use congru::Vector;
 use nalgebra::{SMatrix, SVector};
 
 use crate::{Camera, DepthImage};
-use contour::contour_elements;
 pub use observed::Observed;
 
 type Twist = SVector<f64, 6>;
@@ -123,7 +121,6 @@ fn elements(
             }
         }
     }
-    elements.extend(contour_elements(observed, rendered, camera, tolerance));
     elements
 }
 
@@ -162,30 +159,6 @@ mod tests {
         let information = Information::of(&seen, &flat, &camera, 0.01);
         assert!(information.weakest() < 1e-9);
         assert!(information.eigenvalues[5] > 0.1);
-    }
-
-    #[test]
-    fn a_flat_face_with_its_edges_seen_is_pinned_along_itself() {
-        let camera = Camera {
-            width: 40,
-            height: 40,
-            focal: 40.0,
-        };
-        let mut rendered = DepthImage::filled(40, 40, f64::NAN);
-        let mut seen = DepthImage::filled(40, 40, 3.0);
-        for row in 10..30 {
-            for column in 12..28 {
-                rendered.set(column, row, 1.0);
-                seen.set(column, row, 1.0);
-            }
-        }
-        let observed = Observed::new(seen, &camera, 0.01);
-        let information = Information::of(&observed, &rendered, &camera, 0.01);
-        assert!(
-            information.weakest() > 1e-6,
-            "{:?}",
-            information.eigenvalues
-        );
     }
 
     #[test]

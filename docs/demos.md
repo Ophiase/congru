@@ -53,13 +53,13 @@ the second the same in a room. Each row:
 
 | Condition | Added to an imperfect sensor | Median error | Frames within 2° |
 | --- | --- | --- | --- |
-| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.75° | 77 / 90 |
-| All in a room | the same, with a wall, a bench, a box and the turntable in view | 1.48° | 68 / 90 |
+| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.72° | 79 / 90 |
+| All in a room | the same, with a wall, a bench, a box and the turntable in view | 1.43° | 68 / 90 |
 | Sensor | about 5 mm of noise, blur, holes, flying pixels | 0.19° | 90 / 90 |
 | Shake | a camera in a hand: slow wander and jolts | 0.57° | 88 / 90 |
 | Lens | radial distortion of the depth image | 0.29° | 90 / 90 |
 | Flex | the part flexes by up to 4 mm | 0.26° | 90 / 90 |
-| Room | the room alone | 0.96° | 78 / 90 |
+| Room | the room alone | 0.99° | 81 / 90 |
 
 One effect at a time: [sensor](figures/tracking-sensor.gif),
 [shake](figures/tracking-shake.gif), [lens](figures/tracking-lens.gif),
@@ -79,4 +79,5 @@ On two other paths, the room gives 73 and 79 of 90, all in a room 74 and 57
 - computed offline by `just demo`. A detection in a room takes seconds on four
   threads: following is real-time by design, finding is not.
 
-The realistic scenes have their own tour: [scenes](benchmark/scenes.md).
+The realistic scenes have their own films: [scene films](scene-films.md), and
+[what they measure](benchmark/scenes.md).
