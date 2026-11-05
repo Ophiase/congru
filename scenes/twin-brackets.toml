@@ -1,0 +1,41 @@
+name = "twin brackets"
+summary = "A bracket among three identical ones on a table: only the box tells which."
+
+[camera]
+position = [0.1, -0.7, 1.3]
+look_at = [0.0, 0.05, 0.76]
+field_of_view = 60.0
+width = 320
+height = 240
+
+[ground]
+size = 6.0
+relief = 0.004
+wave = 1.5
+seed = 11
+
+[[objects]]
+kind = "table"
+size = [1.4, 0.8, 0.75]
+position = [0.0, 0.1, 0.0]
+
+[[objects]]
+kind = "bracket"
+position = [0.0, 0.05, 0.75]
+yaw = 30.0
+target = true
+
+[[objects]]
+kind = "bracket"
+position = [-0.32, 0.1, 0.75]
+yaw = 120.0
+
+[[objects]]
+kind = "bracket"
+position = [0.3, 0.12, 0.75]
+yaw = -40.0
+
+[[objects]]
+kind = "bracket"
+position = [0.05, 0.3, 0.75]
+yaw = 200.0

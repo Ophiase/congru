@@ -59,6 +59,9 @@ fn main() -> anyhow::Result<()> {
 }
 
 fn print_table(summaries: Vec<Summary>) -> anyhow::Result<()> {
+    if summaries.is_empty() {
+        return Ok(());
+    }
     let mut output = std::io::stdout().lock();
     writeln!(
         output,

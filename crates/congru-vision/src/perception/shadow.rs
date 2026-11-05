@@ -8,6 +8,11 @@ const EDGE_GAP: usize = 2;
 /// A sensor mixes the two sides of a depth edge over a pixel or two: the
 /// image proves free space only when this whole neighbourhood sees it.
 const RIM: usize = 2;
+/// Fewer neighbouring pairs than this say nothing of the noise.
+const LEAST_GAPS: usize = 30;
+/// The median gap between two Gaussian values, to their deviation: the normal
+/// consistency constant over the square root of two.
+const GAP_TO_DEVIATION: f64 = 1.048;
 
 /// A model's rendered depth read against a depth image, as metric areas, in
 /// the square of the unit of the depths. A pixel without a return counts for
@@ -110,6 +115,24 @@ fn edge_depth(rendered: &DepthImage, column: usize, row: usize) -> Option<f64> {
     .reduce(f64::min)
 }
 
+/// The noise of `depth`, from what the pixels under `mask` say among themselves:
+/// neighbours on one surface differ by the noise alone, and a median ignores those
+/// that do not lie on one. `None` with too few pairs to tell.
+#[must_use]
+pub fn noise_under(depth: &DepthImage, mask: &DepthImage) -> Option<f64> {
+    let mut gaps: Vec<f64> = mask
+        .positions()
+        .filter(|(column, row)| column + 1 < mask.width() && mask.get(*column, *row).is_finite())
+        .map(|(column, row)| (depth.get(column, row) - depth.get(column + 1, row)).abs())
+        .filter(|gap| gap.is_finite())
+        .collect();
+    if gaps.len() < LEAST_GAPS {
+        return None;
+    }
+    gaps.sort_by(f64::total_cmp);
+    Some(gaps[gaps.len() / 2] * GAP_TO_DEVIATION)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -135,6 +158,23 @@ mod tests {
         let score = ViewScore::of(&image([1.0, 2.0]), &image([2.0, f64::NAN]), &CAMERA, 0.1);
         assert!((score.occluded - 4.0).abs() < 1e-12);
         assert!(score.support.abs() < 1e-12);
+    }
+
+    #[test]
+    fn the_noise_is_read_from_neighbouring_pixels() {
+        let mut depth = DepthImage::filled(64, 64, 2.0);
+        let mask = DepthImage::filled(64, 64, 2.0);
+        let mut state = 1_u64;
+        for (column, row) in mask.positions() {
+            state = state
+                .wrapping_mul(6_364_136_223_846_793_005)
+                .wrapping_add(1);
+            let sign = if state >> 63 == 0 { 1.0 } else { -1.0 };
+            let size = coordinate(usize::try_from(state >> 40).unwrap_or(0) % 1000) / 1000.0;
+            depth.set(column, row, 2.0 + sign * size * 0.03);
+        }
+        let noise = noise_under(&depth, &mask).unwrap_or(0.0);
+        assert!(noise > 0.01 && noise < 0.03, "{noise}");
     }
 
     #[test]

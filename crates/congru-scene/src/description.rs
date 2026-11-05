@@ -11,6 +11,9 @@ pub struct Description {
     pub summary: String,
     pub camera: CameraSpec,
     pub ground: Option<GroundSpec>,
+    /// Depth noise at one metre of a sensor whose noise grows as the square of the
+    /// depth, in metres; none keeps the viewer's own.
+    pub noise_at_one_metre: Option<f64>,
     pub objects: Vec<ObjectSpec>,
 }
 

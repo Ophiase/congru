@@ -22,6 +22,8 @@ pub struct Scene {
     /// Maps the world to the camera's frame (x right, y down, z forward).
     pub view: RigidTransform,
     pub objects: Vec<Placed>,
+    /// Depth noise at one metre, when the scene states its sensor.
+    pub noise_at_one_metre: Option<f64>,
     target: usize,
 }
 
@@ -80,6 +82,7 @@ impl Scene {
         Ok(Self {
             name: description.name.clone(),
             summary: description.summary.clone(),
+            noise_at_one_metre: description.noise_at_one_metre,
             camera: Camera::with_field_of_view(
                 description.camera.width,
                 description.camera.height,

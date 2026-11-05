@@ -1,0 +1,36 @@
+name = "bracket in a bin"
+summary = "An asymmetric bracket tilted among gears in a bin: picking, with a pose that means something."
+
+[camera]
+position = [0.05, -0.35, 0.8]
+look_at = [0.0, 0.0, 0.05]
+field_of_view = 60.0
+width = 320
+height = 240
+
+[ground]
+size = 6.0
+relief = 0.004
+wave = 1.5
+seed = 12
+
+[[objects]]
+kind = "bin"
+size = [0.6, 0.45, 0.2]
+position = [0.0, 0.0, 0.0]
+
+[[objects]]
+kind = "gear"
+position = [-0.16, -0.08, 0.03]
+
+[[objects]]
+kind = "gear"
+position = [0.17, 0.09, 0.03]
+yaw = 15.0
+
+[[objects]]
+kind = "bracket"
+position = [0.0, 0.0, 0.05]
+yaw = 65.0
+roll = 15.0
+target = true

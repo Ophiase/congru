@@ -180,10 +180,9 @@ Open3D and PCL do that.
 | Benchmark: 8 one-shot methods, 3 trackers, 4 models, 19 situations | Done ([protocol](docs/benchmark/protocol.md), [results](docs/benchmark/results.md)) |
 | Comparison with Open3D and small_gicp | Planned |
 
-**[caution] Known limits today.** The realistic scenes fail (0 of 72 frames
-within 2°, [scenes](docs/benchmark/scenes.md)); Demo B tracks the part
-alone, but loses it once a room is in view ([demos](docs/demos.md)). The
-alignment core and the tracking of an isolated part are the measured parts.
+**[caution] Known limits today.** All simulated, a noisy box from the truth in
+place of a detector. With it, 13 of 14 scenes hold at least in part
+([films](docs/scene-films.md)), demo B in a room on most frames.
 
 The questions still open are in [ideas/open.md](ideas/open.md).
 

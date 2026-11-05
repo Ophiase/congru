@@ -42,7 +42,7 @@ pub fn run() -> anyhow::Result<()> {
     }
     for condition in &CONDITIONS {
         let mut seeded = Some(stage.sensed(condition, 0)?.1);
-        let steps = stage.run_from(condition, |_, _| seeded.take())?;
+        let steps = stage.run_from(condition, |_, _, _| seeded.take())?;
         writeln!(output, "{}: {}", condition.name, tracking(&steps))?;
     }
     Ok(())

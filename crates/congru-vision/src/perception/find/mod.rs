@@ -91,7 +91,20 @@ impl Finder {
     /// was not found.
     #[must_use]
     pub fn find(&self, depth: &DepthImage, camera: &Camera, least: f64) -> Option<Found> {
-        self.search(depth, camera)
+        self.search(depth, depth, camera)
+            .filter(|found| found.agreement >= least)
+    }
+
+    /// As [`Finder::find`], only `region` proposing poses, all of `depth` judging.
+    #[must_use]
+    pub fn find_in(
+        &self,
+        depth: &DepthImage,
+        region: &DepthImage,
+        camera: &Camera,
+        least: f64,
+    ) -> Option<Found> {
+        self.search(depth, region, camera)
             .filter(|found| found.agreement >= least)
     }
 

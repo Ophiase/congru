@@ -12,34 +12,39 @@ Ordinary scenes written as short TOML files in
 [scenes/](../../scenes/), rendered by a simulated depth camera; the
 target is tinted. Adding one is writing one file.
 
-![The realistic scenes, filmed by a camera in a hand](../figures/scenes.gif)
+Each scene, frame by frame: [the films](../scene-films.md).
 
-*Each scene filmed by a wandering camera while its target moves; the green
-outline is where the target is found, the number its rotation error.*
+**Thirteen scenes of fourteen hold at least in part**, none used to choose
+anything. Every film: [scene films](../scene-films.md).
 
-**Four scenes of six hold**, none used to choose anything. They run the pipeline
-of [demo B](../hold-step.md): a noisy box in place of a detector, poses along
-rays, the trajectory held when a frame says nothing.
+They run the pipeline of [demo B](../hold-step.md): a noisy box in place of a
+detector, poses along rays, the trajectory held when a frame says nothing.
 
-| Scene | Within 2 % of its size | Median | Within 2° | Why |
-| --- | --- | --- | --- | --- |
-| Bin of parts | **72 / 72** | 1.18 % | 0 / 72 | A gear: right up to some teeth |
-| Part on a table | **71 / 72** | 1.10 % | 71 / 72 | No symmetry: both agree |
-| Gear on a bench | **65 / 72** | 1.29 % | 0 / 72 | A gear: right up to one tooth |
-| Shelf of mugs | **43 / 72** | 1.88 % | 4 / 72 | The handle hides: a turn is ambiguous |
-| Car on a road | 0 / 72 | not found | 0 / 72 | 1 m of noise at 14 m |
-| Street corner | 0 / 72 | 406 % | 0 / 72 | 2.6 m of noise at 23 m |
+| Scene | Within 2 % of its size, of 72 | Within 2° |
+| --- | --- | --- |
+| Part on a table | **72** | 69 |
+| Bracket in a bin | **72** | 64 |
+| Mug close up | **72** | 72 |
+| Bin of parts | **71** | 0: a gear, right up to some teeth |
+| Twin brackets | **71** | 72 |
+| Bracket at a low angle | **68** | 38 |
+| Gear on a bench | **63** | 19: a gear |
+| Bracket behind a crate | **60** | 20 |
+| Street corner | **57** | 42 |
+| Gear from above | 47 | 0: a gear, seen flat |
+| Shelf of mugs | 45 | 0: the handle hides |
+| Car on a road | 42 | 39 |
+| Car close by | 39 | 28 |
+| Crate among crates | **0** | 0: a regression, was 72 |
 
 **[caution]**
 
 - **The first column is [ADD-S]**, the distance to the true surface, blind to
   what a symmetry leaves unchanged. A rotation error fails a gear turned by one
-  tooth, so both are shown; only the part on a table has a rotation that means
-  something.
+  tooth, so both are shown.
 - **The box comes from the truth**, until a real detector runs.
-- **The cars are not an algorithm's failure**: the simulated sensor's noise grows
-  as the square of the depth: 1 m at 14 m, 2.6 m at 23 m, for a car 1.5 m
-  high. Even the truth scores zero.
+- **The two far scenes are given a lidar's noise** in their files: a stereo camera
+  has 1 m of noise at 14 m, for a car 1.5 m high.
 - **The breakdown above still shows the previous pipeline.**
 
 [ADD-S]: https://arxiv.org/abs/1711.00199

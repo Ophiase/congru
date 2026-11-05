@@ -30,7 +30,7 @@ fn in_region(name: &str, turns: f64, frames: &[usize]) -> anyhow::Result<()> {
         let (depth, truth) = stage.sensed(condition, *frame)?;
         let region = region_of_interest(&depth, &stage.camera, &stage.part, &truth, *frame as u64);
         let seen = Observed::new(region.clone(), &stage.camera, tight);
-        let found = finder.find(&region, &stage.camera, f64::NEG_INFINITY);
+        let found = finder.find_in(&depth, &region, &stage.camera, f64::NEG_INFINITY);
         let line = found.map_or("nothing".to_owned(), |found| {
             format!(
                 "{:.1}° {:.0} mm, score {:.1} confirms {:.2}",

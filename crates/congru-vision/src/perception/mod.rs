@@ -7,7 +7,7 @@ mod visibility;
 pub use find::{Finder, Found};
 pub use information::{Information, Observed};
 pub use plane::without_support;
-pub use shadow::ViewScore;
+pub use shadow::{ViewScore, noise_under};
 pub use visibility::visible_from_origin;
 
 use congru::Point;

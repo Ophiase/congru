@@ -1,12 +1,10 @@
 use congru::{Distance, RigidTransform, TriangleMesh};
 use congru_vision::pixel::coordinate;
-use congru_vision::{Camera, DepthImage, Finder, Observed, render};
+use congru_vision::{Camera, DepthImage, Finder, render};
 use rand::rngs::ChaCha8Rng;
 use rand::{RngExt, SeedableRng};
 
 const STEP_SHARE: f64 = 1.0 / 20.0;
-/// Poses are judged at this share of the step, close to the noise.
-const JUDGE_SHARE: f64 = 0.5;
 /// A simulated box is this much wider than the object, and off by this share.
 const BOX_GROWTH: f64 = 0.4;
 const BOX_SHIFT: f64 = 0.1;
@@ -23,14 +21,12 @@ const LEAST_AGREEMENT: f64 = 0.3;
 #[derive(Debug)]
 pub struct Detector {
     finder: Finder,
-    tolerance: f64,
 }
 
 impl Detector {
     pub fn new(model: &TriangleMesh, span: f64) -> anyhow::Result<Self> {
         Ok(Self {
             finder: Finder::new(model, Distance::new(span * STEP_SHARE)?)?,
-            tolerance: span * STEP_SHARE * JUDGE_SHARE,
         })
     }
 
@@ -43,10 +39,10 @@ impl Detector {
         pose: &RigidTransform,
     ) -> RigidTransform {
         let brought = self.finder.refined(depth, camera, pose);
-        let seen = Observed::new(depth.clone(), camera, self.tolerance);
+        let seen = self.finder.observed_at(depth, camera, &brought);
         let polished = self.finder.polished(&seen, camera, &brought);
         self.finder
-            .settled(depth, camera, &polished, self.tolerance)
+            .settled(depth, camera, &polished, seen.tolerance())
     }
 
     /// The share of what the model could say at `pose` that the frame says, less
@@ -57,8 +53,7 @@ impl Detector {
 
     /// The share of the model's pixels at `pose` whose ray went through it.
     pub fn through_share(&self, depth: &DepthImage, camera: &Camera, pose: &RigidTransform) -> f64 {
-        self.finder
-            .through_share(depth, camera, pose, self.tolerance)
+        self.finder.through_share(depth, camera, pose)
     }
 
     /// The model found again where `forecast` puts it, turned any way.
@@ -73,11 +68,30 @@ impl Detector {
             .map(|found| found.pose)
     }
 
-    /// The model's pose in the camera's frame, when the frame holds it.
+    /// The model's pose in the camera's frame, when the frame holds it: the better
+    /// of the search's own and that pose brought along rays. The rays usually
+    /// settle it, and under heavy noise take it away.
     pub fn find(&self, depth: &DepthImage, camera: &Camera) -> Option<RigidTransform> {
-        self.finder
-            .find(depth, camera, LEAST_AGREEMENT)
-            .map(|found| found.pose)
+        self.find_in(depth, depth, camera)
+    }
+
+    /// As [`Detector::find`], `region` proposing and all of `depth` judging.
+    pub fn find_in(
+        &self,
+        depth: &DepthImage,
+        region: &DepthImage,
+        camera: &Camera,
+    ) -> Option<RigidTransform> {
+        let found = self
+            .finder
+            .find_in(depth, region, camera, f64::NEG_INFINITY)?;
+        let brought = self.along_rays(depth, camera, &found.pose);
+        [found.pose, brought]
+            .into_iter()
+            .map(|pose| (self.confirmed(depth, camera, &pose), pose))
+            .max_by(|left, right| left.0.total_cmp(&right.0))
+            .filter(|(confirmed, _)| *confirmed >= LEAST_AGREEMENT)
+            .map(|(_, pose)| pose)
     }
 }
 

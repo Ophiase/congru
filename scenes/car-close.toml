@@ -1,0 +1,27 @@
+name = "car close by"
+summary = "A car six metres away under the same depth camera: its noise is now a part of its size, not all of it."
+
+[camera]
+position = [-1.0, -4.5, 1.5]
+look_at = [0.0, 1.0, 0.7]
+field_of_view = 70.0
+width = 320
+height = 240
+
+[ground]
+size = 40.0
+relief = 0.02
+wave = 3.0
+seed = 18
+
+[[objects]]
+kind = "car"
+size = [4.2, 1.8, 1.5]
+position = [0.0, 1.0, 0.0]
+yaw = 25.0
+target = true
+
+[[objects]]
+kind = "tree"
+size = [1.5, 1.5, 4.0]
+position = [-5.0, 5.0, 0.0]

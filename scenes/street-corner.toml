@@ -1,5 +1,7 @@
 name = "street corner"
 summary = "A car turning at a corner twenty metres away, half hidden by a parked one: far, sparse, partly seen."
+# A lidar-like range noise of 2 to 5 cm at this distance, not a stereo camera.
+noise_at_one_metre = 0.0001
 
 [camera]
 position = [2.0, -6.0, 2.2]

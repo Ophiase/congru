@@ -77,7 +77,7 @@ impl Hold {
         if detector.through_share(depth, camera, &forecast) > MOST_THROUGH {
             let turned = detector.turned_again(depth, camera, &forecast);
             let again = self.restart(detector, camera, depth, turned).or_else(|| {
-                let found = detector.find(region, camera);
+                let found = detector.find_in(depth, region, camera);
                 self.restart(detector, camera, depth, found)
             });
             if again.is_some() {

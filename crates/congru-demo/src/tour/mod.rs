@@ -16,6 +16,16 @@ use film::film;
 
 const FRAMES: usize = 72;
 const WITHIN_SURFACE: f64 = 0.02;
+const WITHIN_DEGREES: f64 = 2.0;
+const LINE_LENGTH: usize = 80;
+const INTRO: &str = "# Scene films\n\n\
+Every scene, as demo B draws it. Written by `just demo`, from real runs.\n\n\
+- **Left**: the scene. **Middle**: the depth. **Right**: the points the box holds.\n\
+- **Green outline**: the model at the pose found, the same on all three.\n\
+- **The number**: how far off, as a share of the object's size; the bar turns amber\n  \
+past 2 %, red past 10 %.\n\
+- **The box comes from the truth**, a little larger, a little off, until a real\n  \
+detector runs. Nothing else does.\n\n";
 
 pub fn run(target: &Path) -> anyhow::Result<Vec<Summary>> {
     let frames = std::env::var("CONGRU_FRAMES")
@@ -25,31 +35,97 @@ pub fn run(target: &Path) -> anyhow::Result<Vec<Summary>> {
     let only = std::env::var("CONGRU_SCENE").ok();
     let mut scenes = load(Path::new("scenes"))?;
     scenes.retain(|scene| only.as_ref().is_none_or(|name| *name == scene.name));
-    let runs: Vec<(String, Vec<Tile>)> = scenes
+    let folder = target.with_extension("");
+    std::fs::create_dir_all(&folder)?;
+    let sections = scenes
         .iter()
         .map(|scene| {
             let started = std::time::Instant::now();
-            let (tiles, surface): (Vec<Tile>, Vec<f64>) = film(scene, frames)?.into_iter().unzip();
-            report(&scene.name, started.elapsed().as_secs_f64(), surface);
-            Ok((scene.name.clone(), tiles))
+            let shots = film(scene, frames)?;
+            let name = scene.name.replace(' ', "-");
+            let drawn: Vec<Vec<Tile>> = shots.iter().map(|shot| shot.tiles.clone()).collect();
+            picture::write(&folder.join(format!("{name}.gif")), &drawn, 3)?;
+            let measures = Measures::of(&shots);
+            let mut output = std::io::stdout().lock();
+            writeln!(
+                output,
+                "{}: {:.1} s; {}",
+                scene.name,
+                started.elapsed().as_secs_f64(),
+                measures.line(),
+            )?;
+            Ok(section(scene, &name, &measures))
         })
-        .collect::<anyhow::Result<_>>()?;
-    let mut grid: Vec<Vec<Tile>> = (0..frames).map(|_| Vec::new()).collect();
-    for (_, tiles) in &runs {
-        for (frame, tile) in grid.iter_mut().zip(tiles) {
-            frame.push(tile.clone());
+        .collect::<anyhow::Result<Vec<String>>>()?;
+    if only.is_none()
+        && let Some(docs) = target.parent().and_then(Path::parent)
+    {
+        let page = format!("{INTRO}{}\n", sections.concat().trim_end());
+        std::fs::write(docs.join("scene-films.md"), page)?;
+    }
+    Ok(Vec::new())
+}
+
+/// How one scene went, over all its frames.
+struct Measures {
+    within_surface: usize,
+    median_surface: f64,
+    within_degrees: usize,
+    frames: usize,
+}
+
+impl Measures {
+    fn of(shots: &[film::Shot]) -> Self {
+        let mut surface: Vec<f64> = shots.iter().map(|shot| shot.off).collect();
+        surface.sort_by(f64::total_cmp);
+        Self {
+            within_surface: surface.iter().filter(|off| **off < WITHIN_SURFACE).count(),
+            median_surface: surface[surface.len() / 2],
+            within_degrees: shots
+                .iter()
+                .filter(|shot| shot.degrees < WITHIN_DEGREES)
+                .count(),
+            frames: shots.len(),
         }
     }
-    picture::write(target, &grid, 3)?;
-    Ok(runs
-        .iter()
-        .map(|(name, tiles)| {
-            Summary::of(
-                name.clone().leak(),
-                tiles.iter().map(|tile| tile.error_degrees),
-            )
-        })
-        .collect())
+
+    fn line(&self) -> String {
+        format!(
+            "{} of {} within {:.0} % of its size, median {:.2} %; {} within {WITHIN_DEGREES:.0}°",
+            self.within_surface,
+            self.frames,
+            100.0 * WITHIN_SURFACE,
+            100.0 * self.median_surface,
+            self.within_degrees,
+        )
+    }
+}
+
+fn section(scene: &Scene, name: &str, measures: &Measures) -> String {
+    format!(
+        "## {}\n\n{}\n\n![{name}](figures/scenes/{name}.gif)\n\n{}\n\n",
+        scene.name,
+        wrapped(&scene.summary),
+        wrapped(&format!("{}.", measures.line())),
+    )
+}
+
+/// `text` cut between words, to the page's line length.
+fn wrapped(text: &str) -> String {
+    let mut lines: Vec<String> = vec![String::new()];
+    for word in text.split_whitespace() {
+        let line = lines.last_mut().map_or(0, |line| line.chars().count());
+        if line > 0 && line + 1 + word.chars().count() > LINE_LENGTH {
+            lines.push(String::new());
+        }
+        if let Some(line) = lines.last_mut() {
+            if !line.is_empty() {
+                line.push(' ');
+            }
+            line.push_str(word);
+        }
+    }
+    lines.join("\n")
 }
 
 pub fn load(folder: &Path) -> anyhow::Result<Vec<Scene>> {
@@ -65,18 +141,4 @@ pub fn load(folder: &Path) -> anyhow::Result<Vec<Scene>> {
         .iter()
         .map(|path| Scene::load(path))
         .collect::<Result<_, _>>()?)
-}
-
-/// The surface error of one scene, on the side of the tables: the progress of a
-/// long run.
-fn report(name: &str, seconds: f64, mut surface: Vec<f64>) {
-    let frames = surface.len();
-    let within = surface.iter().filter(|off| **off < WITHIN_SURFACE).count();
-    surface.sort_by(f64::total_cmp);
-    let _ = writeln!(
-        std::io::stderr().lock(),
-        "{name}: {seconds:.1} s; surface off by a median {:.2} % of its size, {within} of {frames} within {:.0} %",
-        100.0 * surface[frames / 2],
-        100.0 * WITHIN_SURFACE,
-    );
 }
