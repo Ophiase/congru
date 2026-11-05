@@ -18,14 +18,14 @@ const MOST_COASTED: usize = 20;
 /// What goes on when a frame is not believed: the trajectory holds through what
 /// hides the object, and is searched again when the frame refutes it.
 #[derive(Debug)]
-pub(super) struct Hold {
+pub(crate) struct Hold {
     filter: MotionFilter,
     recent: VecDeque<f64>,
     coasted: usize,
 }
 
 impl Hold {
-    pub(super) fn new(gains: Gains) -> Self {
+    pub(crate) fn new(gains: Gains) -> Self {
         Self {
             filter: MotionFilter::new(gains),
             recent: VecDeque::new(),
@@ -34,7 +34,7 @@ impl Hold {
     }
 
     /// Where the object should be at this frame.
-    pub(super) fn forecast(&self) -> Option<RigidTransform> {
+    pub(crate) fn forecast(&self) -> Option<RigidTransform> {
         self.filter.predict()
     }
 
@@ -58,7 +58,7 @@ impl Hold {
     /// The pose to answer for this frame, from what was `measured` on it; `None`
     /// says the object is lost. A pose along rays is smoothed here; the tracker's
     /// own is `filtered_already`, and smoothing it twice lags behind every jolt.
-    pub(super) fn judge(
+    pub(crate) fn judge(
         &mut self,
         detector: &Detector,
         camera: &Camera,

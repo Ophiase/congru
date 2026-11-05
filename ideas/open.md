@@ -56,6 +56,9 @@ frame says more than points ([visibility](problem/visibility.md)).
 keep or not: [what a pose is worth](method/pose-information.md). Questions 3 and 4
 stay open, and [step 7 of the ladder](problem/cloud-ladder.md) shows why they matter.
 
+**[question]** Far scenes: the simulated sensor has about 1 m of noise at 14 m,
+close to a car's height, so even the truth scores zero. Give them a lidar's noise?
+
 **[question]** A new one: the author's intuition is a person reads surfaces, not
 points. Segments work in 2D without any start; faces help in 3D but not yet in a
 room. Should the model become faces and edges everywhere, ahead of points?

@@ -5,6 +5,14 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.22 — 2026-11-05
+
+- **The realistic scenes run the new pipeline**: four of six hold, from 0 of 72.
+  Within 2 % of their size: bin of parts 72, part on a table 71, gear on a bench
+  65, shelf of mugs 43 ([scenes](docs/benchmark/scenes.md)).
+- **A surface error beside the rotation one**: a gear turned by one tooth is right.
+- **The cars stay at 0**: the simulated sensor's noise exceeds their height.
+
 ## 0.1.21 — 2026-11-05
 
 - **Holding on when a frame says nothing**: hidden goes on along the trajectory,

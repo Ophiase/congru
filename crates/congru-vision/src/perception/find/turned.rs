@@ -15,10 +15,10 @@ const TURNED_KEPT: usize = 12;
 /// The fractions of the plastic number's powers, a low-discrepancy sequence.
 const SPREAD_FIRST: f64 = 0.754_877_666_2;
 const SPREAD_SECOND: f64 = 0.569_840_290_9;
-/// The first moves of a polish, in radians and in the unit of the depths, and
-/// how they shrink when none helps.
+/// The first moves of a polish, in radians and as a share of the model's size,
+/// and how they shrink when none helps.
 const POLISH_TURN: f64 = 0.02;
-const POLISH_SHIFT: f64 = 0.004;
+const POLISH_SHIFT_SHARE: f64 = 1.0 / 60.0;
 const POLISH_SHRINK: f64 = 0.5;
 const POLISH_ROUNDS: u32 = 6;
 
@@ -83,7 +83,7 @@ impl Finder {
     ) -> RigidTransform {
         let tolerance = self.table.step * TIGHT;
         let (mut pose, mut best) = (*start, self.score(seen, camera, start, tolerance));
-        let (mut turn, mut shift) = (POLISH_TURN, POLISH_SHIFT);
+        let (mut turn, mut shift) = (POLISH_TURN, self.diameter * POLISH_SHIFT_SHARE);
         for _ in 0..POLISH_ROUNDS {
             let mut better = false;
             for axis in [Vector::x(), Vector::y(), Vector::z()] {
