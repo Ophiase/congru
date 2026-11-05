@@ -1,88 +1,18 @@
+mod contour;
+mod observed;
+
 use congru::Vector;
-use nalgebra::{Matrix3, SMatrix, SVector};
+use nalgebra::{SMatrix, SVector};
 
 use crate::{Camera, DepthImage};
+use contour::contour_elements;
+pub use observed::Observed;
 
 type Twist = SVector<f64, 6>;
 
-/// The image's normal at a pixel is a plane fitted this many pixels around
-/// it: a depth noise of the size of the pixel spacing leaves nothing to read
-/// between two neighbours.
-const NORMAL_RADIUS: usize = 3;
-/// Returns farther from a pixel's depth than this, in tolerances, belong to
-/// another surface.
-const NORMAL_REACH: f64 = 3.0;
-/// A fit on fewer returns than this says nothing.
-const LEAST_RETURNS: usize = 12;
 /// A model's face and the image's surface agree within this cosine, 45°:
 /// loose, since the image's normal is a blurred one.
 const LEAST_COSINE: f64 = std::f64::consts::FRAC_1_SQRT_2;
-
-/// A depth image with what a pose is judged against: the direction of its
-/// surface at each pixel, read once.
-#[derive(Debug, Clone, PartialEq)]
-pub struct Observed {
-    pub depth: DepthImage,
-    normals: Vec<Option<Vector>>,
-}
-
-impl Observed {
-    /// `tolerance` must exceed the sensor's noise.
-    #[must_use]
-    pub fn new(depth: DepthImage, camera: &Camera, tolerance: f64) -> Self {
-        let normals = depth
-            .positions()
-            .map(|(column, row)| fitted_normal(&depth, camera, column, row, tolerance))
-            .collect();
-        Self { depth, normals }
-    }
-
-    fn normal(&self, column: usize, row: usize) -> Option<Vector> {
-        self.normals[row * self.depth.width() + column]
-    }
-}
-
-/// The normal of the plane through the returns around a pixel.
-fn fitted_normal(
-    depth: &DepthImage,
-    camera: &Camera,
-    column: usize,
-    row: usize,
-    tolerance: f64,
-) -> Option<Vector> {
-    let centre = depth.get(column, row);
-    if !centre.is_finite() {
-        return None;
-    }
-    let columns =
-        column.saturating_sub(NORMAL_RADIUS)..=(column + NORMAL_RADIUS).min(depth.width() - 1);
-    let mut points = Vec::new();
-    for across in columns {
-        for down in
-            row.saturating_sub(NORMAL_RADIUS)..=(row + NORMAL_RADIUS).min(depth.height() - 1)
-        {
-            let value = depth.get(across, down);
-            if (value - centre).abs() <= NORMAL_REACH * tolerance {
-                points.push(camera.back_project(across, down, value).coords);
-            }
-        }
-    }
-    if points.len() < LEAST_RETURNS {
-        return None;
-    }
-    let mean = points.iter().sum::<Vector>() / crate::pixel::coordinate(points.len());
-    let scatter = points.iter().fold(Matrix3::zeros(), |sum, point| {
-        let offset = point - mean;
-        sum + offset * offset.transpose()
-    });
-    let eigen = scatter.symmetric_eigen();
-    Some(
-        eigen
-            .eigenvectors
-            .column(eigen.eigenvalues.imin())
-            .into_owned(),
-    )
-}
 
 /// How firmly the pixels a rendered model shares with a depth image pin its
 /// pose: the eigenvalues of the point-to-plane matrix of those pixels, each
@@ -193,6 +123,7 @@ fn elements(
             }
         }
     }
+    elements.extend(contour_elements(observed, rendered, camera, tolerance));
     elements
 }
 
@@ -231,6 +162,30 @@ mod tests {
         let information = Information::of(&seen, &flat, &camera, 0.01);
         assert!(information.weakest() < 1e-9);
         assert!(information.eigenvalues[5] > 0.1);
+    }
+
+    #[test]
+    fn a_flat_face_with_its_edges_seen_is_pinned_along_itself() {
+        let camera = Camera {
+            width: 40,
+            height: 40,
+            focal: 40.0,
+        };
+        let mut rendered = DepthImage::filled(40, 40, f64::NAN);
+        let mut seen = DepthImage::filled(40, 40, 3.0);
+        for row in 10..30 {
+            for column in 12..28 {
+                rendered.set(column, row, 1.0);
+                seen.set(column, row, 1.0);
+            }
+        }
+        let observed = Observed::new(seen, &camera, 0.01);
+        let information = Information::of(&observed, &rendered, &camera, 0.01);
+        assert!(
+            information.weakest() > 1e-6,
+            "{:?}",
+            information.eigenvalues
+        );
     }
 
     #[test]

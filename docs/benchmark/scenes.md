@@ -12,10 +12,7 @@ Ordinary scenes written as short TOML files in
 [scenes/](../../scenes/), rendered by a simulated depth camera; the
 target is tinted. Adding one is writing one file.
 
-![The realistic scenes, filmed by a camera in a hand](../figures/scenes.gif)
-
-*Each scene filmed by a wandering camera while its target moves; the green
-outline is where the target is found, the number its rotation error.*
+Each scene, frame by frame: [the films](../scene-films.md).
 
 **Four scenes of six hold**, none used to choose anything. They run the pipeline
 of [demo B](../hold-step.md): a noisy box in place of a detector, poses along

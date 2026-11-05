@@ -3,7 +3,8 @@ use std::f64::consts::TAU;
 use congru::{RigidTransform, Vector};
 use nalgebra::{Quaternion, UnitQuaternion};
 
-use super::search::{FIRST_ITERATIONS, TIGHT, shared};
+use super::pairs::Oriented;
+use super::search::{FIRST_ITERATIONS, shared};
 use super::{Finder, Found};
 use crate::{Camera, DepthImage, Observed};
 
@@ -34,6 +35,22 @@ impl Finder {
             .collect()
     }
 
+    /// Orientations at the middle of `frame`'s points: a frame cut to a region of
+    /// interest says where the object is, not how it is turned, and a small or
+    /// half-hidden object gives votes too few pairs.
+    pub(super) fn orientations_in(&self, frame: &[Oriented]) -> Vec<RigidTransform> {
+        let middle = |pick: fn(&Oriented) -> f64| {
+            let mut values: Vec<f64> = frame.iter().map(pick).collect();
+            values.sort_by(f64::total_cmp);
+            values.get(values.len() / 2).copied().unwrap_or(0.0)
+        };
+        self.orientations_at(Vector::new(
+            middle(|oriented| oriented.point.x),
+            middle(|oriented| oriented.point.y),
+            middle(|oriented| oriented.point.z),
+        ))
+    }
+
     /// The object found again where `forecast` puts it, turned any way: a knock
     /// loses how it is turned, not where it stands. Needs no votes, so it holds
     /// when the object is half hidden and its pairs are few.
@@ -44,14 +61,14 @@ impl Finder {
         camera: &Camera,
         forecast: &RigidTransform,
     ) -> Option<Found> {
-        let step = self.table.step;
-        let tight = Observed::new(depth.clone(), camera, step * TIGHT);
+        let tight = self.observed_at(depth, camera, forecast);
+        let tolerance = tight.tolerance();
         let place = forecast.apply(&self.points_centre).coords;
         let mut judged = shared(&self.orientations_at(place), |pose| {
             let brought = self.refined_by(depth, camera, pose, FIRST_ITERATIONS);
             vec![
-                (self.score(&tight, camera, pose, step * TIGHT), *pose),
-                (self.score(&tight, camera, &brought, step * TIGHT), brought),
+                (self.score(&tight, camera, pose, tolerance), *pose),
+                (self.score(&tight, camera, &brought, tolerance), brought),
             ]
         });
         judged.sort_by(|left, right| right.0.total_cmp(&left.0));
@@ -60,7 +77,7 @@ impl Finder {
             let refined = self.polished(&tight, camera, &self.refined(depth, camera, pose));
             vec![
                 (*value, *pose),
-                (self.score(&tight, camera, &refined, step * TIGHT), refined),
+                (self.score(&tight, camera, &refined, tolerance), refined),
             ]
         });
         let (_, pose) = refined
@@ -81,7 +98,7 @@ impl Finder {
         camera: &Camera,
         start: &RigidTransform,
     ) -> RigidTransform {
-        let tolerance = self.table.step * TIGHT;
+        let tolerance = seen.tolerance();
         let (mut pose, mut best) = (*start, self.score(seen, camera, start, tolerance));
         let (mut turn, mut shift) = (POLISH_TURN, self.diameter * POLISH_SHIFT_SHARE);
         for _ in 0..POLISH_ROUNDS {

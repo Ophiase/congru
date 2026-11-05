@@ -3,14 +3,15 @@ use congru_scene::Scene;
 use congru_sim::Degradation;
 use congru_synth::sequence::Handheld;
 use congru_track::{Settings, Tracker};
-use congru_vision::{Camera, render, within};
+use congru_vision::{Camera, Image, back_project, render, within};
 
 use crate::camera::detect::{Detector, region_of_interest};
 use crate::camera::stage::hold::Hold;
 
+use crate::camera::overlay::rainbow;
 use crate::camera::view::CameraView;
-use crate::picture::palette::{MUTED, TEXT};
-use crate::picture::{Tile, font, outlined};
+use crate::picture::palette::{EMPTY, TEXT, Tone};
+use crate::picture::{Tile, font, outline, outlined, splat};
 
 const WIDTH: usize = 320;
 const HEIGHT: usize = 240;
@@ -34,11 +35,23 @@ const SAMPLE_SHARE: f64 = 1.0 / 80.0;
 const SEARCH_ITERATIONS: u32 = 15;
 const CREEP_PER_FRAME: f64 = 0.004;
 const SURFACE_SAMPLING: f64 = 1.0 / 50.0;
+/// A lost target is searched at one frame in this many: a search costs seconds.
+const SEARCH_EVERY: usize = 6;
+/// The bar turns amber past 2 % of the target's size, red past 10 %.
+const BAR_PERCENT_PER_DEGREE: f64 = 2.0;
 
-/// The scene filmed for `frames` frames by a wandering camera, the target
-/// found by its shape and then tracked, one tile per frame. The truth only
-/// scores the tiles.
-pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<(Tile, f64)>> {
+/// One filmed frame: what is drawn, and how far off the answer is, as a share of
+/// the target's size.
+pub(super) struct Shot {
+    pub(super) tiles: Vec<Tile>,
+    pub(super) off: f64,
+    pub(super) degrees: f64,
+}
+
+/// The scene filmed for `frames` frames by a wandering camera, the target found
+/// by its shape inside a noisy box and followed. The truth gives the box, and
+/// otherwise only scores.
+pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Shot>> {
     let camera = camera_of(scene);
     let target = &scene.target().mesh;
     let (_, span) = extent(target);
@@ -50,17 +63,31 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<(Tile, f64)>> {
         .clone();
     (0..frames)
         .map(|frame| {
-            let (depth, truth) = shoot(scene, &camera, frame);
+            let (exact, depth, truth) = shot(scene, &camera, frame);
             let region = region_of_interest(&depth, &camera, target, &truth, frame as u64);
             let measured = hold
                 .forecast()
-                .or_else(|| detector.find(&region, &camera))
+                .or_else(|| {
+                    (frame % SEARCH_EVERY == 0)
+                        .then(|| detector.find_in(&depth, &region, &camera))
+                        .flatten()
+                })
                 .map(|start| detector.along_rays(&depth, &camera, &start));
             let pose = hold.judge(&detector, &camera, (&depth, &region), measured, false);
             let off = pose.map_or(Ok(f64::INFINITY), |pose| {
                 surface_error(&samples, &pose, &truth).map(|metres| metres / span)
             })?;
-            Ok((tile(scene, &camera, &depth, pose.as_ref(), &truth), off))
+            let silhouette =
+                pose.map(|pose| render(&camera, &[(target, pose)]).depth.map(f64::is_finite));
+            let tiles = panels(&camera, (&exact, &depth, &region), silhouette.as_ref(), off);
+            let degrees = pose.map_or(f64::INFINITY, |pose| {
+                pose.rotation_error_to(&truth).to_degrees()
+            });
+            Ok(Shot {
+                tiles,
+                off,
+                degrees,
+            })
         })
         .collect()
 }
@@ -118,6 +145,20 @@ pub(super) fn shoot(
     camera: &Camera,
     frame: usize,
 ) -> (congru_vision::DepthImage, RigidTransform) {
+    let (_, depth, truth) = shot(scene, camera, frame);
+    (depth, truth)
+}
+
+/// As [`shoot`], with the exact depth first.
+fn shot(
+    scene: &Scene,
+    camera: &Camera,
+    frame: usize,
+) -> (
+    congru_vision::DepthImage,
+    congru_vision::DepthImage,
+    RigidTransform,
+) {
     let view = scene.view.then(&HANDHELD.pose(frame));
     let target = scene.target();
     let moving = drive(target, frame).then(&target.pose);
@@ -133,10 +174,13 @@ pub(super) fn shoot(
             (&object.mesh, pose.then(&view))
         })
         .collect();
-    (
-        SENSOR.apply(&render(camera, &placed).depth, frame as u64),
-        moving.then(&view),
-    )
+    let exact = render(camera, &placed).depth;
+    let sensor = Degradation {
+        noise: scene.noise_at_one_metre.unwrap_or(SENSOR.noise),
+        ..SENSOR
+    };
+    let depth = sensor.apply(&exact, frame as u64);
+    (exact, depth, moving.then(&view))
 }
 
 /// The target's own motion at `frame`, in its frame: it creeps forward along
@@ -157,26 +201,52 @@ pub(super) fn around(points: &[Point], focus: &Point, span: f64) -> anyhow::Resu
         .voxel_downsample(Distance::new(VOXEL_SHARE * span)?))
 }
 
-fn tile(
-    scene: &Scene,
+/// The three panels of a frame, as demo B draws them, at half the camera's size:
+/// the scene, the depth, the points the box holds, each under the outline of the
+/// answer. The bar and the number read the surface error, not the rotation, which
+/// would fail a gear turned by one tooth.
+fn panels(
     camera: &Camera,
-    depth: &congru_vision::DepthImage,
-    estimate: Option<&RigidTransform>,
-    truth: &RigidTransform,
-) -> Tile {
-    let target = &scene.target().mesh;
-    let silhouette =
-        estimate.map(|pose| render(camera, &[(target, *pose)]).depth.map(f64::is_finite));
-    let error = estimate.map_or(f64::INFINITY, |pose| {
-        pose.rotation_error_to(truth).to_degrees()
-    });
-    let mut picture = outlined(depth, camera.focal, silhouette.as_ref());
-    font::write(&mut picture, 8, 8, &scene.name, MUTED);
-    font::write(&mut picture, 8, HEIGHT - 22, &format!("{error:.1}°"), TEXT);
-    Tile {
-        picture,
-        error_degrees: error,
+    (exact, depth, region): (
+        &congru_vision::DepthImage,
+        &congru_vision::DepthImage,
+        &congru_vision::DepthImage,
+    ),
+    silhouette: Option<&Image<bool>>,
+    off: f64,
+) -> Vec<Tile> {
+    let points = back_project(region, camera);
+    let mut drawn = [
+        outlined(exact, camera.focal, None),
+        rainbow(depth, exact),
+        rainbow(&splat(&points, camera), exact),
+    ];
+    if let Some(silhouette) = silhouette {
+        for panel in &mut drawn {
+            outline(panel, silhouette);
+        }
     }
+    let percent = 100.0 * off;
+    drawn
+        .into_iter()
+        .map(|picture| {
+            let mut picture = halved(&picture);
+            let bottom = picture.height() - 14;
+            font::write(&mut picture, 4, bottom, &format!("{percent:.1}%"), TEXT);
+            Tile {
+                picture,
+                error_degrees: percent / BAR_PERCENT_PER_DEGREE,
+            }
+        })
+        .collect()
+}
+
+fn halved(picture: &Image<Tone>) -> Image<Tone> {
+    let mut half = Image::filled(picture.width() / 2, picture.height() / 2, EMPTY);
+    for (column, row) in half.positions() {
+        half.set(column, row, picture.get(column * 2, row * 2));
+    }
+    half
 }
 
 /// The centre of the target's bounding box, and its diagonal.

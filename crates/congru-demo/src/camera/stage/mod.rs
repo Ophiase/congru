@@ -72,8 +72,8 @@ impl Stage {
     }
 
     pub fn run(&self, condition: &Condition) -> anyhow::Result<Vec<Step>> {
-        self.run_from(condition, |detector, depth| {
-            detector.find(depth, &self.camera)
+        self.run_from(condition, |detector, depth, region| {
+            detector.find_in(depth, region, &self.camera)
         })
     }
 
@@ -81,7 +81,7 @@ impl Stage {
     pub fn run_from(
         &self,
         condition: &Condition,
-        mut start: impl FnMut(&Detector, &DepthImage) -> Option<RigidTransform>,
+        mut start: impl FnMut(&Detector, &DepthImage, &DepthImage) -> Option<RigidTransform>,
     ) -> anyhow::Result<Vec<Step>> {
         let path = self.path_for(condition);
         let mut follower = Follower::new(self)?;
@@ -96,7 +96,7 @@ impl Stage {
                     region_of_interest(&depth, &self.camera, &self.part, &truth, frame as u64);
                 let from = follower
                     .forecast()
-                    .or_else(|| start(&follower.detector, &region));
+                    .or_else(|| start(&follower.detector, &depth, &region));
                 let (scan, update) = follower.step(self, (&depth, &region), from);
                 Ok(Step {
                     image: camera_noise(condition).apply(&exact.depth, frame as u64 + 1),

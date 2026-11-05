@@ -145,7 +145,6 @@ fn a_can_in_front_hides_a_pose_where_an_empty_frame_refutes_it() -> Result<(), c
     let camera = Camera::with_field_of_view(160, 120, 60.0);
     let finder = Finder::new(&part, Distance::new(0.0125)?)?;
     let pose = RigidTransform::from_axis_angle(Vector::new(-1.9, 0.4, 0.3), [0.0, 0.0, 0.6]);
-    let tolerance = 0.006;
     let wall_behind = Solids::default()
         .cuboid([-2.0, -2.0, 1.2], [2.0, 2.0, 1.3])
         .build()?;
@@ -155,8 +154,8 @@ fn a_can_in_front_hides_a_pose_where_an_empty_frame_refutes_it() -> Result<(), c
     let identity = RigidTransform::identity();
     let refuted = render(&camera, &[(&wall_behind, identity)]).depth;
     let hidden = render(&camera, &[(&screen_before, identity)]).depth;
-    assert!(finder.through_share(&refuted, &camera, &pose, tolerance) > 0.9);
-    assert!(finder.through_share(&hidden, &camera, &pose, tolerance) < 0.01);
+    assert!(finder.through_share(&refuted, &camera, &pose) > 0.9);
+    assert!(finder.through_share(&hidden, &camera, &pose) < 0.01);
     Ok(())
 }
 
