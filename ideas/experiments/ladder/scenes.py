@@ -98,4 +98,15 @@ def sensed(step: Step, generator: np.random.Generator) -> tuple[Points, NDArray[
     seen = np.isfinite(depths)
     points = CAMERA + ray_directions()[seen] * depths[seen, None]
     strays = generator.uniform([-0.25, -0.07], [0.25, 0.3], (step.strays, 2))
-    return np.vstack((points, strays)), depths
+    return np.vstack((points, strays)), first_returns(depths, strays)
+
+
+def first_returns(depths: NDArray[np.float64], strays: Points) -> NDArray[np.float64]:
+    """A stray is a return: it takes the place of its ray's measure when it comes first."""
+    angles = np.linspace(-HALF_FIELD, HALF_FIELD, RAY_COUNT)
+    returned = depths.copy()
+    for stray in strays:
+        offset = stray - CAMERA
+        ray = int(np.abs(angles - np.arctan2(offset[0], -offset[1])).argmin())
+        returned[ray] = min(returned[ray], float(np.linalg.norm(offset)))
+    return returned
