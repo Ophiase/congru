@@ -24,6 +24,17 @@ impl Detector {
         })
     }
 
+    /// `pose` brought onto the frame along the camera's rays, which the
+    /// surroundings cannot pull.
+    pub fn along_rays(
+        &self,
+        depth: &DepthImage,
+        camera: &Camera,
+        pose: &RigidTransform,
+    ) -> RigidTransform {
+        self.finder.refined(depth, camera, pose)
+    }
+
     /// The model's pose in the camera's frame, when the frame holds it.
     pub fn find(&self, depth: &DepthImage, camera: &Camera) -> Option<RigidTransform> {
         self.finder

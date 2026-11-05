@@ -20,8 +20,12 @@ fn main() -> anyhow::Result<()> {
     let mut arguments = std::env::args_os().skip(1);
     let demo = arguments.next().and_then(|demo| demo.into_string().ok());
     let target = arguments.next().map(PathBuf::from);
-    if demo.as_deref() == Some("rank") {
-        return diagnose::rank();
+    match demo.as_deref() {
+        Some("rank") => return diagnose::rank(),
+        Some("diagnose") => return diagnose::run(),
+        Some("detection") => return diagnose::detection(),
+        Some("cases") => return diagnose::cases(),
+        _ => {}
     }
     let summaries = match demo.as_deref() {
         Some("clouds") => {

@@ -29,7 +29,7 @@ pub fn panels(stage: &Stage, step: &Step, estimate: Option<&RigidTransform>) -> 
 
 /// The depth coloured by distance over the range the scene spans, holes
 /// left empty.
-fn rainbow(depth: &DepthImage, scene: &DepthImage) -> Image<Tone> {
+pub fn rainbow(depth: &DepthImage, scene: &DepthImage) -> Image<Tone> {
     let (near, far) = scene
         .positions()
         .map(|(column, row)| scene.get(column, row))

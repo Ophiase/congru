@@ -4,6 +4,9 @@ use super::pairs::Oriented;
 use crate::pixel::containing;
 use crate::{Camera, DepthImage};
 
+/// A wide gate gives the basin, a narrow one the precision: each pass of a
+/// refinement divides the first gate by this, down to the last.
+pub(super) const GATE_SHRINKS: [f64; 4] = [1.0, 1.5, 2.5, 4.0];
 /// Fewer pairs than this and the motion is not trusted.
 const LEAST_PAIRS: usize = 12;
 /// How many pixels around its own a model point looks for its nearest seen

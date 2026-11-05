@@ -6,7 +6,7 @@ mod shadow;
 mod visibility;
 
 pub use find::{Finder, Found};
-pub use gate::in_view;
+pub use gate::{around_view, in_view};
 pub use information::{Information, Observed};
 pub use plane::without_support;
 pub use shadow::ViewScore;

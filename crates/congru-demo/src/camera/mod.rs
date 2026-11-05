@@ -3,7 +3,7 @@
 
 pub(crate) mod conditions;
 pub(crate) mod detect;
-mod overlay;
+pub(crate) mod overlay;
 mod room;
 pub(crate) mod stage;
 pub(crate) mod view;

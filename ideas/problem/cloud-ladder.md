@@ -97,18 +97,19 @@ scan to model. All of it is a toy: `just ladder`.
 
 1. **Pair along rays**: the visible model at a ray reads only the returns of that
    ray and two around it. A stray or a table far from it is never a candidate.
-2. **Tighten the gate**: 6 cm, then 4, 2.5 and 1.2. A wide gate gives the basin, a
-   narrow one the precision. Only hits move the pose.
-3. **Polish on the rays**: small moves kept when hits minus three times the rays
-   through rise. Through has its say here: it pins what a hit cannot.
+2. **Tighten the gate**: 6 cm, then 4, 2.5 and 1.2. A wide gate gives the basin,
+   a narrow one the precision. Only hits move the pose.
+3. **Polish on the rays**: small moves kept when hits minus three times the
+   rays through rise. Through has its say here: it pins what a hit cannot.
 
 **[caution]**
 
 - **The start is given**, within 30° of the truth. This fits, it does not search.
-- **Step 5 is not better in rotation**: 1.3° against 0.8°, the naive fit having no
-  trouble there.
-- **Step 7 ties**: under the can, many poses have the same score, so the best-scored
-  run of the eight (2.8° to 4.3°) is worse than their median. Three seeds.
+- **Step 5 is not better in rotation**: 1.3° against 0.8°, the naive fit having
+  no trouble there.
+- **Step 7 ties**: under the can, many poses have the same score, so the
+  best-scored run of the eight (2.8° to 4.3°) is worse than their median. Three
+  seeds.
 - **Same constants at every step**, chosen on step 4.
 
 ## What the ladder asks of the algorithm

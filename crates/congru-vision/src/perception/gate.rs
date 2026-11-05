@@ -25,6 +25,26 @@ pub fn in_view(
         .collect()
 }
 
+/// The returns farther than `margin` pixels from the silhouette of a model
+/// rendered at a predicted pose: what stands around it, whatever the error of
+/// the prediction.
+#[must_use]
+pub fn around_view(
+    depth: &DepthImage,
+    rendered: &DepthImage,
+    camera: &Camera,
+    margin: usize,
+) -> Vec<Point> {
+    depth
+        .positions()
+        .filter_map(|(column, row)| {
+            let seen = depth.get(column, row);
+            (seen.is_finite() && nearest_around(rendered, column, row, margin).is_none())
+                .then(|| camera.back_project(column, row, seen))
+        })
+        .collect()
+}
+
 /// The model's nearest depth within `margin` pixels of a pixel.
 fn nearest_around(rendered: &DepthImage, column: usize, row: usize, margin: usize) -> Option<f64> {
     let columns = column.saturating_sub(margin)..=(column + margin).min(rendered.width() - 1);

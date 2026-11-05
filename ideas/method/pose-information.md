@@ -33,10 +33,10 @@ design, and $H$ the matrix [observability](observability.md) already reads.
 
 Three things the measures forced:
 
-- **A hit needs the surface's direction too.** A thin side of the part, across the
-  turntable, lies within the tolerance of its depth and looks like information
-  about sliding. A hit counts only if the image's normal, a plane fitted over 7 × 7
-  pixels, agrees with the model's within 45°.
+- **A hit needs the surface's direction too.** A thin side of the part, across
+  the turntable, lies within the tolerance of its depth and looks like
+  information about sliding. A hit counts only if the image's normal, a plane
+  fitted over 7 × 7 pixels, agrees with the model's within 45°.
 - **A ray through needs a neighbourhood.** A sensor mixes both sides of an edge:
   on the rim of the true silhouette the image seems to see through the model. A
   pixel refutes only if all returns two pixels around it lie behind the model.

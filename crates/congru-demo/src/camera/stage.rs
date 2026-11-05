@@ -5,7 +5,9 @@ use congru::Vector;
 use congru_sim::{Degradation, Turntable, flexed};
 use congru_track::{Settings, Tracker, Update};
 use congru_vision::pixel::coordinate;
-use congru_vision::{Camera, DepthImage, Frame, back_project, render, within};
+use congru_vision::{
+    Camera, DepthImage, Frame, around_view, back_project, in_view, render, within,
+};
 
 use super::conditions::{Clutter, Condition};
 use super::detect::Detector;
@@ -14,7 +16,16 @@ use super::view::CameraView;
 const PART_SPAN: f64 = 0.25;
 const MODEL_SPACING: f64 = 0.003;
 const SCAN_VOXEL: f64 = 0.004;
+/// How far outside the predicted silhouette a return may lie, in pixels, and
+/// how far from the predicted depth, in metres.
+const VIEW_MARGIN: usize = 0;
+const VIEW_GATE: f64 = 0.03;
 const CROP_MARGIN: f64 = 0.015;
+/// Returns this many pixels off the predicted silhouette stand around the
+/// part, whatever a wrong prediction; below this share of the ball, the ball
+/// holds little else than the part.
+const SURROUNDINGS_MARGIN: usize = 12;
+const MOST_AROUND: f64 = 0.02;
 const OCCLUDER_PERIOD: f64 = 45.0;
 
 /// The scene every condition is run on.
@@ -56,21 +67,38 @@ impl Stage {
         ))
     }
 
+    /// The share of a ball around `pose` that stands away from the part.
+    fn share_around(&self, depth: &DepthImage, pose: &RigidTransform) -> f64 {
+        let (centre, reach) = extent(&self.part);
+        let focus = pose.apply(&centre);
+        let rendered = render(&self.camera, &[(&self.part, *pose)]).depth;
+        let around = around_view(depth, &rendered, &self.camera, SURROUNDINGS_MARGIN);
+        let ball = within(&back_project(depth, &self.camera), &focus, reach).len();
+        coordinate(within(&around, &focus, reach).len()) / coordinate(ball.max(1))
+    }
+
+    /// As [`Stage::share_around`], at the truth, for measuring.
+    pub fn share_around_truth(&self, condition: &Condition, frame: usize) -> anyhow::Result<f64> {
+        let (depth, truth) = self.sensed(condition, frame)?;
+        Ok(self.share_around(&depth, &truth))
+    }
+
     pub fn run(&self, condition: &Condition) -> anyhow::Result<Vec<Step>> {
-        let detector = Detector::new(&self.part, PART_SPAN)?;
-        self.run_from(condition, |depth| detector.find(depth, &self.camera))
+        self.run_from(condition, |detector, depth| {
+            detector.find(depth, &self.camera)
+        })
     }
 
     /// Runs the tracker, asking `start` for a pose whenever it has none.
     pub fn run_from(
         &self,
         condition: &Condition,
-        mut start: impl FnMut(&DepthImage) -> Option<RigidTransform>,
+        mut start: impl FnMut(&Detector, &DepthImage) -> Option<RigidTransform>,
     ) -> anyhow::Result<Vec<Step>> {
         let view = CameraView::new(&self.part, self.camera, Distance::new(MODEL_SPACING)?)?;
         let mut tracker = Tracker::new("tracker", view, Settings::for_part(PART_SPAN)?);
-        let (centre, reach) = extent(&self.part);
         let path = self.path_for(condition);
+        let detector = Detector::new(&self.part, PART_SPAN)?;
         let mut last: Option<RigidTransform> = None;
         (0..path.frames)
             .map(|frame| {
@@ -79,10 +107,9 @@ impl Stage {
                 let exact =
                     self.shoot(&part, &truth, &self.around(condition, &path, &truth, frame));
                 let depth = condition.degradation.apply(&exact.depth, frame as u64);
-                let points = back_project(&depth, &self.camera);
-                let scan = last.or_else(|| start(&depth)).and_then(|start| {
-                    Some((start, scan_around(&points, &start.apply(&centre), reach)?))
-                });
+                let scan = last
+                    .or_else(|| start(&detector, &depth))
+                    .and_then(|start| self.scan_for(&detector, &depth, &start));
                 let update = scan
                     .as_ref()
                     .and_then(|(start, cloud)| tracker.update_from(cloud, Some(*start)).ok());
@@ -101,6 +128,45 @@ impl Stage {
                 })
             })
             .collect()
+    }
+
+    /// The scan to align and the pose it starts from. A ball around the part
+    /// keeps the edges that correct a slide along a flat face, so it stays while
+    /// it holds little else than the part. Otherwise the crop keeps to the
+    /// silhouette, and the pose is first brought along rays, which what stands
+    /// around cannot pull.
+    fn scan_for(
+        &self,
+        detector: &Detector,
+        depth: &DepthImage,
+        predicted: &RigidTransform,
+    ) -> Option<(RigidTransform, PointCloud)> {
+        let (centre, reach) = extent(&self.part);
+        let points = back_project(depth, &self.camera);
+        let ball = within(&points, &predicted.apply(&centre), reach);
+        if self.share_around(depth, predicted) <= MOST_AROUND {
+            let cloud = PointCloud::new(ball).ok()?;
+            let thinned = cloud.voxel_downsample(Distance::new(SCAN_VOXEL).ok()?);
+            return Some((*predicted, thinned));
+        }
+        let start = detector.along_rays(depth, &self.camera, predicted);
+        Some((start, self.scan_in_view(depth, &start)?))
+    }
+
+    /// The returns the part, as predicted, can explain.
+    fn scan_in_view(&self, depth: &DepthImage, predicted: &RigidTransform) -> Option<PointCloud> {
+        let rendered = render(&self.camera, &[(&self.part, *predicted)]).depth;
+        Some(
+            PointCloud::new(in_view(
+                depth,
+                &rendered,
+                &self.camera,
+                VIEW_MARGIN,
+                VIEW_GATE,
+            ))
+            .ok()?
+            .voxel_downsample(Distance::new(SCAN_VOXEL).ok()?),
+        )
     }
 
     fn path_for(&self, condition: &Condition) -> Turntable {
@@ -159,15 +225,6 @@ fn camera_noise(condition: &Condition) -> Degradation {
         flying_pixels: false,
         lens: condition.degradation.lens,
     }
-}
-
-/// The frame's points within `reach` of where the part is thought to be.
-fn scan_around(points: &[Point], focus: &Point, reach: f64) -> Option<PointCloud> {
-    Some(
-        PointCloud::new(within(points, focus, reach))
-            .ok()?
-            .voxel_downsample(Distance::new(SCAN_VOXEL).ok()?),
-    )
 }
 
 /// The centre of the part's bounding box, and how far from it its points

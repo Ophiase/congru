@@ -1,6 +1,7 @@
 mod check;
 mod pairs;
 mod rays;
+mod search;
 
 use congru::{Distance, Error, NearestNeighbors, PointCloud, RigidTransform, Target, TriangleMesh};
 
@@ -16,9 +17,12 @@ const NORMAL_NEIGHBORS: usize = 10;
 
 /// Pairs farther apart along a ray than the model's size over this are
 /// left out while refining.
-const RAY_GATE_SHARE: f64 = 10.0;
+const RAY_GATE_SHARE: f64 = 5.0;
 /// Iterations that bring a voted candidate, known to a bin, onto the frame.
 const REFINE_ITERATIONS: u32 = 10;
+/// Peaks a reference proposes: clutter among its neighbours splits its votes,
+/// so the right pose is not always its highest.
+const PEAKS: usize = 4;
 
 /// A known object searched in a whole depth frame by its shape alone, with
 /// [point pair features] voted, each candidate checked against the depth.
@@ -37,9 +41,8 @@ pub struct Finder {
 pub struct Found {
     /// Takes the model into the camera's frame.
     pub pose: RigidTransform,
-    /// The share of the model's pixels the frame sees at the model's depth,
-    /// less the share it sees behind the model, times the share of the model
-    /// inside the image.
+    /// The share of what the model could say at this pose that the frame
+    /// says, less what it refutes.
     pub agreement: f64,
 }
 
@@ -77,17 +80,12 @@ impl Finder {
         })
     }
 
-    /// The best pose of the model in `depth`, when one agrees with at least
-    /// `least` of the frame; `None` says the object was not found.
+    /// The best pose of the model in `depth`, when the frame confirms at
+    /// least `least` of what the model could say there; `None` says the object
+    /// was not found.
     #[must_use]
     pub fn find(&self, depth: &DepthImage, camera: &Camera, least: f64) -> Option<Found> {
-        self.proposals(depth, camera)
-            .into_iter()
-            .map(|pose| Found {
-                pose,
-                agreement: self.agreement(depth, camera, &pose),
-            })
-            .max_by(|left, right| left.agreement.total_cmp(&right.agreement))
+        self.search(depth, camera)
             .filter(|found| found.agreement >= least)
     }
 
@@ -101,7 +99,7 @@ impl Finder {
         frame
             .iter()
             .step_by(REFERENCE_STRIDE)
-            .map(|reference| self.vote(reference, &frame, &index))
+            .filter_map(|reference| self.votes(reference, &frame, &index).into_iter().next())
             .map(|pose| self.refined(depth, camera, &pose))
             .collect()
     }
@@ -150,29 +148,46 @@ impl Finder {
 
     /// A voted pose, known only to a bin, brought onto the frame along its
     /// rays.
-    fn refined(
+    #[must_use]
+    pub fn refined(
         &self,
         depth: &DepthImage,
         camera: &Camera,
         pose: &RigidTransform,
     ) -> RigidTransform {
-        along_rays(
-            depth,
-            camera,
-            &self.points,
-            pose,
-            self.diameter / RAY_GATE_SHARE,
-            REFINE_ITERATIONS,
-        )
+        self.refined_by(depth, camera, pose, REFINE_ITERATIONS)
     }
 
-    /// The pose the votes of one frame point and its neighbours stand for.
-    fn vote(
+    /// As [`Finder::refined`], for this many iterations.
+    #[must_use]
+    pub fn refined_by(
+        &self,
+        depth: &DepthImage,
+        camera: &Camera,
+        pose: &RigidTransform,
+        iterations: u32,
+    ) -> RigidTransform {
+        let widest = self.diameter / RAY_GATE_SHARE;
+        rays::GATE_SHRINKS.iter().fold(*pose, |pose, shrink| {
+            along_rays(
+                depth,
+                camera,
+                &self.points,
+                &pose,
+                widest / shrink,
+                iterations.div_ceil(2),
+            )
+        })
+    }
+
+    /// The poses the votes of one frame point and its neighbours stand for:
+    /// the highest peaks, one per model point, highest first.
+    fn votes(
         &self,
         reference: &Oriented,
         frame: &[Oriented],
         index: &NearestNeighbors,
-    ) -> RigidTransform {
+    ) -> Vec<RigidTransform> {
         let local = local_frame(reference);
         let mut ballot = vec![0_usize; self.points.len() * ANGLE_BINS];
         for neighbor in index.within(&reference.point, self.diameter) {
@@ -189,18 +204,28 @@ impl Finder {
                 ballot[model * ANGLE_BINS + turn_bin(angle - model_angle)] += 1;
             }
         }
-        let peak = ballot
-            .iter()
+        let mut peaks: Vec<(usize, usize)> = ballot
+            .chunks(ANGLE_BINS)
             .enumerate()
-            .max_by_key(|(_, count)| **count)
-            .map_or(0, |(peak, _)| peak);
-        let spin = RigidTransform::from_axis_angle(
-            congru::Vector::x() * turn_of(peak % ANGLE_BINS),
-            [0.0; 3],
-        );
-        local_frame(&self.points[peak / ANGLE_BINS])
-            .then(&spin)
-            .then(&local.inverse())
+            .filter_map(|(model, turns)| {
+                let (bin, count) = turns.iter().enumerate().max_by_key(|(_, count)| **count)?;
+                (*count > 0).then_some((*count, model * ANGLE_BINS + bin))
+            })
+            .collect();
+        peaks.sort_unstable_by_key(|(count, _)| std::cmp::Reverse(*count));
+        peaks
+            .into_iter()
+            .take(PEAKS)
+            .map(|(_, peak)| {
+                let spin = RigidTransform::from_axis_angle(
+                    congru::Vector::x() * turn_of(peak % ANGLE_BINS),
+                    [0.0; 3],
+                );
+                local_frame(&self.points[peak / ANGLE_BINS])
+                    .then(&spin)
+                    .then(&local.inverse())
+            })
+            .collect()
     }
 }
 
