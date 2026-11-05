@@ -1,7 +1,7 @@
 # Step: a noisy box around the part
 
-The current step of demo B. The room alone holds; **the room with every other
-effect does not yet**.
+A step of demo B, [held on since](hold-step.md). The room alone holds; **the room
+with every other effect does not yet**.
 
 The scan is **what a box holds**, points of the turntable and of the wall
 included: the model never cuts it to its shape, unlike

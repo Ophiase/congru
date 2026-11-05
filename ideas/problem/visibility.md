@@ -11,7 +11,8 @@ The experiments that answer this page:
 - [what a pose is worth](../method/pose-information.md);
 - [the cases, frame by frame](../../docs/projection-cases.md);
 - demo B [cut to the model's shape](../../docs/shape-crop-step.md), then
-  [with a noisy box](../../docs/box-step.md).
+  [with a noisy box](../../docs/box-step.md), then
+  [holding on](../../docs/hold-step.md).
 
 ![One ray: empty, then something, then unknown](../../docs/figures/visibility-ray.png)
 

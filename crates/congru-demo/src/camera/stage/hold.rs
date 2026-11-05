@@ -45,40 +45,43 @@ impl Hold {
         confirmed >= 0.0 && confirmed >= LEAST_OF_RECENT * level
     }
 
-    fn accept(&mut self, pose: &RigidTransform, confirmed: f64) {
-        self.filter.correct(pose, &[]);
+    fn accept(&mut self, pose: &RigidTransform, confirmed: f64) -> RigidTransform {
+        let corrected = self.filter.correct(pose, &[]);
         self.recent.push_back(confirmed);
         if self.recent.len() > RECENT {
             self.recent.pop_front();
         }
         self.coasted = 0;
+        corrected
     }
 
     /// The pose to answer for this frame, from what was `measured` on it; `None`
-    /// says the object is lost.
+    /// says the object is lost. A pose along rays is smoothed here; the tracker's
+    /// own is `filtered_already`, and smoothing it twice lags behind every jolt.
     pub(super) fn judge(
         &mut self,
         detector: &Detector,
         camera: &Camera,
         (depth, region): (&DepthImage, &DepthImage),
         measured: Option<RigidTransform>,
+        filtered_already: bool,
     ) -> Option<RigidTransform> {
         if let Some(pose) = measured {
             let confirmed = detector.confirmed(depth, camera, &pose);
             if self.believed(confirmed) {
-                self.accept(&pose, confirmed);
-                return Some(pose);
+                let corrected = self.accept(&pose, confirmed);
+                return Some(if filtered_already { pose } else { corrected });
             }
         }
         let forecast = self.filter.predict()?;
-        if detector.through_share(depth, camera, &forecast) > MOST_THROUGH
-            && let Some(found) = detector.find(region, camera)
-        {
-            let confirmed = detector.confirmed(depth, camera, &found);
-            if self.believed(confirmed) {
-                self.filter.reset();
-                self.accept(&found, confirmed);
-                return Some(found);
+        if detector.through_share(depth, camera, &forecast) > MOST_THROUGH {
+            let turned = detector.turned_again(depth, camera, &forecast);
+            let again = self.restart(detector, camera, depth, turned).or_else(|| {
+                let found = detector.find(region, camera);
+                self.restart(detector, camera, depth, found)
+            });
+            if again.is_some() {
+                return again;
             }
         }
         self.coasted += 1;
@@ -90,5 +93,21 @@ impl Hold {
         }
         self.filter.correct(&forecast, &[]);
         Some(forecast)
+    }
+
+    /// Starts the trajectory over from `found`, when the frame believes it.
+    fn restart(
+        &mut self,
+        detector: &Detector,
+        camera: &Camera,
+        depth: &DepthImage,
+        found: Option<RigidTransform>,
+    ) -> Option<RigidTransform> {
+        let found = found?;
+        let confirmed = detector.confirmed(depth, camera, &found);
+        self.believed(confirmed).then(|| {
+            self.filter.reset();
+            self.accept(&found, confirmed)
+        })
     }
 }

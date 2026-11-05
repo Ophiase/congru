@@ -27,6 +27,16 @@ looks again when the space it should fill turns out empty.
    be believed, or the forecast goes on.
 5. **Too long without belief**: the object is lost, and the answer says so.
 
+## Measured
+
+**[defined]** [The step](../../docs/hold-step.md): all in a room reaches 68, 74 and
+57 of 90 on three paths, two never used to choose.
+
+- **After a knock, the place holds and the turn does not**: trying every
+  orientation where the forecast stands finds it again, once the part is visible.
+- **Smooth only what is not**: the tracker filters its own pose, and filtering it
+  twice took shake from 88 to 78. Poses along rays are smoothed here.
+
 ## [question]
 
 The forecast depends on the object: a part on a table, a thrown ball. By default

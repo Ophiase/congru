@@ -1,14 +1,13 @@
-mod check;
 mod faces;
 mod pairs;
 mod rays;
 mod search;
+mod turned;
 mod votes;
 
 use congru::{Distance, Error, RigidTransform, TriangleMesh};
 
 use crate::{Camera, DepthImage, Information, Observed, ViewScore, render};
-use check::{agreement, share_in_frame};
 use pairs::{Oriented, PairTable};
 use rays::along_rays;
 
@@ -124,17 +123,6 @@ impl Finder {
         let rendered = render(camera, &[(&self.model, *pose)]).depth;
         Information::of(seen, &rendered, camera, tolerance).mean()
             - ViewScore::of(&seen.depth, &rendered, camera, tolerance).violation
-    }
-
-    /// The score of today's detector, for comparison.
-    #[must_use]
-    pub fn agreement(&self, depth: &DepthImage, camera: &Camera, pose: &RigidTransform) -> f64 {
-        agreement(depth, camera, &self.model, pose, self.table.step)
-            * share_in_frame(
-                camera,
-                pose,
-                self.points.iter().map(|oriented| &oriented.point),
-            )
     }
 
     /// A voted pose, known only to a bin, brought onto the frame along its

@@ -29,12 +29,10 @@ const READABLE: f64 = 1e4;
 /// The scores under trial.
 #[derive(Debug, Clone, Copy, PartialEq)]
 enum Mode {
-    Agreement,
     Information(f64),
 }
 
-const MODES: [(Mode, &str); 3] = [
-    (Mode::Agreement, "today     "),
+const MODES: [(Mode, &str); 2] = [
     (Mode::Information(1.0), "info step "),
     (Mode::Information(0.5), "info half "),
 ];
@@ -53,9 +51,6 @@ struct Scorer<'scene> {
 impl Scorer<'_> {
     fn score(&self, pose: &RigidTransform) -> f64 {
         match self.mode {
-            Mode::Agreement => self
-                .finder
-                .agreement(&self.seen[0].depth, &self.camera, pose),
             Mode::Information(share) => {
                 let tolerance = self.step * share;
                 let seen = &self.seen[usize::from(share < 1.0)];

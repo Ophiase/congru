@@ -65,9 +65,7 @@ fn draw_scenes() -> anyhow::Result<()> {
     let simple = report::scenes(&models, folder)?;
     let scenes = report::load_scenes(std::path::Path::new("scenes"))?;
     let realistic = report::realistic(&scenes, &folder.join("realistic.png"))?;
-    std::fs::write(
-        "docs/benchmark/scenes.md",
-        report::scenes_page(&realistic, &simple),
-    )?;
+    std::fs::write("docs/benchmark/scenes.md", report::scenes_page(&realistic))?;
+    std::fs::write("docs/benchmark/scenes-simple.md", simple)?;
     Ok(())
 }

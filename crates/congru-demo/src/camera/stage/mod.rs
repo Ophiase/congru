@@ -1,19 +1,19 @@
-use congru::{Distance, Point, RigidTransform, TriangleMesh};
+use congru::{Point, RigidTransform, TriangleMesh};
 use std::f64::consts::{FRAC_PI_2, TAU};
 
 use congru::Vector;
 use congru_sim::{Degradation, Turntable, flexed};
-use congru_track::{Settings, Tracker, Update};
+use congru_track::Update;
 use congru_vision::pixel::coordinate;
 use congru_vision::{Camera, DepthImage, Frame, render};
 
 mod crop;
+mod follow;
 mod hold;
 
 use super::conditions::{Clutter, Condition};
 use super::detect::{Detector, region_of_interest};
-use super::view::CameraView;
-use hold::Hold;
+use follow::Follower;
 
 const PART_SPAN: f64 = 0.25;
 const MODEL_SPACING: f64 = 0.003;
@@ -83,13 +83,8 @@ impl Stage {
         condition: &Condition,
         mut start: impl FnMut(&Detector, &DepthImage) -> Option<RigidTransform>,
     ) -> anyhow::Result<Vec<Step>> {
-        let view = CameraView::new(&self.part, self.camera, Distance::new(MODEL_SPACING)?)?;
-        let mut tracker = Tracker::new("tracker", view, Settings::for_part(PART_SPAN)?);
         let path = self.path_for(condition);
-        let detector = Detector::new(&self.part, PART_SPAN)?;
-        let settings = Settings::for_part(PART_SPAN)?;
-        let mut hold = Hold::new(settings.gains);
-        let mut latest: Option<Update> = None;
+        let mut follower = Follower::new(self)?;
         (0..path.frames)
             .map(|frame| {
                 let truth = path.pose(frame);
@@ -99,34 +94,15 @@ impl Stage {
                 let depth = condition.degradation.apply(&exact.depth, frame as u64);
                 let region =
                     region_of_interest(&depth, &self.camera, &self.part, &truth, frame as u64);
-                let last = hold.forecast();
-                let scan = last
-                    .or_else(|| start(&detector, &region))
-                    .and_then(|start| self.scan_for(&detector, &depth, &region, &start));
-                let crowded = last.is_some_and(|pose| self.is_crowded(&depth, &pose));
-                let fresh = scan
-                    .as_ref()
-                    .and_then(|(start, cloud)| tracker.update_from(cloud, Some(*start)).ok())
-                    .map(|update| {
-                        along_rays_when(crowded, update, scan.as_ref().map(|found| found.0))
-                    });
-                let measured = fresh
-                    .as_ref()
-                    .filter(|update| update.trusted)
-                    .map(|update| update.pose);
-                let answer = hold.judge(&detector, &self.camera, (&depth, &region), measured);
-                latest = fresh.or_else(|| latest.take());
-                let update = answer.and_then(|pose| {
-                    latest.as_ref().map(|update| Update {
-                        pose,
-                        ..update.clone()
-                    })
-                });
+                let from = follower
+                    .forecast()
+                    .or_else(|| start(&follower.detector, &region));
+                let (scan, update) = follower.step(self, (&depth, &region), from);
                 Ok(Step {
                     image: camera_noise(condition).apply(&exact.depth, frame as u64 + 1),
                     depth,
                     scan: scan
-                        .map(|(_, cloud)| cloud.points().to_vec())
+                        .map(|cloud| cloud.points().to_vec())
                         .unwrap_or_default(),
                     truth,
                     update,
@@ -190,18 +166,5 @@ fn camera_noise(condition: &Condition) -> Degradation {
         holes: 0.0,
         flying_pixels: false,
         lens: condition.degradation.lens,
-    }
-}
-
-/// In a crowded frame the pose along rays stands: the scan holds what is not
-/// the part, and pulls the tracker's own.
-fn along_rays_when(crowded: bool, update: Update, rays: Option<RigidTransform>) -> Update {
-    match rays {
-        Some(pose) if crowded => Update {
-            pose,
-            trusted: true,
-            ..update
-        },
-        _ => update,
     }
 }

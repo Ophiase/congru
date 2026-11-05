@@ -1,0 +1,42 @@
+# Simple situations
+
+Bare point clouds, the basic cases every method must handle; the
+ordinary scenes are [on their own page](scenes.md).
+
+Every situation of the [protocol](protocol.md), drawn exactly as the
+methods receive it, for the first evaluation seed.
+
+- **Blue**: the scan. **Green**: its outliers.
+- **Red**: the model at the starting guess, which a method must bring onto the blue.
+
+Written by `just bench-scenes`.
+
+## bracket
+
+machined part: flat faces, thin plates, a boss and a pin.
+
+![Every situation on the bracket](scenes/bracket.png)
+
+## blob
+
+smooth closed surface, nearly round: few features to lock on.
+
+![Every situation on the blob](scenes/blob.png)
+
+## patch
+
+open curved surface, seen from one side, as a depth camera sees.
+
+![Every situation on the patch](scenes/patch.png)
+
+## gear
+
+twelve teeth: the same after a twelfth of a turn, a trap for every method.
+
+![Every situation on the gear](scenes/gear.png)
+
+## Sequences
+
+![The tracking sequences](../figures/clouds.gif)
+
+The tracking sequences, as [demo A](../demos.md) shows them on the bracket.

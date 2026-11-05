@@ -1,4 +1,4 @@
-use congru::{NearestNeighbors, RigidTransform, Vector};
+use congru::{NearestNeighbors, RigidTransform};
 
 use super::faces::{frame_patches, model_faces, placements};
 use super::pairs::Oriented;
@@ -9,18 +9,12 @@ use crate::{Camera, DepthImage, Information, Observed, ViewScore, render};
 /// again, closer to the noise.
 const REFINED: usize = 128;
 /// The final score reads at this share of the step.
-const TIGHT: f64 = 0.5;
+pub(super) const TIGHT: f64 = 0.5;
 /// Iterations along rays before a vote is judged at all: a raw vote, known to
 /// a bin, scores too low to survive.
-const FIRST_ITERATIONS: u32 = 4;
+pub(super) const FIRST_ITERATIONS: u32 = 4;
 /// A search stays on this many threads, to leave the machine usable.
 const MOST_THREADS: usize = 4;
-/// The first moves of a polish, in radians and in the unit of the depths, and
-/// how they shrink when none helps.
-const POLISH_TURN: f64 = 0.02;
-const POLISH_SHIFT: f64 = 0.004;
-const POLISH_SHRINK: f64 = 0.5;
-const POLISH_ROUNDS: u32 = 6;
 
 impl Finder {
     /// The pose the frame supports best. Votes only propose: their count
@@ -83,51 +77,6 @@ impl Finder {
             })
     }
 
-    /// `start` improved by small moves the rays support, the moves shrinking
-    /// when none helps: rays through the model pin what hits leave free.
-    #[must_use]
-    pub fn polished(
-        &self,
-        seen: &Observed,
-        camera: &Camera,
-        start: &RigidTransform,
-    ) -> RigidTransform {
-        let tolerance = self.table.step * TIGHT;
-        let (mut pose, mut best) = (*start, self.score(seen, camera, start, tolerance));
-        let (mut turn, mut shift) = (POLISH_TURN, POLISH_SHIFT);
-        for _ in 0..POLISH_ROUNDS {
-            let mut better = false;
-            for axis in [Vector::x(), Vector::y(), Vector::z()] {
-                for sign in [1.0, -1.0] {
-                    let moved = axis * sign;
-                    let centre = pose.apply(&self.points_centre);
-                    let spin = RigidTransform::from_axis_angle(Vector::zeros(), -centre.coords)
-                        .then(&RigidTransform::from_axis_angle(moved * turn, [0.0; 3]))
-                        .then(&RigidTransform::from_axis_angle(
-                            Vector::zeros(),
-                            centre.coords,
-                        ));
-                    let slide = moved * shift;
-                    let slid = RigidTransform::from_axis_angle(
-                        Vector::zeros(),
-                        [slide.x, slide.y, slide.z],
-                    );
-                    for trial in [pose.then(&spin), pose.then(&slid)] {
-                        let value = self.score(seen, camera, &trial, tolerance);
-                        if value > best {
-                            (pose, best, better) = (trial, value, true);
-                        }
-                    }
-                }
-            }
-            if !better {
-                turn *= POLISH_SHRINK;
-                shift *= POLISH_SHRINK;
-            }
-        }
-        pose
-    }
-
     /// The share of the model's pixels at `pose` whose ray went through it.
     #[must_use]
     pub fn through_share(
@@ -171,7 +120,7 @@ impl Finder {
 }
 
 /// `work` over `items` on at most [`MOST_THREADS`] threads, results in order.
-fn shared<Item: Sync, Answer: Send>(
+pub(super) fn shared<Item: Sync, Answer: Send>(
     items: &[Item],
     work: impl Fn(&Item) -> Vec<Answer> + Sync,
 ) -> Vec<Answer> {

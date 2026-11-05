@@ -61,6 +61,18 @@ impl Detector {
             .through_share(depth, camera, pose, self.tolerance)
     }
 
+    /// The model found again where `forecast` puts it, turned any way.
+    pub fn turned_again(
+        &self,
+        depth: &DepthImage,
+        camera: &Camera,
+        forecast: &RigidTransform,
+    ) -> Option<RigidTransform> {
+        self.finder
+            .turned_again(depth, camera, forecast)
+            .map(|found| found.pose)
+    }
+
     /// The model's pose in the camera's frame, when the frame holds it.
     pub fn find(&self, depth: &DepthImage, camera: &Camera) -> Option<RigidTransform> {
         self.finder
