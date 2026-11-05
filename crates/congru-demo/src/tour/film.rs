@@ -1,11 +1,12 @@
-use congru::{Distance, Point, PointCloud, RigidTransform, TriangleMesh};
+use congru::{Distance, NearestNeighbors, Point, PointCloud, RigidTransform, TriangleMesh};
 use congru_scene::Scene;
 use congru_sim::Degradation;
 use congru_synth::sequence::Handheld;
 use congru_track::{Settings, Tracker};
-use congru_vision::{Camera, back_project, render, within};
+use congru_vision::{Camera, render, within};
 
-use crate::camera::detect::{Detector, boxed};
+use crate::camera::detect::{Detector, region_of_interest};
+use crate::camera::stage::hold::Hold;
 
 use crate::camera::view::CameraView;
 use crate::picture::palette::{MUTED, TEXT};
@@ -32,32 +33,55 @@ const SEARCH_STARTS: usize = 12;
 const SAMPLE_SHARE: f64 = 1.0 / 80.0;
 const SEARCH_ITERATIONS: u32 = 15;
 const CREEP_PER_FRAME: f64 = 0.004;
+const SURFACE_SAMPLING: f64 = 1.0 / 50.0;
 
 /// The scene filmed for `frames` frames by a wandering camera, the target
 /// found by its shape and then tracked, one tile per frame. The truth only
 /// scores the tiles.
-pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Tile>> {
+pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<(Tile, f64)>> {
     let camera = camera_of(scene);
     let target = &scene.target().mesh;
-    let (centre, span) = extent(target);
-    let mut tracker = tracker_for(target, camera, span)?;
+    let (_, span) = extent(target);
     let detector = Detector::new(target, span)?;
-    let mut last: Option<RigidTransform> = None;
+    let mut hold = Hold::new(Settings::for_part(span)?.gains);
+    let samples = target
+        .sample_surface(Distance::new(span * SURFACE_SAMPLING)?)?
+        .cloud()
+        .clone();
     (0..frames)
         .map(|frame| {
             let (depth, truth) = shoot(scene, &camera, frame);
-            let points = back_project(&depth, &camera);
-            let update = last
-                .or_else(|| detector.find(&boxed(&depth, &camera, target, &truth), &camera))
-                .and_then(|start| {
-                    let region = around(&points, &start.apply(&centre), span).ok()?;
-                    tracker.update_from(&region, Some(start)).ok()
-                })
-                .filter(|update| update.trusted);
-            last = update.map(|update| update.pose);
-            Ok(tile(scene, &camera, &depth, last.as_ref(), &truth))
+            let region = region_of_interest(&depth, &camera, target, &truth, frame as u64);
+            let measured = hold
+                .forecast()
+                .or_else(|| detector.find(&region, &camera))
+                .map(|start| detector.along_rays(&depth, &camera, &start));
+            let pose = hold.judge(&detector, &camera, (&depth, &region), measured, false);
+            let off = pose.map_or(Ok(f64::INFINITY), |pose| {
+                surface_error(&samples, &pose, &truth).map(|metres| metres / span)
+            })?;
+            Ok((tile(scene, &camera, &depth, pose.as_ref(), &truth), off))
         })
         .collect()
+}
+
+/// The mean distance from the model at `pose` to the model at `truth`, nearest
+/// point to nearest point: [ADD-S], blind to what a symmetry leaves unchanged, as
+/// a gear turned by one tooth.
+///
+/// [ADD-S]: https://arxiv.org/abs/1711.00199
+fn surface_error(
+    samples: &PointCloud,
+    pose: &RigidTransform,
+    truth: &RigidTransform,
+) -> anyhow::Result<f64> {
+    let index = NearestNeighbors::new(&samples.transformed(truth))?;
+    let total: f64 = samples
+        .points()
+        .iter()
+        .map(|point| index.nearest(&pose.apply(point)).squared_distance.sqrt())
+        .sum();
+    Ok(total / congru_vision::pixel::coordinate(samples.count()))
 }
 
 /// The scene's camera, at the tour's resolution.
@@ -166,4 +190,25 @@ pub(super) fn extent(mesh: &TriangleMesh) -> (Point, f64) {
         Point::from((lowest + highest) / 2.0),
         (highest - lowest).norm(),
     )
+}
+
+#[cfg(test)]
+mod tests {
+    use congru_sim::{bracket, gear};
+
+    use super::*;
+
+    fn off_by(mesh: &TriangleMesh, angle: f64) -> anyhow::Result<f64> {
+        let samples = mesh.sample_surface(Distance::new(0.003)?)?.cloud().clone();
+        let turned = RigidTransform::from_axis_angle(congru::Vector::z() * angle, [0.0; 3]);
+        surface_error(&samples, &turned, &RigidTransform::identity())
+    }
+
+    #[test]
+    fn a_turn_by_one_tooth_costs_little_where_a_part_turned_costs_much() -> anyhow::Result<()> {
+        let tooth = std::f64::consts::TAU / 12.0;
+        assert!(off_by(&gear()?, tooth)? < 0.002);
+        assert!(off_by(&bracket()?, tooth)? > 0.005);
+        Ok(())
+    }
 }

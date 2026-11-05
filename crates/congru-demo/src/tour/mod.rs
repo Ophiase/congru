@@ -15,24 +15,22 @@ pub use breakdown::breakdown;
 use film::film;
 
 const FRAMES: usize = 72;
+const WITHIN_SURFACE: f64 = 0.02;
 
 pub fn run(target: &Path) -> anyhow::Result<Vec<Summary>> {
     let frames = std::env::var("CONGRU_FRAMES")
         .ok()
         .and_then(|value| value.parse().ok())
         .unwrap_or(FRAMES);
-    let scenes = load(Path::new("scenes"))?;
+    let only = std::env::var("CONGRU_SCENE").ok();
+    let mut scenes = load(Path::new("scenes"))?;
+    scenes.retain(|scene| only.as_ref().is_none_or(|name| *name == scene.name));
     let runs: Vec<(String, Vec<Tile>)> = scenes
         .iter()
         .map(|scene| {
             let started = std::time::Instant::now();
-            let tiles = film(scene, frames)?;
-            let _ = writeln!(
-                std::io::stderr().lock(),
-                "{}: {:.1} s",
-                scene.name,
-                started.elapsed().as_secs_f64()
-            );
+            let (tiles, surface): (Vec<Tile>, Vec<f64>) = film(scene, frames)?.into_iter().unzip();
+            report(&scene.name, started.elapsed().as_secs_f64(), surface);
             Ok((scene.name.clone(), tiles))
         })
         .collect::<anyhow::Result<_>>()?;
@@ -67,4 +65,18 @@ pub fn load(folder: &Path) -> anyhow::Result<Vec<Scene>> {
         .iter()
         .map(|path| Scene::load(path))
         .collect::<Result<_, _>>()?)
+}
+
+/// The surface error of one scene, on the side of the tables: the progress of a
+/// long run.
+fn report(name: &str, seconds: f64, mut surface: Vec<f64>) {
+    let frames = surface.len();
+    let within = surface.iter().filter(|off| **off < WITHIN_SURFACE).count();
+    surface.sort_by(f64::total_cmp);
+    let _ = writeln!(
+        std::io::stderr().lock(),
+        "{name}: {seconds:.1} s; surface off by a median {:.2} % of its size, {within} of {frames} within {:.0} %",
+        100.0 * surface[frames / 2],
+        100.0 * WITHIN_SURFACE,
+    );
 }

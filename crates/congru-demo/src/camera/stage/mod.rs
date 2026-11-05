@@ -9,7 +9,7 @@ use congru_vision::{Camera, DepthImage, Frame, render};
 
 mod crop;
 mod follow;
-mod hold;
+pub(crate) mod hold;
 
 use super::conditions::{Clutter, Condition};
 use super::detect::{Detector, region_of_interest};
