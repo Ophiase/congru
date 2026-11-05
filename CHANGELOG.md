@@ -5,6 +5,16 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.21 — 2026-11-05
+
+- **Holding on when a frame says nothing**: hidden goes on along the trajectory,
+  refuted searches every orientation where it stood. All in a room reaches 68, 74
+  and 57 of 90 on three paths, the room 78, 73 and 79
+  ([the step](docs/hold-step.md)).
+- **All effects recedes** by 7 or 8 frames, shake by 1 or 2; the realistic scenes
+  stay at 0 of 72.
+- **The simple situations have their own page**, apart from the realistic scenes.
+
 ## 0.1.20 — 2026-11-05
 
 - **A pose is worth what its hits say of it**: the information of the hits, less

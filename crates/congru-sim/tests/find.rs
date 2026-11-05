@@ -1,5 +1,5 @@
 use congru::{Distance, Point, RigidTransform, Vector};
-use congru_sim::{Degradation, Turntable, bracket, surroundings, turntable};
+use congru_sim::{Degradation, Solids, Turntable, bracket, surroundings, turntable};
 use congru_vision::{Camera, Finder, Observed, render};
 
 #[test]
@@ -136,5 +136,60 @@ fn the_bracket_is_found_with_its_flat_back_to_the_camera() -> Result<(), congru:
         "the flat side at {flat_side:.3}, confirms {:.2}",
         found.agreement
     );
+    Ok(())
+}
+
+#[test]
+fn a_can_in_front_hides_a_pose_where_an_empty_frame_refutes_it() -> Result<(), congru::Error> {
+    let part = bracket()?;
+    let camera = Camera::with_field_of_view(160, 120, 60.0);
+    let finder = Finder::new(&part, Distance::new(0.0125)?)?;
+    let pose = RigidTransform::from_axis_angle(Vector::new(-1.9, 0.4, 0.3), [0.0, 0.0, 0.6]);
+    let tolerance = 0.006;
+    let wall_behind = Solids::default()
+        .cuboid([-2.0, -2.0, 1.2], [2.0, 2.0, 1.3])
+        .build()?;
+    let screen_before = Solids::default()
+        .cuboid([-2.0, -2.0, 0.2], [2.0, 2.0, 0.3])
+        .build()?;
+    let identity = RigidTransform::identity();
+    let refuted = render(&camera, &[(&wall_behind, identity)]).depth;
+    let hidden = render(&camera, &[(&screen_before, identity)]).depth;
+    assert!(finder.through_share(&refuted, &camera, &pose, tolerance) > 0.9);
+    assert!(finder.through_share(&hidden, &camera, &pose, tolerance) < 0.01);
+    Ok(())
+}
+
+#[test]
+fn a_part_knocked_on_its_turntable_is_found_again_where_it_stood() -> Result<(), congru::Error> {
+    let part = bracket()?;
+    let table = turntable()?;
+    let camera = Camera::with_field_of_view(160, 120, 60.0);
+    let finder = Finder::new(&part, Distance::new(0.0125)?)?;
+    let sensor = Degradation {
+        blur: 1,
+        noise: 0.025,
+        holes: 0.08,
+        flying_pixels: true,
+        lens: 0.0,
+    };
+    let path = Turntable {
+        frames: 12,
+        turns: 1.0,
+        shake_degrees: 0.0,
+        handheld: congru_synth::sequence::Handheld::default(),
+        knock_degrees: 0.0,
+    };
+    for frame in [2, 7] {
+        let truth = path.pose(frame);
+        let before = RigidTransform::from_axis_angle(Vector::z() * 1.2, [0.0; 3]).then(&truth);
+        let exact = render(&camera, &[(&part, truth), (&table, truth)]).depth;
+        let depth = sensor.apply(&exact, frame as u64);
+        let found = finder
+            .turned_again(&depth, &camera, &before)
+            .ok_or(congru::Error::Degenerate)?;
+        let degrees = found.pose.rotation_error_to(&truth).to_degrees();
+        assert!(degrees < 8.0, "frame {frame}: {degrees:.1}° off");
+    }
     Ok(())
 }

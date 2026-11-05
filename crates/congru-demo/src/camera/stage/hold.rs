@@ -1,0 +1,113 @@
+use std::collections::VecDeque;
+
+use congru::RigidTransform;
+use congru_track::{Gains, MotionFilter};
+use congru_vision::{Camera, DepthImage};
+
+use super::super::detect::Detector;
+
+/// How many frames set the level a frame's confirmation is read against.
+const RECENT: usize = 9;
+/// A frame is believed down to this share of the recent level.
+const LEAST_OF_RECENT: f64 = 0.5;
+/// Above this share of rays through the forecast, it is refuted, not hidden.
+const MOST_THROUGH: f64 = 0.15;
+/// After this many frames on the forecast alone, the object is lost.
+const MOST_COASTED: usize = 20;
+
+/// What goes on when a frame is not believed: the trajectory holds through what
+/// hides the object, and is searched again when the frame refutes it.
+#[derive(Debug)]
+pub(super) struct Hold {
+    filter: MotionFilter,
+    recent: VecDeque<f64>,
+    coasted: usize,
+}
+
+impl Hold {
+    pub(super) fn new(gains: Gains) -> Self {
+        Self {
+            filter: MotionFilter::new(gains),
+            recent: VecDeque::new(),
+            coasted: 0,
+        }
+    }
+
+    /// Where the object should be at this frame.
+    pub(super) fn forecast(&self) -> Option<RigidTransform> {
+        self.filter.predict()
+    }
+
+    fn believed(&self, confirmed: f64) -> bool {
+        let mut levels: Vec<f64> = self.recent.iter().copied().collect();
+        levels.sort_by(f64::total_cmp);
+        let level = levels.get(levels.len() / 2).copied().unwrap_or(0.0);
+        confirmed >= 0.0 && confirmed >= LEAST_OF_RECENT * level
+    }
+
+    fn accept(&mut self, pose: &RigidTransform, confirmed: f64) -> RigidTransform {
+        let corrected = self.filter.correct(pose, &[]);
+        self.recent.push_back(confirmed);
+        if self.recent.len() > RECENT {
+            self.recent.pop_front();
+        }
+        self.coasted = 0;
+        corrected
+    }
+
+    /// The pose to answer for this frame, from what was `measured` on it; `None`
+    /// says the object is lost. A pose along rays is smoothed here; the tracker's
+    /// own is `filtered_already`, and smoothing it twice lags behind every jolt.
+    pub(super) fn judge(
+        &mut self,
+        detector: &Detector,
+        camera: &Camera,
+        (depth, region): (&DepthImage, &DepthImage),
+        measured: Option<RigidTransform>,
+        filtered_already: bool,
+    ) -> Option<RigidTransform> {
+        if let Some(pose) = measured {
+            let confirmed = detector.confirmed(depth, camera, &pose);
+            if self.believed(confirmed) {
+                let corrected = self.accept(&pose, confirmed);
+                return Some(if filtered_already { pose } else { corrected });
+            }
+        }
+        let forecast = self.filter.predict()?;
+        if detector.through_share(depth, camera, &forecast) > MOST_THROUGH {
+            let turned = detector.turned_again(depth, camera, &forecast);
+            let again = self.restart(detector, camera, depth, turned).or_else(|| {
+                let found = detector.find(region, camera);
+                self.restart(detector, camera, depth, found)
+            });
+            if again.is_some() {
+                return again;
+            }
+        }
+        self.coasted += 1;
+        if self.coasted > MOST_COASTED {
+            self.filter.reset();
+            self.recent.clear();
+            self.coasted = 0;
+            return None;
+        }
+        self.filter.correct(&forecast, &[]);
+        Some(forecast)
+    }
+
+    /// Starts the trajectory over from `found`, when the frame believes it.
+    fn restart(
+        &mut self,
+        detector: &Detector,
+        camera: &Camera,
+        depth: &DepthImage,
+        found: Option<RigidTransform>,
+    ) -> Option<RigidTransform> {
+        let found = found?;
+        let confirmed = detector.confirmed(depth, camera, &found);
+        self.believed(confirmed).then(|| {
+            self.filter.reset();
+            self.accept(&found, confirmed)
+        })
+    }
+}

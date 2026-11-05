@@ -53,13 +53,13 @@ the second the same in a room. Each row:
 
 | Condition | Added to an imperfect sensor | Median error | Frames within 2° |
 | --- | --- | --- | --- |
-| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.74° | 79 / 90 |
-| All in a room | the same, with a wall, a bench, a box and the turntable in view | 2.63° | 41 / 90 |
+| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.75° | 77 / 90 |
+| All in a room | the same, with a wall, a bench, a box and the turntable in view | 1.48° | 68 / 90 |
 | Sensor | about 5 mm of noise, blur, holes, flying pixels | 0.19° | 90 / 90 |
-| Shake | a camera in a hand: slow wander and jolts | 0.57° | 90 / 90 |
+| Shake | a camera in a hand: slow wander and jolts | 0.57° | 88 / 90 |
 | Lens | radial distortion of the depth image | 0.29° | 90 / 90 |
 | Flex | the part flexes by up to 4 mm | 0.26° | 90 / 90 |
-| Room | the room alone | 1.22° | 71 / 90 |
+| Room | the room alone | 0.96° | 78 / 90 |
 
 One effect at a time: [sensor](figures/tracking-sensor.gif),
 [shake](figures/tracking-shake.gif), [lens](figures/tracking-lens.gif),
@@ -71,8 +71,9 @@ Still frames of what goes right and wrong, with what each ray says:
 **[caution]** Measured on one path and one sensor seed, with a noisy box standing
 in for a detector.
 
-On two other paths, the room gives 77 and 69 of 90, all in a room only 20 and 13
-([the box](box-step.md), [the step before](shape-crop-step.md)).
+On two other paths, the room gives 73 and 79 of 90, all in a room 74 and 57
+([this step](hold-step.md), [the box](box-step.md),
+[the model's shape](shape-crop-step.md)).
 
 - no crop from the truth but that box, no support plane removed;
 - computed offline by `just demo`. A detection in a room takes seconds on four

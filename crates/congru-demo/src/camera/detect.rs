@@ -7,8 +7,6 @@ use rand::{RngExt, SeedableRng};
 const STEP_SHARE: f64 = 1.0 / 20.0;
 /// Poses are judged at this share of the step, close to the noise.
 const JUDGE_SHARE: f64 = 0.5;
-/// Below this, the rays through the model outweigh what it could say.
-const MOST_REFUTED: f64 = 0.0;
 /// A simulated box is this much wider than the object, and off by this share.
 const BOX_GROWTH: f64 = 0.4;
 const BOX_SHIFT: f64 = 0.1;
@@ -51,10 +49,28 @@ impl Detector {
             .settled(depth, camera, &polished, self.tolerance)
     }
 
-    /// Whether the rays that went through the model at `pose` outweigh what it
-    /// could say there: no such pose is believed, whatever its inliers.
-    pub fn refuted(&self, depth: &DepthImage, camera: &Camera, pose: &RigidTransform) -> bool {
-        self.finder.confirmed_at(depth, camera, pose) < MOST_REFUTED
+    /// The share of what the model could say at `pose` that the frame says, less
+    /// what its rays refute.
+    pub fn confirmed(&self, depth: &DepthImage, camera: &Camera, pose: &RigidTransform) -> f64 {
+        self.finder.confirmed_at(depth, camera, pose)
+    }
+
+    /// The share of the model's pixels at `pose` whose ray went through it.
+    pub fn through_share(&self, depth: &DepthImage, camera: &Camera, pose: &RigidTransform) -> f64 {
+        self.finder
+            .through_share(depth, camera, pose, self.tolerance)
+    }
+
+    /// The model found again where `forecast` puts it, turned any way.
+    pub fn turned_again(
+        &self,
+        depth: &DepthImage,
+        camera: &Camera,
+        forecast: &RigidTransform,
+    ) -> Option<RigidTransform> {
+        self.finder
+            .turned_again(depth, camera, forecast)
+            .map(|found| found.pose)
     }
 
     /// The model's pose in the camera's frame, when the frame holds it.

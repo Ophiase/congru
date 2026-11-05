@@ -73,7 +73,8 @@ tuning.
 - **The scan was cut with the model's silhouette** at the predicted pose: a
   hypothesis choosing the data that confirm it. No sensor gives such a cut.
 - **No truth reached it**, but the author called it what it is, and it is gone.
-- **The current measures** are [with a noisy box](../../docs/box-step.md).
+- **The current measures**: [holding on](../../docs/hold-step.md), after
+  [a noisy box](../../docs/box-step.md).
 
 Demo B, the whole pipeline, frames within 2°, out of 90. The two other paths were
 never used to choose anything.

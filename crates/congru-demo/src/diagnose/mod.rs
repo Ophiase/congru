@@ -10,7 +10,7 @@ use std::io::Write;
 use congru::Distance;
 use congru_vision::{Finder, Observed};
 
-use crate::camera::conditions::{CONDITIONS, Clutter};
+use crate::camera::conditions::CONDITIONS;
 use crate::camera::stage;
 use crate::camera::stage::Step;
 
@@ -31,7 +31,13 @@ pub fn run() -> anyhow::Result<()> {
     match std::env::args().nth(2).as_deref() {
         Some("shares") => return shares(&stage, &mut output),
         Some("apart") => return apart(&stage, &mut output),
-        Some(name) => return one_condition(&stage, name, &mut output),
+        Some(name) => {
+            let turned = std::env::args()
+                .nth(3)
+                .and_then(|turns| turns.parse().ok())
+                .map(|turns| stage.turning(turns));
+            return one_condition(turned.as_ref().unwrap_or(&stage), name, &mut output);
+        }
         None => {}
     }
     for condition in &CONDITIONS {
@@ -91,10 +97,7 @@ fn one_condition(stage: &stage::Stage, name: &str, output: &mut impl Write) -> a
 fn apart(stage: &stage::Stage, output: &mut impl Write) -> anyhow::Result<()> {
     for turns in APART_TURNS {
         let other = stage.turning(turns);
-        for condition in CONDITIONS
-            .iter()
-            .filter(|condition| condition.clutter == Clutter::Room)
-        {
+        for condition in &CONDITIONS {
             let steps = other.run(condition)?;
             writeln!(
                 output,

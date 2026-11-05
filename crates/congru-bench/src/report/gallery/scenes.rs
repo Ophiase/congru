@@ -27,11 +27,14 @@ pub fn scenes(models: &[Model], folder: &Path) -> anyhow::Result<String> {
 
     writeln!(
         page,
-        "Every situation of the [protocol](protocol.md), drawn exactly as the\n\
-         methods receive it, for the first evaluation seed: the scan in blue,\n\
-         its outliers in green, the model at the starting guess in red. A\n\
-         method must bring the red onto the blue. Written by\n\
-         `just bench-scenes`.\n"
+        "# Simple situations\n\n\
+         Bare point clouds, the basic cases every method must handle; the\n\
+         ordinary scenes are [on their own page](scenes.md).\n\n\
+         Every situation of the [protocol](protocol.md), drawn exactly as the\n\
+         methods receive it, for the first evaluation seed.\n\n\
+         - **Blue**: the scan. **Green**: its outliers.\n\
+         - **Red**: the model at the starting guess, which a method must bring onto the blue.\n\n\
+         Written by `just bench-scenes`.\n"
     )?;
     for model in models {
         writeln!(page, "## {}\n\n{}.\n", model.name, model.summary)?;
@@ -97,13 +100,15 @@ fn thinned(points: &[Point]) -> Vec<Point> {
     points.iter().step_by(stride).copied().collect()
 }
 
-/// The whole page: realistic scenes first, then every simple situation.
+/// The page of ordinary scenes, which only points to the simple situations.
 #[must_use]
-pub fn scenes_page(realistic: &str, simple: &str) -> String {
+pub fn scenes_page(realistic: &str) -> String {
     format!(
         "# Scenes\n\n## Realistic scenes\n\nOrdinary scenes written as short TOML files in\n\
          [scenes/](../../scenes/), rendered by a simulated depth camera; the\n\
          target is tinted. Adding one is writing one file.\n\n\
-         ![The realistic scenes](scenes/realistic.png)\n\n{realistic}\n## Simple situations\n\n{simple}"
+         ![The realistic scenes](scenes/realistic.png)\n\n{realistic}\n## Simple situations\n\n\
+         Bare point clouds, every situation of the protocol:\n\
+         [their own page](scenes-simple.md).\n"
     )
 }
