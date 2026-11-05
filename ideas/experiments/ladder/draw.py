@@ -5,6 +5,7 @@ from statistics import median
 
 import matplotlib.pyplot as plt
 import numpy as np
+from numpy.typing import NDArray
 
 from fit import Pose, Verdict, model_to_scan, rotation_error, scan_to_model, starts, verdict
 from rays import by_rays
@@ -23,6 +24,10 @@ Method = Callable[[Points, Pose], Pose]
 
 def closed(polygon: Points) -> Points:
     return np.vstack((polygon, polygon[:1]))
+
+
+def along_rays_on(observed: NDArray[np.float64]) -> Method:
+    return lambda _, start: by_rays(start, observed)
 
 
 def median_run(scan: Points, truth: Pose, method: Method) -> tuple[Pose, float, float]:
@@ -83,8 +88,7 @@ def main(target: Path) -> None:
         _, reverse, reverse_offset = median_run(scan, truth, model_to_scan)
         rays, rays_error, rays_offset = (None, 0.0, 0.0)
         if observed is not None:
-            known = observed
-            rays, rays_error, rays_offset = median_run(scan, truth, lambda _, start: by_rays(start, known))
+            rays, rays_error, rays_offset = median_run(scan, truth, along_rays_on(observed))
         figure_of(step, scan, truth, (naive, error, rays, rays_error), target / f"ladder-{number}-{step.name}.png")
         truth_verdict = None if observed is None else verdict(truth, observed)
         naive_verdict = None if observed is None else verdict(naive, observed)

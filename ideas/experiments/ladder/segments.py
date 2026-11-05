@@ -3,10 +3,10 @@
 from dataclasses import dataclass
 
 import numpy as np
-from numpy.typing import NDArray
-
 from fit import Pose
+from numpy.typing import NDArray
 from rays import along_rays, polish, read
+
 from scenes import BRACKET, CAMERA, Points, ray_directions
 
 JUMP = 0.025

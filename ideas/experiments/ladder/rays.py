@@ -3,10 +3,18 @@
 from dataclasses import dataclass
 
 import numpy as np
+from fit import HIT_GATE, Pose, rigid_fit
 from numpy.typing import NDArray
 
-from fit import HIT_GATE, Pose, rigid_fit
-from scenes import BRACKET, CAMERA, RAY_COUNT, Points, depths_along_rays, placed, ray_directions
+from scenes import (
+    BRACKET,
+    CAMERA,
+    RAY_COUNT,
+    Points,
+    depths_along_rays,
+    placed,
+    ray_directions,
+)
 
 GATES = (0.06, 0.04, 0.025, 0.012)
 PAIRING_ROUNDS = 6
