@@ -68,8 +68,15 @@ tuning.
 
 ## What it changed, end to end
 
-**[defined]** Demo B, the whole pipeline, nothing from the truth, no box. Frames
-within 2°, out of 90. The two other paths were never used to choose anything.
+**[caution]** This table is [the shape crop step](../../docs/shape-crop-step.md).
+
+- **The scan was cut with the model's silhouette** at the predicted pose: a
+  hypothesis choosing the data that confirm it. No sensor gives such a cut.
+- **No truth reached it**, but the author called it what it is, and it is gone.
+- **The current measures** are [with a noisy box](../../docs/box-step.md).
+
+Demo B, the whole pipeline, frames within 2°, out of 90. The two other paths were
+never used to choose anything.
 
 | Condition | 0.75 turns, chosen on | 0.55 turns, apart | 1.3 turns, apart |
 | --- | --- | --- | --- |
@@ -95,7 +102,7 @@ graph TD
   K --> T["tracker"]
   T --> C{"frame crowded?"}
   C -->|"no"| W["ball around the part"]
-  C -->|"yes"| R["along rays, then the silhouette only"]
+  C -->|"yes"| R["along rays, polished, settled"]
   W --> X{"refuted?"}
   R --> X
   X -->|"no"| T
@@ -109,17 +116,15 @@ What each part answers, and what forced it:
 | Gate tightening, as in [the ladder](../problem/cloud-ladder.md) | The right vote goes from unranked to rank 0 on a failing frame |
 | Faces laid on regions | Votes propose nothing on a flat face: all its pairs look alike |
 | Raw and refined both kept | Rays let a right pose slide along a flat face: 112° off from rank 0 |
-| Crop to the silhouette only when crowded | It cuts the edges that correct a slide, so a clean frame lost 9 frames |
+| Tight crop only when crowded | It cuts the edges that correct a slide, so a clean frame lost 9 frames |
 | Crowded read from the count of returns | Read around the prediction, a wrong pose looks crowded, and hides that it is wrong |
 | A refuted pose is not believed | The health test trusted 100° off; the same run went from 42 to 76 frames |
 
 ## [caution] What is still wrong
 
-- **Thresholds came from these frames**: refuted at −2, crowded at 3 times the
-  part's pixels. Crowded has a wide gap, under 1.7 against over 6. Refuted has
-  not: −1.9 against −2.9, on one path.
-- **After a knock, a wrong pose can stay**: at −0.3, above the threshold, for seven
-  frames. The signal exists; the threshold misses it.
+- **Crowded came from these frames**: 3 times the part's pixels, in a wide gap,
+  under 1.7 against over 6. Refuted now stands at zero: the rays through outweigh
+  what the model explains. It costs all effects some frames.
 - **Detection in a room is still weak**: on the flat view, the right pose is not
   offered, or ranks past 3000 of 11000. The tracker hides this: it needs a
   detection only at the start and when lost.

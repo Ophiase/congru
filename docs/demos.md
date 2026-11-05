@@ -53,13 +53,13 @@ the second the same in a room. Each row:
 
 | Condition | Added to an imperfect sensor | Median error | Frames within 2° |
 | --- | --- | --- | --- |
-| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.72° | 83 / 90 |
-| All in a room | the same, with a wall, a bench, a box and the turntable in view | 1.04° | 76 / 90 |
+| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.74° | 79 / 90 |
+| All in a room | the same, with a wall, a bench, a box and the turntable in view | 2.63° | 41 / 90 |
 | Sensor | about 5 mm of noise, blur, holes, flying pixels | 0.19° | 90 / 90 |
 | Shake | a camera in a hand: slow wander and jolts | 0.57° | 90 / 90 |
 | Lens | radial distortion of the depth image | 0.29° | 90 / 90 |
 | Flex | the part flexes by up to 4 mm | 0.26° | 90 / 90 |
-| Room | the room alone | 0.51° | 90 / 90 |
+| Room | the room alone | 1.22° | 71 / 90 |
 
 One effect at a time: [sensor](figures/tracking-sensor.gif),
 [shake](figures/tracking-shake.gif), [lens](figures/tracking-lens.gif),
@@ -68,12 +68,14 @@ One effect at a time: [sensor](figures/tracking-sensor.gif),
 Still frames of what goes right and wrong, with what each ray says:
 [the cases](projection-cases.md).
 
-**[caution]** Measured on one path and one sensor seed; on two other paths, the
-room gives 76 and 86 of 90, all in a room 74 and 45
-([what a pose is worth](../ideas/method/pose-information.md)).
+**[caution]** Measured on one path and one sensor seed, with a noisy box standing
+in for a detector.
 
-- no crop from the truth, no support plane removed, no box;
-- computed offline by `just demo`. A detection in a room takes about 6 s on four
+On two other paths, the room gives 77 and 69 of 90, all in a room only 20 and 13
+([the box](box-step.md), [the step before](shape-crop-step.md)).
+
+- no crop from the truth but that box, no support plane removed;
+- computed offline by `just demo`. A detection in a room takes seconds on four
   threads: following is real-time by design, finding is not.
 
 The realistic scenes have their own tour: [scenes](benchmark/scenes.md).

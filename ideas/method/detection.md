@@ -20,6 +20,13 @@ The box gives neither depth nor orientation. Until a real detector runs
 shifted by a tenth. It is the one input still taken from the truth, and
 every page that shows a scene says so.
 
+**[defined]** The author, on demo B: until a real detector runs, a video may be
+given this region of interest, a little larger, a little off. Never the model's
+shape.
+
+- [What the shape gave](../../docs/shape-crop-step.md).
+- [What a box gives](../../docs/box-step.md).
+
 ## [sketch] Point pair features, voted
 
 [Point pair features][drost] (Drost et al., 2010): every pair of oriented

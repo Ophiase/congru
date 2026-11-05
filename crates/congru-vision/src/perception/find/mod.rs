@@ -31,6 +31,7 @@ pub struct Finder {
     points: Vec<Oriented>,
     table: PairTable,
     diameter: f64,
+    points_centre: congru::Point,
 }
 
 /// Where the object was found, and how well the frame agrees with it.
@@ -69,7 +70,16 @@ impl Finder {
                     .map(|second| (second.point - first.point).norm())
             })
             .fold(0.0, f64::max);
+        let points_centre = congru::Point::from(
+            points
+                .iter()
+                .fold(congru::Vector::zeros(), |sum, oriented| {
+                    sum + oriented.point.coords
+                })
+                / crate::pixel::coordinate(points.len().max(1)),
+        );
         Ok(Self {
+            points_centre,
             model: model.clone(),
             table: PairTable::new(&points, step.get()),
             points,
@@ -137,6 +147,20 @@ impl Finder {
         pose: &RigidTransform,
     ) -> RigidTransform {
         self.refined_by(depth, camera, pose, REFINE_ITERATIONS)
+    }
+
+    /// `pose`, already close, averaged onto the returns at the model's depth: only
+    /// those within `gate` count, so what stands around has no say, and many
+    /// pixels give the precision a verdict per pixel cannot.
+    #[must_use]
+    pub fn settled(
+        &self,
+        depth: &DepthImage,
+        camera: &Camera,
+        pose: &RigidTransform,
+        gate: f64,
+    ) -> RigidTransform {
+        along_rays(depth, camera, &self.points, pose, gate, REFINE_ITERATIONS)
     }
 
     /// As [`Finder::refined`], for this many iterations.

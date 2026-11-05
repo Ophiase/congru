@@ -10,7 +10,7 @@ use std::io::Write;
 use congru::Distance;
 use congru_vision::{Finder, Observed};
 
-use crate::camera::conditions::CONDITIONS;
+use crate::camera::conditions::{CONDITIONS, Clutter};
 use crate::camera::stage;
 use crate::camera::stage::Step;
 
@@ -91,7 +91,10 @@ fn one_condition(stage: &stage::Stage, name: &str, output: &mut impl Write) -> a
 fn apart(stage: &stage::Stage, output: &mut impl Write) -> anyhow::Result<()> {
     for turns in APART_TURNS {
         let other = stage.turning(turns);
-        for condition in &CONDITIONS {
+        for condition in CONDITIONS
+            .iter()
+            .filter(|condition| condition.clutter == Clutter::Room)
+        {
             let steps = other.run(condition)?;
             writeln!(
                 output,

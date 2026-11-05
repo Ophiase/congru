@@ -10,7 +10,7 @@ use congru_vision::{Camera, DepthImage, Frame, render};
 mod crop;
 
 use super::conditions::{Clutter, Condition};
-use super::detect::Detector;
+use super::detect::{Detector, region_of_interest};
 use super::view::CameraView;
 
 const PART_SPAN: f64 = 0.25;
@@ -93,12 +93,18 @@ impl Stage {
                 let exact =
                     self.shoot(&part, &truth, &self.around(condition, &path, &truth, frame));
                 let depth = condition.degradation.apply(&exact.depth, frame as u64);
+                let region =
+                    region_of_interest(&depth, &self.camera, &self.part, &truth, frame as u64);
                 let scan = last
-                    .or_else(|| start(&detector, &depth))
-                    .and_then(|start| self.scan_for(&detector, &depth, &start));
+                    .or_else(|| start(&detector, &region))
+                    .and_then(|start| self.scan_for(&detector, &depth, &region, &start));
+                let crowded = last.is_some_and(|pose| self.is_crowded(&depth, &pose));
                 let update = scan
                     .as_ref()
-                    .and_then(|(start, cloud)| tracker.update_from(cloud, Some(*start)).ok());
+                    .and_then(|(start, cloud)| tracker.update_from(cloud, Some(*start)).ok())
+                    .map(|update| {
+                        along_rays_when(crowded, update, scan.as_ref().map(|found| found.0))
+                    });
                 last = update
                     .as_ref()
                     .filter(|update| update.trusted)
@@ -172,5 +178,18 @@ fn camera_noise(condition: &Condition) -> Degradation {
         holes: 0.0,
         flying_pixels: false,
         lens: condition.degradation.lens,
+    }
+}
+
+/// In a crowded frame the pose along rays stands: the scan holds what is not
+/// the part, and pulls the tracker's own.
+fn along_rays_when(crowded: bool, update: Update, rays: Option<RigidTransform>) -> Update {
+    match rays {
+        Some(pose) if crowded => Update {
+            pose,
+            trusted: true,
+            ..update
+        },
+        _ => update,
     }
 }
