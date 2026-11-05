@@ -5,6 +5,16 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.20 — 2026-11-05
+
+- **A pose is worth what its hits say of it**: the information of the hits, less
+  the rays through, ranks the truth first ([why](ideas/method/pose-information.md)).
+- **Demo B with a noisy box**: the room goes from 0 to 71 of 90, 77 and 69 on paths
+  never used; with every effect, 41, then only 20 and 13
+  ([the box](docs/box-step.md), [the step before](docs/shape-crop-step.md)).
+- **The ladder is answered**: along rays, and read as segments without any start.
+- **All effects recedes**, 84 to 79 of 90; the realistic scenes stay at 0 of 72.
+
 ## 0.1.19 — 2026-11-04
 
 - **Detection judges every vote**, refined along rays and weighted by the share
