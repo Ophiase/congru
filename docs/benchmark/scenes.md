@@ -38,8 +38,8 @@ rays, the trajectory held when a frame says nothing.
   something.
 - **The box comes from the truth**, until a real detector runs.
 - **The cars are not an algorithm's failure**: the simulated sensor's noise grows
-  as the square of the depth, and exceeds the car's height. Even the truth scores
-  zero.
+  as the square of the depth: 1 m at 14 m, 2.6 m at 23 m, for a car 1.5 m
+  high. Even the truth scores zero.
 - **The breakdown above still shows the previous pipeline.**
 
 [ADD-S]: https://arxiv.org/abs/1711.00199
