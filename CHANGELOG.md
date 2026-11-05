@@ -11,7 +11,8 @@ crate of the workspace carries the same one.
   Within 2 % of their size: bin of parts 72, part on a table 71, gear on a bench
   65, shelf of mugs 43 ([scenes](docs/benchmark/scenes.md)).
 - **A surface error beside the rotation one**: a gear turned by one tooth is right.
-- **The cars stay at 0**: the simulated sensor's noise exceeds their height.
+- **The cars stay at 0**: the simulated sensor has 1 m of noise at 14 m and
+  2.6 m at 23 m, for a car 1.5 m high.
 
 ## 0.1.21 — 2026-11-05
 
