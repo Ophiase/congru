@@ -8,10 +8,12 @@ rust-version.workspace = true
 license.workspace = true
 
 [dependencies]
+rand.workspace = true
+rayon.workspace = true
 anyhow = "1.0.104"
 gif = "0.14.2"
 nalgebra.workspace = true
-congru.workspace = true
+congru = { workspace = true, default-features = true }
 congru-scene.workspace = true
 congru-sim.workspace = true
 congru-synth.workspace = true

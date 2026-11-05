@@ -38,8 +38,35 @@ file that argues it.
      amplitude, on the wall and the bench;
    - the camera shake must be visible and tested, not only a jolt of the
      pose.
+   - **[defined]** In a room, the region kept is centred on a wrong pose
+     found on the turntable, so the part itself is never given to the
+     tracker, while the depth shows it plainly: detection is what fails.
 3. **Scenes**: the gallery shows too many simple synthetic variations.
    What matters is a few ordinary scenes, found free online with a clear
    licence, with one object to cut out of them; and the tooling that makes
    adding such a scene one command (fetch a single file, check its sum,
    record it in [catalogue/sources.yaml](../catalogue/sources.yaml)).
+
+## Next, from the author's review of demo B
+
+**[defined]** Demo A is solved; what fails in a room is not missing data. The
+frame says more than points ([visibility](problem/visibility.md)).
+
+**[sketch]** On a branch, proposals for 1, 2 and 5, measured, for the author to
+keep or not: [what a pose is worth](method/pose-information.md). Questions 3 and 4
+stay open, and [step 7 of the ladder](problem/cloud-ladder.md) shows why they matter.
+
+**[question]** A new one: the author's intuition is a person reads surfaces, not
+points. Segments work in 2D without any start; faces help in 3D but not yet in a
+room. Should the model become faces and edges everywhere, ahead of points?
+
+1. **[question]** Keep the detector as measured: every vote judged, refined along
+   rays, share in frame? Room stays at 0 / 90, and it costs time
+   ([evidence along rays](method/ray-evidence.md)).
+2. **[question]** Move the tracker to rays with a budget of K points, and to three
+   verdicts: supported, hidden, refuted. It breaks a right start in one update.
+3. **[question]** Is a physical prior allowed, that a part neither sinks nor floats?
+   The sensor alone leaves it open.
+4. **[question]** Should the answer be a set of poses when several survive?
+5. **[question]** How to detect in clutter without a 2D box? Without one, the room
+   still gives none, then 160° off.

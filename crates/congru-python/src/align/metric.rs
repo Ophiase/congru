@@ -1,3 +1,5 @@
+#![expect(clippy::min_ident_chars, reason = "pyo3 macro expansion")]
+
 use pyo3::pyclass;
 
 #[pyclass(

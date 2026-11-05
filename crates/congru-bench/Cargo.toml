@@ -13,7 +13,7 @@ congru-figures = { path = "../congru-figures" }
 congru-scene.workspace = true
 congru-vision.workspace = true
 resvg = "0.49.0"
-congru.workspace = true
+congru = { workspace = true, default-features = true }
 congru-sim.workspace = true
 congru-synth.workspace = true
 congru-track.workspace = true

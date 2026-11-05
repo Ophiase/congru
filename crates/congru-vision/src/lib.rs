@@ -9,5 +9,8 @@ mod render;
 
 pub use camera::Camera;
 pub use image::{DepthImage, Image};
-pub use perception::{Finder, Found, back_project, visible_from_origin, within, without_support};
+pub use perception::{
+    Finder, Found, Information, Observed, ViewScore, back_project, visible_from_origin, within,
+    without_support,
+};
 pub use render::{Frame, render};

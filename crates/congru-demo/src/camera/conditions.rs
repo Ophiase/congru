@@ -21,6 +21,10 @@ pub struct Condition {
     /// Largest jolt of the camera per frame, in degrees.
     pub shake: f64,
     pub handheld: Handheld,
+    /// A can passing between the camera and the part.
+    pub occluder: bool,
+    /// Each of the two abrupt turns of the table, in degrees.
+    pub knock_degrees: f64,
 }
 
 /// A camera in a child's hands: several degrees and centimetres of slow
@@ -31,12 +35,13 @@ const HANDHELD: Handheld = Handheld {
     period: 45.0,
 };
 
-/// A consumer depth camera at half a metre: noise, a little blur, a few
-/// holes, flying pixels at edges. Every condition starts from it.
+/// A cheap depth camera at half a metre, as rough as demo A: about 5 mm of
+/// noise on the part, a little blur, holes, flying pixels at edges. Every
+/// condition starts from it.
 const SENSOR: Degradation = Degradation {
     blur: 1,
-    noise: 0.01,
-    holes: 0.04,
+    noise: 0.025,
+    holes: 0.08,
     flying_pixels: true,
     lens: 0.0,
 };
@@ -52,9 +57,33 @@ const BASE: Condition = Condition {
         shift: 0.0,
         period: 0.0,
     },
+    occluder: false,
+    knock_degrees: 0.0,
 };
 
-pub const CONDITIONS: [Condition; 6] = [
+/// Every effect demo A certifies, at once.
+const ALL: Condition = Condition {
+    name: "all effects",
+    degradation: Degradation {
+        lens: 0.08,
+        ..SENSOR
+    },
+    flex: 0.004,
+    shake: 1.0,
+    handheld: HANDHELD,
+    occluder: true,
+    knock_degrees: 70.0,
+    ..BASE
+};
+
+/// The first two are drawn together; each other one alone.
+pub const CONDITIONS: [Condition; 7] = [
+    ALL,
+    Condition {
+        name: "in a room",
+        clutter: Clutter::Room,
+        ..ALL
+    },
     BASE,
     Condition {
         name: "shake",
@@ -79,18 +108,5 @@ pub const CONDITIONS: [Condition; 6] = [
         name: "room",
         clutter: Clutter::Room,
         ..BASE
-    },
-    Condition {
-        name: "everything",
-        degradation: Degradation {
-            noise: 0.02,
-            holes: 0.12,
-            lens: 0.08,
-            ..SENSOR
-        },
-        clutter: Clutter::Room,
-        flex: 0.004,
-        shake: 1.0,
-        handheld: HANDHELD,
     },
 ];

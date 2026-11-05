@@ -75,11 +75,33 @@ python-test: python-dev
     uv run --no-sync ruff format --check
     uv run --no-sync pytest
 
+[doc("Draw the visibility schemas into docs/figures, from the Python experiment")]
+[working-directory("ideas/experiments/visibility")]
+visibility-schemas:
+    uv run --no-project --with numpy --with scipy --with matplotlib python schemas.py ../../../docs/figures
+
+[doc("Measure visibility on held-out seeds, one core, ten minutes: writes out/visibility and its figures, prints the tables")]
+[working-directory("ideas/experiments/visibility")]
+visibility-measure:
+    OMP_NUM_THREADS=1 uv run --no-project --with numpy --with scipy --with matplotlib python measure.py ../../../out/visibility all
+    uv run --no-project --with numpy --with scipy --with matplotlib python charts.py ../../../out/visibility ../../../docs/figures
+    uv run --no-project --with numpy python report.py ../../../out/visibility
+
+[doc("Draw the ladder of hand-made 2D clouds into docs/figures and print its table, one core, a few seconds")]
+[working-directory("ideas/experiments/ladder")]
+ladder:
+    OMP_NUM_THREADS=1 uv run --no-project --with numpy --with scipy --with matplotlib python draw.py ../../../docs/figures
+
+[doc("Survey a grid of poses on the ladder with ray evidence alone, one core, a few minutes")]
+[working-directory("ideas/experiments/ladder")]
+ladder-survey:
+    OMP_NUM_THREADS=1 uv run --no-project --with numpy --with scipy --with matplotlib python survey.py
+
 [doc("Run the project's and the portable checks over every changed file")]
 [script("bash")]
 guards:
     status=0
-    for check in markdown french comment-slop doc-slop hardcoded-url portable rust-format folder-size yaml-extension config-format file-length version; do
+    for check in markdown markdown-smell french comment-slop doc-slop hardcoded-url portable rust-format folder-size yaml-extension config-format file-length version; do
         just _guard "$check" || status=1
     done
     exit $status

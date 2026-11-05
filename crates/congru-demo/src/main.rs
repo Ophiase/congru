@@ -4,6 +4,7 @@
 
 mod camera;
 mod clouds;
+mod diagnose;
 mod picture;
 mod summary;
 mod tour;
@@ -19,6 +20,13 @@ fn main() -> anyhow::Result<()> {
     let mut arguments = std::env::args_os().skip(1);
     let demo = arguments.next().and_then(|demo| demo.into_string().ok());
     let target = arguments.next().map(PathBuf::from);
+    match demo.as_deref() {
+        Some("rank") => return diagnose::rank(),
+        Some("diagnose") => return diagnose::run(),
+        Some("detection") => return diagnose::detection(),
+        Some("cases") => return diagnose::cases(),
+        _ => {}
+    }
     let summaries = match demo.as_deref() {
         Some("clouds") => {
             clouds::run(&target.unwrap_or_else(|| PathBuf::from("docs/figures/clouds.gif")))?
@@ -47,6 +55,10 @@ fn main() -> anyhow::Result<()> {
         }
         _ => bail!("usage: congru-demo clouds|camera|tour [animation.gif]"),
     };
+    print_table(summaries)
+}
+
+fn print_table(summaries: Vec<Summary>) -> anyhow::Result<()> {
     let mut output = std::io::stdout().lock();
     writeln!(
         output,

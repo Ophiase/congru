@@ -1,14 +1,13 @@
 use std::path::Path;
 
-use congru::{Point, RigidTransform};
+use congru::RigidTransform;
 use congru_scene::Scene;
-use congru_vision::pixel::containing;
 use congru_vision::{Camera, DepthImage, back_project, render, within};
 
 use super::film::{CROP, around, camera_of, extent, shoot, tracker_for};
 use crate::camera::detect::{Detector, boxed};
 use crate::picture::palette::TEXT;
-use crate::picture::{self, Tile, font, outlined};
+use crate::picture::{self, Tile, font, outlined, splat};
 
 /// The first frame of `scene`, step by step: what the camera returns, the
 /// points, the target found by its shape, the region kept around it, the
@@ -73,25 +72,4 @@ fn tile(
         picture,
         error_degrees: 0.0,
     }
-}
-
-/// Points back into a depth image, the nearest per pixel, so every step is
-/// drawn the same way.
-fn splat(points: &[Point], camera: &Camera) -> DepthImage {
-    let mut depth = DepthImage::filled(camera.width, camera.height, f64::NAN);
-    for point in points {
-        let Some([across, down]) = camera.project(point) else {
-            continue;
-        };
-        if let (Some(column), Some(row)) = (
-            containing(across, camera.width),
-            containing(down, camera.height),
-        ) {
-            let current = depth.get(column, row);
-            if current.is_nan() || point.z < current {
-                depth.set(column, row, point.z);
-            }
-        }
-    }
-    depth
 }

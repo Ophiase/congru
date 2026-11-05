@@ -3,19 +3,17 @@
 **[sketch]** One core, thin skins. Nothing above the core holds an
 algorithm.
 
-```text
-   Python (NumPy)     C / C++ header     CLI (files → JSON)
-          │                  │                  │
-          └──────────────────┼──────────────────┘
-                             │  thin skins: convert, validate, call
-                     ┌───────┴───────┐
-                     │   core crate  │  geometry, search, fit, ICP, global
-                     └───────┬───────┘  no I/O, no printing, no threads forced
-                             │
-                     ┌───────┴───────┐
-                     │  synth crate  │  the observation model, the truth
-                     └───────────────┘  tests and benchmark only
+```mermaid
+graph TD
+  PY["Python, NumPy"] --> CORE["core crate"]
+  C["C and C++ header"] --> CORE
+  CLI["CLI, files to JSON"] --> CORE
+  SYNTH["synth crate"] --> CORE
 ```
+
+- **Core**: geometry, search, fit, ICP, global; no I/O, no threads.
+- **Synth**: the observation model and its truth, for tests only.
+- **Skins**: they only convert, validate and call.
 
 ## Rules
 
