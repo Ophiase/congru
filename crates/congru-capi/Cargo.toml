@@ -17,7 +17,7 @@ crate-type = [
 doctest = false
 
 [dependencies]
-congru.workspace = true
+congru = { workspace = true, default-features = true }
 
 [dev-dependencies]
 congru-synth.workspace = true

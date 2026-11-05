@@ -17,7 +17,7 @@ doctest = false
 [dependencies]
 numpy.workspace = true
 pyo3.workspace = true
-congru.workspace = true
+congru = { workspace = true, default-features = true }
 
 [lints]
 workspace = true

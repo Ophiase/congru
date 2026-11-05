@@ -11,7 +11,7 @@ categories.workspace = true
 
 [dependencies]
 nalgebra.workspace = true
-congru.workspace = true
+congru = { workspace = true, default-features = true }
 congru-vision.workspace = true
 
 [dev-dependencies]

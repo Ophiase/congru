@@ -35,7 +35,7 @@ categories = [
 ]
 
 [workspace.dependencies]
-congru = { path = "crates/congru", version = "0.1.18" }
+congru = { path = "crates/congru", version = "0.1.18", default-features = false }
 congru-synth = { path = "crates/congru-synth", version = "0.1.18" }
 congru-vision = { path = "crates/congru-vision", version = "0.1.18" }
 congru-sim = { path = "crates/congru-sim", version = "0.1.18" }
