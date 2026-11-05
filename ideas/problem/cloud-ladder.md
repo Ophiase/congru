@@ -112,6 +112,41 @@ scan to model. All of it is a toy: `just ladder`.
   seeds.
 - **Same constants at every step**, chosen on step 4.
 
+## Reading segments: no start at all
+
+**[sketch]** The author's intuition: a person does not see points. A person sees
+a segment of some length, and looks for where it goes, or decides it is absent.
+Discrete, so a point alone does not pull: mean against median, at the scale of
+objects. In `segments.py`, without any start:
+
+1. **Read**: neighbouring rays at close depths form runs, cut where they bend. A
+   stray, alone on its ray, forms nothing: it is gone before any reasoning.
+2. **Place**: lay each model edge on each segment, its outside to the camera. A
+   segment longer than the edge rules it out; a shorter one may slide along it.
+3. **Judge**: the rays score each placement; the best are refined.
+
+Six seeds per step; right is within 5° and 2 cm. A grid would judge 5832 poses;
+this judges 72 to 481.
+
+| Step | Right | Worst of the right ones |
+| --- | --- | --- |
+| 3 One side | 6 / 6 | 2.7°, 4 mm |
+| 4 Strays | 6 / 6 | 0.3°, 2 mm |
+| 5 Table | 6 / 6 | 1.6°, 1 mm |
+| 6 Twin | 6 / 6 | 0.6°, 3 mm |
+| 7 Can | 0 / 6 | none |
+| 8 Flat side | 6 / 6 | 2.3°, 3 mm |
+
+**[caution]** Step 7 fails, and it is not a detail.
+
+- **What wins is the can**: the model is laid on it, 33 cm away, flipped. The part
+  half hidden gives fewer hits than a whole can.
+- **With a start, the same step holds**: 2.0° and 5 mm. A tracker has that context,
+  a first detection does not.
+- **Before widening the search**, the flip at the true place tied the truth exactly,
+  17 hits to 17: hiding the upright leaves only a flat face, which both explain. The
+  answer may have to be a set of poses ([open](../open.md)).
+
 ## What the ladder asks of the algorithm
 
 | Requirement | From step | In Congru today |
