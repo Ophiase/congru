@@ -52,6 +52,14 @@ file that argues it.
 **[defined]** Demo A is solved; what fails in a room is not missing data. The
 frame says more than points ([visibility](problem/visibility.md)).
 
+**[sketch]** On a branch, proposals for 1, 2 and 5, measured, for the author to
+keep or not: [what a pose is worth](method/pose-information.md). Questions 3 and 4
+stay open, and [step 7 of the ladder](problem/cloud-ladder.md) shows why they matter.
+
+**[question]** A new one: the author's intuition is a person reads surfaces, not
+points. Segments work in 2D without any start; faces help in 3D but not yet in a
+room. Should the model become faces and edges everywhere, ahead of points?
+
 1. **[question]** Keep the detector as measured: every vote judged, refined along
    rays, share in frame? Room stays at 0 / 90, and it costs time
    ([evidence along rays](method/ray-evidence.md)).

@@ -22,40 +22,40 @@ never offered the truth; above it, the score itself fails. Written by
 
 ![sensor-00](figures/projection/sensor-00.gif)
 
-- **Off by**: 1.9° and 4 mm.
-- **Score**: truth 16.7, found 15.5.
+- **Off by**: 1.7° and 3 mm.
+- **Score**: truth 16.7, found 17.9.
 - **Reading**: right.
 
 ## sensor, frame 51
 
 ![sensor-51](figures/projection/sensor-51.gif)
 
-- **Off by**: 1.3° and 3 mm.
-- **Score**: truth 13.2, found 12.2.
+- **Off by**: 1.4° and 1 mm.
+- **Score**: truth 13.2, found 12.4.
 - **Reading**: right.
 
 ## shake, frame 40
 
 ![shake-40](figures/projection/shake-40.gif)
 
-- **Off by**: 1.7° and 4 mm.
-- **Score**: truth 12.1, found 8.9.
+- **Off by**: 1.7° and 3 mm.
+- **Score**: truth 12.1, found 10.5.
 - **Reading**: right.
 
 ## lens, frame 27
 
 ![lens-27](figures/projection/lens-27.gif)
 
-- **Off by**: 122.1° and 95 mm.
-- **Score**: truth 8.3, found 0.0.
-- **Reading**: wrong, and the score knows: the search never offered the truth.
+- **Off by**: 0.4° and 4 mm.
+- **Score**: truth 8.3, found 7.1.
+- **Reading**: right.
 
 ## flex, frame 30
 
 ![flex-30](figures/projection/flex-30.gif)
 
-- **Off by**: 7.6° and 8 mm.
-- **Score**: truth 5.9, found 2.5.
+- **Off by**: 11.1° and 10 mm.
+- **Score**: truth 5.9, found 2.8.
 - **Reading**: wrong, and the score knows: the search never offered the truth.
 
 ## all effects, frame 0
@@ -70,16 +70,16 @@ never offered the truth; above it, the score itself fails. Written by
 
 ![all-effects-27](figures/projection/all-effects-27.gif)
 
-- **Off by**: 98.8° and 58 mm.
-- **Score**: truth 3.3, found 0.1.
-- **Reading**: wrong, and the score knows: the search never offered the truth.
+- **Off by**: 3.5° and 7 mm.
+- **Score**: truth 3.3, found 5.7.
+- **Reading**: right.
 
 ## room, frame 0
 
 ![room-00](figures/projection/room-00.gif)
 
-- **Off by**: 0.1° and 4 mm.
-- **Score**: truth 13.8, found 11.6.
+- **Off by**: 1.8° and 3 mm.
+- **Score**: truth 13.8, found 12.1.
 - **Reading**: right.
 
 ## room, frame 7
@@ -94,8 +94,8 @@ never offered the truth; above it, the score itself fails. Written by
 
 ![room-27](figures/projection/room-27.gif)
 
-- **Off by**: 105.9° and 450 mm.
-- **Score**: truth 5.9, found 1.7.
+- **Off by**: 135.3° and 363 mm.
+- **Score**: truth 5.9, found 2.5.
 - **Reading**: wrong, and the score knows: the search never offered the truth.
 
 ## room, frame 40
@@ -110,8 +110,8 @@ never offered the truth; above it, the score itself fails. Written by
 
 ![in-a-room-00](figures/projection/in-a-room-00.gif)
 
-- **Off by**: 49.8° and 507 mm.
-- **Score**: truth 3.5, found 1.3.
+- **Off by**: 177.8° and 506 mm.
+- **Score**: truth 3.5, found 1.9.
 - **Reading**: wrong, and the score knows: the search never offered the truth.
 
 ## in a room, frame 7
@@ -126,8 +126,8 @@ never offered the truth; above it, the score itself fails. Written by
 
 ![in-a-room-27](figures/projection/in-a-room-27.gif)
 
-- **Off by**: 173.6° and 509 mm.
-- **Score**: truth -0.5, found 1.8.
+- **Off by**: 165.2° and 407 mm.
+- **Score**: truth -0.5, found 2.3.
 - **Reading**: wrong, and the score prefers it: the score itself fails.
 
 ## in a room, frame 40

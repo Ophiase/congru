@@ -57,9 +57,11 @@ const CASES: [(&str, usize); 16] = [
     ("in a room", 40),
     ("in a room", 73),
 ];
+const PANELS: usize = 4;
+const READABLE: f64 = 1e4;
 const RIGHT_DEGREES: f64 = 5.0;
 const RIGHT_METRES: f64 = 0.02;
-/// Above this share of the step, the depth check reads close to the noise.
+/// At this share of the step, the depth check reads close to the noise.
 const TIGHT: f64 = 0.5;
 
 /// Writes the page and its figures.
@@ -75,9 +77,7 @@ pub fn run() -> anyhow::Result<()> {
                 .iter()
                 .find(|condition| condition.name == *name)
                 .ok_or_else(|| anyhow::anyhow!("no condition {name}"))?;
-            let section = case(&stage, &finder, condition, *frame);
-            eprintln!("done: {name}, frame {frame}");
-            section
+            case(&stage, &finder, condition, *frame)
         })
         .collect::<anyhow::Result<Vec<String>>>()?;
     let page = format!("{INTRO}{}\n", sections.concat().trim_end());
@@ -98,31 +98,17 @@ fn case(
     let degrees = pose.rotation_error_to(&truth).to_degrees();
     let metres = pose.translation_error_to(&truth);
     let seen = Observed::new(depth.clone(), &stage.camera, tolerance);
-    let score_of = |pose| 1e4 * finder.score(&seen, &stage.camera, pose, tolerance);
+    let score_of = |pose| READABLE * finder.score(&seen, &stage.camera, pose, tolerance);
     let (at_truth, at_found) = (score_of(&truth), score_of(&pose));
-    let tile = |picture: Image<Tone>, label: &str| {
-        let mut picture = picture;
-        font::write(&mut picture, 4, 4, label, TEXT);
-        Tile {
-            picture,
-            error_degrees: degrees,
-        }
-    };
-    let drawn = |pose: &RigidTransform| {
-        let mut picture = rainbow(&depth, &depth);
-        outline(&mut picture, &silhouette(stage, pose));
-        picture
-    };
     let slug = format!("{}-{frame:02}", condition.name.replace(' ', "-"));
+    let tiles = panels(stage, &depth, (&truth, &pose), tolerance).map(|picture| Tile {
+        picture,
+        error_degrees: degrees,
+    });
     picture::write(
         Path::new(&format!("{FIGURES}/{slug}.gif")),
-        &[vec![
-            tile(drawn(&truth), "truth"),
-            tile(drawn(&pose), "found"),
-            tile(verdicts(stage, &depth, &truth, tolerance), "rays, truth"),
-            tile(verdicts(stage, &depth, &pose, tolerance), "rays, found"),
-        ]],
-        4,
+        &[tiles.to_vec()],
+        PANELS,
     )?;
     let mut section = format!("## {}, frame {frame}\n\n", condition.name);
     writeln!(section, "![{slug}](figures/projection/{slug}.gif)\n")?;
@@ -141,6 +127,29 @@ fn case(
         reading(degrees, metres, at_truth, at_found)
     )?;
     Ok(section)
+}
+
+fn panels(
+    stage: &Stage,
+    depth: &Image<f64>,
+    (truth, found): (&RigidTransform, &RigidTransform),
+    tolerance: f64,
+) -> [Image<Tone>; PANELS] {
+    let drawn = |pose: &RigidTransform| {
+        let mut picture = rainbow(depth, depth);
+        outline(&mut picture, &silhouette(stage, pose));
+        picture
+    };
+    [
+        (drawn(truth), "truth"),
+        (drawn(found), "found"),
+        (verdicts(stage, depth, truth, tolerance), "rays, truth"),
+        (verdicts(stage, depth, found, tolerance), "rays, found"),
+    ]
+    .map(|(mut picture, label)| {
+        font::write(&mut picture, 4, 4, label, TEXT);
+        picture
+    })
 }
 
 fn reading(degrees: f64, metres: f64, at_truth: f64, at_found: f64) -> &'static str {

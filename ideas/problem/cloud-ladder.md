@@ -139,13 +139,13 @@ this judges 72 to 481.
 
 **[caution]** Step 7 fails, and it is not a detail.
 
-- **What wins is the can**: the model is laid on it, 33 cm away, flipped. The part
-  half hidden gives fewer hits than a whole can.
-- **With a start, the same step holds**: 2.0° and 5 mm. A tracker has that context,
-  a first detection does not.
-- **Before widening the search**, the flip at the true place tied the truth exactly,
-  17 hits to 17: hiding the upright leaves only a flat face, which both explain. The
-  answer may have to be a set of poses ([open](../open.md)).
+- **What wins is the can**: the model is laid on it, 33 cm away, flipped. The
+  part half hidden gives fewer hits than a whole can.
+- **With a start, the same step holds**: 2.0° and 5 mm. A tracker has that
+  context, a first detection does not.
+- **Before widening the search**, the flip at the true place tied the truth
+  exactly, 17 hits to 17: hiding the upright leaves only a flat face, which both
+  explain. The answer may have to be a set of poses ([open](../open.md)).
 
 ## What the ladder asks of the algorithm
 

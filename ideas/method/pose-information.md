@@ -65,3 +65,67 @@ tuning.
 
 [D-optimal]: https://en.wikipedia.org/wiki/Optimal_experimental_design
 [point-to-plane]: https://en.wikipedia.org/wiki/Iterative_closest_point
+
+## What it changed, end to end
+
+**[defined]** Demo B, the whole pipeline, nothing from the truth, no box. Frames
+within 2°, out of 90. The two other paths were never used to choose anything.
+
+| Condition | 0.75 turns, chosen on | 0.55 turns, apart | 1.3 turns, apart |
+| --- | --- | --- | --- |
+| Room | 0 → **90** | 0 → **76** | 0 → **86** |
+| In a room | 0 → **76** | 0 → **74** | 0 → **45** |
+| All effects | 84 → 83 | 89 → 86 | 76 → 74 |
+| Sensor | 90 → 90 | 90 → 90 | 87 → 87 |
+| Shake | 90 → 90 | 90 → 90 | 88 → 88 |
+| Lens | 90 → 90 | 90 → 90 | 87 → 87 |
+| Flex | 90 → 90 | 90 → 90 | 87 → 87 |
+
+Demo A does not use this code: its table is the same to the digit. One sensor
+seed per frame; the frames of each path are not independent.
+
+## The pipeline that gave it
+
+```mermaid
+graph TD
+  V["votes, several peaks per reference"] --> B["brought along rays, the gate tightening"]
+  F["model faces laid on flat regions"] --> J["judged by S, loosely"]
+  B --> J
+  J --> K["the best kept, raw and refined, judged closely"]
+  K --> T["tracker"]
+  T --> C{"frame crowded?"}
+  C -->|"no"| W["ball around the part"]
+  C -->|"yes"| R["along rays, then the silhouette only"]
+  W --> X{"refuted?"}
+  R --> X
+  X -->|"no"| T
+  X -->|"yes"| V
+```
+
+What each part answers, and what forced it:
+
+| Part | Measured reason |
+| --- | --- |
+| Gate tightening, as in [the ladder](../problem/cloud-ladder.md) | The right vote goes from unranked to rank 0 on a failing frame |
+| Faces laid on regions | Votes propose nothing on a flat face: all its pairs look alike |
+| Raw and refined both kept | Rays let a right pose slide along a flat face: 112° off from rank 0 |
+| Crop to the silhouette only when crowded | It cuts the edges that correct a slide, so a clean frame lost 9 frames |
+| Crowded read from the count of returns | Read around the prediction, a wrong pose looks crowded, and hides that it is wrong |
+| A refuted pose is not believed | The health test trusted 100° off; the same run went from 42 to 76 frames |
+
+## [caution] What is still wrong
+
+- **Thresholds came from these frames**: refuted at −2, crowded at 3 times the
+  part's pixels. Crowded has a wide gap, under 1.7 against over 6. Refuted has
+  not: −1.9 against −2.9, on one path.
+- **After a knock, a wrong pose can stay**: at −0.3, above the threshold, for seven
+  frames. The signal exists; the threshold misses it.
+- **Detection in a room is still weak**: on the flat view, the right pose is not
+  offered, or ranks past 3000 of 11000. The tracker hides this: it needs a
+  detection only at the start and when lost.
+- **The realistic scenes do not gain**: still 0 of 72 on each, a data set never
+  used here. They keep a ball crop and the health test, and the finder alone
+  changed, slower on the largest: 170 s against 81 s for the car on a road.
+- **Cost**: a detection in a room takes about 6 s on 4 threads, far from real time.
+- **The score is coarse**: it tells a right pose from a wrong one, not 0.5° from
+  2°. Choosing the higher score between two near poses made tracking worse.

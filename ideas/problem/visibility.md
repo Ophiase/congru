@@ -4,6 +4,13 @@
 where a surface is, that space before it is empty, and nothing about space
 behind it. Behind a point seen from the camera, having no point is normal.
 
+The experiments that answer this page:
+
+- [the ladder](cloud-ladder.md), in 2D;
+- [evidence along rays](../method/ray-evidence.md);
+- [what a pose is worth](../method/pose-information.md);
+- [the cases, frame by frame](../../docs/projection-cases.md).
+
 ![One ray: empty, then something, then unknown](../../docs/figures/visibility-ray.png)
 
 ![The scene from the side, with a few rays and the part's shadow](../../docs/figures/visibility-scene.png)

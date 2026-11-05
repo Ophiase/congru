@@ -1,5 +1,5 @@
-use congru::{Distance, RigidTransform, Vector};
-use congru_sim::{Degradation, bracket, turntable};
+use congru::{Distance, Point, RigidTransform, Vector};
+use congru_sim::{Degradation, Turntable, bracket, surroundings, turntable};
 use congru_vision::{Camera, Finder, Observed, render};
 
 #[test]
@@ -72,5 +72,69 @@ fn the_truth_outscores_the_part_flipped_flush_on_its_turntable() -> Result<(), c
         let wrong = finder.score(&seen, &camera, &flipped, tolerance);
         assert!(right > 2.0 * wrong, "seed {seed}: {right} against {wrong}");
     }
+    Ok(())
+}
+
+#[test]
+fn the_bracket_is_found_among_surroundings_in_a_noisy_frame() -> Result<(), congru::Error> {
+    let part = bracket()?;
+    let table = turntable()?;
+    let around = surroundings()?;
+    let camera = Camera::with_field_of_view(160, 120, 60.0);
+    let finder = Finder::new(&part, Distance::new(0.0125)?)?;
+    let sensor = Degradation {
+        blur: 1,
+        noise: 0.025,
+        holes: 0.08,
+        flying_pixels: true,
+        lens: 0.0,
+    };
+    let path = Turntable {
+        frames: 12,
+        turns: 1.0,
+        shake_degrees: 0.0,
+        handheld: congru_synth::sequence::Handheld::default(),
+        knock_degrees: 0.0,
+    };
+    let mut right = 0;
+    for frame in [1, 4, 8, 10] {
+        let truth = path.pose(frame);
+        let exact = render(
+            &camera,
+            &[
+                (&part, truth),
+                (&table, truth),
+                (&around, RigidTransform::identity()),
+            ],
+        )
+        .depth;
+        let depth = sensor.apply(&exact, frame as u64);
+        let found = finder.find(&depth, &camera, f64::NEG_INFINITY);
+        right += usize::from(found.is_some_and(|found| {
+            found.pose.rotation_error_to(&truth).to_degrees() < 5.0
+                && found.pose.translation_error_to(&truth) < 0.02
+        }));
+    }
+    assert!(right >= 3, "{right} of 4 frames found");
+    Ok(())
+}
+
+#[test]
+fn the_bracket_is_found_with_its_flat_back_to_the_camera() -> Result<(), congru::Error> {
+    let part = bracket()?;
+    let camera = Camera::with_field_of_view(160, 120, 60.0);
+    let finder = Finder::new(&part, Distance::new(0.0125)?)?;
+    let truth =
+        RigidTransform::from_axis_angle(Vector::x() * std::f64::consts::PI, [0.0, 0.0, 0.5]);
+    let depth = render(&camera, &[(&part, truth)]).depth;
+    let found = finder
+        .find(&depth, &camera, 0.3)
+        .ok_or(congru::Error::Degenerate)?;
+    let flat_side = found.pose.apply(&Point::new(0.1, 0.06, 0.0)).z;
+    assert!(
+        (flat_side - 0.5).abs() < 0.01 && found.pose.translation_error_to(&truth) < 0.3,
+        "the flat side at {flat_side:.3}, confirms {:.2}",
+        found.agreement
+    );
     Ok(())
 }

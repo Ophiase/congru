@@ -10,7 +10,7 @@ mod render;
 pub use camera::Camera;
 pub use image::{DepthImage, Image};
 pub use perception::{
-    Finder, Found, Information, Observed, ViewScore, around_view, back_project, in_view,
-    visible_from_origin, within, without_support,
+    Finder, Found, Information, Observed, ViewScore, back_project, in_view, visible_from_origin,
+    within, without_support,
 };
 pub use render::{Frame, render};

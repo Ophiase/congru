@@ -3,6 +3,8 @@ use congru_vision::pixel::coordinate;
 use congru_vision::{Camera, DepthImage, Finder, render};
 
 const STEP_SHARE: f64 = 1.0 / 20.0;
+/// Below this, the rays through the model outweigh twice what it could say.
+const MOST_REFUTED: f64 = -2.0;
 /// A simulated box is this much wider than the object, and off by this share.
 const BOX_GROWTH: f64 = 0.4;
 const BOX_SHIFT: f64 = 0.1;
@@ -33,6 +35,12 @@ impl Detector {
         pose: &RigidTransform,
     ) -> RigidTransform {
         self.finder.refined(depth, camera, pose)
+    }
+
+    /// Whether the rays that went through the model at `pose` outweigh what it
+    /// could say there: no such pose is believed, whatever its inliers.
+    pub fn refuted(&self, depth: &DepthImage, camera: &Camera, pose: &RigidTransform) -> bool {
+        self.finder.confirmed_at(depth, camera, pose) < MOST_REFUTED
     }
 
     /// The model's pose in the camera's frame, when the frame holds it.
