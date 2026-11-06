@@ -66,7 +66,7 @@ Other seeds, with the box, all in a room: 75, 78, 73, 78 at 0.75 turns; 60, 63,
 **What fails**:
 
 - **All in a room at 1.3 turns**: 60; a knock believes a flat wrong pose for ten
-  frames.
+  frames. An amount bar on the search changed nothing: not kept.
 - **All effects at 0.55 turns**: 82, under 89 before the hold.
 - **The first frames**: nothing while the can hides the part; the nearest car misses
   a third of its run, 48 of 72.
