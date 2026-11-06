@@ -51,7 +51,7 @@ impl Follower {
                 let pose = update
                     .as_ref()
                     .filter(|update| update.trusted)
-                    .map(|update| update.pose);
+                    .map(Update::measured);
                 (pose, update)
             }
             None => (None, None),

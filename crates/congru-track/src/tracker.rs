@@ -28,6 +28,15 @@ pub struct Update {
     pub alignment: Alignment,
 }
 
+impl Update {
+    /// What the frame alone says of the pose, before the tracker's filter: `pose`
+    /// is steadier and lags behind what a jolt of the camera did at once.
+    #[must_use]
+    pub fn measured(&self) -> RigidTransform {
+        self.alignment.transform.inverse()
+    }
+}
+
 /// Follows one model through a stream of point clouds.
 #[derive(Debug)]
 pub struct Tracker<View> {

@@ -56,21 +56,21 @@ impl Hold {
     }
 
     /// The pose to answer for this frame, from what was `measured` on it; `None`
-    /// says the object is lost. A pose along rays is smoothed here; the tracker's
-    /// own is `filtered_already`, and smoothing it twice lags behind every jolt.
+    /// says the object is lost. A pose along rays is noisy and answers smoothed; one
+    /// `aligned` on points answers as it is, since a jolt moves it at once.
     pub(crate) fn judge(
         &mut self,
         detector: &Detector,
         camera: &Camera,
         (depth, region): (&DepthImage, &DepthImage),
         measured: Option<RigidTransform>,
-        filtered_already: bool,
+        aligned: bool,
     ) -> Option<RigidTransform> {
         if let Some(pose) = measured {
             let confirmed = detector.confirmed(depth, camera, &pose);
             if self.believed(confirmed) {
                 let corrected = self.accept(&pose, confirmed);
-                return Some(if filtered_already { pose } else { corrected });
+                return Some(if aligned { pose } else { corrected });
             }
         }
         let forecast = self.filter.predict()?;
