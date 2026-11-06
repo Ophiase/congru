@@ -88,7 +88,7 @@ fn beside(target: &Path, name: &str) -> PathBuf {
 }
 
 fn tiles(stage: &Stage, name: &str, step: &Step) -> [Tile; 3] {
-    let pose = step.update.as_ref().map(|update| update.pose);
+    let pose = step.answer.pose;
     let error = error_degrees(step);
     let [image, mut depth, cloud] = overlay::panels(stage, step, pose.as_ref());
     let bottom = depth.height() - 22;
@@ -108,7 +108,7 @@ fn tiles(stage: &Stage, name: &str, step: &Step) -> [Tile; 3] {
 }
 
 fn error_degrees(step: &Step) -> f64 {
-    step.update.as_ref().map_or(f64::INFINITY, |update| {
-        update.pose.rotation_error_to(&step.truth).to_degrees()
+    step.answer.pose.map_or(f64::INFINITY, |pose| {
+        pose.rotation_error_to(&step.truth).to_degrees()
     })
 }

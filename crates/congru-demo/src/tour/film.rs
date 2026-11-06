@@ -56,7 +56,7 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Shot>> {
     let target = &scene.target().mesh;
     let (_, span) = extent(target);
     let detector = Detector::new(target, span)?;
-    let mut hold = Hold::new(Settings::for_part(span)?.gains);
+    let mut hold = Hold::new(Settings::for_part(span)?.motion);
     let samples = target
         .sample_surface(Distance::new(span * SURFACE_SAMPLING)?)?
         .cloud()

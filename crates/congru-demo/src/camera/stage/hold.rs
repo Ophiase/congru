@@ -1,7 +1,7 @@
 use std::collections::VecDeque;
 
 use congru::RigidTransform;
-use congru_track::{Gains, MotionFilter};
+use congru_track::{MotionFilter, MotionModel};
 use congru_vision::{Camera, DepthImage};
 
 use super::super::detect::Detector;
@@ -25,9 +25,9 @@ pub(crate) struct Hold {
 }
 
 impl Hold {
-    pub(crate) fn new(gains: Gains) -> Self {
+    pub(crate) fn new(motion: MotionModel) -> Self {
         Self {
-            filter: MotionFilter::new(gains),
+            filter: MotionFilter::of(motion),
             recent: VecDeque::new(),
             coasted: 0,
         }

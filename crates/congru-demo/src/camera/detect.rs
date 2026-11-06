@@ -14,6 +14,9 @@ const ROI_SHIFT: f64 = 0.05;
 const ROI_SEED: u64 = 7_000;
 /// Below this agreement with the depth, the object is reported missing.
 const LEAST_AGREEMENT: f64 = 0.3;
+/// The same in a box, which already said where it is: half hidden, a right pose
+/// confirms this little.
+const LEAST_IN_A_BOX: f64 = 0.1;
 
 /// Finds the target in a whole frame from its shape alone: no guess, no
 /// assumption on what it stands on. What a headset does when it first sees
@@ -72,7 +75,7 @@ impl Detector {
     /// of the search's own and that pose brought along rays. The rays usually
     /// settle it, and under heavy noise take it away.
     pub fn find(&self, depth: &DepthImage, camera: &Camera) -> Option<RigidTransform> {
-        self.find_in(depth, depth, camera)
+        self.searched(depth, depth, camera, LEAST_AGREEMENT)
     }
 
     /// As [`Detector::find`], `region` proposing and all of `depth` judging.
@@ -82,6 +85,16 @@ impl Detector {
         region: &DepthImage,
         camera: &Camera,
     ) -> Option<RigidTransform> {
+        self.searched(depth, region, camera, LEAST_IN_A_BOX)
+    }
+
+    fn searched(
+        &self,
+        depth: &DepthImage,
+        region: &DepthImage,
+        camera: &Camera,
+        least: f64,
+    ) -> Option<RigidTransform> {
         let found = self
             .finder
             .find_in(depth, region, camera, f64::NEG_INFINITY)?;
@@ -90,7 +103,7 @@ impl Detector {
             .into_iter()
             .map(|pose| (self.confirmed(depth, camera, &pose), pose))
             .max_by(|left, right| left.0.total_cmp(&right.0))
-            .filter(|(confirmed, _)| *confirmed >= LEAST_AGREEMENT)
+            .filter(|(confirmed, _)| *confirmed >= least)
             .map(|(_, pose)| pose)
     }
 }

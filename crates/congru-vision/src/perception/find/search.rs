@@ -51,9 +51,8 @@ impl Finder {
             vec![self.refined_by(depth, camera, pose, FIRST_ITERATIONS)]
         });
         let rectangle = ImageBox::around(region)?;
-        let in_box = |pose: &RigidTransform| {
-            rectangle.holds(camera, &pose.apply(&self.points_centre))
-        };
+        let in_box =
+            |pose: &RigidTransform| rectangle.holds(camera, &pose.apply(&self.points_centre));
         let mut candidates = [brought, turned, self.face_placements(&frame, &index)].concat();
         candidates.retain(in_box);
         let mut voted: Vec<(f64, RigidTransform)> = shared(&candidates, |pose| {

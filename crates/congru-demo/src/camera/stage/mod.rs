@@ -3,7 +3,6 @@ use std::f64::consts::{FRAC_PI_2, TAU};
 
 use congru::Vector;
 use congru_sim::{Degradation, Turntable, flexed};
-use congru_track::Update;
 use congru_vision::pixel::coordinate;
 use congru_vision::{Camera, DepthImage, Frame, render};
 
@@ -13,6 +12,7 @@ pub(crate) mod hold;
 
 use super::conditions::{Clutter, Condition};
 use super::detect::{Detector, region_of_interest};
+pub use follow::Answer;
 use follow::Follower;
 
 const PART_SPAN: f64 = 0.25;
@@ -39,7 +39,7 @@ pub struct Step {
     pub depth: DepthImage,
     pub scan: Vec<Point>,
     pub truth: RigidTransform,
-    pub update: Option<Update>,
+    pub answer: Answer,
 }
 
 impl Stage {
@@ -97,7 +97,7 @@ impl Stage {
                 let from = follower
                     .forecast()
                     .or_else(|| start(&follower.detector, &depth, &region));
-                let (scan, update) = follower.step(self, (&depth, &region), from);
+                let (scan, answer) = follower.step(self, (&depth, &region), from);
                 Ok(Step {
                     image: camera_noise(condition).apply(&exact.depth, frame as u64 + 1),
                     depth,
@@ -105,7 +105,7 @@ impl Stage {
                         .map(|cloud| cloud.points().to_vec())
                         .unwrap_or_default(),
                     truth,
-                    update,
+                    answer,
                 })
             })
             .collect()

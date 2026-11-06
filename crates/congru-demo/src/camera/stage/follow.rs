@@ -1,4 +1,4 @@
-use congru::{Distance, PointCloud, RigidTransform};
+use congru::{Aligner, Distance, PointCloud, RigidTransform};
 use congru_track::{Settings, Tracker, Update};
 use congru_vision::DepthImage;
 
@@ -13,7 +13,6 @@ pub(super) struct Follower {
     tracker: Tracker<CameraView>,
     pub(super) detector: Detector,
     hold: Hold,
-    latest: Option<Update>,
 }
 
 impl Follower {
@@ -23,8 +22,7 @@ impl Follower {
         Ok(Self {
             tracker: Tracker::new("tracker", view, settings),
             detector: Detector::new(&stage.part, PART_SPAN)?,
-            hold: Hold::new(settings.gains),
-            latest: None,
+            hold: Hold::new(settings.motion),
         })
     }
 
@@ -32,46 +30,47 @@ impl Follower {
         self.hold.forecast()
     }
 
-    /// One frame from the pose it starts `from`: the scan given to the tracker,
-    /// and the answer.
+    /// One frame from the pose it starts `from`: the scan, and the answer. In a
+    /// crowded frame the rays have the say, and the tracker, which only clutter
+    /// would feed, starts over when the frame clears.
     pub(super) fn step(
         &mut self,
         stage: &Stage,
         (depth, region): (&DepthImage, &DepthImage),
         from: Option<RigidTransform>,
-    ) -> (Option<PointCloud>, Option<Update>) {
+    ) -> (Option<PointCloud>, Answer) {
         let scan = from.and_then(|start| stage.scan_for(&self.detector, depth, region, &start));
         let crowded = from.is_some_and(|pose| stage.is_crowded(depth, &pose));
-        let fresh = scan.as_ref().and_then(|(start, cloud)| {
-            let update = self.tracker.update_from(cloud, Some(*start)).ok()?;
-            Some(if crowded {
-                Update {
-                    pose: *start,
-                    trusted: true,
-                    ..update
-                }
-            } else {
-                update
-            })
-        });
-        let measured = fresh
-            .as_ref()
-            .filter(|update| update.trusted)
-            .map(|update| update.pose);
-        let answer = self.hold.judge(
+        let (measured, tracked) = match &scan {
+            Some((start, _)) if crowded => {
+                self.tracker.reset();
+                (Some(*start), None)
+            }
+            Some((start, cloud)) => {
+                let update = self.tracker.update_from(cloud, Some(*start)).ok();
+                let pose = update
+                    .as_ref()
+                    .filter(|update| update.trusted)
+                    .map(|update| update.pose);
+                (pose, update)
+            }
+            None => (None, None),
+        };
+        let pose = self.hold.judge(
             &self.detector,
             &stage.camera,
             (depth, region),
             measured,
             !crowded,
         );
-        self.latest = fresh.or_else(|| self.latest.take());
-        let update = answer.and_then(|pose| {
-            self.latest.as_ref().map(|update| Update {
-                pose,
-                ..update.clone()
-            })
-        });
-        (scan.map(|(_, cloud)| cloud), update)
+        (scan.map(|(_, cloud)| cloud), Answer { pose, tracked })
     }
+}
+
+/// A frame's outcome: the pose answered, and what the tracker said of it when it
+/// had a say.
+#[derive(Debug, Clone, PartialEq)]
+pub struct Answer {
+    pub pose: Option<RigidTransform>,
+    pub tracked: Option<Update>,
 }

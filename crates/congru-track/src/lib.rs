@@ -9,7 +9,7 @@ mod settings;
 mod tracker;
 mod view;
 
-pub use filter::{Gains, MotionFilter};
+pub use filter::{Gains, MotionFilter, MotionModel};
 pub use sensor::SensorView;
 pub use settings::{Agility, Health, Settings};
 pub use tracker::{Phase, Tracker, Update};

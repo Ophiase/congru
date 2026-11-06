@@ -90,9 +90,10 @@ mod tests {
     #[test]
     fn a_side_on_the_border_stays_open() {
         let found = ImageBox::around(&cut(0..20));
-        assert!(found.is_some_and(|rectangle| {
-            rectangle.holds(&CAMERA, &Point::new(-2.0, 0.0, 1.0))
-        }));
+        assert!(
+            found
+                .is_some_and(|rectangle| { rectangle.holds(&CAMERA, &Point::new(-2.0, 0.0, 1.0)) })
+        );
     }
 
     #[test]

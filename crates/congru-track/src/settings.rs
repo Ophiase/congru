@@ -1,6 +1,11 @@
 use congru::{Distance, Error, Icp, Kernel, Multistart};
 
-use crate::Gains;
+use crate::{Gains, MotionModel};
+
+const GAINS: Gains = Gains {
+    pose: 0.6,
+    velocity: 0.2,
+};
 
 /// When a frame's alignment is trusted enough to follow from.
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -40,6 +45,10 @@ pub struct Settings {
     pub health: Health,
     pub agility: Agility,
     pub gains: Gains,
+    /// What holds an object through frames along rays: a depth pins the place far
+    /// better than the turn, so the place answers quickly, and its lag on a camera
+    /// in a hand costs more than its noise.
+    pub motion: MotionModel,
     /// The learned noise never goes below this: the model's own sampling
     /// spacing is a good value.
     pub noise_floor: f64,
@@ -78,9 +87,13 @@ impl Settings {
                 rotation: 0.08,
                 translation: span / 20.0,
             },
-            gains: Gains {
-                pose: 0.6,
-                velocity: 0.2,
+            gains: GAINS,
+            motion: MotionModel {
+                translation: Gains {
+                    pose: 0.8,
+                    velocity: 0.5,
+                },
+                ..MotionModel::uniform(GAINS)
             },
             noise_floor: span / 100.0,
         })
