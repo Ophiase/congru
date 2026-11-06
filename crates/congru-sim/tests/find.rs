@@ -192,3 +192,26 @@ fn a_part_knocked_on_its_turntable_is_found_again_where_it_stood() -> Result<(),
     }
     Ok(())
 }
+
+#[test]
+fn a_twin_beside_the_box_does_not_win() -> Result<(), congru::Error> {
+    let part = bracket()?;
+    let camera = Camera::with_field_of_view(160, 120, 60.0);
+    let turn = Vector::new(-1.9, 0.4, 0.3);
+    let target = RigidTransform::from_axis_angle(turn, [-0.12, 0.0, 0.7]);
+    let twin = RigidTransform::from_axis_angle(turn, [0.12, 0.0, 0.7]);
+    let depth = render(&camera, &[(&part, target), (&part, twin)]).depth;
+    let mut region = depth.clone();
+    for (column, row) in depth.positions() {
+        if column >= camera.width / 2 {
+            region.set(column, row, f64::NAN);
+        }
+    }
+    let finder = Finder::new(&part, Distance::new(0.0125)?)?;
+    let found = finder
+        .find_in(&depth, &region, &camera, 0.1)
+        .ok_or(congru::Error::Degenerate)?;
+    let offset = found.pose.translation_error_to(&target);
+    assert!(offset < 0.02, "{offset:.3} off");
+    Ok(())
+}

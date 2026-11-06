@@ -2,10 +2,10 @@ use std::path::Path;
 
 use congru::RigidTransform;
 use congru_scene::Scene;
-use congru_vision::{Camera, DepthImage, back_project, render, within};
+use congru_vision::{Camera, DepthImage, Finder, back_project, render, within};
 
 use super::film::{CROP, around, camera_of, extent, shoot, tracker_for};
-use crate::camera::detect::{Detector, boxed};
+use crate::camera::detect::boxed;
 use crate::picture::palette::TEXT;
 use crate::picture::{self, Tile, font, outlined, splat};
 
@@ -19,8 +19,8 @@ pub fn breakdown(scene: &Scene, target: &Path) -> anyhow::Result<()> {
     let (depth, truth) = shoot(scene, &camera, 0);
     let seen = boxed(&depth, &camera, model, &truth);
     let points = back_project(&depth, &camera);
-    let found = Detector::new(model, span)?
-        .find(&seen, &camera)
+    let found = Finder::for_span(model, span)?
+        .located(&seen, &camera)
         .ok_or_else(|| anyhow::anyhow!("the target was not found in {}", scene.name))?;
     let focus = found.apply(&centre);
     let region = within(&points, &focus, CROP * span);

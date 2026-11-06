@@ -2,14 +2,12 @@ use congru::{Distance, NearestNeighbors, Point, PointCloud, RigidTransform, Tria
 use congru_scene::Scene;
 use congru_sim::Degradation;
 use congru_synth::sequence::Handheld;
-use congru_track::{Settings, Tracker};
+use congru_track::{CameraView, Follower, Settings, Sight, Tracker};
 use congru_vision::{Camera, Image, back_project, render, within};
 
-use crate::camera::detect::{Detector, region_of_interest};
-use crate::camera::stage::hold::Hold;
+use crate::camera::detect::region_of_interest;
 
 use crate::camera::overlay::rainbow;
-use crate::camera::view::CameraView;
 use crate::picture::palette::{EMPTY, TEXT, Tone};
 use crate::picture::{Tile, font, outline, outlined, splat};
 
@@ -55,8 +53,8 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Shot>> {
     let camera = camera_of(scene);
     let target = &scene.target().mesh;
     let (_, span) = extent(target);
-    let detector = Detector::new(target, span)?;
-    let mut hold = Hold::new(Settings::for_part(span)?.motion);
+    let mut follower =
+        Follower::new(target, camera, span, tour_settings(span)?)?.searching_every(SEARCH_EVERY);
     let samples = target
         .sample_surface(Distance::new(span * SURFACE_SAMPLING)?)?
         .cloud()
@@ -65,15 +63,12 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Shot>> {
         .map(|frame| {
             let (exact, depth, truth) = shot(scene, &camera, frame);
             let region = region_of_interest(&depth, &camera, target, &truth, frame as u64);
-            let measured = hold
-                .forecast()
-                .or_else(|| {
-                    (frame % SEARCH_EVERY == 0)
-                        .then(|| detector.find_in(&depth, &region, &camera))
-                        .flatten()
+            let pose = follower
+                .step(Sight {
+                    depth: &depth,
+                    region: &region,
                 })
-                .map(|start| detector.along_rays(&depth, &camera, &start));
-            let pose = hold.judge(&detector, &camera, (&depth, &region), measured, false);
+                .pose;
             let off = pose.map_or(Ok(f64::INFINITY), |pose| {
                 surface_error(&samples, &pose, &truth).map(|metres| metres / span)
             })?;
@@ -129,13 +124,17 @@ pub(super) fn tracker_for(
     camera: Camera,
     span: f64,
 ) -> anyhow::Result<Tracker<CameraView>> {
+    let view = CameraView::new(model, camera, Distance::new(span * SAMPLE_SHARE)?)?;
+    Ok(Tracker::new("tracker", view, tour_settings(span)?))
+}
+
+fn tour_settings(span: f64) -> anyhow::Result<Settings> {
     let mut settings = Settings::for_part(span)?;
     settings.find.starts = SEARCH_STARTS;
     settings.health.min_inliers = 0.25;
     settings.health.max_noise_ratio = 4.0;
     settings.find.icp.convergence.max_iterations = SEARCH_ITERATIONS;
-    let view = CameraView::new(model, camera, Distance::new(span * SAMPLE_SHARE)?)?;
-    Ok(Tracker::new("tracker", view, settings))
+    Ok(settings)
 }
 
 /// What the wandering camera sees at `frame`, degraded, and the target's

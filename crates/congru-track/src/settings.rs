@@ -49,6 +49,9 @@ pub struct Settings {
     /// better than the turn, so the place answers quickly, and its lag on a camera
     /// in a hand costs more than its noise.
     pub motion: MotionModel,
+    /// How far a point may lie from the model when a start is already close: short
+    /// enough for what stands around to have no say.
+    pub near_gate: f64,
     /// The learned noise never goes below this: the model's own sampling
     /// spacing is a good value.
     pub noise_floor: f64,
@@ -95,6 +98,7 @@ impl Settings {
                 },
                 ..MotionModel::uniform(GAINS)
             },
+            near_gate: span / 25.0,
             noise_floor: span / 100.0,
         })
     }

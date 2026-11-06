@@ -6,7 +6,6 @@ pub(crate) mod detect;
 pub(crate) mod overlay;
 mod room;
 pub(crate) mod stage;
-pub(crate) mod view;
 
 use std::path::{Path, PathBuf};
 

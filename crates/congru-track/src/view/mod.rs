@@ -1,3 +1,9 @@
+mod camera;
+mod sensor;
+
+pub use camera::CameraView;
+pub use sensor::SensorView;
+
 use congru::{Error, RigidTransform, Target};
 
 /// What the tracker aligns a frame onto. Poses map the model's frame to the
