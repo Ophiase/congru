@@ -21,6 +21,9 @@ const NOISE_SPAN: f64 = 1.25;
 pub(super) const FIRST_ITERATIONS: u32 = 4;
 /// A search stays on this many threads, to leave the machine usable.
 const MOST_THREADS: usize = 4;
+/// A box is noisy, but a pose with less than this share of the object's points in it
+/// is another object.
+const LEAST_IN_BOX: f64 = 0.75;
 /// Less of its outline than this standing out, and nothing marks an object there.
 const LEAST_OUTLINE: f64 = 0.25;
 
@@ -32,7 +35,7 @@ impl Finder {
     /// `region` is what proposes, a frame cut to a region of interest or the whole
     /// of it; poses are judged on the whole `depth`, since beyond the box's border
     /// nothing was measured, and that is not an edge of the object. Only poses with
-    /// the object's middle in the box stand: a twin beside it may score higher.
+    /// most of the object in the box stand: a twin beside it may score higher.
     pub(super) fn search(
         &self,
         depth: &DepthImage,
@@ -54,8 +57,14 @@ impl Finder {
             vec![self.refined_by(depth, camera, pose, FIRST_ITERATIONS)]
         });
         let rectangle = ImageBox::around(region)?;
-        let in_box =
-            |pose: &RigidTransform| rectangle.holds(camera, &pose.apply(&self.points_centre));
+        let in_box = |pose: &RigidTransform| {
+            let inside = self
+                .points
+                .iter()
+                .filter(|oriented| rectangle.holds(camera, &pose.apply(&oriented.point)))
+                .count();
+            coordinate(inside) >= LEAST_IN_BOX * coordinate(self.points.len())
+        };
         let mut candidates = [brought, turned, self.face_placements(&frame, &index)].concat();
         candidates.retain(in_box);
         let mut voted: Vec<(f64, RigidTransform)> = shared(&candidates, |pose| {

@@ -11,6 +11,8 @@ const BOX_SHIFT: f64 = 0.1;
 const ROI_GROWTH: f64 = 0.2;
 const ROI_SHIFT: f64 = 0.05;
 const ROI_SEED: u64 = 7_000;
+/// Measures a worse detector: `shift,growth`, as shares of the object's size.
+const BOX_VARIABLE: &str = "CONGRU_BOX";
 
 /// What a 2D detector on the colour image gives: a box around the object,
 /// here simulated from the truth, grown and shifted. Only the pixels in it
@@ -34,10 +36,21 @@ pub fn region_of_interest(
     truth: &RigidTransform,
     frame: u64,
 ) -> DepthImage {
+    let (shift, growth) = box_noise();
     let mut random = ChaCha8Rng::seed_from_u64(frame + ROI_SEED);
-    let mut offset = || ROI_SHIFT * (random.random::<f64>() * 2.0 - 1.0);
+    let mut offset = || shift * (random.random::<f64>() * 2.0 - 1.0);
     let shifts = [offset(), offset()];
-    kept_in_box(depth, camera, model, truth, ROI_GROWTH, shifts)
+    kept_in_box(depth, camera, model, truth, growth, shifts)
+}
+
+fn box_noise() -> (f64, f64) {
+    std::env::var(BOX_VARIABLE)
+        .ok()
+        .and_then(|value| {
+            let (shift, growth) = value.split_once(',')?;
+            Some((shift.parse().ok()?, growth.parse().ok()?))
+        })
+        .unwrap_or((ROI_SHIFT, ROI_GROWTH))
 }
 
 fn kept_in_box(
