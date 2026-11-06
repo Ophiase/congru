@@ -1,4 +1,4 @@
-use congru::{Distance, NearestNeighbors, Point, PointCloud, RigidTransform, TriangleMesh};
+use congru::{Distance, Point, RigidTransform, TriangleMesh};
 use congru_scene::Scene;
 use congru_sim::Degradation;
 use congru_synth::sequence::Handheld;
@@ -7,7 +7,9 @@ use congru_vision::{Camera, render};
 
 use crate::camera::detect::{region_of_interest, seed};
 
-use super::panels::panels;
+use super::panels::{Seen, panels};
+use super::score::surface_error;
+use super::zoom::Zoom;
 use crate::picture::Tile;
 
 const WIDTH: usize = 320;
@@ -53,7 +55,7 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Shot>> {
         .sample_surface(Distance::new(span * SURFACE_SAMPLING)?)?
         .cloud()
         .clone();
-    (0..frames)
+    let seen = (0..frames)
         .map(|frame| {
             let (exact, depth, truth) = shot(scene, &camera, frame);
             let region = region_of_interest(&depth, &camera, target, &truth, frame as u64);
@@ -68,36 +70,34 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Shot>> {
             })?;
             let silhouette =
                 pose.map(|pose| render(&camera, &[(target, pose)]).depth.map(f64::is_finite));
-            let tiles = panels(&camera, (&exact, &depth, &region), silhouette.as_ref(), off);
             let degrees = pose.map_or(f64::INFINITY, |pose| {
                 pose.rotation_error_to(&truth).to_degrees()
             });
-            Ok(Shot {
-                tiles,
+            Ok(Seen {
+                exact,
+                depth,
+                region,
+                silhouette,
                 off,
                 degrees,
             })
         })
-        .collect()
+        .collect::<anyhow::Result<Vec<Seen>>>()?;
+    Ok(drawn(&seen, &camera))
 }
 
-/// The mean distance from the model at `pose` to the model at `truth`, nearest
-/// point to nearest point: [ADD-S], blind to what a symmetry leaves unchanged, as
-/// a gear turned by one tooth.
-///
-/// [ADD-S]: https://arxiv.org/abs/1711.00199
-fn surface_error(
-    samples: &PointCloud,
-    pose: &RigidTransform,
-    truth: &RigidTransform,
-) -> anyhow::Result<f64> {
-    let index = NearestNeighbors::new(&samples.transformed(truth))?;
-    let total: f64 = samples
-        .points()
-        .iter()
-        .map(|point| index.nearest(&pose.apply(point)).squared_distance.sqrt())
-        .sum();
-    Ok(total / congru_vision::pixel::coordinate(samples.count()))
+fn drawn(seen: &[Seen], camera: &Camera) -> Vec<Shot> {
+    let zoom = Zoom::over(
+        seen.iter().map(|frame| &frame.region),
+        (camera.width, camera.height),
+    );
+    seen.iter()
+        .map(|frame| Shot {
+            tiles: panels(frame, &zoom, camera.focal),
+            off: frame.off,
+            degrees: frame.degrees,
+        })
+        .collect()
 }
 
 /// The scene's camera, at the tour's resolution.
@@ -183,15 +183,7 @@ pub(super) fn extent(mesh: &TriangleMesh) -> (Point, f64) {
 
 #[cfg(test)]
 mod tests {
-    use congru_sim::{bracket, gear};
-
     use super::*;
-
-    fn off_by(mesh: &TriangleMesh, angle: f64) -> anyhow::Result<f64> {
-        let samples = mesh.sample_surface(Distance::new(0.003)?)?.cloud().clone();
-        let turned = RigidTransform::from_axis_angle(congru::Vector::z() * angle, [0.0; 3]);
-        surface_error(&samples, &turned, &RigidTransform::identity())
-    }
 
     #[test]
     fn among_alike_crates_the_box_tells_which() -> anyhow::Result<()> {
@@ -199,14 +191,6 @@ mod tests {
             .join("../../scenes/crate-among-crates.toml");
         let shots = film(&Scene::load(&path)?, 1)?;
         assert!(shots[0].off < 0.05, "{:.3} of its size off", shots[0].off);
-        Ok(())
-    }
-
-    #[test]
-    fn a_turn_by_one_tooth_costs_little_where_a_part_turned_costs_much() -> anyhow::Result<()> {
-        let tooth = std::f64::consts::TAU / 12.0;
-        assert!(off_by(&gear()?, tooth)? < 0.002);
-        assert!(off_by(&bracket()?, tooth)? > 0.005);
         Ok(())
     }
 }

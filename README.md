@@ -6,10 +6,9 @@
 [![Status: research](https://img.shields.io/badge/status-research-blue.svg)](ideas/open.md)
 [![Kanon](https://img.shields.io/badge/%3C%3E-Kanon-blueviolet.svg)](.agents/kanon.md)
 
-Put a scan back where it belongs. Given two views of the same rigid object
-(a depth frame and a CAD model, a few marks and the part they sit on, two
-passes of a lidar), congru finds the rotation and translation that bring
-one onto the other, says how sure it is, and runs wherever the robot runs.
+Put a scan back where it belongs. Given two views of one rigid object (a depth
+frame and a CAD model, a few marks and their part, two lidar passes), congru finds
+the motion between them and says how sure it is, from Rust, Python or C.
 
 <p align="center">
   <img src="docs/figures/clouds.gif" alt="A noisy point cloud in motion, and the model holding on to it" width="49%">
@@ -30,13 +29,9 @@ one onto the other, says how sure it is, and runs wherever the robot runs.
 
 ## In plain words
 
-A robot, a headset or a scanner sees an object as a cloud of points: a few
-thousand dots, noisy, partly hidden. It also knows what the object looks
-like, from a 3D model. congru finds how the model must be turned and moved
-to sit exactly on the dots, says whether it is sure, and keeps doing it
-frame after frame while the object or the camera moves. The rest of this
-page is how, how well, and why it matters
-([where it could go](ideas/beyond.md)).
+A robot, a headset or a scanner sees an object as a few thousand noisy dots, and
+knows its 3D model. congru finds how to move the model onto the dots, says whether
+it is sure, and keeps doing it frame after frame ([beyond](ideas/beyond.md)).
 
 ## Why this project exists
 
@@ -173,24 +168,31 @@ Open3D and PCL do that.
 | Mesh targets, sampled with face normals | Done, tested |
 | Observability: which motions the data leaves free | Done, tested |
 | Simulated tracking demo: depth camera, degradations, projective tracking | Done, measured |
-| Python bindings, NumPy in and out | Done ([bindings](docs/bindings.md)) |
-| C ABI and C++ header (unstable), command line printing JSON | Done ([bindings](docs/bindings.md)) |
+| Python, C ABI and C++ header (unstable), command line printing JSON | Done ([bindings](docs/bindings.md)) |
 | Real recordings, RGB-D and lidar | Milestone 2 ([milestones](ideas/milestones.md)) |
 | One contract for every method: the `Aligner` trait | Done ([contract](ideas/architecture/contract.md)) |
 | Benchmark: 8 one-shot methods, 3 trackers, 4 models, 19 situations | Done ([protocol](docs/benchmark/protocol.md), [results](docs/benchmark/results.md)) |
 | Comparison with Open3D and small_gicp | Planned |
 
-**[caution] Known limits today.** All simulated. With a noisy box for a detector,
-12 of 14 scenes hold ([films](docs/scene-films.md)); without, demo B in a room
-holds most frames, and twins cannot be told apart ([why](docs/answer-step.md)).
+**[caution] Known limits today.**
+
+- **All simulated**: no real recording yet, and no comparison with other libraries.
+- **The box comes from the truth**, standing in for a detector. With a tight one,
+  12 of 14 scenes hold ([films](docs/scene-films.md)).
+- **A wider box breaks some**: up to 4 scenes fall to 0 of 72, some on one seed
+  only; a wrong pose can be held for a whole film
+  ([table](ideas/method/box-as-test.md)).
+- **Without a box**, demo B in a room holds most frames, and twins cannot be told
+  apart ([why](docs/answer-step.md)).
+- **Not real time yet**: a search costs seconds, and following a whole scene about
+  0.4 s per frame ([where it goes](ideas/architecture/acceleration.md)).
 
 The questions still open are in [ideas/open.md](ideas/open.md).
 
 ## Try it
 
-The project requires: Rust 1.89+ and [just](https://just.systems). \
-Install and quick start for Rust, Python and C: [docs/install.md](docs/install.md). \
-The core builds from this repository today; crates.io and PyPI are incoming.
+Needs Rust 1.89+ and [just](https://just.systems); the core builds from this
+repository, not yet on crates.io or PyPI ([install](docs/install.md)).
 
 ```sh
 just           # show all the recipes
@@ -221,10 +223,7 @@ println!("{:?}", alignment.transform.to_row_major());
 | [crates/congru-track/](crates/congru-track/src/lib.rs) | Tracking: follow from frame to frame, find again after a jump |
 | [crates/congru-bench/](crates/congru-bench/src/main.rs) | The benchmark: every method, every situation, many seeds |
 | [crates/congru-python/](crates/congru-python/README.md) | The Python bindings, NumPy in and out |
-| [crates/congru-demo/](crates/congru-demo/src/main.rs) | The two animations above |
-| [crates/congru-figures/](crates/congru-figures/src/main.rs) | The figures of this page, computed from real runs |
-
-Agents working on this code read [AGENTS.md](AGENTS.md).
+| [crates/congru-demo/](crates/congru-demo/src/main.rs), [congru-figures/](crates/congru-figures/src/main.rs) | The animations and figures of this page, from real runs |
 
 ## Standing on
 

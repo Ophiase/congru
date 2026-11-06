@@ -61,6 +61,8 @@ a car's height, so they are given a lidar's noise in their files.
 
 **[sketch]** To pick up, in order:
 
+- **A wider box**: the first search can lock on a wrong pose and hold it for a whole
+  film, and two scenes need a tight box ([the box](method/box-as-test.md)).
 - **A knock in a room**: a flat wrong pose confirms 0.84 and is believed for ten
   frames. Refusing a search under 0.3 or 0.5 of the recent amount changed no frame
   on ten cases, so it stays out.

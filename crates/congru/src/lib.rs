@@ -46,3 +46,7 @@ pub use geometry::{
 pub use icp::Multistart;
 pub use icp::{Alignment, Convergence, Icp, Metric, StopReason, Target};
 pub use search::{NearestNeighbors, Neighbor};
+
+#[cfg(doctest)]
+#[doc = include_str!("../README.md")]
+struct ReadmeExample;

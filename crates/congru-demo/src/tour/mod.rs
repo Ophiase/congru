@@ -4,6 +4,8 @@
 mod breakdown;
 mod film;
 mod panels;
+mod score;
+mod zoom;
 
 use std::io::Write;
 use std::path::{Path, PathBuf};
@@ -21,12 +23,14 @@ const WITHIN_DEGREES: f64 = 2.0;
 const LINE_LENGTH: usize = 80;
 const INTRO: &str = "# Scene films\n\n\
 Every scene, as demo B draws it. Written by `just demo`, from real runs.\n\n\
-- **Left**: the scene. **Middle**: the depth. **Right**: the points the box holds.\n\
+- **Left**: the scene. **Middle**: the depth. **Right**: what the box holds, enlarged,\n  \
+coloured over its own depths.\n\
 - **Green outline**: the model at the pose found, the same on all three.\n\
 - **The number**: how far off, as a share of the object's size; the bar turns amber\n  \
 past 2 %, red past 10 %.\n\
 - **The box comes from the truth**, a little larger, a little off, until a real\n  \
-detector runs. Nothing else does.\n\n";
+detector runs. Nothing else does.\n  \
+[A wider box breaks some scenes](../ideas/method/box-as-test.md).\n\n";
 
 pub fn run(target: &Path) -> anyhow::Result<Vec<Summary>> {
     let frames = std::env::var("CONGRU_FRAMES")

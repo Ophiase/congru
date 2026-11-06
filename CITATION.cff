@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: If you use congru in research, please cite it as below.
-title: "congru: rigid registration you can ship"
+title: "congru: rigid registration of point clouds and meshes"
 type: software
 authors:
   - alias: "Phorcys"

@@ -2,12 +2,14 @@
 
 Every scene, as demo B draws it. Written by `just demo`, from real runs.
 
-- **Left**: the scene. **Middle**: the depth. **Right**: the points the box holds.
+- **Left**: the scene. **Middle**: the depth. **Right**: what the box holds, enlarged,
+  coloured over its own depths.
 - **Green outline**: the model at the pose found, the same on all three.
 - **The number**: how far off, as a share of the object's size; the bar turns amber
   past 2 %, red past 10 %.
 - **The box comes from the truth**, a little larger, a little off, until a real
   detector runs. Nothing else does.
+  [A wider box breaks some scenes](../ideas/method/box-as-test.md).
 
 ## bin of parts
 
