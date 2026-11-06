@@ -5,7 +5,7 @@ use congru_synth::sequence::Handheld;
 use congru_track::{Follower, Settings, Sight};
 use congru_vision::{Camera, render};
 
-use crate::camera::detect::region_of_interest;
+use crate::camera::detect::{region_of_interest, seed};
 
 use super::panels::panels;
 use crate::picture::Tile;
@@ -153,7 +153,7 @@ pub(super) fn shot(
         noise: scene.noise_at_one_metre.unwrap_or(SENSOR.noise),
         ..SENSOR
     };
-    let depth = sensor.apply(&exact, frame as u64);
+    let depth = sensor.apply(&exact, frame as u64 + seed());
     (exact, depth, moving.then(&view))
 }
 

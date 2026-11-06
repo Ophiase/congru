@@ -51,7 +51,7 @@ its size, not all of it.
 
 ![car-close-by](figures/scenes/car-close-by.gif)
 
-60 of 72 within 2 % of its size, median 0.58 %; 60 within 2°.
+48 of 72 within 2 % of its size, median 0.63 %; 48 within 2°.
 
 ## car on a road
 

@@ -13,6 +13,9 @@ const ROI_SHIFT: f64 = 0.05;
 const ROI_SEED: u64 = 7_000;
 /// Measures a worse detector: `shift,growth`, as shares of the object's size.
 const BOX_VARIABLE: &str = "CONGRU_BOX";
+const SEED_VARIABLE: &str = "CONGRU_SEED";
+/// Longer than any film: two seeds never share a frame's draw.
+const SEED_STRIDE: u64 = 100_000;
 
 /// What a 2D detector on the colour image gives: a box around the object,
 /// here simulated from the truth, grown and shifted. Only the pixels in it
@@ -37,10 +40,18 @@ pub fn region_of_interest(
     frame: u64,
 ) -> DepthImage {
     let (shift, growth) = box_noise();
-    let mut random = ChaCha8Rng::seed_from_u64(frame + ROI_SEED);
+    let mut random = ChaCha8Rng::seed_from_u64(frame + ROI_SEED + seed());
     let mut offset = || shift * (random.random::<f64>() * 2.0 - 1.0);
     let shifts = [offset(), offset()];
     kept_in_box(depth, camera, model, truth, growth, shifts)
+}
+
+/// How far a run's sensor and box draws are moved, for measuring other seeds.
+pub fn seed() -> u64 {
+    std::env::var(SEED_VARIABLE)
+        .ok()
+        .and_then(|value| value.parse().ok())
+        .map_or(0, |seed: u64| seed * SEED_STRIDE)
 }
 
 fn box_noise() -> (f64, f64) {

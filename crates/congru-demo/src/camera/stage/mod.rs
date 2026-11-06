@@ -8,7 +8,7 @@ use congru_vision::pixel::coordinate;
 use congru_vision::{Camera, DepthImage, Finder, Frame, render};
 
 use super::conditions::{Clutter, Condition};
-use super::detect::region_of_interest;
+use super::detect::{region_of_interest, seed};
 
 const PART_SPAN: f64 = 0.25;
 const OCCLUDER_PERIOD: f64 = 45.0;
@@ -59,7 +59,9 @@ impl Stage {
         let part = flexed(&self.part, condition.flex, PART_SPAN, frame)?;
         let exact = self.shoot(&part, &truth, &self.around(condition, &path, &truth, frame));
         Ok((
-            condition.degradation.apply(&exact.depth, frame as u64),
+            condition
+                .degradation
+                .apply(&exact.depth, frame as u64 + seed()),
             truth,
         ))
     }
@@ -85,7 +87,9 @@ impl Stage {
                 let part = flexed(&self.part, condition.flex, PART_SPAN, frame)?;
                 let exact =
                     self.shoot(&part, &truth, &self.around(condition, &path, &truth, frame));
-                let depth = condition.degradation.apply(&exact.depth, frame as u64);
+                let depth = condition
+                    .degradation
+                    .apply(&exact.depth, frame as u64 + seed());
                 let region =
                     region_of_interest(&depth, &self.camera, &self.part, &truth, frame as u64);
                 let from = follower

@@ -13,9 +13,9 @@ crate of the workspace carries the same one.
 - **A flat view is read at last**: its confirmation was rounding, at $10^{150}$.
   Gear from above 47 to 72 of 72.
 - **The answer is what the frame says**, then a short alignment after the rays:
-  all in a room 68, 71, 54 to 78, 81, 61 of 90; all effects 79, 81, 69 to 87,
-  84, 84; shake 90 on all paths; a car close by 39 to 60 of 72; three times
-  faster in a room.
+  all in a room 68, 71, 54 to 75, 82, 60 of 90; all effects 79, 81, 69 to 85, 82,
+  81; shake 90 on all paths; three times faster in a room.
+- **Without any box, all in a room still gives 74, 71, 69 of 90** on three seeds.
 - **Most of the object must lie in the box**: a crate among crates 0 to 72 of 72.
 - **The contour term stays out**: it loses in a room and on the shelf
   ([why](ideas/method/contour-term.md)).

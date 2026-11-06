@@ -16,13 +16,16 @@ size. The first line is the usual box.
 
 | Box: shift, growth | Room | In a room | Crate among crates | Twin brackets | Part on a table |
 | --- | --- | --- | --- | --- | --- |
-| 0.05, 0.2 | 90 | 78 | 72 | 72 | 72 |
-| 0.25, 0.6 | 89 | 77 | 72 | 72 | 72 |
-| None, 90 or 36 frames | 88 of 90 | **0 of 90** | 0 of 36 | 0 of 36 | 36 of 36 |
+| 0.05, 0.2 | 90 | 75 | 72 | 72 | 72 |
+| 0.25, 0.6 | 89 | 78 | 72 | 72 | 72 |
+| None, 90 or 36 frames | 88 of 90 | **74 of 90** | 0 of 36 | 0 of 36 | 36 of 36 |
 
-- **A sloppy box costs little**, once the test reads the share of the object rather
-  than its middle.
-- **Without a box, the room alone holds, and the room with every effect does not.**
-  Twins and alike crates cannot be told apart by shape: that is no failure.
+- **A sloppy box costs nothing here**, once the test reads the share of the object
+  rather than its middle.
+- **Without any box, nothing from the truth**, all in a room gives 74, 71, 69 on
+  three seeds: the object is found by shape, once a search asks 0.3 of agreement.
+- **Twins and alike crates cannot be told apart by shape**: that is no failure,
+  and what a box is for.
 
-`CONGRU_BOX=shift,growth` sets it.
+`CONGRU_BOX=shift,growth` sets it. The scenes ran 36 frames, without a box a search
+costs seconds.

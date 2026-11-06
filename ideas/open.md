@@ -65,8 +65,8 @@ a car's height, so they are given a lidar's noise in their files.
   frames. A share cannot refuse it; an amount read against the recent one might.
 - **Which motion model for which object**: [the forecast](method/hold-through-loss.md)
   has its parameter, no scene sets it yet.
-- **Detection in a room without a box** is still 0 of 90:
-  [the box](method/box-as-test.md).
+- **Without a box, what a box still buys**: all in a room 74 of 90 by shape alone;
+  [the box](method/box-as-test.md). Twins need it, the rest may not.
 - **[question]** Is a short alignment [a gate or a cut](method/what-answers.md)? It
   is written as a gate; the author refused the cut.
 
@@ -82,5 +82,6 @@ room. Should the model become faces and edges everywhere, ahead of points?
 3. **[question]** Is a physical prior allowed, that a part neither sinks nor floats?
    The sensor alone leaves it open.
 4. **[question]** Should the answer be a set of poses when several survive?
-5. **[question]** How to detect in clutter without a 2D box? Without one, the room
-   still gives none, then 160° off.
+5. **[question]** How to detect in clutter without a 2D box? Measured since: the
+   same search holds demo B in a room ([the box](method/box-as-test.md)). Is a real
+   2D detector still the next step, for twins and for speed?

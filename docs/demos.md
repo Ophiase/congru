@@ -53,8 +53,8 @@ the second the same in a room. Each row:
 
 | Condition | Added to an imperfect sensor | Median error | Frames within 2° |
 | --- | --- | --- | --- |
-| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.42° | 87 / 90 |
-| All in a room | the same, with a wall, a bench, a box and the turntable in view | 1.17° | 78 / 90 |
+| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.44° | 85 / 90 |
+| All in a room | the same, with a wall, a bench, a box and the turntable in view | 1.24° | 75 / 90 |
 | Sensor | about 5 mm of noise, blur, holes, flying pixels | 0.23° | 90 / 90 |
 | Shake | a camera in a hand: slow wander and jolts | 0.21° | 90 / 90 |
 | Lens | radial distortion of the depth image | 0.33° | 90 / 90 |
@@ -71,7 +71,7 @@ Still frames of what goes right and wrong, with what each ray says:
 **[caution]** Measured on one path and one sensor seed, with a noisy box standing
 in for a detector.
 
-On two other paths, the room gives 83 and 83 of 90, all in a room 81 and 61
+On two other paths, the room gives 83 and 83 of 90, all in a room 82 and 60
 ([this step](answer-step.md), [holding on](hold-step.md), [the box](box-step.md),
 [the model's shape](shape-crop-step.md)).
 

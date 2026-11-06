@@ -38,8 +38,8 @@ says nothing.
 | Crate among crates | **72** | 0: a box, right up to a half turn |
 | Shelf of mugs | **72** | 0: the handle hides |
 | Bracket behind a crate | **66** | 64 |
-| Car close by | **60** | 60 |
 | Car on a road | **54** | 54 |
+| Car close by | 48 | 48 |
 
 **[caution]**
 
