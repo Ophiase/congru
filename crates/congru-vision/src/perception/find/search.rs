@@ -4,6 +4,7 @@ use super::faces::{frame_patches, model_faces, placements};
 use super::pairs::Oriented;
 use super::{Finder, Found};
 use crate::perception::{ImageBox, noise_under};
+use crate::pixel::coordinate;
 use crate::{Camera, DepthImage, Information, Observed, ViewScore, render};
 
 /// The votes scored best at the finder's step, refined along rays and scored
@@ -20,6 +21,8 @@ const NOISE_SPAN: f64 = 1.25;
 pub(super) const FIRST_ITERATIONS: u32 = 4;
 /// A search stays on this many threads, to leave the machine usable.
 const MOST_THREADS: usize = 4;
+/// Less of its outline than this standing out, and nothing marks an object there.
+const LEAST_OUTLINE: f64 = 0.25;
 
 impl Finder {
     /// The pose the frame supports best. Votes only propose: their count
@@ -112,6 +115,17 @@ impl Finder {
         } else {
             0.0
         }
+    }
+
+    /// Whether enough of the outline of `pose` stands out of the frame: what only an
+    /// object explains. A flat face flush on a wall confirms itself and stands out
+    /// nowhere.
+    #[must_use]
+    pub fn stands_out(&self, depth: &DepthImage, camera: &Camera, pose: &RigidTransform) -> bool {
+        let rendered = render(camera, &[(&self.model, *pose)]).depth;
+        let view = ViewScore::of(depth, &rendered, camera, self.close_to(depth, &rendered));
+        let outline = view.standing + view.flush;
+        outline > 0 && coordinate(view.standing) / coordinate(outline) >= LEAST_OUTLINE
     }
 
     /// The tolerance that reads `depth` close to its noise: half the step at

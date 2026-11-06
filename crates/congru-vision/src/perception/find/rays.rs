@@ -68,7 +68,7 @@ impl Finder {
             .into_iter()
             .map(|pose| (self.confirmed_at(depth, camera, &pose), pose))
             .max_by(|left, right| left.0.total_cmp(&right.0))
-            .filter(|(confirmed, _)| *confirmed >= least)
+            .filter(|(confirmed, pose)| *confirmed >= least && self.stands_out(depth, camera, pose))
             .map(|(_, pose)| pose)
     }
 }

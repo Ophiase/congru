@@ -14,7 +14,7 @@ const LEAST_OF_RECENT: f64 = 0.5;
 const MOST_THROUGH: f64 = 0.15;
 /// After this many frames on the forecast alone, the object is lost.
 const MOST_COASTED: usize = 20;
-/// After this many frames on the forecast, it is searched again whatever the rays
+/// Every this many frames on the forecast, it is searched again whatever the rays
 /// say: a wrong pose lying flat on a table is neither hidden nor refuted.
 const LOOK_AGAIN: usize = 3;
 
@@ -79,9 +79,8 @@ impl Hold {
             }
         }
         let forecast = self.filter.predict()?;
-        if self.coasted >= LOOK_AGAIN
-            || finder.through_share(sight.depth, camera, &forecast) > MOST_THROUGH
-        {
+        let due = self.coasted > 0 && self.coasted.is_multiple_of(LOOK_AGAIN);
+        if due || finder.through_share(sight.depth, camera, &forecast) > MOST_THROUGH {
             let turned = finder
                 .turned_again(sight.depth, camera, &forecast)
                 .map(|found| found.pose);
@@ -114,7 +113,7 @@ impl Hold {
     ) -> Option<RigidTransform> {
         let found = found?;
         let confirmed = finder.confirmed_at(sight.depth, camera, &found);
-        self.believed(confirmed).then(|| {
+        (self.believed(confirmed) && finder.stands_out(sight.depth, camera, &found)).then(|| {
             self.filter.reset();
             self.accept(&found, confirmed)
         })

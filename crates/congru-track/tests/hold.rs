@@ -81,7 +81,17 @@ fn an_object_that_left_is_lost() {
         assert!(step(&mut follower, &depth).pose.is_some());
     }
     let wall = DepthImage::filled(camera().width, camera().height, 2.0);
-    let answers: Vec<Answer> = (0..30).map(|_| step(&mut follower, &wall)).collect();
+    let mut seen = DepthImage::filled(camera().width, camera().height, f64::NAN);
+    for row in 30..45 {
+        for column in 40..60 {
+            seen.set(column, row, 2.0);
+        }
+    }
+    let sight = Sight {
+        depth: &wall,
+        region: &seen,
+    };
+    let answers: Vec<Answer> = (0..30).map(|_| follower.step(sight)).collect();
     assert!(answers.iter().any(|answer| answer.pose.is_none()));
 }
 

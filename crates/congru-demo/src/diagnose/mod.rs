@@ -7,7 +7,6 @@ mod rank;
 
 use std::io::Write;
 
-use congru::Distance;
 use congru_vision::{Finder, Observed};
 
 use crate::camera::conditions::CONDITIONS;
@@ -71,7 +70,7 @@ fn one_condition(stage: &stage::Stage, name: &str, output: &mut impl Write) -> a
     let steps = stage.run(condition)?;
     let seconds = began.elapsed().as_secs_f64();
     writeln!(output, "{name}: {}, in {seconds:.0} s", tracking(&steps))?;
-    let finder = Finder::new(&stage.part, Distance::new(PART_SPAN * STEP_SHARE)?)?;
+    let finder = Finder::for_span(&stage.part, PART_SPAN)?;
     let tolerance = PART_SPAN * STEP_SHARE / 2.0;
     for (frame, step) in steps.iter().enumerate() {
         let line = step.answer.pose.map_or("nothing".to_owned(), |pose| {

@@ -4,7 +4,7 @@
 use std::io::Write;
 use std::time::Instant;
 
-use congru::{Distance, RigidTransform};
+use congru::RigidTransform;
 use congru_vision::{Finder, Observed, render};
 
 use super::{PART_SPAN, STEP_SHARE};
@@ -20,7 +20,7 @@ const WITHIN_METRES: f64 = 0.02;
 fn in_region(name: &str, turns: f64, frames: &[usize]) -> anyhow::Result<()> {
     let stage = stage()?.turning(turns);
     let tight = PART_SPAN * STEP_SHARE / 2.0;
-    let finder = Finder::new(&stage.part, Distance::new(PART_SPAN * STEP_SHARE)?)?;
+    let finder = Finder::for_span(&stage.part, PART_SPAN)?;
     let condition = CONDITIONS
         .iter()
         .find(|condition| condition.name == name)
@@ -59,7 +59,7 @@ pub fn run() -> anyhow::Result<()> {
         return in_region(name, turns.parse()?, &frames);
     }
     let stage = stage()?;
-    let finder = Finder::new(&stage.part, Distance::new(PART_SPAN * STEP_SHARE)?)?;
+    let finder = Finder::for_span(&stage.part, PART_SPAN)?;
     let mut output = std::io::stdout().lock();
     for condition in CONDITIONS.iter().filter(|condition| {
         ["room", "in a room", "all effects", "sensor"].contains(&condition.name)
