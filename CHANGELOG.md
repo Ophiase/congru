@@ -5,6 +5,10 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.25 — 2026-11-06
+
+- **An amount bar on a search changes no frame**: measured, left out, noted.
+
 ## 0.1.24 — 2026-11-06
 
 - **One pipeline in the library**: `Follower`, `Hold`, `CameraView` and a parametric

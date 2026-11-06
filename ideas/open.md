@@ -62,7 +62,8 @@ a car's height, so they are given a lidar's noise in their files.
 **[sketch]** To pick up, in order:
 
 - **A knock in a room**: a flat wrong pose confirms 0.84 and is believed for ten
-  frames. A share cannot refuse it; an amount read against the recent one might.
+  frames. Refusing a search under 0.3 or 0.5 of the recent amount changed no frame
+  on ten cases, so it stays out.
 - **Which motion model for which object**: [the forecast](method/hold-through-loss.md)
   has its parameter, no scene sets it yet.
 - **Without a box, what a box still buys**: all in a room 74 of 90 by shape alone;
