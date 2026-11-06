@@ -53,8 +53,8 @@ impl Finder {
 
     /// The object found again where `forecast` puts it, turned any way: a knock
     /// loses how it is turned, not where it stands. Needs no votes, so it holds
-    /// when the object is half hidden and its pairs are few. The last choice reads
-    /// what the answer will be believed by, not an amount a larger view would win.
+    /// when the object is half hidden and its pairs are few. The choice reads an
+    /// amount, not a share: a flat face on a flat surface confirms all it could say.
     #[must_use]
     pub fn turned_again(
         &self,
@@ -83,7 +83,6 @@ impl Finder {
         });
         let (_, pose) = refined
             .into_iter()
-            .map(|(_, pose)| (self.confirmed(&tight, camera, &pose), pose))
             .max_by(|left, right| left.0.total_cmp(&right.0))?;
         Some(Found {
             pose,
