@@ -14,28 +14,32 @@ target is tinted. Adding one is writing one file.
 
 Each scene, frame by frame: [the films](../scene-films.md).
 
-**Thirteen scenes of fourteen hold at least in part**, none used to choose
-anything. Every film: [scene films](../scene-films.md).
+**Twelve scenes of fourteen hold more than nine frames in ten**, the two cars 60
+and 54 of 72. Every film: [scene films](../scene-films.md).
 
-They run the pipeline of [demo B](../hold-step.md): a noisy box in place of a
-detector, poses along rays, the trajectory held when a frame says nothing.
+- **Used to choose**: the crate, whose regression was fixed on it, the gear, whose
+  bug it showed, and five more to test the changes.
+
+They run the pipeline of [demo B](../answer-step.md): a noisy box in place of a
+detector, poses along rays then a short alignment, the trajectory held when a frame
+says nothing.
 
 | Scene | Within 2 % of its size, of 72 | Within 2° |
 | --- | --- | --- |
-| Part on a table | **72** | 69 |
-| Bracket in a bin | **72** | 64 |
+| Part on a table | **72** | 72 |
 | Mug close up | **72** | 72 |
-| Bin of parts | **71** | 0: a gear, right up to some teeth |
-| Twin brackets | **71** | 72 |
-| Bracket at a low angle | **68** | 38 |
-| Gear on a bench | **63** | 19: a gear |
-| Bracket behind a crate | **60** | 20 |
-| Street corner | **57** | 42 |
-| Gear from above | 47 | 0: a gear, seen flat |
-| Shelf of mugs | 45 | 0: the handle hides |
-| Car on a road | 42 | 39 |
-| Car close by | 39 | 28 |
-| Crate among crates | **0** | 0: a regression, was 72 |
+| Twin brackets | **72** | 72 |
+| Bracket in a bin | **72** | 71 |
+| Street corner | **72** | 70 |
+| Bracket at a low angle | **72** | 69 |
+| Bin of parts | **72** | 0: a gear, right up to some teeth |
+| Gear on a bench | **72** | 0: a gear |
+| Gear from above | **72** | 0: a gear, seen flat |
+| Crate among crates | **72** | 0: a box, right up to a half turn |
+| Shelf of mugs | **72** | 0: the handle hides |
+| Bracket behind a crate | **66** | 64 |
+| Car close by | **60** | 60 |
+| Car on a road | **54** | 54 |
 
 **[caution]**
 
@@ -45,7 +49,8 @@ detector, poses along rays, the trajectory held when a frame says nothing.
 - **The box comes from the truth**, until a real detector runs.
 - **The two far scenes are given a lidar's noise** in their files: a stereo camera
   has 1 m of noise at 14 m, for a car 1.5 m high.
-- **The breakdown above still shows the previous pipeline.**
+- **The breakdown above shows the first frame's search, not the follower.**
+- **2 % of a car's size is 10 cm**: a bound relative to the object, not to a task.
 
 [ADD-S]: https://arxiv.org/abs/1711.00199
 

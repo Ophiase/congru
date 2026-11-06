@@ -5,6 +5,21 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.24 — 2026-11-06
+
+- **One pipeline in the library**: `Follower`, `Hold`, `CameraView` and a parametric
+  `MotionModel` in `congru-track`; the scenes and demo B both run them
+  ([the step](docs/answer-step.md)).
+- **A flat view is read at last**: its confirmation was rounding, at $10^{150}$.
+  Gear from above 47 to 72 of 72.
+- **The answer is what the frame says**, then a short alignment after the rays:
+  all in a room 68, 71, 54 to 78, 81, 61 of 90; all effects 79, 81, 69 to 87,
+  84, 84; shake 90 on all paths; a car close by 39 to 60 of 72; three times
+  faster in a room.
+- **Most of the object must lie in the box**: a crate among crates 0 to 72 of 72.
+- **The contour term stays out**: it loses in a room and on the shelf
+  ([why](ideas/method/contour-term.md)).
+
 ## 0.1.23 — 2026-11-06
 
 - **One film per scene**, as demo B draws them, 14 scenes

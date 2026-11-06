@@ -61,11 +61,14 @@ a car's height, so they are given a lidar's noise in their files.
 
 **[sketch]** To pick up, in order:
 
-- **Crate among crates fell from 72 to 0**: since the tolerance reads the noise
-  and the search judges on the whole frame. Not understood yet.
-- **A contour term**, on branch `dev/contour-term`: gear from above 29 to 72 of
-  72, but demo B in a room 68 to 16, wrong poses confirming positive.
-- **It wants using only where faces leave the pose free.**
+- **A knock in a room**: a flat wrong pose confirms 0.84 and is believed for ten
+  frames. A share cannot refuse it; an amount read against the recent one might.
+- **Which motion model for which object**: [the forecast](method/hold-through-loss.md)
+  has its parameter, no scene sets it yet.
+- **Detection in a room without a box** is still 0 of 90:
+  [the box](method/box-as-test.md).
+- **[question]** Is a short alignment [a gate or a cut](method/what-answers.md)? It
+  is written as a gate; the author refused the cut.
 
 **[question]** A new one: the author's intuition is a person reads surfaces, not
 points. Segments work in 2D without any start; faces help in 3D but not yet in a

@@ -2,8 +2,8 @@ use congru::{Point, RigidTransform, fit_rigid};
 
 use super::Finder;
 use super::pairs::Oriented;
-use crate::pixel::containing;
-use crate::{Camera, DepthImage};
+use crate::pixel::{containing, coordinate};
+use crate::{Camera, DepthImage, ViewScore, render};
 
 /// A wide gate gives the basin, a narrow one the precision: each pass of a
 /// refinement divides the first gate by this, down to the last.
@@ -19,8 +19,35 @@ const LEAST_AGREEMENT: f64 = 0.3;
 /// The same in a box, which already said where it is: half hidden, a right pose
 /// confirms this little.
 const LEAST_IN_A_BOX: f64 = 0.1;
+/// Less of its outline than this standing out, and nothing marks an object there.
+const LEAST_OUTLINE: f64 = 0.25;
 
 impl Finder {
+    /// The share of the model's pixels at `pose` whose ray went through it, read
+    /// at the tolerance the noise there asks for.
+    #[must_use]
+    pub fn through_share(&self, depth: &DepthImage, camera: &Camera, pose: &RigidTransform) -> f64 {
+        let rendered = render(camera, &[(&self.model, *pose)]).depth;
+        let view = ViewScore::of(depth, &rendered, camera, self.close_to(depth, &rendered));
+        let total = view.support + view.violation + view.occluded;
+        if total > 0.0 {
+            view.violation / total
+        } else {
+            0.0
+        }
+    }
+
+    /// Whether enough of the outline of `pose` stands out of the frame: what only an
+    /// object explains. A flat face flush on a wall confirms itself and stands out
+    /// nowhere.
+    #[must_use]
+    pub fn stands_out(&self, depth: &DepthImage, camera: &Camera, pose: &RigidTransform) -> bool {
+        let rendered = render(camera, &[(&self.model, *pose)]).depth;
+        let view = ViewScore::of(depth, &rendered, camera, self.close_to(depth, &rendered));
+        let outline = view.standing + view.flush;
+        outline > 0 && coordinate(view.standing) / coordinate(outline) >= LEAST_OUTLINE
+    }
+
     /// `pose` brought onto the frame along the camera's rays, which the surroundings
     /// cannot pull: to a bin of the search, then polished, then settled.
     #[must_use]

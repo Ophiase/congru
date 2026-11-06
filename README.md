@@ -181,8 +181,8 @@ Open3D and PCL do that.
 | Comparison with Open3D and small_gicp | Planned |
 
 **[caution] Known limits today.** All simulated, a noisy box from the truth in
-place of a detector. With it, 13 of 14 scenes hold at least in part
-([films](docs/scene-films.md)), demo B in a room on most frames.
+place of a detector. With it, 12 of 14 scenes hold ([films](docs/scene-films.md)),
+demo B in a room most frames ([the step](docs/answer-step.md)); without, it is lost.
 
 The questions still open are in [ideas/open.md](ideas/open.md).
 

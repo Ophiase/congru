@@ -16,7 +16,7 @@ picking problem.
 
 ![bin-of-parts](figures/scenes/bin-of-parts.gif)
 
-71 of 72 within 2 % of its size, median 1.19 %; 0 within 2°.
+72 of 72 within 2 % of its size, median 0.80 %; 0 within 2°.
 
 ## bracket behind a crate
 
@@ -25,7 +25,7 @@ of sight.
 
 ![bracket-behind-a-crate](figures/scenes/bracket-behind-a-crate.gif)
 
-60 of 72 within 2 % of its size, median 1.41 %; 20 within 2°.
+66 of 72 within 2 % of its size, median 0.76 %; 64 within 2°.
 
 ## bracket in a bin
 
@@ -34,7 +34,7 @@ means something.
 
 ![bracket-in-a-bin](figures/scenes/bracket-in-a-bin.gif)
 
-72 of 72 within 2 % of its size, median 1.06 %; 64 within 2°.
+72 of 72 within 2 % of its size, median 0.59 %; 71 within 2°.
 
 ## bracket at a low angle
 
@@ -42,7 +42,7 @@ The camera nearly at table height: grazing rays, the plate seen edge on.
 
 ![bracket-at-a-low-angle](figures/scenes/bracket-at-a-low-angle.gif)
 
-68 of 72 within 2 % of its size, median 1.41 %; 38 within 2°.
+72 of 72 within 2 % of its size, median 0.75 %; 69 within 2°.
 
 ## car close by
 
@@ -51,7 +51,7 @@ its size, not all of it.
 
 ![car-close-by](figures/scenes/car-close-by.gif)
 
-39 of 72 within 2 % of its size, median 1.38 %; 28 within 2°.
+60 of 72 within 2 % of its size, median 0.58 %; 60 within 2°.
 
 ## car on a road
 
@@ -60,7 +60,7 @@ along the side.
 
 ![car-on-a-road](figures/scenes/car-on-a-road.gif)
 
-42 of 72 within 2 % of its size, median 1.39 %; 39 within 2°.
+54 of 72 within 2 % of its size, median 0.80 %; 54 within 2°.
 
 ## crate among crates
 
@@ -68,7 +68,7 @@ A plain box among other boxes: only flat faces, and a shape that repeats.
 
 ![crate-among-crates](figures/scenes/crate-among-crates.gif)
 
-0 of 72 within 2 % of its size, median 77.82 %; 0 within 2°.
+72 of 72 within 2 % of its size, median 0.96 %; 0 within 2°.
 
 ## gear from above
 
@@ -77,7 +77,7 @@ read.
 
 ![gear-from-above](figures/scenes/gear-from-above.gif)
 
-47 of 72 within 2 % of its size, median 1.49 %; 0 within 2°.
+72 of 72 within 2 % of its size, median 0.53 %; 0 within 2°.
 
 ## gear on a bench
 
@@ -86,7 +86,7 @@ twelve near-answers.
 
 ![gear-on-a-bench](figures/scenes/gear-on-a-bench.gif)
 
-63 of 72 within 2 % of its size, median 1.37 %; 19 within 2°.
+72 of 72 within 2 % of its size, median 0.74 %; 0 within 2°.
 
 ## mug close up
 
@@ -95,7 +95,7 @@ noise-free detail.
 
 ![mug-close-up](figures/scenes/mug-close-up.gif)
 
-72 of 72 within 2 % of its size, median 0.89 %; 72 within 2°.
+72 of 72 within 2 % of its size, median 0.40 %; 72 within 2°.
 
 ## part on a table
 
@@ -103,7 +103,7 @@ A machined bracket on a table, a mug and a crate beside it, a wall behind.
 
 ![part-on-a-table](figures/scenes/part-on-a-table.gif)
 
-72 of 72 within 2 % of its size, median 1.07 %; 69 within 2°.
+72 of 72 within 2 % of its size, median 0.66 %; 72 within 2°.
 
 ## shelf of mugs
 
@@ -112,7 +112,7 @@ handles.
 
 ![shelf-of-mugs](figures/scenes/shelf-of-mugs.gif)
 
-45 of 72 within 2 % of its size, median 1.78 %; 0 within 2°.
+72 of 72 within 2 % of its size, median 1.20 %; 0 within 2°.
 
 ## street corner
 
@@ -121,7 +121,7 @@ sparse, partly seen.
 
 ![street-corner](figures/scenes/street-corner.gif)
 
-57 of 72 within 2 % of its size, median 1.50 %; 42 within 2°.
+72 of 72 within 2 % of its size, median 1.03 %; 70 within 2°.
 
 ## twin brackets
 
@@ -129,4 +129,4 @@ A bracket among three identical ones on a table: only the box tells which.
 
 ![twin-brackets](figures/scenes/twin-brackets.gif)
 
-71 of 72 within 2 % of its size, median 1.07 %; 72 within 2°.
+72 of 72 within 2 % of its size, median 0.69 %; 72 within 2°.

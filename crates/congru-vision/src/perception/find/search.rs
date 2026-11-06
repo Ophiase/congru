@@ -5,7 +5,7 @@ use super::pairs::Oriented;
 use super::{Finder, Found};
 use crate::perception::{ImageBox, noise_under};
 use crate::pixel::coordinate;
-use crate::{Camera, DepthImage, Information, Observed, ViewScore, render};
+use crate::{Camera, DepthImage, Information, Observed, render};
 
 /// The votes scored best at the finder's step, refined along rays and scored
 /// again, closer to the noise.
@@ -24,8 +24,6 @@ const MOST_THREADS: usize = 4;
 /// A box is noisy, but a pose with less than this share of the object's points in it
 /// is another object.
 const LEAST_IN_BOX: f64 = 0.75;
-/// Less of its outline than this standing out, and nothing marks an object there.
-const LEAST_OUTLINE: f64 = 0.25;
 
 impl Finder {
     /// The pose the frame supports best. Votes only propose: their count
@@ -57,14 +55,7 @@ impl Finder {
             vec![self.refined_by(depth, camera, pose, FIRST_ITERATIONS)]
         });
         let rectangle = ImageBox::around(region)?;
-        let in_box = |pose: &RigidTransform| {
-            let inside = self
-                .points
-                .iter()
-                .filter(|oriented| rectangle.holds(camera, &pose.apply(&oriented.point)))
-                .count();
-            coordinate(inside) >= LEAST_IN_BOX * coordinate(self.points.len())
-        };
+        let in_box = |pose: &RigidTransform| self.mostly_in(&rectangle, camera, pose);
         let mut candidates = [brought, turned, self.face_placements(&frame, &index)].concat();
         candidates.retain(in_box);
         let mut voted: Vec<(f64, RigidTransform)> = shared(&candidates, |pose| {
@@ -86,6 +77,15 @@ impl Finder {
             pose,
             agreement: self.confirmed(&tight, camera, &pose),
         })
+    }
+
+    fn mostly_in(&self, rectangle: &ImageBox, camera: &Camera, pose: &RigidTransform) -> bool {
+        let inside = self
+            .points
+            .iter()
+            .filter(|oriented| rectangle.holds(camera, &pose.apply(&oriented.point)))
+            .count();
+        coordinate(inside) >= LEAST_IN_BOX * coordinate(self.points.len())
     }
 
     /// Every pose laying a flat face of the model on a flat region of the frame:
@@ -110,31 +110,6 @@ impl Finder {
             .map_or_else(Vec::new, |(frame, index)| {
                 self.face_placements(&frame, &index)
             })
-    }
-
-    /// The share of the model's pixels at `pose` whose ray went through it, read
-    /// at the tolerance the noise there asks for.
-    #[must_use]
-    pub fn through_share(&self, depth: &DepthImage, camera: &Camera, pose: &RigidTransform) -> f64 {
-        let rendered = render(camera, &[(&self.model, *pose)]).depth;
-        let view = ViewScore::of(depth, &rendered, camera, self.close_to(depth, &rendered));
-        let total = view.support + view.violation + view.occluded;
-        if total > 0.0 {
-            view.violation / total
-        } else {
-            0.0
-        }
-    }
-
-    /// Whether enough of the outline of `pose` stands out of the frame: what only an
-    /// object explains. A flat face flush on a wall confirms itself and stands out
-    /// nowhere.
-    #[must_use]
-    pub fn stands_out(&self, depth: &DepthImage, camera: &Camera, pose: &RigidTransform) -> bool {
-        let rendered = render(camera, &[(&self.model, *pose)]).depth;
-        let view = ViewScore::of(depth, &rendered, camera, self.close_to(depth, &rendered));
-        let outline = view.standing + view.flush;
-        outline > 0 && coordinate(view.standing) / coordinate(outline) >= LEAST_OUTLINE
     }
 
     /// The tolerance that reads `depth` close to its noise: half the step at
