@@ -28,6 +28,15 @@ pub struct Update {
     pub alignment: Alignment,
 }
 
+impl Update {
+    /// What the frame alone says of the pose, before the tracker's filter: `pose`
+    /// is steadier and lags behind what a jolt of the camera did at once.
+    #[must_use]
+    pub fn measured(&self) -> RigidTransform {
+        self.alignment.transform.inverse()
+    }
+}
+
 /// Follows one model through a stream of point clouds.
 #[derive(Debug)]
 pub struct Tracker<View> {
@@ -96,6 +105,29 @@ impl<View: ModelView> Tracker<View> {
             trusted: false,
             alignment,
         })
+    }
+
+    /// `scan` aligned from `start`, already close, through a short gate.
+    ///
+    /// # Errors
+    /// When `start` shows nothing of the model, or too few points lie in the gate.
+    pub fn aligned_near(
+        &self,
+        scan: &PointCloud,
+        start: &RigidTransform,
+    ) -> Result<RigidTransform, Error> {
+        let seen = self.view.seen_from(start)?;
+        let target = seen.as_ref().unwrap_or_else(|| self.view.whole());
+        let gate = Distance::new(self.settings.near_gate)?;
+        let icp = Icp {
+            kernel: Kernel::Tukey(gate),
+            max_correspondence_distance: Some(gate),
+            ..self.settings.follow
+        };
+        Ok(icp
+            .align(scan, target, &start.inverse())?
+            .transform
+            .inverse())
     }
 
     fn accept(&mut self, alignment: Alignment, deviation: f64, phase: Phase) -> Update {

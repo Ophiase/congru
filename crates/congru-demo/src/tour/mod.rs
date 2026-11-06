@@ -3,6 +3,7 @@
 
 mod breakdown;
 mod film;
+mod panels;
 
 use std::io::Write;
 use std::path::{Path, PathBuf};

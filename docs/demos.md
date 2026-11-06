@@ -20,12 +20,12 @@ noise on a 20 cm part, and 40 points of clutter. Each adds one trouble:
 
 | Run | Added | Median error | Frames within 2° |
 | --- | --- | --- | --- |
-| Noise | nothing | 0.91° | 114 / 120 |
-| Shake | the sensor wanders as in a hand, up to 6° and 2.5 cm over two seconds, and jolts every frame | 1.07° | 109 / 120 |
-| Bend | the part flexes by up to 4 mm | 1.07° | 112 / 120 |
-| Occluder | a ball crosses in front | 0.94° | 112 / 120 |
-| Lens | radial distortion | 1.17° | 103 / 120 |
-| Knocks | two abrupt turns of 70° and 60° | 0.95° | 113 / 120 |
+| Noise | nothing | 0.97° | 112 / 120 |
+| Shake | the sensor wanders as in a hand, up to 6° and 2.5 cm over two seconds, and jolts every frame | 1.13° | 109 / 120 |
+| Bend | the part flexes by up to 4 mm | 1.14° | 113 / 120 |
+| Occluder | a ball crosses in front | 0.87° | 114 / 120 |
+| Lens | radial distortion | 1.15° | 100 / 120 |
+| Knocks | two abrupt turns of 70° and 60° | 0.94° | 113 / 120 |
 
 For scale: aligning one such frame alone, from the true pose, already
 leaves about 0.85° of error. What tracking adds is holding on: through the
@@ -53,13 +53,13 @@ the second the same in a room. Each row:
 
 | Condition | Added to an imperfect sensor | Median error | Frames within 2° |
 | --- | --- | --- | --- |
-| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.72° | 79 / 90 |
-| All in a room | the same, with a wall, a bench, a box and the turntable in view | 1.43° | 68 / 90 |
-| Sensor | about 5 mm of noise, blur, holes, flying pixels | 0.19° | 90 / 90 |
-| Shake | a camera in a hand: slow wander and jolts | 0.57° | 88 / 90 |
-| Lens | radial distortion of the depth image | 0.29° | 90 / 90 |
-| Flex | the part flexes by up to 4 mm | 0.26° | 90 / 90 |
-| Room | the room alone | 0.99° | 81 / 90 |
+| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.44° | 85 / 90 |
+| All in a room | the same, with a wall, a bench, a box and the turntable in view | 1.24° | 75 / 90 |
+| Sensor | about 5 mm of noise, blur, holes, flying pixels | 0.23° | 90 / 90 |
+| Shake | a camera in a hand: slow wander and jolts | 0.21° | 90 / 90 |
+| Lens | radial distortion of the depth image | 0.33° | 90 / 90 |
+| Flex | the part flexes by up to 4 mm | 0.27° | 90 / 90 |
+| Room | the room alone | 0.72° | 90 / 90 |
 
 One effect at a time: [sensor](figures/tracking-sensor.gif),
 [shake](figures/tracking-shake.gif), [lens](figures/tracking-lens.gif),
@@ -71,8 +71,8 @@ Still frames of what goes right and wrong, with what each ray says:
 **[caution]** Measured on one path and one sensor seed, with a noisy box standing
 in for a detector.
 
-On two other paths, the room gives 73 and 79 of 90, all in a room 74 and 57
-([this step](hold-step.md), [the box](box-step.md),
+On two other paths, the room gives 83 and 83 of 90, all in a room 82 and 60
+([this step](answer-step.md), [holding on](hold-step.md), [the box](box-step.md),
 [the model's shape](shape-crop-step.md)).
 
 - no crop from the truth but that box, no support plane removed;

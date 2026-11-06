@@ -2,16 +2,13 @@ use congru::{Distance, NearestNeighbors, Point, PointCloud, RigidTransform, Tria
 use congru_scene::Scene;
 use congru_sim::Degradation;
 use congru_synth::sequence::Handheld;
-use congru_track::{Settings, Tracker};
-use congru_vision::{Camera, Image, back_project, render, within};
+use congru_track::{Follower, Settings, Sight};
+use congru_vision::{Camera, render};
 
-use crate::camera::detect::{Detector, region_of_interest};
-use crate::camera::stage::hold::Hold;
+use crate::camera::detect::{region_of_interest, seed};
 
-use crate::camera::overlay::rainbow;
-use crate::camera::view::CameraView;
-use crate::picture::palette::{EMPTY, TEXT, Tone};
-use crate::picture::{Tile, font, outline, outlined, splat};
+use super::panels::panels;
+use crate::picture::Tile;
 
 const WIDTH: usize = 320;
 const HEIGHT: usize = 240;
@@ -27,18 +24,13 @@ const HANDHELD: Handheld = Handheld {
     shift: 0.0,
     period: 40.0,
 };
-pub(super) const CROP: f64 = 0.6;
-const VOXEL_SHARE: f64 = 1.0 / 60.0;
 const TURN_PER_FRAME: f64 = 0.006;
 const SEARCH_STARTS: usize = 12;
-const SAMPLE_SHARE: f64 = 1.0 / 80.0;
 const SEARCH_ITERATIONS: u32 = 15;
 const CREEP_PER_FRAME: f64 = 0.004;
 const SURFACE_SAMPLING: f64 = 1.0 / 50.0;
 /// A lost target is searched at one frame in this many: a search costs seconds.
 const SEARCH_EVERY: usize = 6;
-/// The bar turns amber past 2 % of the target's size, red past 10 %.
-const BAR_PERCENT_PER_DEGREE: f64 = 2.0;
 
 /// One filmed frame: what is drawn, and how far off the answer is, as a share of
 /// the target's size.
@@ -55,8 +47,8 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Shot>> {
     let camera = camera_of(scene);
     let target = &scene.target().mesh;
     let (_, span) = extent(target);
-    let detector = Detector::new(target, span)?;
-    let mut hold = Hold::new(Settings::for_part(span)?.gains);
+    let mut follower =
+        Follower::new(target, camera, span, tour_settings(span)?)?.searching_every(SEARCH_EVERY);
     let samples = target
         .sample_surface(Distance::new(span * SURFACE_SAMPLING)?)?
         .cloud()
@@ -65,15 +57,12 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Shot>> {
         .map(|frame| {
             let (exact, depth, truth) = shot(scene, &camera, frame);
             let region = region_of_interest(&depth, &camera, target, &truth, frame as u64);
-            let measured = hold
-                .forecast()
-                .or_else(|| {
-                    (frame % SEARCH_EVERY == 0)
-                        .then(|| detector.find_in(&depth, &region, &camera))
-                        .flatten()
+            let pose = follower
+                .step(Sight {
+                    depth: &depth,
+                    region: &region,
                 })
-                .map(|start| detector.along_rays(&depth, &camera, &start));
-            let pose = hold.judge(&detector, &camera, (&depth, &region), measured, false);
+                .pose;
             let off = pose.map_or(Ok(f64::INFINITY), |pose| {
                 surface_error(&samples, &pose, &truth).map(|metres| metres / span)
             })?;
@@ -122,35 +111,20 @@ pub(super) fn camera_of(scene: &Scene) -> Camera {
     }
 }
 
-/// The tracker of the tour: searches are cut short, and a frame is trusted
-/// with a quarter of its points on the model, for the clutter around it.
-pub(super) fn tracker_for(
-    model: &TriangleMesh,
-    camera: Camera,
-    span: f64,
-) -> anyhow::Result<Tracker<CameraView>> {
+/// Searches are cut short, and a frame is trusted with a quarter of its points on
+/// the model, for the clutter around it.
+pub(super) fn tour_settings(span: f64) -> anyhow::Result<Settings> {
     let mut settings = Settings::for_part(span)?;
     settings.find.starts = SEARCH_STARTS;
     settings.health.min_inliers = 0.25;
     settings.health.max_noise_ratio = 4.0;
     settings.find.icp.convergence.max_iterations = SEARCH_ITERATIONS;
-    let view = CameraView::new(model, camera, Distance::new(span * SAMPLE_SHARE)?)?;
-    Ok(Tracker::new("tracker", view, settings))
+    Ok(settings)
 }
 
-/// What the wandering camera sees at `frame`, degraded, and the target's
+/// What the wandering camera sees at `frame`, exact then degraded, and the target's
 /// true pose in its frame; the target moves too.
-pub(super) fn shoot(
-    scene: &Scene,
-    camera: &Camera,
-    frame: usize,
-) -> (congru_vision::DepthImage, RigidTransform) {
-    let (_, depth, truth) = shot(scene, camera, frame);
-    (depth, truth)
-}
-
-/// As [`shoot`], with the exact depth first.
-fn shot(
+pub(super) fn shot(
     scene: &Scene,
     camera: &Camera,
     frame: usize,
@@ -179,7 +153,7 @@ fn shot(
         noise: scene.noise_at_one_metre.unwrap_or(SENSOR.noise),
         ..SENSOR
     };
-    let depth = sensor.apply(&exact, frame as u64);
+    let depth = sensor.apply(&exact, frame as u64 + seed());
     (exact, depth, moving.then(&view))
 }
 
@@ -192,61 +166,6 @@ fn drive(target: &congru_scene::Placed, frame: usize) -> RigidTransform {
         congru::Vector::z() * (TURN_PER_FRAME * time),
         [CREEP_PER_FRAME * span * time, 0.0, 0.0],
     )
-}
-
-/// The frame's points near `focus`, thinned: one point per voxel, so the
-/// density no longer depends on the distance.
-pub(super) fn around(points: &[Point], focus: &Point, span: f64) -> anyhow::Result<PointCloud> {
-    Ok(PointCloud::new(within(points, focus, CROP * span))?
-        .voxel_downsample(Distance::new(VOXEL_SHARE * span)?))
-}
-
-/// The three panels of a frame, as demo B draws them, at half the camera's size:
-/// the scene, the depth, the points the box holds, each under the outline of the
-/// answer. The bar and the number read the surface error, not the rotation, which
-/// would fail a gear turned by one tooth.
-fn panels(
-    camera: &Camera,
-    (exact, depth, region): (
-        &congru_vision::DepthImage,
-        &congru_vision::DepthImage,
-        &congru_vision::DepthImage,
-    ),
-    silhouette: Option<&Image<bool>>,
-    off: f64,
-) -> Vec<Tile> {
-    let points = back_project(region, camera);
-    let mut drawn = [
-        outlined(exact, camera.focal, None),
-        rainbow(depth, exact),
-        rainbow(&splat(&points, camera), exact),
-    ];
-    if let Some(silhouette) = silhouette {
-        for panel in &mut drawn {
-            outline(panel, silhouette);
-        }
-    }
-    let percent = 100.0 * off;
-    drawn
-        .into_iter()
-        .map(|picture| {
-            let mut picture = halved(&picture);
-            let bottom = picture.height() - 14;
-            font::write(&mut picture, 4, bottom, &format!("{percent:.1}%"), TEXT);
-            Tile {
-                picture,
-                error_degrees: percent / BAR_PERCENT_PER_DEGREE,
-            }
-        })
-        .collect()
-}
-
-fn halved(picture: &Image<Tone>) -> Image<Tone> {
-    let mut half = Image::filled(picture.width() / 2, picture.height() / 2, EMPTY);
-    for (column, row) in half.positions() {
-        half.set(column, row, picture.get(column * 2, row * 2));
-    }
-    half
 }
 
 /// The centre of the target's bounding box, and its diagonal.
@@ -272,6 +191,15 @@ mod tests {
         let samples = mesh.sample_surface(Distance::new(0.003)?)?.cloud().clone();
         let turned = RigidTransform::from_axis_angle(congru::Vector::z() * angle, [0.0; 3]);
         surface_error(&samples, &turned, &RigidTransform::identity())
+    }
+
+    #[test]
+    fn among_alike_crates_the_box_tells_which() -> anyhow::Result<()> {
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../scenes/crate-among-crates.toml");
+        let shots = film(&Scene::load(&path)?, 1)?;
+        assert!(shots[0].off < 0.05, "{:.3} of its size off", shots[0].off);
+        Ok(())
     }
 
     #[test]

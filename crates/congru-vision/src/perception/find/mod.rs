@@ -11,6 +11,7 @@ use crate::{Camera, DepthImage, Information, Observed, ViewScore, render};
 use pairs::{Oriented, PairTable};
 use rays::along_rays;
 
+const STEP_SHARE: f64 = 1.0 / 20.0;
 /// A frame point out of this many is a reference that votes.
 const REFERENCE_STRIDE: usize = 4;
 
@@ -44,6 +45,14 @@ pub struct Found {
 }
 
 impl Finder {
+    /// A finder at a twentieth of the model's size `span`.
+    ///
+    /// # Errors
+    /// When `span` is not finite and positive, or the model cannot be sampled.
+    pub fn for_span(model: &TriangleMesh, span: f64) -> Result<Self, Error> {
+        Self::new(model, Distance::new(span * STEP_SHARE)?)
+    }
+
     /// `step` sets both the sampling and the distance bins: about a
     /// twentieth of the model's size.
     ///

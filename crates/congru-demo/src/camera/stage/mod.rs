@@ -3,21 +3,14 @@ use std::f64::consts::{FRAC_PI_2, TAU};
 
 use congru::Vector;
 use congru_sim::{Degradation, Turntable, flexed};
-use congru_track::Update;
+use congru_track::{Answer, Follower, Settings, Sight, crowding};
 use congru_vision::pixel::coordinate;
-use congru_vision::{Camera, DepthImage, Frame, render};
-
-mod crop;
-mod follow;
-pub(crate) mod hold;
+use congru_vision::{Camera, DepthImage, Finder, Frame, render};
 
 use super::conditions::{Clutter, Condition};
-use super::detect::{Detector, region_of_interest};
-use follow::Follower;
+use super::detect::{region_of_interest, seed};
 
 const PART_SPAN: f64 = 0.25;
-const MODEL_SPACING: f64 = 0.003;
-const SCAN_VOXEL: f64 = 0.004;
 const OCCLUDER_PERIOD: f64 = 45.0;
 
 /// The scene every condition is run on.
@@ -39,7 +32,7 @@ pub struct Step {
     pub depth: DepthImage,
     pub scan: Vec<Point>,
     pub truth: RigidTransform,
-    pub update: Option<Update>,
+    pub answer: Answer,
 }
 
 impl Stage {
@@ -66,14 +59,16 @@ impl Stage {
         let part = flexed(&self.part, condition.flex, PART_SPAN, frame)?;
         let exact = self.shoot(&part, &truth, &self.around(condition, &path, &truth, frame));
         Ok((
-            condition.degradation.apply(&exact.depth, frame as u64),
+            condition
+                .degradation
+                .apply(&exact.depth, frame as u64 + seed()),
             truth,
         ))
     }
 
     pub fn run(&self, condition: &Condition) -> anyhow::Result<Vec<Step>> {
-        self.run_from(condition, |detector, depth, region| {
-            detector.find_in(depth, region, &self.camera)
+        self.run_from(condition, |finder, depth, region| {
+            finder.located_in(depth, region, &self.camera)
         })
     }
 
@@ -81,34 +76,49 @@ impl Stage {
     pub fn run_from(
         &self,
         condition: &Condition,
-        mut start: impl FnMut(&Detector, &DepthImage, &DepthImage) -> Option<RigidTransform>,
+        mut start: impl FnMut(&Finder, &DepthImage, &DepthImage) -> Option<RigidTransform>,
     ) -> anyhow::Result<Vec<Step>> {
         let path = self.path_for(condition);
-        let mut follower = Follower::new(self)?;
+        let settings = Settings::for_part(PART_SPAN)?;
+        let mut follower = Follower::new(&self.part, self.camera, PART_SPAN, settings)?;
         (0..path.frames)
             .map(|frame| {
                 let truth = path.pose(frame);
                 let part = flexed(&self.part, condition.flex, PART_SPAN, frame)?;
                 let exact =
                     self.shoot(&part, &truth, &self.around(condition, &path, &truth, frame));
-                let depth = condition.degradation.apply(&exact.depth, frame as u64);
+                let depth = condition
+                    .degradation
+                    .apply(&exact.depth, frame as u64 + seed());
                 let region =
                     region_of_interest(&depth, &self.camera, &self.part, &truth, frame as u64);
                 let from = follower
                     .forecast()
-                    .or_else(|| start(&follower.detector, &depth, &region));
-                let (scan, update) = follower.step(self, (&depth, &region), from);
+                    .or_else(|| start(follower.finder(), &depth, &region));
+                let sight = Sight {
+                    depth: &depth,
+                    region: &region,
+                };
+                let answer = follower.step_from(sight, from);
                 Ok(Step {
                     image: camera_noise(condition).apply(&exact.depth, frame as u64 + 1),
                     depth,
-                    scan: scan
+                    scan: answer
+                        .scan
+                        .as_ref()
                         .map(|cloud| cloud.points().to_vec())
                         .unwrap_or_default(),
                     truth,
-                    update,
+                    answer,
                 })
             })
             .collect()
+    }
+
+    /// How many times the frame's returns outnumber the part's pixels, at the truth.
+    pub fn crowding_at_truth(&self, condition: &Condition, frame: usize) -> anyhow::Result<f64> {
+        let (depth, truth) = self.sensed(condition, frame)?;
+        Ok(crowding(&self.part, &self.camera, &depth, &truth))
     }
 
     fn path_for(&self, condition: &Condition) -> Turntable {

@@ -1,7 +1,7 @@
 # Step: holding on when a frame says nothing
 
-The current step of demo B. **The room with every effect now holds on all three
-paths**, from 0 of 90 at the start of this work.
+A step of demo B, [better answered since](answer-step.md). **The room with every
+effect now holds on all three paths**, from 0 of 90 at the start of this work.
 
 Same noisy box as [the step before](box-step.md), the only input from the truth.
 What is new is deciding, at each frame, whether to believe it.

@@ -7,7 +7,6 @@ mod rank;
 
 use std::io::Write;
 
-use congru::Distance;
 use congru_vision::{Finder, Observed};
 
 use crate::camera::conditions::CONDITIONS;
@@ -71,19 +70,26 @@ fn one_condition(stage: &stage::Stage, name: &str, output: &mut impl Write) -> a
     let steps = stage.run(condition)?;
     let seconds = began.elapsed().as_secs_f64();
     writeln!(output, "{name}: {}, in {seconds:.0} s", tracking(&steps))?;
-    let finder = Finder::new(&stage.part, Distance::new(PART_SPAN * STEP_SHARE)?)?;
+    let finder = Finder::for_span(&stage.part, PART_SPAN)?;
     let tolerance = PART_SPAN * STEP_SHARE / 2.0;
     for (frame, step) in steps.iter().enumerate() {
-        let line = step.update.as_ref().map_or("nothing".to_owned(), |update| {
+        let line = step.answer.pose.map_or("nothing".to_owned(), |pose| {
             let seen = Observed::new(step.depth.clone(), &stage.camera, tolerance);
+            let tracked = step
+                .answer
+                .tracked
+                .as_ref()
+                .map_or("along rays".to_owned(), |update| {
+                    format!(
+                        "{:?} trusted {} inliers {:.2}",
+                        update.phase, update.trusted, update.alignment.inlier_fraction,
+                    )
+                });
             format!(
-                "{:.1}° confirms {:.2} at truth {:.2} {:?} trusted {} inliers {:.2} scan {}",
-                update.pose.rotation_error_to(&step.truth).to_degrees(),
-                finder.confirmed(&seen, &stage.camera, &update.pose),
+                "{:.1}° confirms {:.2} at truth {:.2} {tracked} scan {}",
+                pose.rotation_error_to(&step.truth).to_degrees(),
+                finder.confirmed(&seen, &stage.camera, &pose),
                 finder.confirmed(&seen, &stage.camera, &step.truth),
-                update.phase,
-                update.trusted,
-                update.alignment.inlier_fraction,
                 step.scan.len(),
             )
         });
@@ -114,8 +120,8 @@ fn tracking(steps: &[Step]) -> String {
     let errors: Vec<f64> = steps
         .iter()
         .map(|step| {
-            step.update.as_ref().map_or(f64::INFINITY, |update| {
-                update.pose.rotation_error_to(&step.truth).to_degrees()
+            step.answer.pose.map_or(f64::INFINITY, |pose| {
+                pose.rotation_error_to(&step.truth).to_degrees()
             })
         })
         .collect();

@@ -15,6 +15,7 @@ congru = { workspace = true, default-features = true }
 congru-vision.workspace = true
 
 [dev-dependencies]
+congru-sim.workspace = true
 congru-synth.workspace = true
 
 [lints]

@@ -180,9 +180,9 @@ Open3D and PCL do that.
 | Benchmark: 8 one-shot methods, 3 trackers, 4 models, 19 situations | Done ([protocol](docs/benchmark/protocol.md), [results](docs/benchmark/results.md)) |
 | Comparison with Open3D and small_gicp | Planned |
 
-**[caution] Known limits today.** All simulated, a noisy box from the truth in
-place of a detector. With it, 13 of 14 scenes hold at least in part
-([films](docs/scene-films.md)), demo B in a room on most frames.
+**[caution] Known limits today.** All simulated. With a noisy box for a detector,
+12 of 14 scenes hold ([films](docs/scene-films.md)); without, demo B in a room
+holds most frames, and twins cannot be told apart ([why](docs/answer-step.md)).
 
 The questions still open are in [ideas/open.md](ideas/open.md).
 

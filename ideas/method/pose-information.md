@@ -73,8 +73,8 @@ tuning.
 - **The scan was cut with the model's silhouette** at the predicted pose: a
   hypothesis choosing the data that confirm it. No sensor gives such a cut.
 - **No truth reached it**, but the author called it what it is, and it is gone.
-- **The current measures**: [holding on](../../docs/hold-step.md), after
-  [a noisy box](../../docs/box-step.md).
+- **The current measures**: [what answers](../../docs/answer-step.md), after
+  [holding on](../../docs/hold-step.md) and [a noisy box](../../docs/box-step.md).
 
 Demo B, the whole pipeline, frames within 2°, out of 90. The two other paths were
 never used to choose anything.
@@ -129,9 +129,7 @@ What each part answers, and what forced it:
 - **Detection in a room is still weak**: on the flat view, the right pose is not
   offered, or ranks past 3000 of 11000. The tracker hides this: it needs a
   detection only at the start and when lost.
-- **The realistic scenes do not gain**: still 0 of 72 on each, a data set never
-  used here. They keep a ball crop and the health test, and the finder alone
-  changed, slower on the largest: 170 s against 81 s for the car on a road.
+- **The realistic scenes run this pipeline now**: [the step](../../docs/answer-step.md).
 - **Cost**: a detection in a room takes about 6 s on 4 threads, far from real time.
 - **The score is coarse**: it tells a right pose from a wrong one, not 0.5° from
   2°. Choosing the higher score between two near poses made tracking worse.

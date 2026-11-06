@@ -12,6 +12,10 @@ type Twist = SVector<f64, 6>;
 /// loose, since the image's normal is a blurred one.
 const LEAST_COSINE: f64 = std::f64::consts::FRAC_1_SQRT_2;
 
+/// A direction weaker than this share of the strongest is free: below it lies only
+/// rounding, and a flat view's mean, and any ratio of two, would read that.
+const LEAST_DIRECTION: f64 = 1e-6;
+
 /// How firmly the pixels a rendered model shares with a depth image pin its
 /// pose: the eigenvalues of the point-to-plane matrix of those pixels, each
 /// weighted by its metric area, rotations scaled by the size of what is seen. A flat face leaves three of them at
@@ -73,13 +77,15 @@ impl Information {
         self.eigenvalues[0]
     }
 
-    /// The geometric mean of all six directions.
+    /// The geometric mean of all six directions, each counted at
+    /// [`LEAST_DIRECTION`] of the strongest at least.
     #[must_use]
     pub fn mean(&self) -> f64 {
+        let floor = (self.eigenvalues[5] * LEAST_DIRECTION).max(f64::MIN_POSITIVE);
         let logarithms: f64 = self
             .eigenvalues
             .iter()
-            .map(|value| value.max(f64::MIN_POSITIVE).ln())
+            .map(|value| value.max(floor).ln())
             .sum();
         (logarithms / 6.0).exp()
     }
@@ -159,6 +165,31 @@ mod tests {
         let information = Information::of(&seen, &flat, &camera, 0.01);
         assert!(information.weakest() < 1e-9);
         assert!(information.eigenvalues[5] > 0.1);
+    }
+
+    #[test]
+    fn half_a_flat_face_seen_is_worth_about_half_of_it() {
+        let camera = Camera {
+            width: 40,
+            height: 40,
+            focal: 40.0,
+        };
+        let flat = DepthImage::filled(40, 40, 1.0);
+        let mut half = flat.clone();
+        for (column, row) in flat.positions() {
+            if column < 20 {
+                half.set(column, row, f64::NAN);
+            }
+        }
+        let whole = Information::of(
+            &Observed::new(flat.clone(), &camera, 0.01),
+            &flat,
+            &camera,
+            0.01,
+        );
+        let seen = Information::of(&Observed::new(half, &camera, 0.01), &flat, &camera, 0.01);
+        let ratio = seen.mean() / whole.mean();
+        assert!((0.3..0.7).contains(&ratio), "{ratio}");
     }
 
     #[test]

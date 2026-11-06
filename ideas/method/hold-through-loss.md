@@ -24,22 +24,32 @@ looks again when the space it should fill turns out empty.
 3. **Believed** if the frame confirms it about as well as it did recently: a drop
    is read against the recent level, since each view says a different amount.
 4. **Not believed**: hidden coasts; through searches, and what is found must itself
-   be believed, or the forecast goes on.
+   be believed, or the forecast goes on. Every third frame on the forecast searches
+   anyway: a wrong pose lying flat is neither hidden nor refuted.
 5. **Too long without belief**: the object is lost, and the answer says so.
 
 ## Measured
 
-**[defined]** [The step](../../docs/hold-step.md): all in a room reaches 68, 74 and
-57 of 90 on three paths, two never used to choose.
+**[defined]** [The step](../../docs/hold-step.md), [and the next](../../docs/answer-step.md).
 
 - **After a knock, the place holds and the turn does not**: trying every
   orientation where the forecast stands finds it again, once the part is visible.
-- **Smooth only what is not**: the tracker filters its own pose, and filtering it
-  twice took shake from 88 to 78. Poses along rays are smoothed here.
+- **Never smooth an answer that can jolt**: see [what answers](what-answers.md).
+
+## The forecast is a parameter
+
+**[sketch]** The author's question, a first answer: `MotionModel` in `congru-track`,
+one family, as in the [Singer model][singer] **[to check]**: the share of the
+velocity left after each frame.
+
+- **One** goes on for ever, the default.
+- **Zero** stands where last seen, for a part on a table.
+- **Between**, it dies away. The turn and the place have their gains apart.
 
 ## [question]
 
-The forecast depends on the object: a part on a table, a thrown ball. By default
-the current trajectory and its noise; parametric later. Which objects first?
+Which objects first? Every measure here runs the default: no scene file sets the
+model yet, and only a test exercises the part at rest.
 
+[singer]: https://doi.org/10.1109/TAES.1970.310128
 [kalman]: https://en.wikipedia.org/wiki/Kalman_filter

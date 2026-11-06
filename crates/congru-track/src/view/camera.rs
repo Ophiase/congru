@@ -1,6 +1,7 @@
 use congru::{Distance, Error, PointCloud, RigidTransform, Target, TriangleMesh};
-use congru_track::ModelView;
 use congru_vision::{Camera, back_project, render};
+
+use super::ModelView;
 
 const NORMAL_NEIGHBORS: usize = 10;
 
@@ -18,6 +19,9 @@ pub struct CameraView {
 impl CameraView {
     /// `spacing` sets the sampling of the model and of its visible side: a
     /// hundredth of its size is plenty.
+    ///
+    /// # Errors
+    /// When the model cannot be sampled at `spacing`.
     pub fn new(model: &TriangleMesh, camera: Camera, spacing: Distance) -> Result<Self, Error> {
         Ok(Self {
             model: model.clone(),

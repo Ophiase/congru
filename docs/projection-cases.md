@@ -78,8 +78,8 @@ never offered the truth; above it, the score itself fails. Written by
 
 ![room-00](figures/projection/room-00.gif)
 
-- **Off by**: 1.8° and 3 mm.
-- **Score**: truth 13.8, found 12.1.
+- **Off by**: 1.2° and 3 mm.
+- **Score**: truth 13.8, found 11.8.
 - **Reading**: right.
 
 ## room, frame 7
@@ -110,8 +110,8 @@ never offered the truth; above it, the score itself fails. Written by
 
 ![in-a-room-00](figures/projection/in-a-room-00.gif)
 
-- **Off by**: 177.8° and 506 mm.
-- **Score**: truth 3.5, found 1.9.
+- **Off by**: 60.4° and 486 mm.
+- **Score**: truth 3.5, found -2.1.
 - **Reading**: wrong, and the score knows: the search never offered the truth.
 
 ## in a room, frame 7
@@ -134,8 +134,8 @@ never offered the truth; above it, the score itself fails. Written by
 
 ![in-a-room-40](figures/projection/in-a-room-40.gif)
 
-- **Off by**: 4.3° and 2 mm.
-- **Score**: truth 18.3, found 13.4.
+- **Off by**: 3.1° and 2 mm.
+- **Score**: truth 18.3, found 14.2.
 - **Reading**: right.
 
 ## in a room, frame 73
