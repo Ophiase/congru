@@ -20,12 +20,12 @@ noise on a 20 cm part, and 40 points of clutter. Each adds one trouble:
 
 | Run | Added | Median error | Frames within 2° |
 | --- | --- | --- | --- |
-| Noise | nothing | 0.91° | 114 / 120 |
-| Shake | the sensor wanders as in a hand, up to 6° and 2.5 cm over two seconds, and jolts every frame | 1.07° | 109 / 120 |
-| Bend | the part flexes by up to 4 mm | 1.07° | 112 / 120 |
-| Occluder | a ball crosses in front | 0.94° | 112 / 120 |
-| Lens | radial distortion | 1.17° | 103 / 120 |
-| Knocks | two abrupt turns of 70° and 60° | 0.95° | 113 / 120 |
+| Noise | nothing | 0.97° | 112 / 120 |
+| Shake | the sensor wanders as in a hand, up to 6° and 2.5 cm over two seconds, and jolts every frame | 1.13° | 109 / 120 |
+| Bend | the part flexes by up to 4 mm | 1.14° | 113 / 120 |
+| Occluder | a ball crosses in front | 0.87° | 114 / 120 |
+| Lens | radial distortion | 1.15° | 100 / 120 |
+| Knocks | two abrupt turns of 70° and 60° | 0.94° | 113 / 120 |
 
 For scale: aligning one such frame alone, from the true pose, already
 leaves about 0.85° of error. What tracking adds is holding on: through the
