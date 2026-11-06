@@ -3,7 +3,7 @@ use congru::{NearestNeighbors, RigidTransform};
 use super::faces::{frame_patches, model_faces, placements};
 use super::pairs::Oriented;
 use super::{Finder, Found};
-use crate::perception::noise_under;
+use crate::perception::{ImageBox, noise_under};
 use crate::{Camera, DepthImage, Information, Observed, ViewScore, render};
 
 /// The votes scored best at the finder's step, refined along rays and scored
@@ -28,7 +28,8 @@ impl Finder {
     ///
     /// `region` is what proposes, a frame cut to a region of interest or the whole
     /// of it; poses are judged on the whole `depth`, since beyond the box's border
-    /// nothing was measured, and that is not an edge of the object.
+    /// nothing was measured, and that is not an edge of the object. Only poses with
+    /// the object's middle in the box stand: a twin beside it may score higher.
     pub(super) fn search(
         &self,
         depth: &DepthImage,
@@ -49,7 +50,12 @@ impl Finder {
         let turned = shared(&self.orientations_in(&frame), |pose| {
             vec![self.refined_by(depth, camera, pose, FIRST_ITERATIONS)]
         });
-        let candidates = [brought, turned, self.face_placements(&frame, &index)].concat();
+        let rectangle = ImageBox::around(region)?;
+        let in_box = |pose: &RigidTransform| {
+            rectangle.holds(camera, &pose.apply(&self.points_centre))
+        };
+        let mut candidates = [brought, turned, self.face_placements(&frame, &index)].concat();
+        candidates.retain(in_box);
         let mut voted: Vec<(f64, RigidTransform)> = shared(&candidates, |pose| {
             vec![(self.score(&loose, camera, pose, wide), *pose)]
         });
@@ -63,6 +69,7 @@ impl Finder {
         });
         let (_, pose) = judged
             .into_iter()
+            .filter(|(_, pose)| in_box(pose))
             .max_by(|left, right| left.0.total_cmp(&right.0))?;
         Some(Found {
             pose,

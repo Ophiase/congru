@@ -1,12 +1,14 @@
 mod find;
 mod information;
 mod plane;
+mod region;
 mod shadow;
 mod visibility;
 
 pub use find::{Finder, Found};
 pub use information::{Information, Observed};
 pub use plane::without_support;
+pub use region::ImageBox;
 pub use shadow::{ViewScore, noise_under};
 pub use visibility::visible_from_origin;
 
