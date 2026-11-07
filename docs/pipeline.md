@@ -25,7 +25,7 @@ detector would draw (step 2). Everything after it uses the depth only.
    near object no longer weighs more than a far one.
 6. **Tracked.** The model aligned onto those voxels by the tracker
    ([ICP], point-to-plane, robust kernel): the green outline is its pose.
-   Later frames start from here, not from the detector.
+   Later frames start from here; a crowded one still takes its points from the box.
 
 `CONGRU_SCENE="gear on a bench" just demo` draws it for another scene.
 
@@ -47,11 +47,11 @@ graph TD
 | --- | --- | --- | --- |
 | **1. Frame** | A depth image: the distance along the optical axis at every pixel. The colour image is not used | [congru-vision](../crates/congru-vision/src/lib.rs) | Simulated: scenes rendered by rasterising meshes, then degraded (noise growing with depth, holes, flying pixels, a hand-held camera) by [congru-sim](../crates/congru-sim/src/lib.rs) |
 | **2. Points** | Every valid pixel back-projected through the pinhole camera into a 3D point | `back_project` | Done |
-| **3. Found by shape** | On the first frame, or once the tracker has let go: the model searched by point pair features in the detector's box, checked against the depth | [`Finder`](../crates/congru-vision/src/perception/find/mod.rs) | Done. **The 2D box is simulated from the truth**: milestone 2 replaces it by a real detector |
-| **4. Region** | Only the points within 0.6 of the model's size around the last pose | `within` | Done |
+| **3. Found by shape** | On the first frame, once the pose is lost, and in the films at regular looks: the model searched by point pair features in the detector's box, checked against the depth | [`Finder`](../crates/congru-vision/src/perception/find/mod.rs) | Done. **The 2D box is simulated from the truth**: milestone 2 replaces it by a real detector |
+| **4. Region** | Only the points within about 0.6 of the model's size around the predicted pose; in a crowded frame, the points of the box | `within` | Done |
 | **5. Thinned** | One point per voxel, a sixtieth of the target's size: a density independent of distance | `PointCloud::voxel_downsample` | Done |
-| **6. Tracker** | Predict the pose from the last ones (alpha-beta filter); align the region onto the side of the model the camera would see there (point-to-plane ICP, Tukey kernel scaled by the learned noise, pulled toward the prediction); if the frame fails its health check, search all rotations | [congru-track](../crates/congru-track/src/lib.rs) | Done; see [tracking](../ideas/method/tracking.md) |
-| **7. Answer** | The pose, whether it is trusted, which motions the frame left free | `Update`, `Observability` | Done |
+| **6. Tracker** | Predict the pose from the last ones (alpha-beta filter); align the region onto the side of the model the camera would see there (point-to-plane ICP, Tukey kernel scaled by the learned noise, pulled toward the prediction); if the frame fails its health check, search all rotations. In a crowded frame the tracker stands aside: the pose is brought along rays, then a short alignment | [congru-track](../crates/congru-track/src/lib.rs) | Done; see [tracking](../ideas/method/tracking.md) |
+| **7. Answer** | The pose, whether it is trusted, which motions the frame left free | `Answer`, `Update`, `Observability` | Done; the free motions only on a frame with little else than the object |
 
 [YOLO]: https://arxiv.org/abs/1506.02640
 [point pair features]: https://doi.org/10.1109/CVPR.2010.5540108
@@ -62,13 +62,13 @@ graph TD
 | Animation | Starts at | Why |
 | --- | --- | --- |
 | Demo A, point clouds | Layer 5 | Synthetic point clouds, no camera: the alignment alone |
-| Demo B, the turntable | Layer 1 | One part, a known room, a crop from the prediction |
-| Realistic scenes | Layer 1 | Ordinary scenes, the same layers, a detector's first guess |
+| Demo B, the turntable | Layer 1 | One part, alone or in a room, the noisy box |
+| Realistic scenes | Layer 1 | Ordinary scenes, the same layers, the noisy box |
 
 ## What milestone 2 adds
 
-- **A real detector** at layer 4: a segmentation network or, without one,
-  clustering (DBSCAN) of what is left after layer 3: the *mostly the
+- **A real detector** at layer 3: a segmentation network or, without one,
+  clustering (DBSCAN) of the frame's points: the *mostly the
   object* rung of the [ladder](../ideas/problem/hypothesis-ladder.md).
 - **Colour** at layer 1, to tell apart objects of the same shape.
 - **Real recordings**, RGB-D and lidar, in place of the simulated frame.

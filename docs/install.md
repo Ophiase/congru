@@ -33,9 +33,9 @@ let alignment = Icp::default().align(&source, &target, &RigidTransform::identity
 
 ### Python
 
-The extension builds with maturin, so a Rust toolchain is needed. The
-package lives in `crates/congru-python`, so a git URL names that
-subdirectory:
+It needs Python 3.14 or newer. The extension builds with maturin, so a Rust
+toolchain is needed too. The package lives in `crates/congru-python`, so a git
+URL names that subdirectory:
 
 ```sh
 uv add "congru @ git+https://github.com/Ophiase/congru#subdirectory=crates/congru-python"
@@ -75,9 +75,9 @@ print(alignment.transform)
 cargo build --release -p congru-capi
 ```
 
-Link `target/release/libcongru_capi.a` and include
-`crates/congru-capi/include/congru.h` or `congru.hpp`. The ABI is unstable
-until 1.0.
+Link `target/release/libcongru_capi.a` (with `-lpthread -ldl -lm` on Linux) and
+include `crates/congru-capi/include/congru.h`, or `congru.hpp` from C++20. The ABI
+is unstable until 1.0.
 
 ## Incoming
 
@@ -86,6 +86,5 @@ When the project leaves 0.1.x:
 - `cargo add congru` (crates.io)
 - `pip install congru` (PyPI)
 - A versioned C ABI, with a compatibility policy
-- A published benchmark with every model and every seed
 
 Until then, pin a commit: the API may move.

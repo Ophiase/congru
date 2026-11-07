@@ -28,7 +28,7 @@ tables rather than discovered in the field.
 | **H6 — dense enough**: a few hundred points or more | Sparse |
 | **H7 — asymmetric**: one pose, and only one, fits the shape | Every situation on the gear |
 
-The library is first made excellent under all six, then each is dropped in
+The library is first made to work under all seven, then each is dropped in
 turn; a method that needs one says so in its documentation.
 
 ## Models
@@ -100,7 +100,7 @@ frame. Each sequence adds one trouble:
 | bend | the object flexes, up to 2 % of the size, with no rigid part to first order |
 | occluder | a ball of 30 % of the size crosses in front |
 | lens | radial distortion, `k = 1` |
-| knocks | two abrupt turns of about 70° at frames 30 and 60 |
+| knocks | two abrupt turns of about 70° and 60° at frames 30 and 60 |
 
 Every method gets the same first guess, 10° off, as from a detector; a
 one-shot method then starts each frame from its own last answer.
@@ -131,8 +131,8 @@ homework.
 The leaderboard gives every situation and model the same weight: the mean
 success rate, the worst situation, the mean confidently-wrong rate, and the
 median time. The recommendations pick, for each class of situation and each
-model, the method with the highest mean success, ties broken by time. The
-library's defaults follow them, and say so.
+model, the method with the highest mean success, ties broken by time. They
+inform the library's defaults; no default cites its table yet.
 
 ## Adding a method
 

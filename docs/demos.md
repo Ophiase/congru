@@ -72,7 +72,7 @@ the second the same in a room. Each row:
 
 | Condition | Added to an imperfect sensor | Median error | Frames within 2° |
 | --- | --- | --- | --- |
-| All effects | everything demo A certifies: shake, lens, flex, a can crossing, two knocks of 70° | 0.44° | 85 / 90 |
+| All effects | everything demo A adds: shake, lens, flex, a can crossing, two knocks of 70° | 0.44° | 85 / 90 |
 | All in a room | the same, with a wall, a bench, a box and the turntable in view | 1.24° | 75 / 90 |
 | Sensor | about 5 mm of noise, blur, holes, flying pixels | 0.23° | 90 / 90 |
 | Shake | a camera in a hand: slow wander and jolts | 0.21° | 90 / 90 |
@@ -96,7 +96,8 @@ On two other paths, the room gives 83 and 83 of 90, all in a room 82 and 60
 
 - no crop from the truth but that box, no support plane removed;
 - computed offline by `just demo`. A detection in a room takes seconds on four
-  threads: following is real-time by design, finding is not.
+  threads, following a scene about 0.4 s per frame on 12 cores: neither is real
+  time yet ([where it goes](../ideas/architecture/acceleration.md)).
 
 The realistic scenes have their own films: [scene films](scene-films.md), and
 [what they measure](benchmark/scenes.md).

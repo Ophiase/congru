@@ -7,11 +7,11 @@ use super::shapes::{clover, marks, sheet, truth};
 use super::*;
 use crate::geometry::count_as_float;
 
-const TRUNCATION: f64 = 0.02;
-const REACH: f64 = 0.15;
-const RESOLUTION: [f64; 2] = [0.04, 0.004];
+pub(super) const TRUNCATION: f64 = 0.02;
+pub(super) const REACH: f64 = 0.15;
+pub(super) const RESOLUTION: [f64; 2] = [0.04, 0.004];
 
-fn certifier(margin: f64, budget: usize) -> Result<Certifier, Error> {
+pub(super) fn certifier(margin: f64, budget: usize) -> Result<Certifier, Error> {
     Ok(Certifier {
         truncation: Distance::new(TRUNCATION)?,
         reach: Distance::new(REACH)?,
@@ -21,7 +21,11 @@ fn certifier(margin: f64, budget: usize) -> Result<Certifier, Error> {
     })
 }
 
-fn value_of(source: &PointCloud, target: &PointCloud, pose: &RigidTransform) -> Result<f64, Error> {
+pub(super) fn value_of(
+    source: &PointCloud,
+    target: &PointCloud,
+    pose: &RigidTransform,
+) -> Result<f64, Error> {
     let index = NearestNeighbors::new(target)?;
     let total: f64 = source
         .points()
@@ -36,11 +40,11 @@ fn value_of(source: &PointCloud, target: &PointCloud, pose: &RigidTransform) -> 
     Ok(total / count_as_float(source.count()))
 }
 
-fn drawn(random: &mut ChaCha8Rng, half: f64) -> Vector {
+pub(super) fn drawn(random: &mut ChaCha8Rng, half: f64) -> Vector {
     Vector::from_fn(|_, _| half * (random.random::<f64>() * 2.0 - 1.0))
 }
 
-fn random_pose(
+pub(super) fn random_pose(
     random: &mut ChaCha8Rng,
     source: &PointCloud,
     target: &PointCloud,
@@ -53,7 +57,7 @@ fn random_pose(
 }
 
 /// How far the survivor farthest from `pose` is turned from it, and the nearest.
-fn spread(certificate: &Certificate, pose: &RigidTransform) -> (f64, f64) {
+pub(super) fn spread(certificate: &Certificate, pose: &RigidTransform) -> (f64, f64) {
     certificate.survivors.iter().fold(
         (0.0, f64::INFINITY),
         |(farthest, nearest): (f64, f64), survivor| {
@@ -111,14 +115,17 @@ fn every_pose_inside_a_cube_stays_above_its_bound() -> Result<(), Error> {
     let mut random = ChaCha8Rng::seed_from_u64(9);
     for half_rotation in [0.02, 0.2, 1.0, PI] {
         for half_translation in [0.001, 0.01, 0.1] {
-            let cube = problem.measured(Cube {
-                rotation: Vector::new(0.4, -0.3, 0.2),
-                translation: target.centroid().coords,
-                half_rotation,
-                half_translation,
-                lower: 0.0,
-                value: 0.0,
-            });
+            let cube = problem.measured(
+                Cube {
+                    rotation: Vector::new(0.4, -0.3, 0.2),
+                    translation: target.centroid().coords,
+                    half_rotation,
+                    half_translation,
+                    lower: 0.0,
+                    value: 0.0,
+                },
+                f64::INFINITY,
+            );
             for _ in 0..300 {
                 let inside = Cube {
                     rotation: cube.rotation + drawn(&mut random, half_rotation),

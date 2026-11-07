@@ -63,8 +63,8 @@ a car's height, so they are given a lidar's noise in their files.
 
 **[sketch]** To pick up, in order:
 
-- **The certificate under strays**: it never closes with them
-  ([certificate](method/certificate.md)).
+- **The certificate at 3 mm without strays**: 5 of 16 stay open within 15 million
+  cubes, while all 16 with strays close ([certificate](method/certificate.md)).
 - **A wider box**: the first search can lock on a wrong pose and hold it for a whole
   film, and two scenes need a tight box ([the box](method/box-as-test.md)).
 - **A knock in a room**: a flat wrong pose confirms 0.84 and is believed for ten

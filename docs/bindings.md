@@ -33,8 +33,9 @@ let alignment = Icp::default().align(&PointCloud::from_xyz(&scan)?, &target, &Ri
 let row_major: [f64; 16] = alignment.transform.to_row_major();
 ```
 
-Every method also implements the [`Aligner`](../ideas/architecture/contract.md)
-contract, so a caller can hold any of them as `Box<dyn Aligner>`.
+The methods of the benchmark implement the
+[`Aligner`](../ideas/architecture/contract.md) contract (`Local` holds an `Icp`,
+`Search` a `Multistart`), so a caller can hold any of them as `Box<dyn Aligner>`.
 
 ## Python
 
@@ -53,6 +54,8 @@ alignment.observability                                # what was left free
 | `Target(points, *, normals=None, neighbors=None)`, `Target.from_mesh` | `Target` |
 | `Icp(*, metric, kernel, max_correspondence_distance, overlap, max_iterations)` | `Icp` |
 | `Multistart(*, starts, icp)` | `Multistart` |
+| `Certifier(*, truncation, reach, margin, ...).run(source, target, seeds)` | `Certifier` |
+| `fit_similarity(source, target)` | `fit_similarity` |
 | `Metric.POINT_TO_POINT`, `Metric.POINT_TO_PLANE` | `Metric` |
 | `Kernel.quadratic()`, `.huber(s)`, `.cauchy(s)`, `.geman_mcclure(s)`, `.tukey(s)` | `Kernel` |
 | `RegistrationError(ValueError)` | `Error` |

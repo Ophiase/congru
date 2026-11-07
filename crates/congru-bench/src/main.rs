@@ -45,11 +45,8 @@ fn main() -> anyhow::Result<()> {
                 .is_some_and(|extension| extension.eq_ignore_ascii_case("md"))
         })
         .map_or_else(|| PathBuf::from("docs/benchmark/results.md"), PathBuf::from);
-    if flag("--scenes") {
-        return draw_scenes();
-    }
-    if flag("--certified") {
-        return measure::certified::run(std::path::Path::new("docs/benchmark/certified.md"));
+    if let Some(outcome) = page_apart(&flag) {
+        return outcome;
     }
     let cache = PathBuf::from(format!("target/bench/{pool:?}-{seeds}.tsv").to_lowercase());
     let mut session = Session::new(
@@ -60,6 +57,22 @@ fn main() -> anyhow::Result<()> {
         page,
     );
     session.run(flag("--realistic"))
+}
+
+/// The runs that write a page of their own, away from the tables.
+fn page_apart(flag: &impl Fn(&str) -> bool) -> Option<anyhow::Result<()>> {
+    let at = std::path::Path::new;
+    if flag("--scenes") {
+        Some(draw_scenes())
+    } else if flag("--breaking") {
+        Some(measure::breaking::run(at("docs/benchmark/breaking.md")))
+    } else if flag("--comparison") {
+        Some(measure::comparison::run(at("out/comparison")))
+    } else if flag("--certified") {
+        Some(measure::certified::run(at("docs/benchmark/certified.md")))
+    } else {
+        None
+    }
 }
 
 fn draw_scenes() -> anyhow::Result<()> {

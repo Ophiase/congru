@@ -30,7 +30,7 @@ of sight.
 
 ![bracket-behind-a-crate](figures/scenes/bracket-behind-a-crate.gif)
 
-66 of 72 within 2 % of its size, median 0.76 %; 64 within 2°; 0 believed and
+66 of 72 within 2 % of its size, median 0.76 %; 63 within 2°; 0 believed and
 wrong.
 
 ## bracket in a bin
@@ -40,7 +40,7 @@ means something.
 
 ![bracket-in-a-bin](figures/scenes/bracket-in-a-bin.gif)
 
-72 of 72 within 2 % of its size, median 0.59 %; 71 within 2°; 0 believed and
+72 of 72 within 2 % of its size, median 0.58 %; 71 within 2°; 0 believed and
 wrong.
 
 ## bracket at a low angle
@@ -49,7 +49,7 @@ The camera nearly at table height: grazing rays, the plate seen edge on.
 
 ![bracket-at-a-low-angle](figures/scenes/bracket-at-a-low-angle.gif)
 
-72 of 72 within 2 % of its size, median 0.75 %; 69 within 2°; 0 believed and
+72 of 72 within 2 % of its size, median 0.72 %; 68 within 2°; 0 believed and
 wrong.
 
 ## car close by
@@ -78,7 +78,7 @@ A plain box among other boxes: only flat faces, and a shape that repeats.
 
 ![crate-among-crates](figures/scenes/crate-among-crates.gif)
 
-72 of 72 within 2 % of its size, median 0.96 %; 0 within 2°; 0 believed and
+72 of 72 within 2 % of its size, median 0.93 %; 0 within 2°; 0 believed and
 wrong.
 
 ## gear from above
@@ -117,7 +117,7 @@ A machined bracket on a table, a mug and a crate beside it, a wall behind.
 
 ![part-on-a-table](figures/scenes/part-on-a-table.gif)
 
-72 of 72 within 2 % of its size, median 0.66 %; 72 within 2°; 0 believed and
+72 of 72 within 2 % of its size, median 0.65 %; 72 within 2°; 0 believed and
 wrong.
 
 ## shelf of mugs
@@ -127,7 +127,7 @@ handles.
 
 ![shelf-of-mugs](figures/scenes/shelf-of-mugs.gif)
 
-72 of 72 within 2 % of its size, median 1.20 %; 0 within 2°; 0 believed and
+71 of 72 within 2 % of its size, median 1.18 %; 0 within 2°; 0 believed and
 wrong.
 
 ## street corner
@@ -137,7 +137,7 @@ sparse, partly seen.
 
 ![street-corner](figures/scenes/street-corner.gif)
 
-72 of 72 within 2 % of its size, median 1.03 %; 70 within 2°; 0 believed and
+72 of 72 within 2 % of its size, median 1.04 %; 70 within 2°; 0 believed and
 wrong.
 
 ## twin brackets

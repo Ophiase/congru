@@ -5,6 +5,16 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.27 — 2026-11-07
+
+- **The certificate closes with strays**: 16 of 16, from 0, by a better upper bound.
+- **A believed pose stays in doubt**: a rival takes over after two wins running;
+  the low-angle bracket at a wider box goes from 0 to 60 of 72.
+- **Compared on the same frames** with Open3D and small_gicp: the same accuracy,
+  Open3D about three times faster.
+- **A scale**: `fit_similarity`, and curves for a wrong scale and a bent part.
+- **Python**: the certificate and the similarity. The public pages audited.
+
 ## 0.1.26 — 2026-11-07
 
 - **A certificate**: `Certifier` bounds how far any pose can be below an answer,

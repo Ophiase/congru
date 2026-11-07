@@ -3,6 +3,7 @@ mod kernel;
 mod observability;
 mod plane;
 mod prior;
+mod similarity;
 
 use nalgebra::Unit;
 
@@ -15,6 +16,7 @@ pub(crate) use observability::observe;
 pub use observability::{MotionKind, Observability, WeakMotion};
 pub(crate) use plane::point_to_plane;
 pub use prior::Prior;
+pub use similarity::{SimilarFit, fit_similarity};
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub(crate) struct Match {

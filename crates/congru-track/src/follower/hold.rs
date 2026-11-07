@@ -43,6 +43,13 @@ impl Hold {
         self.filter.predict()
     }
 
+    /// Drops the trajectory: what comes next owes nothing to it.
+    pub fn forget(&mut self) {
+        self.filter.reset();
+        self.recent.clear();
+        self.coasted = 0;
+    }
+
     fn believed(&self, confirmed: f64) -> bool {
         let mut levels: Vec<f64> = self.recent.iter().copied().collect();
         levels.sort_by(f64::total_cmp);

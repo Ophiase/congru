@@ -1,4 +1,4 @@
-# Congru - Efficient point cloud alignment
+# Congru - Point cloud alignment you can check
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
 [![Rust 1.89+](https://img.shields.io/badge/Rust-1.89%2B-orange.svg)](https://www.rust-lang.org/)
@@ -15,6 +15,12 @@ the motion between them and says how sure it is, from Rust, Python or C.
   <img src="docs/figures/tracking.gif" alt="A machined part tracked through a simulated depth camera" width="49%">
 </p>
 
+| What it does | What it does not |
+| --- | --- |
+| Finds a rigid motion from marks, a scan or depth frames, and says which motions the data left free | Bend, segment, view, or read a zoo of file formats |
+| [Proves](docs/benchmark/certified-method.md), on tens of marks, strays included, how far an answer can be from the best one | Prove anything on a whole scan, or that the best one is the truth |
+| Matches [Open3D and small_gicp](docs/benchmark/comparison.md) in accuracy on the same frames | Beat Open3D's speed, run in real time on a whole scene, or meet a real recording yet |
+
 ## Start here
 
 | If you want | Go to |
@@ -24,14 +30,8 @@ the motion between them and says how sure it is, from Rust, Python or C.
 | Dependencies | Rust 1.89+, `just`; Python 3.14+; C/C++ |
 | The demos, every film | [docs/demos.md](docs/demos.md) |
 | The pipeline, layer by layer | [docs/pipeline.md](docs/pipeline.md) |
-| How methods are measured | [protocol](docs/benchmark/protocol.md) · [results](docs/benchmark/results.md) · [against a proof](docs/benchmark/certified.md) |
+| How methods are measured | [protocol](docs/benchmark/protocol.md) · [results](docs/benchmark/results.md) · [against a proof](docs/benchmark/certified.md) · [against others](docs/benchmark/comparison.md) · [off the model](docs/benchmark/breaking.md) |
 | The scenes, and what fails today | [scenes](docs/benchmark/scenes.md) · [status](#status) |
-
-## In plain words
-
-A robot, a headset or a scanner sees an object as a few thousand noisy dots, and
-knows its 3D model. congru finds how to move the model onto the dots, says whether
-it is sure, and keeps doing it frame after frame ([beyond](ideas/beyond.md)).
 
 ## Why this project exists
 
@@ -110,11 +110,10 @@ depends on what is known beforehand and on what the data does
 [GeoTransformer]: https://arxiv.org/abs/2202.06688
 
 Every method is one [`Aligner`](ideas/architecture/contract.md) and goes
-through the same [benchmark](docs/benchmark/protocol.md): three families of
-models, thirteen situations that each break one hypothesis, six tracking
-sequences, many seeds. A default is a default because a table says so, and
-[the results](docs/benchmark/results.md) say where each method wins and
-where it breaks.
+through the same [benchmark](docs/benchmark/protocol.md): four models, fourteen
+scenes, thirteen situations with one trouble at a time, six tracking sequences,
+many seeds. [The results](docs/benchmark/results.md) say where each method wins
+and where it breaks.
 
 <details>
 <summary>The ideas, in pictures</summary>
@@ -137,13 +136,13 @@ of a pair as its distance grows.*
 </details>
 
 Every figure on this page is computed by the library from a seeded
-scenario: `just figures` draws them again.
+scenario: `just figures` draws them again, `just demo` the animations.
 
 ## Hypotheses, and dropping them
 
-Every hypothesis buys speed. congru states each one, is excellent under
-all of them first, then offers the next rung for when one fails; the
-[benchmark](docs/benchmark/protocol.md) has a situation that breaks each.
+Every hypothesis buys speed. congru states each one, then climbs to the next rung
+for when one fails; the [benchmark](docs/benchmark/protocol.md) breaks each. Bending
+modes, kinematic chains and distortion as an unknown are not built yet.
 
 | congru starts from | Which buys | The next rung |
 | --- | --- | --- |
@@ -172,16 +171,16 @@ Open3D and PCL do that.
 | Real recordings, RGB-D and lidar | Milestone 2 ([milestones](ideas/milestones.md)) |
 | One contract for every method: the `Aligner` trait | Done ([contract](ideas/architecture/contract.md)) |
 | Benchmark: one-shot methods, trackers, models and situations, many seeds | Done ([protocol](docs/benchmark/protocol.md), [results](docs/benchmark/results.md)) |
-| A certificate: how far any pose can be below an answer | Done on few clean marks, open with strays ([method](docs/benchmark/certified-method.md)) |
-| Comparison with Open3D and small_gicp | Planned |
+| A certificate: how far any pose can be below an answer | Closes on 27 of 32 instances of tens of marks ([graded](docs/benchmark/certified.md), [method](docs/benchmark/certified-method.md)) |
+| Comparison with Open3D and small_gicp | On simulated frames ([table](docs/benchmark/comparison.md)) |
 
 **[caution] Known limits today.**
 
-- **All simulated**: no real recording yet, and no comparison with other libraries.
+- **All simulated**: no real recording yet.
 - **The box comes from the truth**, standing in for a detector. With a tight one,
-  12 of 14 scenes hold ([films](docs/scene-films.md)).
-- **A wider box breaks some**: up to 4 scenes fall to 0 of 72, some on one seed
-  only; a wrong pose can be held for a whole film
+  12 of 14 scenes hold, on one seed ([films](docs/scene-films.md)).
+- **A wider box breaks some**: up to 3 scenes fall to 0 of 72, one of them on one
+  seed only; a wrong pose can be held for a whole film
   ([table](ideas/method/box-as-test.md)).
 - **Without a box**, demo B in a room holds most frames, and twins cannot be told
   apart ([why](docs/answer-step.md)).
@@ -199,7 +198,7 @@ repository, not yet on crates.io or PyPI ([install](docs/install.md)).
 just           # show all the recipes
 just test      # every property, against the synthetic truth
 just figures   # recompute the figures of this page
-just demo      # run both demos, rewrite the animations, print the tables
+just demo      # run the demos, rewrite the animations, print the tables
 just bench     # every method on every situation: docs/benchmark/results.md
 ```
 
