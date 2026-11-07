@@ -1,3 +1,4 @@
+pub mod certified;
 mod realistic;
 mod registration;
 mod stats;

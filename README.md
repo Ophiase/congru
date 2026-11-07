@@ -22,9 +22,9 @@ the motion between them and says how sure it is, from Rust, Python or C.
 | Install and quick start (Rust, Python, C) | [docs/install.md](docs/install.md) |
 | Run it, with the `just` recipes | [Try it](#try-it) |
 | Dependencies | Rust 1.89+, `just`; Python 3.14+; C/C++ |
-| The demos | [docs/demos.md](docs/demos.md) |
+| The demos, every film | [docs/demos.md](docs/demos.md) |
 | The pipeline, layer by layer | [docs/pipeline.md](docs/pipeline.md) |
-| How methods are measured | [protocol](docs/benchmark/protocol.md) · [results](docs/benchmark/results.md) |
+| How methods are measured | [protocol](docs/benchmark/protocol.md) · [results](docs/benchmark/results.md) · [against a proof](docs/benchmark/certified.md) |
 | The scenes, and what fails today | [scenes](docs/benchmark/scenes.md) · [status](#status) |
 
 ## In plain words
@@ -171,7 +171,8 @@ Open3D and PCL do that.
 | Python, C ABI and C++ header (unstable), command line printing JSON | Done ([bindings](docs/bindings.md)) |
 | Real recordings, RGB-D and lidar | Milestone 2 ([milestones](ideas/milestones.md)) |
 | One contract for every method: the `Aligner` trait | Done ([contract](ideas/architecture/contract.md)) |
-| Benchmark: 8 one-shot methods, 3 trackers, 4 models, 19 situations | Done ([protocol](docs/benchmark/protocol.md), [results](docs/benchmark/results.md)) |
+| Benchmark: one-shot methods, trackers, models and situations, many seeds | Done ([protocol](docs/benchmark/protocol.md), [results](docs/benchmark/results.md)) |
+| A certificate: how far any pose can be below an answer | Done on few clean marks, open with strays ([method](docs/benchmark/certified-method.md)) |
 | Comparison with Open3D and small_gicp | Planned |
 
 **[caution] Known limits today.**

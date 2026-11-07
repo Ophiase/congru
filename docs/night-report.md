@@ -3,6 +3,29 @@
 Newest first. Every number is one sensor seed; the frames of a path are not
 independent.
 
+## 2026-11-07, 0.1.26
+
+**Done**: films readable, every film in one page, a wider box measured, a certificate
+with its attacks, the benchmark rerun, the direction written in
+[what would make it the reference](../ideas/reference.md).
+
+**What fails**:
+
+- **The box was flattering**: at ±10 %, +40 %, the low-angle bracket falls to 0
+  of 72 on one seed and is believed all along
+  ([table](../ideas/method/box-as-test.md)).
+- **The certificate never closes with strays**.
+- **The tracker scores 33.7 % over every model of the benchmark**, far under what
+  the demos show; not compared with the old page, which held one model.
+- **Following costs about 0.4 s a frame**: "near real time" below was too kind.
+
+**Decided alone, for the author to check**:
+
+- **The films keep the tight box**: the wider ones are tabled, not filmed. Changing
+  it would move every table.
+- **No GPU**: rendering is 6 % of a frame and each call 0.18 ms
+  ([why](../ideas/architecture/acceleration.md)).
+
 ## 2026-11-06, 0.1.24
 
 **Done**: the crate regression understood and fixed; a numeric bug in the

@@ -51,6 +51,9 @@ Frames within 2 % of the size, of 72, on seeds 0 and 1, at 0.1.25:
 - **The low angle and the close car depend on the seed**: all or nothing, so the
   first search decides. The bracket then stays 11.6 % off for the whole film: a
   wrong pose is believed and never doubted.
+- **Believed and wrong**, seed 0: the low-angle bracket gives 72 of 72 at both wider
+  boxes, the crate 72 of 72 at the widest. The close car and the flat gear refuse
+  instead, which is the better failure. The usual box has 12, on the car on a road.
 - **[to check]** Two seeds show the failures, not their rate.
 - **[to check]** Still from the truth: no box yet leaves out a hidden part, or
   misses a frame.

@@ -19,6 +19,7 @@ use film::film;
 
 const FRAMES: usize = 72;
 const WITHIN_SURFACE: f64 = 0.02;
+const WRONG_SURFACE: f64 = 0.1;
 const WITHIN_DEGREES: f64 = 2.0;
 const LINE_LENGTH: usize = 80;
 const INTRO: &str = "# Scene films\n\n\
@@ -28,6 +29,8 @@ coloured over its own depths.\n\
 - **Green outline**: the model at the pose found, the same on all three.\n\
 - **The number**: how far off, as a share of the object's size; the bar turns amber\n  \
 past 2 %, red past 10 %.\n\
+- **Believed and wrong**: frames that gave a pose more than 10 % off, the ones that\n  \
+matter most: a robot acts on them.\n\
 - **The box comes from the truth**, a little larger, a little off, until a real\n  \
 detector runs. Nothing else does.\n  \
 [A wider box breaks some scenes](../ideas/method/box-as-test.md).\n\n";
@@ -76,6 +79,9 @@ struct Measures {
     within_surface: usize,
     median_surface: f64,
     within_degrees: usize,
+    /// Frames that answered, and were past [`WRONG_SURFACE`]: refusing would have
+    /// been right.
+    believed_wrong: usize,
     frames: usize,
 }
 
@@ -90,18 +96,24 @@ impl Measures {
                 .iter()
                 .filter(|shot| shot.degrees < WITHIN_DEGREES)
                 .count(),
+            believed_wrong: surface
+                .iter()
+                .filter(|off| off.is_finite() && **off >= WRONG_SURFACE)
+                .count(),
             frames: shots.len(),
         }
     }
 
     fn line(&self) -> String {
         format!(
-            "{} of {} within {:.0} % of its size, median {:.2} %; {} within {WITHIN_DEGREES:.0}°",
+            "{} of {} within {:.0} % of its size, median {:.2} %; {} within {WITHIN_DEGREES:.0}°; \
+             {} believed and wrong",
             self.within_surface,
             self.frames,
             100.0 * WITHIN_SURFACE,
             100.0 * self.median_surface,
             self.within_degrees,
+            self.believed_wrong,
         )
     }
 }
