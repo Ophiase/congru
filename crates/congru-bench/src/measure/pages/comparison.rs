@@ -26,7 +26,6 @@ const FIELD_BAND: f64 = 0.035;
 const EARLY_ROTATION: f64 = 0.001_745;
 const EARLY_TRANSLATION: f64 = 0.001;
 
-/// One way of making a frame hard.
 struct Situation {
     name: &'static str,
     noise: f64,
