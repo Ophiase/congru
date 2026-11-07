@@ -56,6 +56,7 @@ alignment.observability                                # what was left free
 | `Multistart(*, starts, icp)` | `Multistart` |
 | `Certifier(*, truncation, reach, margin, ...).run(source, target, seeds)` | `Certifier` |
 | `fit_similarity(source, target)` | `fit_similarity` |
+| `Surface.exact(v, t)`, `Surface.field(v, t, voxel, band)`, `.align(source, icp, initial)` | `MeshIndex`, `DistanceField`, `Icp::align_on` |
 | `Metric.POINT_TO_POINT`, `Metric.POINT_TO_PLANE` | `Metric` |
 | `Kernel.quadratic()`, `.huber(s)`, `.cauchy(s)`, `.geman_mcclure(s)`, `.tukey(s)` | `Kernel` |
 | `RegistrationError(ValueError)` | `Error` |

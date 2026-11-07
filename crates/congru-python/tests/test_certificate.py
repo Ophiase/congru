@@ -3,7 +3,7 @@ from typing import Final
 import numpy as np
 
 import congru
-from geometry import asymmetric_surface, moved, rigid_motion, rotation_error
+from geometry import asymmetric_surface, box_mesh, moved, rigid_motion, rotation_error
 
 MOTION: Final = rigid_motion((0.4, -0.3, 0.6), (0.1, 0.0, -0.05))
 MARKS: Final = 40
@@ -45,6 +45,19 @@ def test_a_value_past_the_optimum_shows_a_gap() -> None:
     ).run(source, target, [wrong])
     assert certificate.upper < ASKED_GAP
     assert certificate.gap(WRONG_VALUE) > WRONG_VALUE - 2 * ASKED_GAP
+
+
+def test_a_motion_is_recovered_on_a_mesh_and_its_field() -> None:
+    mesh = box_mesh()
+    small = rigid_motion((0.03, -0.02, 0.04), (0.02, 0.0, 0.01))
+    samples = congru.Target.from_mesh(mesh.vertices, mesh.triangles, 0.1).points
+    scan = moved(samples, np.linalg.inv(small))
+    for surface in (
+        congru.Surface.exact(mesh.vertices, mesh.triangles),
+        congru.Surface.field(mesh.vertices, mesh.triangles, 0.02, 0.3),
+    ):
+        found = surface.align(scan, congru.Icp())
+        assert rotation_error(found.transform, small) < NEAR_TRUTH
 
 
 def test_a_similarity_recovers_a_known_scale() -> None:

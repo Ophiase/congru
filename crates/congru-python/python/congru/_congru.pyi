@@ -85,6 +85,18 @@ class Multistart:
     def icp(self) -> Icp: ...
 
 @final
+class Surface:
+    @staticmethod
+    def exact(vertices: Points, triangles: Indices) -> Surface: ...
+    @staticmethod
+    def field(
+        vertices: Points, triangles: Indices, voxel: float, band: float
+    ) -> Surface: ...
+    def align(
+        self, source: Points, icp: Icp, initial: ArrayLike | None = None
+    ) -> Alignment: ...
+
+@final
 class Certifier:
     def __new__(
         cls,

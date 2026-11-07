@@ -14,15 +14,21 @@
     reason = "a C ABI reads raw pointers and exports unmangled symbols"
 )]
 
+mod align;
 mod boundary;
 mod fit;
-mod icp;
 mod status;
+#[cfg(test)]
+mod surface_tests;
 mod target;
 #[cfg(test)]
 mod tests;
 
-pub use fit::{FitOut, congru_fit_rigid};
-pub use icp::{AlignmentOut, IcpOptions, congru_icp_align, congru_icp_options_default};
+pub use align::{
+    AlignmentOut, CertificateOut, CertifierOptions, IcpOptions, SurfaceHandle, congru_certify,
+    congru_icp_align, congru_icp_options_default, congru_multistart_align, congru_surface_align,
+    congru_surface_free, congru_surface_new_field, congru_surface_new_mesh,
+};
+pub use fit::{FitOut, SimilarFitOut, congru_fit_rigid, congru_fit_similarity};
 pub use status::{Status, congru_last_error_message, congru_status_message};
 pub use target::{TargetHandle, congru_target_free, congru_target_new_from_points};

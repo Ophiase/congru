@@ -12,7 +12,7 @@ use pyo3::pymodule;
 #[pymodule(name = "_congru")]
 mod module {
     #[pymodule_export]
-    use crate::align::{Certifier, Icp, Kernel, Metric, Multistart};
+    use crate::align::{Certifier, Icp, Kernel, Metric, Multistart, Surface};
     #[pymodule_export]
     use crate::error::RegistrationError;
     #[pymodule_export]

@@ -87,7 +87,7 @@ pub unsafe extern "C" fn congru_icp_align(
     })
 }
 
-fn icp(options: &IcpOptions) -> Result<Icp, Failure> {
+pub(super) fn icp(options: &IcpOptions) -> Result<Icp, Failure> {
     let metric = match options.metric {
         POINT_TO_POINT => Metric::PointToPoint,
         POINT_TO_PLANE => Metric::PointToPlane,
@@ -120,7 +120,7 @@ fn kernel(kind: c_int, scale: f64) -> Result<Kernel, Failure> {
     })
 }
 
-fn translated(alignment: &Alignment) -> AlignmentOut {
+pub(super) fn translated(alignment: &Alignment) -> AlignmentOut {
     let observability = alignment.observability.as_ref();
     AlignmentOut {
         transform: alignment.transform.to_row_major(),

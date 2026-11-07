@@ -105,29 +105,31 @@ fn elements(
     tolerance: f64,
 ) -> Vec<Element> {
     let (width, height) = (rendered.width(), rendered.height());
-    let mut elements = Vec::new();
-    for row in 1..height.saturating_sub(1) {
+    let rows: Vec<usize> = (1..height.saturating_sub(1)).collect();
+    congru::map(&rows, |row| {
+        let mut elements = Vec::new();
         for column in 1..width.saturating_sub(1) {
-            let expected = rendered.get(column, row);
-            let seen = observed.depth.get(column, row);
+            let expected = rendered.get(column, *row);
+            let seen = observed.depth.get(column, *row);
             if !expected.is_finite() || !seen.is_finite() || (expected - seen).abs() > tolerance {
                 continue;
             }
-            let faces = normal_at(rendered, camera, column, row, tolerance)
-                .zip(observed.normal(column, row));
+            let faces = normal_at(rendered, camera, column, *row, tolerance)
+                .zip(observed.normal(column, *row));
             if let Some((normal, _)) =
                 faces.filter(|(normal, image)| normal.dot(image).abs() >= LEAST_COSINE)
             {
                 let side = expected / camera.focal;
                 elements.push(Element {
-                    position: camera.back_project(column, row, expected).coords,
+                    position: camera.back_project(column, *row, expected).coords,
                     normal,
                     area: side * side,
                 });
             }
         }
-    }
-    elements
+        elements
+    })
+    .concat()
 }
 
 /// The surface's normal at a pixel, from its four neighbours; `None` across

@@ -17,6 +17,7 @@ pub(super) struct Seen {
     pub(super) silhouette: Option<Image<bool>>,
     pub(super) off: f64,
     pub(super) degrees: f64,
+    pub(super) seconds: f64,
 }
 
 /// The three panels of a frame: the scene and the depth at half the camera's size,

@@ -1,3 +1,5 @@
+use std::sync::OnceLock;
+
 use congru::Vector;
 use nalgebra::Matrix3;
 
@@ -13,26 +15,32 @@ const NORMAL_REACH: f64 = 3.0;
 /// A fit on fewer returns than this says nothing.
 const LEAST_RETURNS: usize = 12;
 
-/// A depth image with what a pose is judged against: the direction of its
-/// surface at each pixel, read once.
-#[derive(Debug, Clone, PartialEq)]
+/// A depth image with what a pose is judged against: the direction of its surface
+/// at each pixel, fitted when first asked and kept. A pose only asks under its own
+/// silhouette, a small share of the frame.
+#[derive(Debug, Clone)]
 pub struct Observed {
     pub depth: DepthImage,
-    normals: Vec<Option<Vector>>,
+    camera: Camera,
+    normals: Vec<OnceLock<Option<Vector>>>,
     tolerance: f64,
+}
+
+impl PartialEq for Observed {
+    fn eq(&self, other: &Self) -> bool {
+        self.depth == other.depth && self.tolerance == other.tolerance
+    }
 }
 
 impl Observed {
     /// `tolerance` must exceed the sensor's noise.
     #[must_use]
     pub fn new(depth: DepthImage, camera: &Camera, tolerance: f64) -> Self {
-        let normals = depth
-            .positions()
-            .map(|(column, row)| fitted_normal(&depth, camera, column, row, tolerance))
-            .collect();
+        let cells = depth.width() * depth.height();
         Self {
             depth,
-            normals,
+            camera: *camera,
+            normals: (0..cells).map(|_| OnceLock::new()).collect(),
             tolerance,
         }
     }
@@ -44,7 +52,8 @@ impl Observed {
     }
 
     pub(super) fn normal(&self, column: usize, row: usize) -> Option<Vector> {
-        self.normals[row * self.depth.width() + column]
+        *self.normals[row * self.depth.width() + column]
+            .get_or_init(|| fitted_normal(&self.depth, &self.camera, column, row, self.tolerance))
     }
 }
 

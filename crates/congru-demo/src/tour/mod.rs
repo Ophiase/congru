@@ -55,11 +55,14 @@ pub fn run(target: &Path) -> anyhow::Result<Vec<Summary>> {
             picture::write(&folder.join(format!("{name}.gif")), &drawn, 3)?;
             let measures = Measures::of(&shots);
             let mut output = std::io::stdout().lock();
+            let mut times: Vec<f64> = shots.iter().map(|shot| shot.seconds).collect();
+            times.sort_by(f64::total_cmp);
             writeln!(
                 output,
-                "{}: {:.1} s; {}",
+                "{}: {:.1} s, {:.0} ms a frame; {}",
                 scene.name,
                 started.elapsed().as_secs_f64(),
+                1e3 * times[times.len() / 2],
                 measures.line(),
             )?;
             Ok(section(scene, &name, &measures))

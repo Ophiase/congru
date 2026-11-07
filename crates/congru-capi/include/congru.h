@@ -75,10 +75,65 @@ congru_status congru_icp_align(const congru_target *target, const double *xyz,
                                const congru_icp_options *options,
                                congru_alignment *out);
 
+/* Without an initial pose. starts = 0 takes the default; options may be NULL. */
+congru_status congru_multistart_align(const congru_target *target,
+                                      const double *xyz, size_t count,
+                                      uint32_t starts,
+                                      const congru_icp_options *options,
+                                      congru_alignment *out);
+
+/* A mesh held for alignment: exact, or a distance field, faster once built. */
+typedef struct congru_surface congru_surface;
+congru_status congru_surface_new_mesh(const double *vertices, size_t vertex_count,
+                                      const uint32_t *triangles,
+                                      size_t triangle_count,
+                                      congru_surface **out);
+/* band must exceed the alignments' max_correspondence_distance. */
+congru_status congru_surface_new_field(const double *vertices,
+                                       size_t vertex_count,
+                                       const uint32_t *triangles,
+                                       size_t triangle_count, double voxel,
+                                       double band, congru_surface **out);
+void congru_surface_free(congru_surface *surface);
+congru_status congru_surface_align(const congru_surface *surface,
+                                   const double *xyz, size_t count,
+                                   const double *initial,
+                                   const congru_icp_options *options,
+                                   congru_alignment *out);
+
 /* weights may be NULL: uniform. */
 congru_status congru_fit_rigid(const double *source, const double *target,
                                size_t count, const double *weights,
                                congru_fit *out);
+
+typedef struct congru_similar_fit {
+    double scale;
+    double transform[16]; /* the scale is not in it */
+    double rmse;
+} congru_similar_fit;
+congru_status congru_fit_similarity(const double *source, const double *target,
+                                    size_t count, congru_similar_fit *out);
+
+typedef struct congru_certifier_options {
+    double truncation; /* past this a point counts as an outlier */
+    double reach;      /* of the source's centroid, per axis */
+    double margin;     /* < 0: asks that gap; > 0: keeps poses this close */
+    double rotation_resolution;
+    double translation_resolution;
+    uint64_t budget;
+} congru_certifier_options;
+typedef struct congru_certificate {
+    double lower; /* no pose costs less, closed or not */
+    double upper;
+    double pose[16];
+    bool closed;
+    uint64_t measured;
+    uint64_t survivors;
+} congru_certificate;
+congru_status congru_certify(const double *source, size_t source_count,
+                             const double *target, size_t target_count,
+                             const congru_certifier_options *options,
+                             congru_certificate *out);
 
 const char *congru_status_message(int status);
 /* The detail of this thread's last failure. */

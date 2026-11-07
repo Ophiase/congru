@@ -41,6 +41,7 @@ pub(super) struct Shot {
     pub(super) tiles: Vec<Tile>,
     pub(super) off: f64,
     pub(super) degrees: f64,
+    pub(super) seconds: f64,
 }
 
 /// The scene filmed for `frames` frames by a wandering camera, the target found
@@ -61,20 +62,20 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Shot>> {
         .map(|frame| {
             let (exact, depth, truth) = shot(scene, &camera, frame);
             let region = region_of_interest(&depth, &camera, target, &truth, frame as u64);
+            let started = std::time::Instant::now();
             let pose = follower
                 .step(Sight {
                     depth: &depth,
                     region: &region,
                 })
                 .pose;
+            let seconds = started.elapsed().as_secs_f64();
             let off = pose.map_or(Ok(f64::INFINITY), |pose| {
                 surface_error(&samples, &pose, &truth).map(|metres| metres / span)
             })?;
             let silhouette =
                 pose.map(|pose| render(&camera, &[(target, pose)]).depth.map(f64::is_finite));
-            let degrees = pose.map_or(f64::INFINITY, |pose| {
-                pose.rotation_error_to(&truth).to_degrees()
-            });
+            let degrees = degrees_off(pose.as_ref(), &truth);
             Ok(Seen {
                 exact,
                 depth,
@@ -82,10 +83,17 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Shot>> {
                 silhouette,
                 off,
                 degrees,
+                seconds,
             })
         })
         .collect::<anyhow::Result<Vec<Seen>>>()?;
     Ok(drawn(&seen, &camera))
+}
+
+fn degrees_off(pose: Option<&RigidTransform>, truth: &RigidTransform) -> f64 {
+    pose.map_or(f64::INFINITY, |pose| {
+        pose.rotation_error_to(truth).to_degrees()
+    })
 }
 
 fn drawn(seen: &[Seen], camera: &Camera) -> Vec<Shot> {
@@ -98,6 +106,7 @@ fn drawn(seen: &[Seen], camera: &Camera) -> Vec<Shot> {
             tiles: panels(frame, &zoom, camera.focal),
             off: frame.off,
             degrees: frame.degrees,
+            seconds: frame.seconds,
         })
         .collect()
 }

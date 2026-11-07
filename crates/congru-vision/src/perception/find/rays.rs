@@ -103,10 +103,11 @@ pub(super) fn along_rays(
 ) -> RigidTransform {
     let mut pose = *pose;
     for _ in 0..iterations {
-        let (model, seen): (Vec<Point>, Vec<Point>) = points
-            .iter()
-            .filter_map(|oriented| hit(depth, camera, &pose, oriented, gate))
-            .unzip();
+        let (model, seen): (Vec<Point>, Vec<Point>) =
+            congru::map(points, |oriented| hit(depth, camera, &pose, oriented, gate))
+                .into_iter()
+                .flatten()
+                .unzip();
         if model.len() < LEAST_PAIRS {
             break;
         }

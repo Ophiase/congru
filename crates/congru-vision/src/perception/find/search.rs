@@ -19,8 +19,6 @@ const NOISE_SPAN: f64 = 1.25;
 /// Iterations along rays before a vote is judged at all: a raw vote, known to
 /// a bin, scores too low to survive.
 pub(super) const FIRST_ITERATIONS: u32 = 4;
-/// A search stays on this many threads, to leave the machine usable.
-const MOST_THREADS: usize = 4;
 /// A box is noisy, but a pose with less than this share of the object's points in it
 /// is another object.
 const LEAST_IN_BOX: f64 = 0.75;
@@ -160,22 +158,10 @@ impl Finder {
     }
 }
 
-/// `work` over `items` on at most [`MOST_THREADS`] threads, results in order.
+/// `work` over `items`, results in order.
 pub(super) fn shared<Item: Sync, Answer: Send>(
     items: &[Item],
-    work: impl Fn(&Item) -> Vec<Answer> + Sync,
+    work: impl Fn(&Item) -> Vec<Answer> + Sync + Send,
 ) -> Vec<Answer> {
-    let threads =
-        std::thread::available_parallelism().map_or(1, |count| count.get().min(MOST_THREADS));
-    let share = items.len().div_ceil(threads).max(1);
-    std::thread::scope(|scope| {
-        let running: Vec<_> = items
-            .chunks(share)
-            .map(|chunk| scope.spawn(|| chunk.iter().flat_map(&work).collect::<Vec<Answer>>()))
-            .collect();
-        running
-            .into_iter()
-            .flat_map(|thread| thread.join().unwrap_or_default())
-            .collect()
-    })
+    congru::map(items, work).into_iter().flatten().collect()
 }
