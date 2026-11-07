@@ -109,11 +109,11 @@ depends on what is known beforehand and on what the data does
 [Deep Closest Point]: https://arxiv.org/abs/1905.03304
 [GeoTransformer]: https://arxiv.org/abs/2202.06688
 
-Every method is one [`Aligner`](ideas/architecture/contract.md) and goes
-through the same [benchmark](docs/benchmark/protocol.md): four models, sixteen
-scenes, thirteen situations with one trouble at a time, six tracking sequences,
-many seeds. [The results](docs/benchmark/results.md) say where each method wins
-and where it breaks.
+Every method is one [`Aligner`](ideas/architecture/contract.md) and goes through
+the same [benchmark](docs/benchmark/protocol.md): four models, sixteen scenes,
+thirteen situations, six tracking sequences, many seeds.
+
+[The results](docs/benchmark/results.md) say where each wins and where it breaks.
 
 <details>
 <summary>The ideas, in pictures</summary>
