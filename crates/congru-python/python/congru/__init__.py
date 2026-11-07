@@ -1,5 +1,7 @@
 from congru._congru import (
     Alignment,
+    Certificate,
+    Certifier,
     Fit,
     Icp,
     Kernel,
@@ -8,14 +10,18 @@ from congru._congru import (
     Observability,
     RegistrationError,
     Rotation,
+    SimilarFit,
     Target,
     Translation,
     WeakMotion,
     fit_rigid,
+    fit_similarity,
 )
 
 __all__ = (
     "Alignment",
+    "Certificate",
+    "Certifier",
     "Fit",
     "Icp",
     "Kernel",
@@ -24,8 +30,10 @@ __all__ = (
     "Observability",
     "RegistrationError",
     "Rotation",
+    "SimilarFit",
     "Target",
     "Translation",
     "WeakMotion",
     "fit_rigid",
+    "fit_similarity",
 )

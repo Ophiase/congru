@@ -12,12 +12,13 @@ use pyo3::pymodule;
 #[pymodule(name = "_congru")]
 mod module {
     #[pymodule_export]
-    use crate::align::{Icp, Kernel, Metric, Multistart};
+    use crate::align::{Certifier, Icp, Kernel, Metric, Multistart};
     #[pymodule_export]
     use crate::error::RegistrationError;
     #[pymodule_export]
     use crate::results::{
-        Alignment, Fit, Observability, Rotation, Translation, WeakMotion, fit_rigid,
+        Alignment, Certificate, Fit, Observability, Rotation, SimilarFit, Translation, WeakMotion,
+        fit_rigid, fit_similarity,
     };
     #[pymodule_export]
     use crate::target::Target;

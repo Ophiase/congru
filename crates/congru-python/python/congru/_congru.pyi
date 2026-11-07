@@ -1,3 +1,4 @@
+from collections.abc import Sequence
 from typing import ClassVar, final
 
 import numpy as np
@@ -84,6 +85,41 @@ class Multistart:
     def icp(self) -> Icp: ...
 
 @final
+class Certifier:
+    def __new__(
+        cls,
+        *,
+        truncation: float,
+        reach: float,
+        margin: float = ...,
+        rotation_resolution: float = ...,
+        translation_resolution: float = ...,
+        budget: int = ...,
+    ) -> Certifier: ...
+    def run(
+        self,
+        source: Points,
+        target: Points,
+        seeds: Sequence[ArrayLike] = ...,
+    ) -> Certificate: ...
+
+@final
+class Certificate:
+    @property
+    def lower(self) -> float: ...
+    @property
+    def upper(self) -> float: ...
+    @property
+    def pose(self) -> Matrix: ...
+    @property
+    def closed(self) -> bool: ...
+    @property
+    def measured(self) -> int: ...
+    @property
+    def survivors(self) -> list[Matrix]: ...
+    def gap(self, value: float) -> float: ...
+
+@final
 class Fit:
     @property
     def transform(self) -> Matrix: ...
@@ -95,6 +131,17 @@ def fit_rigid(
     target: Points,
     weights: ArrayLike | None = None,
 ) -> Fit: ...
+
+@final
+class SimilarFit:
+    @property
+    def scale(self) -> float: ...
+    @property
+    def transform(self) -> Matrix: ...
+    @property
+    def rmse(self) -> float: ...
+
+def fit_similarity(source: Points, target: Points) -> SimilarFit: ...
 
 @final
 class Alignment:
