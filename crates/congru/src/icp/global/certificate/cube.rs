@@ -41,14 +41,24 @@ impl Problem<'_> {
     }
 
     /// Cube `cube` with its bound and the value at its centre, Hartley and Kahl's
-    /// radius for what a turn can move a point.
-    pub(super) fn measured(&self, cube: Cube) -> Cube {
+    /// radius for what a turn can move a point. Past `ceiling` the sum stops, still a
+    /// valid bound as every term is positive, and the value is left infinite.
+    pub(super) fn measured(&self, cube: Cube, ceiling: f64) -> Cube {
         let rotation = nalgebra::UnitQuaternion::from_scaled_axis(cube.rotation);
         let turn = turn_share(cube.half_rotation);
         let shift = 3.0_f64.sqrt() * cube.half_translation;
         let slack = SLACK * self.reach;
+        let count = count_as_float(self.centred.len());
+        let last = ceiling * count;
         let (mut lower, mut value) = (0.0, 0.0);
         for point in &self.centred {
+            if lower > last {
+                return Cube {
+                    lower: lower / count,
+                    value: f64::INFINITY,
+                    ..cube
+                };
+            }
             let moved = rotation * point + cube.translation;
             let squared = self.index.nearest(&moved).squared_distance;
             value += squared.min(self.truncation_squared);
@@ -56,7 +66,6 @@ impl Problem<'_> {
             let closest = (squared.sqrt() - radius).max(0.0);
             lower += (closest * closest).min(self.truncation_squared);
         }
-        let count = count_as_float(self.centred.len());
         Cube {
             lower: lower / count,
             value: value / count,
@@ -106,6 +115,15 @@ impl Cube {
         Some(std::array::from_fn(|corner| {
             self.child(corner, along_rotation)
         }))
+    }
+
+    /// Whether a rotation vector of this cube is at most a half turn: every rotation
+    /// has one there, so a cube wholly past it only repeats others.
+    pub(super) fn inside_the_turns(&self) -> bool {
+        let nearest = self
+            .rotation
+            .map(|along| (along.abs() - self.half_rotation).max(0.0));
+        nearest.norm() <= std::f64::consts::PI * (1.0 + SLACK)
     }
 
     fn child(&self, corner: usize, along_rotation: bool) -> Self {
