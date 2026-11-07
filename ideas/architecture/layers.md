@@ -14,6 +14,8 @@ graph TD
 - **Core**: geometry, search, fit, ICP, global; no I/O, no threads.
 - **Synth**: the observation model and its truth, for tests only.
 - **Skins**: they only convert, validate and call.
+- **[defined]** One exception stands beside the core:
+  [the embedded crate](embedded.md), without `std`, holds its own small ICP.
 
 ## Rules
 

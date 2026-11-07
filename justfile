@@ -78,6 +78,15 @@ capi-example:
     g++ -std=c++20 -O2 -I crates/congru-capi/include crates/congru-capi/examples/align.cpp target/release/libcongru_capi.a -lpthread -ldl -lm -o target/release/congru-example
     target/release/congru-example
 
+[doc("Prove the embedded crate builds without std; needs `rustup target add thumbv7em-none-eabihf`")]
+embedded-build:
+    cargo build -p congru-embedded --target thumbv7em-none-eabihf
+    cargo build -p congru-embedded-probe --target thumbv7em-none-eabihf --profile embedded
+
+[doc("Measure the embedded crate, code size on the bare-metal images: writes docs/benchmark/embedded.md")]
+embedded-measure: embedded-build
+    RAYON_NUM_THREADS=1 cargo run --release -q -p congru-embedded --example measure -- target/thumbv7em-none-eabihf/embedded docs/benchmark/embedded.md
+
 [doc("Everything that must pass before declaring work done")]
 check: lint test rumdl
 

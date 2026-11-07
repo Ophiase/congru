@@ -369,6 +369,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "congru-embedded"
+version = "0.1.27"
+dependencies = [
+ "anyhow",
+ "congru",
+ "congru-sim",
+ "congru-synth",
+ "libm",
+ "nalgebra",
+ "rand",
+ "thiserror 2.0.21",
+]
+
+[[package]]
+name = "congru-embedded-probe"
+version = "0.1.27"
+dependencies = [
+ "congru-embedded",
+]
+
+[[package]]
 name = "congru-figures"
 version = "0.1.27"
 dependencies = [
