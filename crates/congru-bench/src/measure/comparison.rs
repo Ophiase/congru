@@ -17,6 +17,9 @@ const SOURCE_SPACING: f64 = 0.0047;
 const GATE: f64 = 0.03;
 const ITERATIONS: u32 = 50;
 const STRAY_REACH: f64 = 0.2;
+/// The stopping steps of the fastest library's defaults, for a column on equal terms.
+const EARLY_ROTATION: f64 = 0.001_745;
+const EARLY_TRANSLATION: f64 = 0.001;
 
 /// One way of making a frame hard.
 struct Situation {
@@ -85,8 +88,14 @@ pub fn run(folder: &Path) -> anyhow::Result<()> {
         .sample_surface(Distance::new(SOURCE_SPACING)?)?
         .cloud()
         .clone();
-    let icp = aligner()?;
-    let mut trials = String::from("situation,seed,seconds,guess,truth,congru\n");
+    let icp = aligner(Convergence::default())?;
+    let early = aligner(Convergence {
+        rotation: EARLY_ROTATION,
+        translation: EARLY_TRANSLATION,
+        ..Convergence::default()
+    })?;
+    let mut trials =
+        String::from("situation,seed,seconds,guess,truth,congru,early_seconds,early\n");
     for situation in &SITUATIONS {
         for seed in 0..SEEDS {
             let (source, truth, guess) = frame(&scan, situation, seed)?;
@@ -95,13 +104,17 @@ pub fn run(folder: &Path) -> anyhow::Result<()> {
             let started = std::time::Instant::now();
             let found = icp.align(&source, &target, &guess)?.transform;
             let seconds = started.elapsed().as_secs_f64();
+            let started = std::time::Instant::now();
+            let stopped = early.align(&source, &target, &guess)?.transform;
+            let early_seconds = started.elapsed().as_secs_f64();
             writeln!(
                 trials,
-                "{},{seed},{seconds},{},{},{}",
+                "{},{seed},{seconds},{},{},{},{early_seconds},{}",
                 situation.name,
                 row(&guess),
                 row(&truth),
-                row(&found)
+                row(&found),
+                row(&stopped)
             )?;
         }
     }
@@ -109,13 +122,13 @@ pub fn run(folder: &Path) -> anyhow::Result<()> {
     Ok(())
 }
 
-fn aligner() -> anyhow::Result<Icp> {
+fn aligner(convergence: Convergence) -> anyhow::Result<Icp> {
     Ok(Icp {
         metric: Metric::PointToPlane,
         max_correspondence_distance: Some(Distance::new(GATE)?),
         convergence: Convergence {
             max_iterations: ITERATIONS,
-            ..Convergence::default()
+            ..convergence
         },
         ..Icp::default()
     })

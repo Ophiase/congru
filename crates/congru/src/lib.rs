@@ -1,4 +1,4 @@
-//! Fast, robust rigid registration of point clouds and meshes.
+//! Rigid registration of point clouds and meshes, measured against a known truth.
 //!
 //! Three entry points, from the most to the least informed:
 //!

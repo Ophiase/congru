@@ -26,6 +26,8 @@ seeds per line.
 
 - **Success**: within 2° and 2 % of the size of the truth.
 - **Median time**: the alignment alone, its target already prepared.
+- **Stopped as small_gicp**: congru's default stops at steps of 1e-7, much later
+  than the others; this column stops at 0.1° and 1 mm.
 - **Mean over all**: the last line weighs each situation the same.
 
 """
@@ -140,12 +142,17 @@ def main(folder: Path, page: Path) -> None:
     )
     outcomes: dict[str, dict[str, list[Outcome]]] = defaultdict(lambda: defaultdict(list))
     for line in (folder / "trials.csv").read_text().splitlines()[1:]:
-        situation, seed, seconds, guess, truth, found = line.split(",")
+        situation, seed, seconds, guess, truth, found, early_seconds, early = line.split(
+            ","
+        )
         guess_pose, truth_pose = pose(guess), pose(truth)
         source = np.loadtxt(folder / f"source-{situation}-{seed}.csv", delimiter=",")
         of = outcomes[situation]
         of["congru, point to plane"].append(
             judged(pose(found), truth_pose, float(seconds))
+        )
+        of["congru, stopped as small_gicp"].append(
+            judged(pose(early), truth_pose, float(early_seconds))
         )
         for other in others:
             answer, spent = other.align(source, guess_pose)

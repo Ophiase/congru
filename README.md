@@ -1,4 +1,4 @@
-# Congru - Efficient point cloud alignment
+# Congru - Point cloud alignment you can check
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
 [![Rust 1.89+](https://img.shields.io/badge/Rust-1.89%2B-orange.svg)](https://www.rust-lang.org/)
@@ -172,11 +172,11 @@ Open3D and PCL do that.
 | One contract for every method: the `Aligner` trait | Done ([contract](ideas/architecture/contract.md)) |
 | Benchmark: one-shot methods, trackers, models and situations, many seeds | Done ([protocol](docs/benchmark/protocol.md), [results](docs/benchmark/results.md)) |
 | A certificate: how far any pose can be below an answer | Closes on 7 of 16 clean instances, never with strays ([method](docs/benchmark/certified-method.md)) |
-| Comparison with Open3D and small_gicp | Planned |
+| Comparison with Open3D and small_gicp | On simulated frames ([table](docs/benchmark/comparison.md)) |
 
 **[caution] Known limits today.**
 
-- **All simulated**: no real recording yet, and no comparison with other libraries.
+- **All simulated**: no real recording yet.
 - **The box comes from the truth**, standing in for a detector. With a tight one,
   12 of 14 scenes hold, on one seed ([films](docs/scene-films.md)).
 - **A wider box breaks some**: up to 3 scenes fall to 0 of 72, one of them on one
