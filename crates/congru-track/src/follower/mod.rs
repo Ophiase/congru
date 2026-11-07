@@ -1,6 +1,7 @@
 //! An object followed through depth frames in a whole scene: the region says
 //! roughly where, the frame judges, and a frame that says nothing is held through.
 
+mod doubt;
 mod hold;
 mod scan;
 
@@ -24,14 +25,12 @@ pub struct Sight<'frame> {
     pub region: &'frame DepthImage,
 }
 
-/// A frame's outcome.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Answer {
     /// `None` says the object is lost, or not found yet.
     pub pose: Option<RigidTransform>,
     /// What the tracker said, on a frame with little else than the object.
     pub tracked: Option<Update>,
-    /// The points aligned on.
     pub scan: Option<PointCloud>,
 }
 
@@ -44,6 +43,8 @@ pub struct Follower {
     scope: Scope,
     camera: Camera,
     search_every: usize,
+    doubt_every: Option<usize>,
+    rival: Option<RigidTransform>,
     frame: usize,
 }
 
@@ -66,6 +67,8 @@ impl Follower {
             scope: Scope::new(part, span),
             camera,
             search_every: 1,
+            doubt_every: None,
+            rival: None,
             frame: 0,
         })
     }
@@ -90,17 +93,29 @@ impl Follower {
         self.hold.forecast()
     }
 
+    /// A believed pose is put to a fresh search every `frames` frames: a wrong one
+    /// can confirm itself for a whole film.
+    #[must_use]
+    pub fn doubting_every(self, frames: usize) -> Self {
+        Self {
+            doubt_every: Some(frames.max(1)),
+            ..self
+        }
+    }
+
     /// One frame, from the forecast, or from a search when there is none.
     pub fn step(&mut self, sight: Sight<'_>) -> Answer {
-        let from = self.forecast().or_else(|| {
-            self.frame
+        let from = match self.forecast() {
+            Some(forecast) => Some(self.challenged(sight, forecast)),
+            None => self
+                .frame
                 .is_multiple_of(self.search_every)
                 .then(|| {
                     self.finder
                         .located_in(sight.depth, sight.region, &self.camera)
                 })
-                .flatten()
-        });
+                .flatten(),
+        };
         self.step_from(sight, from)
     }
 

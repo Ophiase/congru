@@ -33,6 +33,7 @@ const CREEP_PER_FRAME: f64 = 0.004;
 const SURFACE_SAMPLING: f64 = 1.0 / 50.0;
 /// A lost target is searched at one frame in this many: a search costs seconds.
 const SEARCH_EVERY: usize = 6;
+const DOUBT_EVERY: usize = 6;
 
 /// One filmed frame: what is drawn, and how far off the answer is, as a share of
 /// the target's size.
@@ -49,8 +50,9 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Shot>> {
     let camera = camera_of(scene);
     let target = &scene.target().mesh;
     let (_, span) = extent(target);
-    let mut follower =
-        Follower::new(target, camera, span, tour_settings(span)?)?.searching_every(SEARCH_EVERY);
+    let mut follower = Follower::new(target, camera, span, tour_settings(span)?)?
+        .searching_every(SEARCH_EVERY)
+        .doubting_every(DOUBT_EVERY);
     let samples = target
         .sample_surface(Distance::new(span * SURFACE_SAMPLING)?)?
         .cloud()
@@ -191,6 +193,37 @@ mod tests {
             .join("../../scenes/crate-among-crates.toml");
         let shots = film(&Scene::load(&path)?, 1)?;
         assert!(shots[0].off < 0.05, "{:.3} of its size off", shots[0].off);
+        Ok(())
+    }
+
+    #[test]
+    fn a_wrong_pose_believed_is_taken_back_by_doubt() -> anyhow::Result<()> {
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../scenes/part-on-table.toml");
+        let scene = Scene::load(&path)?;
+        let camera = camera_of(&scene);
+        let target = &scene.target().mesh;
+        let (_, span) = extent(target);
+        let mut follower =
+            Follower::new(target, camera, span, tour_settings(span)?)?.doubting_every(2);
+        let turned = RigidTransform::from_axis_angle(congru::Vector::z() * 1.5, [0.02, 0.0, 0.0]);
+        let mut last = None;
+        for frame in 0..8 {
+            let (_, depth, truth) = shot(&scene, &camera, frame);
+            let region = region_of_interest(&depth, &camera, target, &truth, frame as u64);
+            let sight = Sight {
+                depth: &depth,
+                region: &region,
+            };
+            let answer = if frame == 0 {
+                follower.step_from(sight, Some(turned.then(&truth)))
+            } else {
+                follower.step(sight)
+            };
+            last = answer.pose.map(|pose| pose.rotation_error_to(&truth));
+        }
+        let off = last.ok_or_else(|| anyhow::anyhow!("no answer"))?;
+        assert!(off < 0.1, "{off} rad off");
         Ok(())
     }
 }

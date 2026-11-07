@@ -13,7 +13,7 @@ would close it.
 | 2 | Confidently wrong as the headline | The rate at which a believed pose is false | No answer can be refused without losing most frames |
 | 3 | Real recordings with a truth | The first number that is not simulated | Results collapse: then that is the finding |
 | 4 | Compared on the same frames | Where Open3D and small_gicp win | Never: losing is a result too |
-| 5 | Scale, then slight deformation | How far a rigid answer holds, a breaking curve | A rigid fit holds past any real error |
+| 5 | [Scale, then slight deformation](method/not-quite-the-model.md) | How far a rigid answer holds, a breaking curve | A rigid fit holds past any real error |
 | 6 | Where to put the marks | A placement chosen for what it pins down | It does not beat hand-placed marks |
 | 7 | More realistic scenes | Better pictures | **[caution]** They prove nothing a real recording would not |
 

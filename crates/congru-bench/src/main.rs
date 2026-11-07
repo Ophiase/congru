@@ -48,6 +48,9 @@ fn main() -> anyhow::Result<()> {
     if flag("--scenes") {
         return draw_scenes();
     }
+    if flag("--breaking") {
+        return measure::breaking::run(std::path::Path::new("docs/benchmark/breaking.md"));
+    }
     if flag("--certified") {
         return measure::certified::run(std::path::Path::new("docs/benchmark/certified.md"));
     }
