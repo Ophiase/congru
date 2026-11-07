@@ -3,28 +3,48 @@
 Newest first. Every number is one sensor seed; the frames of a path are not
 independent.
 
-## 2026-11-07, 0.1.26
+## 2026-11-07, 0.1.27
 
-**Done**: films readable, every film in one page, a wider box measured, a certificate
-with its attacks, the benchmark rerun, the direction written in
-[what would make it the reference](../ideas/reference.md).
+**Done**: the direction in
+[what would make it the reference](../ideas/reference.md), and these:
+
+| Topic | Result |
+| --- | --- |
+| [Films](demos.md) | Thick outline, the box enlarged, all on one page |
+| [A wider box](../ideas/method/box-as-test.md) | Measured: it breaks some scenes |
+| [Doubt](../ideas/method/doubt.md) | Low-angle bracket, wider box: 0 to 60 of 72 |
+| [Certificate](benchmark/certified.md) | Closes on 27 of 32, strays included |
+| [Comparison](benchmark/comparison.md) | Same accuracy; Open3D 3 times faster |
+| [Off the model](benchmark/breaking.md) | A scale fixes a wrong size, not a bend |
+| Public pages | Audited against the code by a second agent |
 
 **What fails**:
 
-- **The box was flattering**: at ±10 %, +40 %, the low-angle bracket falls to 0
-  of 72 on one seed and is believed all along
-  ([table](../ideas/method/box-as-test.md)).
-- **The certificate never closes with strays**.
+- **Nothing real**: no real recording, and the box still comes from the truth.
+- **A wider box still breaks** the crate, the flat gear and, on one seed, the close
+  car. The crate is believed wrong for the whole film: a real twin.
+- **A proof is not the truth**: on 12 marks with strays the proved optimum is often
+  far from the motion that made them.
 - **The tracker scores 33.7 % over every model of the benchmark**, far under what
   the demos show; not compared with the old page, which held one model.
 - **Following costs about 0.4 s a frame**: "near real time" below was too kind.
 
 **Decided alone, for the author to check**:
 
-- **The films keep the tight box**: the wider ones are tabled, not filmed. Changing
-  it would move every table.
 - **No GPU**: rendering is 6 % of a frame and each call 0.18 ms
-  ([why](../ideas/architecture/acceleration.md)).
+  ([why](../ideas/architecture/acceleration.md)). Threads in tracking come first:
+  not done.
+- **The films keep the tight box**: wider ones are tabled. Doubt is on in the films,
+  off by default in the library.
+- **The title** "Efficient" became "you can check": Open3D is faster.
+- **`Icp` still stops at 1e-7**, 2.5 times slower for no gain here; changing it
+  moves every table.
+
+**For the author**:
+
+- **Real data**: the usual sets come as archives, which the download rule forbids.
+- **The history** weighs about 280 MB; while the repository is private it can still
+  be cleaned, never after.
 
 ## 2026-11-06, 0.1.24
 

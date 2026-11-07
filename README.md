@@ -18,8 +18,8 @@ the motion between them and says how sure it is, from Rust, Python or C.
 | What it does | What it does not |
 | --- | --- |
 | Finds a rigid motion from marks, a scan or depth frames, and says which motions the data left free | Bend, segment, view, or read a zoo of file formats |
-| [Proves](docs/benchmark/certified-method.md), on a few clean marks, how far an answer can be from the best one | Prove anything on a whole scan, or with strays, yet |
-| Matches [Open3D and small_gicp](docs/benchmark/comparison.md) in accuracy on the same frames | Run in real time on a whole scene, or on any real recording yet |
+| [Proves](docs/benchmark/certified-method.md), on tens of marks, strays included, how far an answer can be from the best one | Prove anything on a whole scan, or that the best one is the truth |
+| Matches [Open3D and small_gicp](docs/benchmark/comparison.md) in accuracy on the same frames | Beat Open3D's speed, run in real time on a whole scene, or meet a real recording yet |
 
 ## Start here
 
@@ -171,7 +171,7 @@ Open3D and PCL do that.
 | Real recordings, RGB-D and lidar | Milestone 2 ([milestones](ideas/milestones.md)) |
 | One contract for every method: the `Aligner` trait | Done ([contract](ideas/architecture/contract.md)) |
 | Benchmark: one-shot methods, trackers, models and situations, many seeds | Done ([protocol](docs/benchmark/protocol.md), [results](docs/benchmark/results.md)) |
-| A certificate: how far any pose can be below an answer | Closes on 7 of 16 clean instances, never with strays ([method](docs/benchmark/certified-method.md)) |
+| A certificate: how far any pose can be below an answer | Closes on 27 of 32 instances of tens of marks ([graded](docs/benchmark/certified.md), [method](docs/benchmark/certified-method.md)) |
 | Comparison with Open3D and small_gicp | On simulated frames ([table](docs/benchmark/comparison.md)) |
 
 **[caution] Known limits today.**
