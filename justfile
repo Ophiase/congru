@@ -55,6 +55,11 @@ bench-certified:
 bench-breaking:
     cargo run --release -q -p congru-bench -- --breaking
 
+[doc("The same frames through congru, Open3D and small_gicp, one thread: writes docs/benchmark/comparison.md")]
+comparison:
+    RAYON_NUM_THREADS=1 cargo run --release -q -p congru-bench -- --comparison
+    OMP_NUM_THREADS=1 uv run --no-project --python 3.12 --with numpy --with open3d --with small_gicp python ideas/experiments/comparison/compare.py out/comparison docs/benchmark/comparison.md
+
 [doc("Build the C ABI and run the C++ example against it")]
 capi-example:
     cargo build --release -q -p congru-capi
