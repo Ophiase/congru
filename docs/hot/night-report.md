@@ -3,6 +3,26 @@
 Newest first. Every number is one sensor seed; the frames of a path are not
 independent.
 
+## 2026-11-07, after 0.1.27
+
+**Done**, each committed on `main`:
+
+| Order | Result |
+| --- | --- |
+| [Aligned on the mesh](../../ideas/method/representations.md) | Exact, or a read on a field |
+| [Speed](../../ideas/architecture/acceleration.md) | 395 to 110 ms a frame, same answers |
+| [A GPU](../benchmark/hardware.md) | Optional, measured; loses on a GTX 960 |
+| [f32, no_std](../benchmark/embedded.md) | 20 KB for a bare Cortex-M, not run on one |
+| C ABI | Surfaces, Multistart, similarity, certificate |
+| [The failing ones](../failing.md) | Films of what fails, until fixed |
+| [The proof](../../ideas/method/certificate.md) | On the surface; lemma written, drawn |
+| Scenes | A car shaped like one; a parking lot, a workshop |
+
+**Tried and dropped**: the field in the tracker's short alignment. It reads the far
+side too: bracket behind a crate 66 to 58 of 72.
+
+**Not done**: threads in every loop; real recordings, on their way.
+
 ## 2026-11-07, 0.1.27
 
 **Done**: the direction in

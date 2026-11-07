@@ -1,7 +1,7 @@
 # Next session
 
 **[defined]** The author's orders after 0.1.27, to read first, in autonomy.
-Done means it runs and is measured, not that it is written here.
+Done means it runs and is measured. [What is done](../docs/hot/night-report.md).
 
 ## In order
 

@@ -1,41 +1,15 @@
 use congru::{Alignment, Distance, Error, Icp, Kernel, PointCloud, Prior, RigidTransform};
 
+mod update;
+
+pub use update::{Phase, Update};
+
 use crate::noise::{LearnedNoise, deviation_of};
 use crate::{ModelView, MotionFilter, Settings};
 
 /// Tukey's constant for 95 % efficiency on Gaussian residuals.
 const KERNEL_DEVIATIONS: f64 = 4.685;
 const GATE_DEVIATIONS: f64 = 5.0;
-
-/// Which of the two phases produced a frame's pose.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Phase {
-    /// Predicted from the last frames, refined by local iterations pulled
-    /// toward the prediction.
-    Follow,
-    /// Searched over all rotations: the first frame, or a frame the follow
-    /// phase could not explain.
-    Find,
-}
-
-/// One frame's outcome. `pose` maps the model's frame to the sensor's.
-#[derive(Debug, Clone, PartialEq)]
-pub struct Update {
-    pub pose: RigidTransform,
-    pub phase: Phase,
-    /// Whether the next frame may follow from this one.
-    pub trusted: bool,
-    pub alignment: Alignment,
-}
-
-impl Update {
-    /// What the frame alone says of the pose, before the tracker's filter: `pose`
-    /// is steadier and lags behind what a jolt of the camera did at once.
-    #[must_use]
-    pub fn measured(&self) -> RigidTransform {
-        self.alignment.transform.inverse()
-    }
-}
 
 /// Follows one model through a stream of point clouds.
 #[derive(Debug)]
@@ -181,9 +155,10 @@ impl<View: ModelView> congru::Aligner for Tracker<View> {
 
     fn align(&mut self, frame: &congru::Frame<'_>) -> Result<congru::Estimate, Error> {
         let update = self.update_from(frame.scan, frame.guess)?;
+        let defensible = update.defensible();
         Ok(congru::Estimate {
             pose: update.pose,
-            trusted: update.trusted,
+            trusted: defensible,
             observability: update.alignment.observability,
         })
     }

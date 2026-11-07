@@ -74,9 +74,10 @@ pub fn failing(docs: &Path) -> anyhow::Result<()> {
         }
         writeln!(
             page,
-            "## Under {}\n\n{}\n\n{failed}",
+            "## Under {}\n\n{}\n\n{}\n",
             case.name,
-            wrapped(&format!("Holding: {}.", holding.join(", ")))
+            wrapped(&format!("Holding: {}.", holding.join(", "))),
+            failed.trim_end()
         )?;
     }
     std::fs::write(docs.join("failing.md"), page.trim_end().to_owned() + "\n")?;
