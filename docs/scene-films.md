@@ -59,8 +59,7 @@ its size, not all of it.
 
 ![car-close-by](figures/scenes/car-close-by.gif)
 
-48 of 72 within 2 % of its size, median 0.63 %; 48 within 2°; 0 believed and
-wrong.
+0 of 72 within 2 % of its size, median inf %; 0 within 2°; 0 believed and wrong.
 
 ## car on a road
 
@@ -69,7 +68,7 @@ along the side.
 
 ![car-on-a-road](figures/scenes/car-on-a-road.gif)
 
-54 of 72 within 2 % of its size, median 0.80 %; 54 within 2°; 12 believed and
+66 of 72 within 2 % of its size, median 0.77 %; 64 within 2°; 0 believed and
 wrong.
 
 ## crate among crates
@@ -111,6 +110,16 @@ noise-free detail.
 72 of 72 within 2 % of its size, median 0.40 %; 72 within 2°; 0 believed and
 wrong.
 
+## parking lot
+
+One car among a row of parked ones, nearly alike, with a van and a tree: only
+the box says which.
+
+![parking-lot](figures/scenes/parking-lot.gif)
+
+72 of 72 within 2 % of its size, median 0.84 %; 72 within 2°; 0 believed and
+wrong.
+
 ## part on a table
 
 A machined bracket on a table, a mug and a crate beside it, a wall behind.
@@ -137,7 +146,7 @@ sparse, partly seen.
 
 ![street-corner](figures/scenes/street-corner.gif)
 
-72 of 72 within 2 % of its size, median 1.04 %; 70 within 2°; 0 believed and
+72 of 72 within 2 % of its size, median 0.97 %; 66 within 2°; 0 believed and
 wrong.
 
 ## twin brackets
@@ -147,4 +156,14 @@ A bracket among three identical ones on a table: only the box tells which.
 ![twin-brackets](figures/scenes/twin-brackets.gif)
 
 72 of 72 within 2 % of its size, median 0.69 %; 72 within 2°; 0 believed and
+wrong.
+
+## workshop
+
+A bracket on a crowded bench, among gears, mugs, crates and a twin further back,
+a wall behind.
+
+![workshop](figures/scenes/workshop.gif)
+
+72 of 72 within 2 % of its size, median 0.74 %; 72 within 2°; 0 believed and
 wrong.

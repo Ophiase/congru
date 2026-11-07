@@ -21,6 +21,12 @@ independent.
 **Tried and dropped**: the field in the tracker's short alignment. It reads the
 far side too: bracket behind a crate 66 to 58 of 72.
 
+**Lost**: the shaped car broke car close by, 48 to 0 of 72: at 6 m the simulated
+stereo noise is about 18 cm, and the box it used to be held on noise better.
+
+**Won**: a tracker that refuses what it cannot defend, believed and wrong 66.3 to
+32.0 %, same successes.
+
 **Not done**: threads in every loop; real recordings, on their way.
 
 ## 2026-11-07, 0.1.27

@@ -110,7 +110,7 @@ depends on what is known beforehand and on what the data does
 [GeoTransformer]: https://arxiv.org/abs/2202.06688
 
 Every method is one [`Aligner`](ideas/architecture/contract.md) and goes
-through the same [benchmark](docs/benchmark/protocol.md): four models, fourteen
+through the same [benchmark](docs/benchmark/protocol.md): four models, sixteen
 scenes, thirteen situations with one trouble at a time, six tracking sequences,
 many seeds. [The results](docs/benchmark/results.md) say where each method wins
 and where it breaks.
@@ -178,7 +178,7 @@ Open3D and PCL do that.
 
 - **All simulated**: no real recording yet.
 - **The box comes from the truth**, standing in for a detector. With a tight one,
-  12 of 14 scenes hold, on one seed ([films](docs/scene-films.md)).
+  15 of 16 scenes hold, on one seed ([films](docs/scene-films.md)).
 - **A wider box breaks some**: up to 3 scenes fall to 0 of 72, one of them on one
   seed only; a wrong pose can be held for a whole film
   ([table](ideas/method/box-as-test.md)).

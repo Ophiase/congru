@@ -7,7 +7,7 @@ them again and prints the tables below. All is simulated.
 | --- | --- |
 | [Point clouds over time](#a--point-clouds-over-time) | Six troubles, one at a time |
 | [A depth camera](#b--a-simulated-depth-camera) | A turning part, alone or in a room |
-| [Scene films](scene-films.md) | Fourteen ordinary scenes, each with its numbers |
+| [Scene films](scene-films.md) | Sixteen ordinary scenes, each with its numbers |
 | [The failing ones](failing.md) | Every scene that fails today, filmed, until fixed |
 | [The cases](projection-cases.md) | Still frames of what goes right and wrong |
 
