@@ -110,11 +110,10 @@ depends on what is known beforehand and on what the data does
 [GeoTransformer]: https://arxiv.org/abs/2202.06688
 
 Every method is one [`Aligner`](ideas/architecture/contract.md) and goes
-through the same [benchmark](docs/benchmark/protocol.md): three families of
-models, thirteen situations that each break one hypothesis, six tracking
-sequences, many seeds. A default is a default because a table says so, and
-[the results](docs/benchmark/results.md) say where each method wins and
-where it breaks.
+through the same [benchmark](docs/benchmark/protocol.md): four models, fourteen
+scenes, thirteen situations with one trouble at a time, six tracking sequences,
+many seeds. [The results](docs/benchmark/results.md) say where each method wins
+and where it breaks.
 
 <details>
 <summary>The ideas, in pictures</summary>
@@ -137,13 +136,13 @@ of a pair as its distance grows.*
 </details>
 
 Every figure on this page is computed by the library from a seeded
-scenario: `just figures` draws them again.
+scenario: `just figures` draws them again, `just demo` the animations.
 
 ## Hypotheses, and dropping them
 
-Every hypothesis buys speed. congru states each one, is excellent under
-all of them first, then offers the next rung for when one fails; the
-[benchmark](docs/benchmark/protocol.md) has a situation that breaks each.
+Every hypothesis buys speed. congru states each one, then climbs to the next rung
+for when one fails; the [benchmark](docs/benchmark/protocol.md) breaks each. Bending
+modes, kinematic chains and distortion as an unknown are not built yet.
 
 | congru starts from | Which buys | The next rung |
 | --- | --- | --- |
@@ -172,16 +171,16 @@ Open3D and PCL do that.
 | Real recordings, RGB-D and lidar | Milestone 2 ([milestones](ideas/milestones.md)) |
 | One contract for every method: the `Aligner` trait | Done ([contract](ideas/architecture/contract.md)) |
 | Benchmark: one-shot methods, trackers, models and situations, many seeds | Done ([protocol](docs/benchmark/protocol.md), [results](docs/benchmark/results.md)) |
-| A certificate: how far any pose can be below an answer | Done on few clean marks, open with strays ([method](docs/benchmark/certified-method.md)) |
+| A certificate: how far any pose can be below an answer | Closes on 7 of 16 clean instances, never with strays ([method](docs/benchmark/certified-method.md)) |
 | Comparison with Open3D and small_gicp | Planned |
 
 **[caution] Known limits today.**
 
 - **All simulated**: no real recording yet, and no comparison with other libraries.
 - **The box comes from the truth**, standing in for a detector. With a tight one,
-  12 of 14 scenes hold ([films](docs/scene-films.md)).
-- **A wider box breaks some**: up to 4 scenes fall to 0 of 72, some on one seed
-  only; a wrong pose can be held for a whole film
+  12 of 14 scenes hold, on one seed ([films](docs/scene-films.md)).
+- **A wider box breaks some**: up to 3 scenes fall to 0 of 72, one of them on one
+  seed only; a wrong pose can be held for a whole film
   ([table](ideas/method/box-as-test.md)).
 - **Without a box**, demo B in a room holds most frames, and twins cannot be told
   apart ([why](docs/answer-step.md)).
@@ -199,7 +198,7 @@ repository, not yet on crates.io or PyPI ([install](docs/install.md)).
 just           # show all the recipes
 just test      # every property, against the synthetic truth
 just figures   # recompute the figures of this page
-just demo      # run both demos, rewrite the animations, print the tables
+just demo      # run the demos, rewrite the animations, print the tables
 just bench     # every method on every situation: docs/benchmark/results.md
 ```
 

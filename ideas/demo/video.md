@@ -10,7 +10,7 @@
   tracking holds and where it breaks.
 
 Written as GIF from Rust, like the figures: no plotting stack, nothing drawn
-by hand. The same frames, at full rate, show it runs in real time.
+by hand. **[caution]** Computed offline: it does not run in real time yet.
 
 ## [defined] Three layers side by side
 
