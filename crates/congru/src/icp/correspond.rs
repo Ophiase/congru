@@ -1,7 +1,7 @@
 use crate::fit::Match;
 use crate::geometry::count_as_float;
 use crate::search::map;
-use crate::{Icp, Metric, PointCloud, RigidTransform, Surface, Target};
+use crate::{Icp, Metric, Point, PointCloud, RigidTransform, Surface, Target};
 
 /// The kept, weighted pairs between the source moved by `pose` and the
 /// target: nearest neighbours, minus those beyond the correspondence
@@ -42,22 +42,27 @@ pub(crate) fn correspond_on(
     let limit = icp
         .max_correspondence_distance
         .map_or(f64::INFINITY, |distance| distance.get().powi(2));
-    let pairs: Vec<(f64, Match)> = map(source.points(), |point| {
-        let moved = pose.apply(point);
-        surface.closest(&moved).map(|closest| {
+    let moved: Vec<Point> = source
+        .points()
+        .iter()
+        .map(|point| pose.apply(point))
+        .collect();
+    let pairs: Vec<(f64, Match)> = surface
+        .closest_all(&moved)
+        .into_iter()
+        .zip(&moved)
+        .filter_map(|(closest, source)| {
+            let closest = closest?;
             let pair = Match {
-                source: moved,
+                source: *source,
                 target: closest.point,
                 normal: Some(closest.normal),
                 weight: 1.0,
             };
-            (closest.squared_distance, pair)
+            Some((closest.squared_distance, pair))
         })
-    })
-    .into_iter()
-    .flatten()
-    .filter(|(squared_distance, _)| *squared_distance <= limit)
-    .collect();
+        .filter(|(squared_distance, _)| *squared_distance <= limit)
+        .collect();
     kept(pairs, source, icp)
 }
 

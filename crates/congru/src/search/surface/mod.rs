@@ -8,6 +8,7 @@ mod triangle;
 use nalgebra::Unit;
 
 pub use field::DistanceField;
+pub use filling::Grid;
 pub use tree::MeshIndex;
 
 use crate::{Point, Vector};
@@ -25,4 +26,10 @@ pub struct Closest {
 pub trait Surface: Sync {
     /// `None` where the shape says nothing, past a field's band.
     fn closest(&self, query: &Point) -> Option<Closest>;
+
+    /// [`Surface::closest`] for each query, in order: on every core by default, on
+    /// a device where a shape has one.
+    fn closest_all(&self, queries: &[Point]) -> Vec<Option<Closest>> {
+        crate::search::map(queries, |query| self.closest(query))
+    }
 }

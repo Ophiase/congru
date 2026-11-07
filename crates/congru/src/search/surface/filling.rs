@@ -8,13 +8,14 @@ use crate::{Error, Point, TriangleMesh, Vector};
 const BLOCK: usize = 8;
 const MOST_CELLS: usize = 1 << 31;
 
-/// Where a field's samples lie.
+/// Where a field's samples lie: a sample's place is `origin + voxel * (i, j, k)`.
 #[derive(Debug)]
-pub(super) struct Grid {
-    pub(super) origin: Vector,
-    pub(super) voxel: f64,
-    pub(super) band: f64,
-    pub(super) sizes: [usize; 3],
+pub struct Grid {
+    pub origin: Vector,
+    pub voxel: f64,
+    /// How far from the surface its values are truthful.
+    pub band: f64,
+    pub sizes: [usize; 3],
 }
 
 impl Grid {

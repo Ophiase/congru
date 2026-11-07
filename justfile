@@ -68,6 +68,10 @@ comparison:
 bench-on-mesh:
     RAYON_NUM_THREADS=1 cargo run --release -q -p congru-bench -- --on-mesh
 
+[doc("What a batch of distances costs on each kind of hardware: writes docs/benchmark/hardware.md")]
+bench-hardware:
+    cargo run --release -q -p congru-gpu --example hardware
+
 [doc("Build the C ABI and run the C++ example against it")]
 capi-example:
     cargo build --release -q -p congru-capi

@@ -55,8 +55,8 @@ graph TD
 
 - **Floating point**: the bound is widened by a small slack, not proved in exact
   arithmetic.
-- **The target**: `run` proves on samples, `run_on_mesh` on the surface itself, at
-  a higher cost per query.
+- **The target**: `run` proves on samples, `run_on_mesh` on the surface itself,
+  at a higher cost per query.
 - **A box of translations**: nothing is claimed outside it.
 - **Scale**: tens of points and seconds of search; past its budget the bound holds
   but stays open, and says so.

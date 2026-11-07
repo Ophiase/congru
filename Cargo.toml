@@ -13,6 +13,7 @@ members = [
   "crates/congru-scene",
   "crates/congru-cli",
   "crates/congru-capi",
+  "crates/congru-gpu",
 ]
 
 [workspace.package]

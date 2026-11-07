@@ -30,6 +30,18 @@ impl DistanceField {
         Ok(Self { grid, values })
     }
 
+    /// Where its samples lie.
+    #[must_use]
+    pub const fn grid(&self) -> &Grid {
+        &self.grid
+    }
+
+    /// Its samples, the first axis running fastest.
+    #[must_use]
+    pub const fn values(&self) -> &[f32] {
+        &self.values
+    }
+
     /// How many bytes its grid holds.
     #[must_use]
     pub const fn bytes(&self) -> usize {
