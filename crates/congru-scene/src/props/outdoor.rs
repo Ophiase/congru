@@ -6,23 +6,66 @@ use nalgebra::Vector3;
 
 const SEGMENTS: u32 = 24;
 
-/// A car: a body, a cabin set back, four wheels along the width.
+/// The side of a saloon as shares of its length and height, around its middle: a
+/// bonnet, a sloped windscreen, a roof, a rear window and a boot.
+const SIDE: [[f64; 2]; 11] = [
+    [-0.5, -0.3],
+    [0.5, -0.3],
+    [0.5, -0.1],
+    [0.47, 0.02],
+    [0.2, 0.09],
+    [0.03, 0.46],
+    [-0.2, 0.5],
+    [-0.36, 0.13],
+    [-0.47, 0.1],
+    [-0.5, 0.0],
+    [-0.5, -0.15],
+];
+/// The cabin is narrower than the body: the sides slope in above the waist.
+const WAIST: f64 = 0.1;
+const CABIN_WIDTH: f64 = 0.84;
+
+/// A saloon: a shaped body, a narrower cabin, bumpers, mirrors, four wheels.
 pub fn car([length, width, height]: [f64; 3]) -> Result<TriangleMesh, Error> {
-    let (half_length, half_width) = (length / 2.0, width / 2.0);
+    let half_width = width / 2.0;
     let radius = 0.18 * height;
     let tread = 0.12 * width;
     let wheel = Solids::default()
         .cylinder([0.0, 0.0, -tread / 2.0], radius, tread, SEGMENTS)
         .build()?;
+    let outline = SIDE.map(|[along, up]| [along * length, up * height]);
+    let lower = outline.map(|[along, up]| [along, up.min(WAIST * height)]);
+    let body = Solids::default()
+        .extrusion(&lower, -half_width, half_width)
+        .build()?;
+    let cabin = Solids::default()
+        .extrusion(
+            &outline,
+            -CABIN_WIDTH * half_width,
+            CABIN_WIDTH * half_width,
+        )
+        .build()?;
+    let standing =
+        RigidTransform::from_axis_angle(Vector3::x() * FRAC_PI_2, [0.0, 0.0, height / 2.0]);
     let mut solids = Solids::default();
     solids
+        .merge(&body, &standing)
+        .merge(&cabin, &standing)
         .cuboid(
-            [-half_length, -half_width, radius],
-            [half_length, half_width, 0.55 * height],
+            [0.49 * length, -0.98 * half_width, 0.2 * height],
+            [0.52 * length, 0.98 * half_width, 0.32 * height],
         )
         .cuboid(
-            [-0.3 * length, -0.42 * width, 0.55 * height],
-            [0.2 * length, 0.42 * width, height],
+            [-0.52 * length, -0.98 * half_width, 0.2 * height],
+            [-0.49 * length, 0.98 * half_width, 0.32 * height],
+        )
+        .cuboid(
+            [0.1 * length, half_width, 0.6 * height],
+            [0.14 * length, 1.1 * half_width, 0.66 * height],
+        )
+        .cuboid(
+            [0.1 * length, -1.1 * half_width, 0.6 * height],
+            [0.14 * length, -half_width, 0.66 * height],
         );
     for (across, along) in [(-0.32, -1.0), (0.32, -1.0), (-0.32, 1.0), (0.32, 1.0)] {
         let pose = RigidTransform::from_axis_angle(
