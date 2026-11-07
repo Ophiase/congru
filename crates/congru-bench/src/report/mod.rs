@@ -45,13 +45,11 @@ pub fn page(
     writeln!(page, "# Benchmark results\n")?;
     writeln!(
         page,
-        "Written by `just bench` from the evaluation seeds, {} per situation. The
-\
-         source of truth is [results.csv](results.csv): this page only lays it
-\
-         out. The protocol, the situations and the metrics are defined in\n\
-         [protocol.md](protocol.md). A cell reads *success rate · median\n\
-         rotation error*; times are from the machine that wrote this page.\n",
+        "Written by `just bench` from the evaluation seeds, {} per situation.\n\n\
+         - **The source of truth** is [results.csv](results.csv), laid out here.\n\
+         - **The protocol**, its situations and metrics: [protocol.md](protocol.md).\n\
+         - **A cell** reads *success rate · median rotation error*; times are from the\n  \
+         machine that wrote this page.\n",
         results.seeds
     )?;
     page.push_str(&leaderboard(results)?);

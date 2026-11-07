@@ -7,5 +7,5 @@ mod target;
 
 pub use alignment::{Alignment, StopReason};
 pub use config::{Convergence, Icp, Metric};
-pub use global::Multistart;
+pub use global::{Certificate, Certifier, Multistart};
 pub use target::Target;

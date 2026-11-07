@@ -1,7 +1,26 @@
 # Demos
 
-Both animations are computed from real runs, frame by frame; `just demo`
-writes them again and prints the tables below.
+Every animation is computed from real runs, frame by frame; `just demo` writes
+them again and prints the tables below. All is simulated.
+
+| Film | What it shows |
+| --- | --- |
+| [Point clouds over time](#a--point-clouds-over-time) | Six troubles, one at a time |
+| [A depth camera](#b--a-simulated-depth-camera) | A turning part, alone or in a room |
+| [Scene films](scene-films.md) | Fourteen ordinary scenes, each with its numbers |
+| [The cases](projection-cases.md) | Still frames of what goes right and wrong |
+
+## The scenes at a glance
+
+<p align="center">
+  <img src="figures/scenes/part-on-a-table.gif" alt="A bracket on a table" width="49%">
+  <img src="figures/scenes/bin-of-parts.gif" alt="A gear on a jumble of parts" width="49%">
+  <img src="figures/scenes/shelf-of-mugs.gif" alt="A row of mugs" width="49%">
+  <img src="figures/scenes/street-corner.gif" alt="A car at a corner" width="49%">
+</p>
+
+Left, the scene; middle, the depth; right, what the box holds, enlarged. The green
+outline is the pose found; the number, how far off.
 
 ## A — point clouds over time
 

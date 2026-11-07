@@ -47,6 +47,10 @@ bench-fresh:
 bench-tuning seeds="6":
     cargo run --release -q -p congru-bench -- --tuning --seeds {{ seeds }} target/bench-tuning.md
 
+[doc("Grade the methods against a proved optimum: writes docs/benchmark/certified.md")]
+bench-certified:
+    cargo run --release -q -p congru-bench -- --certified
+
 [doc("Build the C ABI and run the C++ example against it")]
 capi-example:
     cargo build --release -q -p congru-capi

@@ -59,8 +59,14 @@ stay open, and [step 7 of the ladder](problem/cloud-ladder.md) shows why they ma
 **[sketch]** Far scenes: a stereo sensor has about 1 m of noise at 14 m, close to
 a car's height, so they are given a lidar's noise in their files.
 
+**[sketch]** What would make it the reference: [ranked](reference.md).
+
 **[sketch]** To pick up, in order:
 
+- **The certificate under strays**: it never closes with them
+  ([certificate](method/certificate.md)).
+- **A wider box**: the first search can lock on a wrong pose and hold it for a whole
+  film, and two scenes need a tight box ([the box](method/box-as-test.md)).
 - **A knock in a room**: a flat wrong pose confirms 0.84 and is believed for ten
   frames. Refusing a search under 0.3 or 0.5 of the recent amount changed no frame
   on ten cases, so it stays out.

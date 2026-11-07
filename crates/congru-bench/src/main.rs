@@ -48,6 +48,9 @@ fn main() -> anyhow::Result<()> {
     if flag("--scenes") {
         return draw_scenes();
     }
+    if flag("--certified") {
+        return measure::certified::run(std::path::Path::new("docs/benchmark/certified.md"));
+    }
     let cache = PathBuf::from(format!("target/bench/{pool:?}-{seeds}.tsv").to_lowercase());
     let mut session = Session::new(
         catalog::models()?,

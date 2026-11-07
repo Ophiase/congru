@@ -5,6 +5,18 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+## 0.1.26 — 2026-11-07
+
+- **A certificate**: `Certifier` bounds how far any pose can be below an answer,
+  and lists what it cannot exclude; methods
+  [graded on it](docs/benchmark/certified.md). It closes on clean marks, never yet
+  with strays.
+- **Readable films**: the outline drawn at the size shown, the box enlarged, in
+  [one page](docs/demos.md); each scene counts its frames believed and wrong.
+- **A wider box breaks some scenes**, measured on two seeds and said in the README;
+  the claim that it cost nothing is withdrawn.
+- **The benchmark rerun** on every model; rendering is 6 % of a frame, so no GPU.
+
 ## 0.1.25 — 2026-11-06
 
 - **An amount bar on a search changes no frame**: measured, left out, noted.

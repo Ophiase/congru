@@ -25,7 +25,7 @@ const HUES: u8 = 40;
 /// brick for the state, ink for the text.
 const ACCENTS: [[u8; 3]; 11] = [
     [245, 241, 232],
-    [63, 155, 92],
+    [10, 140, 70],
     [63, 155, 92],
     [201, 138, 28],
     [196, 74, 60],

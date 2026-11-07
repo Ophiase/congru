@@ -43,6 +43,10 @@ pub use fit::{Fit, Kernel, MotionKind, Observability, Prior, WeakMotion, fit_rig
 pub use geometry::{
     Distance, Fraction, OrientedCloud, Point, PointCloud, RigidTransform, TriangleMesh, Vector,
 };
-pub use icp::Multistart;
 pub use icp::{Alignment, Convergence, Icp, Metric, StopReason, Target};
+pub use icp::{Certificate, Certifier, Multistart};
 pub use search::{NearestNeighbors, Neighbor};
+
+#[cfg(doctest)]
+#[doc = include_str!("../README.md")]
+struct ReadmeExample;
