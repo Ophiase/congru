@@ -33,8 +33,9 @@ let alignment = Icp::default().align(&PointCloud::from_xyz(&scan)?, &target, &Ri
 let row_major: [f64; 16] = alignment.transform.to_row_major();
 ```
 
-Every method also implements the [`Aligner`](../ideas/architecture/contract.md)
-contract, so a caller can hold any of them as `Box<dyn Aligner>`.
+The methods of the benchmark implement the
+[`Aligner`](../ideas/architecture/contract.md) contract (`Local` holds an `Icp`,
+`Search` a `Multistart`), so a caller can hold any of them as `Box<dyn Aligner>`.
 
 ## Python
 

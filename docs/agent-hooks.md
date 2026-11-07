@@ -61,7 +61,7 @@ version.
 
 `just agent gate` runs `just check` then `just guards`; `just agent ci` adds
 the Python, C and licence checks when their tools are installed.
-`just install-hooks` sets `core.hooksPath` to `.githooks`, so every commit
+`just agent install-hooks` sets `core.hooksPath` to `.githooks`, so every commit
 runs `just guards` locally: no event API, no paid runner.
 
 ## Why the hook is the floor, not the ceiling

@@ -15,7 +15,7 @@ practice: every team rewrites ICP, tunes it on its own data, and cannot
 ship it to the robot. The project is:
 
 - **one small, typed, fast registration brick**, written once in Rust;
-- called from Python, C++ or firmware;
+- called from Python, C or C++, and one day firmware;
 - **measured against a known truth** under noise, outliers and partial
   views, not hoped for.
 
