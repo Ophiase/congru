@@ -5,7 +5,9 @@ use congru_synth::sequence::Handheld;
 use congru_track::{Follower, Settings, Sight};
 use congru_vision::{Camera, render};
 
-use crate::camera::detect::{region_of_interest, seed};
+#[cfg(test)]
+use crate::camera::detect::region_of_interest;
+use crate::camera::detect::{noisy_region, seed};
 
 use super::panels::{Seen, panels};
 use super::score::surface_error;
@@ -47,7 +49,7 @@ pub(super) struct Shot {
 /// The scene filmed for `frames` frames by a wandering camera, the target found
 /// by its shape inside a noisy box and followed. The truth gives the box, and
 /// otherwise only scores.
-pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Shot>> {
+pub fn film(scene: &Scene, frames: usize, noise: (f64, f64)) -> anyhow::Result<Vec<Shot>> {
     let camera = camera_of(scene);
     let target = &scene.target().mesh;
     let (_, span) = extent(target);
@@ -61,7 +63,7 @@ pub fn film(scene: &Scene, frames: usize) -> anyhow::Result<Vec<Shot>> {
     let seen = (0..frames)
         .map(|frame| {
             let (exact, depth, truth) = shot(scene, &camera, frame);
-            let region = region_of_interest(&depth, &camera, target, &truth, frame as u64);
+            let region = noisy_region(&depth, &camera, target, &truth, frame as u64, noise);
             let started = std::time::Instant::now();
             let pose = follower
                 .step(Sight {
@@ -200,7 +202,7 @@ mod tests {
     fn among_alike_crates_the_box_tells_which() -> anyhow::Result<()> {
         let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("../../scenes/crate-among-crates.toml");
-        let shots = film(&Scene::load(&path)?, 1)?;
+        let shots = film(&Scene::load(&path)?, 1, (0.05, 0.2))?;
         assert!(shots[0].off < 0.05, "{:.3} of its size off", shots[0].off);
         Ok(())
     }

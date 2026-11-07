@@ -41,6 +41,28 @@ $$
 - **Lower bound**: the least bound over the cubes still open.
 - **The proof is the comparison**: their gap is measured, never assumed.
 
+## The argument in full
+
+For a cube of centre $(r_0, t_0)$ and any pose $(r, t)$ in it:
+
+1. **A turn is short.** The angle between $R(r)$ and $R(r_0)$ is at most
+   $\lVert r - r_0 \rVert \le \sqrt 3 \sigma_r$: [the exponential map contracts
+   distance from the identity](https://doi.org/10.1007/s11263-008-0186-9).
+   **[to check]** Read again; a million drawn pairs in `certificate/proof.rs` agree.
+2. **So a point moves little.** A turn by angle $\theta$ moves $x$ by
+   $2 \sin(\theta / 2) \lVert x \rVert$, increasing up to $\theta = \pi$.
+3. **Distance is 1-Lipschitz.** By the triangle inequality, moving a point by
+   $\gamma$ changes its distance to any set by at most $\gamma$. So
+   $d_i - \gamma_i$ is below the distance anywhere in the cube.
+4. **The cost is monotone.** $\min(\max(u, 0)^2, \tau^2)$ grows with $u$, so the
+   sum of step 3's values is below $f$ everywhere in the cube.
+
+**[defined]** Each step holds for any set $Y$: the points, or the surface of a mesh
+with `run_on_mesh`, where the proof is about the surface itself.
+
+**[caution]** Trust: argued here, attacked by drawn poses, read by no outside
+reviewer, in floating point with a slack of $10^{-9}$ of the reach.
+
 ## What it answers
 
 - **A gap**: the given pose is at most this far above the optimum, in the

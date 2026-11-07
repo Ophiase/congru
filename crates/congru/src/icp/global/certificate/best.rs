@@ -1,6 +1,6 @@
 use super::cube::{Cube, Problem};
 use crate::search::map;
-use crate::{Point, PointCloud, RigidTransform, fit_rigid};
+use crate::{Point, RigidTransform, fit_rigid};
 
 const POLISH_STEPS: usize = 6;
 /// Cube centres polished per batch: one already closes what eight close, sixty-four
@@ -35,12 +35,7 @@ impl Best {
     /// Polishes from the lowest centres of a batch, each new, rather than from the
     /// best pose again: the upper bound sets the size of the tree, and being a
     /// millimetre high can multiply it without limit.
-    pub(super) fn polish_lowest(
-        &mut self,
-        problem: &Problem<'_>,
-        target: &PointCloud,
-        children: &[Cube],
-    ) {
+    pub(super) fn polish_lowest(&mut self, problem: &Problem<'_>, children: &[Cube]) {
         let mut lowest: Vec<&Cube> = children
             .iter()
             .filter(|cube| cube.value.is_finite())
@@ -51,16 +46,11 @@ impl Best {
             self.offer(problem.pose(first), first.value);
         }
         let starts: Vec<RigidTransform> = lowest.iter().map(|cube| problem.pose(cube)).collect();
-        self.polish_from(problem, target, &starts);
+        self.polish_from(problem, &starts);
     }
 
-    pub(super) fn polish_from(
-        &mut self,
-        problem: &Problem<'_>,
-        target: &PointCloud,
-        starts: &[RigidTransform],
-    ) {
-        for (pose, value) in map(starts, |start| polished(problem, target, *start)) {
+    pub(super) fn polish_from(&mut self, problem: &Problem<'_>, starts: &[RigidTransform]) {
+        for (pose, value) in map(starts, |start| polished(problem, *start)) {
             self.offer(pose, value);
         }
     }
@@ -68,11 +58,7 @@ impl Best {
 
 /// A few closed-form steps on the pairs within the truncation. The value returned is
 /// that of the pose returned, evaluated: only that may become an upper bound.
-fn polished(
-    problem: &Problem<'_>,
-    target: &PointCloud,
-    start: RigidTransform,
-) -> (RigidTransform, f64) {
+fn polished(problem: &Problem<'_>, start: RigidTransform) -> (RigidTransform, f64) {
     let (mut pose, mut kept, mut value) = (start, start, f64::INFINITY);
     for _ in 0..POLISH_STEPS {
         let (from, to): (Vec<Point>, Vec<Point>) = problem
@@ -80,9 +66,8 @@ fn polished(
             .iter()
             .filter_map(|point| {
                 let given = Point::from(point.coords + problem.centre);
-                let found = problem.index.nearest(&pose.apply(&given));
-                (found.squared_distance < problem.truncation_squared)
-                    .then(|| (given, target.points()[found.index]))
+                let (squared, nearest) = problem.shape.nearest(&pose.apply(&given))?;
+                (squared < problem.truncation_squared).then_some((given, nearest))
             })
             .unzip();
         let Ok(fit) = fit_rigid(&from, &to, None) else {

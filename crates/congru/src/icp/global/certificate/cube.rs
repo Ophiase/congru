@@ -1,11 +1,45 @@
 use std::cmp::Ordering;
 
 use crate::geometry::count_as_float;
-use crate::{NearestNeighbors, Point, RigidTransform, Vector};
+use crate::{MeshIndex, NearestNeighbors, Point, PointCloud, RigidTransform, Surface, Vector};
 
 /// Wider than rounding, as a share of the source's reach: a bound that errs must
 /// err low.
 const SLACK: f64 = 1e-9;
+
+/// What a source is aligned on: the proof is about this, samples or the surface.
+#[derive(Clone, Copy)]
+pub(super) enum Shape<'data> {
+    Points {
+        index: &'data NearestNeighbors,
+        cloud: &'data PointCloud,
+    },
+    Mesh(&'data MeshIndex),
+}
+
+impl Shape<'_> {
+    pub(super) fn squared(&self, query: &Point) -> f64 {
+        match self {
+            Self::Points { index, .. } => index.nearest(query).squared_distance,
+            Self::Mesh(mesh) => mesh
+                .closest(query)
+                .map_or(f64::INFINITY, |closest| closest.squared_distance),
+        }
+    }
+
+    /// The nearest point, and the square of how far it is.
+    pub(super) fn nearest(&self, query: &Point) -> Option<(f64, Point)> {
+        match self {
+            Self::Points { index, cloud } => {
+                let found = index.nearest(query);
+                Some((found.squared_distance, cloud.points()[found.index]))
+            }
+            Self::Mesh(mesh) => mesh
+                .closest(query)
+                .map(|closest| (closest.squared_distance, closest.point)),
+        }
+    }
+}
 
 /// The source centred on its centroid, so that a turn moves it least, and what a
 /// pose costs on the target.
@@ -13,7 +47,7 @@ pub(super) struct Problem<'data> {
     pub(super) centred: Vec<Point>,
     pub(super) centre: Vector,
     pub(super) reach: f64,
-    pub(super) index: &'data NearestNeighbors,
+    pub(super) shape: Shape<'data>,
     pub(super) truncation_squared: f64,
 }
 
@@ -25,10 +59,7 @@ impl Problem<'_> {
             .iter()
             .map(|point| {
                 let moved = rotation * point + translation;
-                self.index
-                    .nearest(&moved)
-                    .squared_distance
-                    .min(self.truncation_squared)
+                self.shape.squared(&moved).min(self.truncation_squared)
             })
             .sum();
         total / count_as_float(self.centred.len())
@@ -60,7 +91,7 @@ impl Problem<'_> {
                 };
             }
             let moved = rotation * point + cube.translation;
-            let squared = self.index.nearest(&moved).squared_distance;
+            let squared = self.shape.squared(&moved);
             value += squared.min(self.truncation_squared);
             let radius = turn * point.coords.norm() + shift + slack;
             let closest = (squared.sqrt() - radius).max(0.0);

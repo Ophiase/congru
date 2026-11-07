@@ -2,6 +2,7 @@
 //! finds the target and holds on to it while the view wanders.
 
 mod breakdown;
+mod failing;
 mod film;
 mod panels;
 mod score;
@@ -13,8 +14,10 @@ use std::path::{Path, PathBuf};
 use congru_scene::Scene;
 
 use crate::Summary;
+use crate::camera::detect::box_noise;
 use crate::picture::{self, Tile};
 pub use breakdown::breakdown;
+pub use failing::failing;
 use film::film;
 
 const FRAMES: usize = 72;
@@ -49,7 +52,7 @@ pub fn run(target: &Path) -> anyhow::Result<Vec<Summary>> {
         .iter()
         .map(|scene| {
             let started = std::time::Instant::now();
-            let shots = film(scene, frames)?;
+            let shots = film(scene, frames, box_noise())?;
             let name = scene.name.replace(' ', "-");
             let drawn: Vec<Vec<Tile>> = shots.iter().map(|shot| shot.tiles.clone()).collect();
             picture::write(&folder.join(format!("{name}.gif")), &drawn, 3)?;

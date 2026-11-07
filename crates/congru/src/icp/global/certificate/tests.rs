@@ -111,7 +111,14 @@ fn every_pose_inside_a_cube_stays_above_its_bound() -> Result<(), Error> {
     let target = sheet()?;
     let source = marks(&target, 12)?;
     let index = NearestNeighbors::new(&target)?;
-    let problem = problem_of(&source, &index, TRUNCATION);
+    let problem = problem_of(
+        &source,
+        Shape::Points {
+            index: &index,
+            cloud: &target,
+        },
+        TRUNCATION,
+    );
     let mut random = ChaCha8Rng::seed_from_u64(9);
     for half_rotation in [0.02, 0.2, 1.0, PI] {
         for half_translation in [0.001, 0.01, 0.1] {

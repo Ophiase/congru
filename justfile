@@ -31,6 +31,10 @@ demo:
     cargo run --release -q -p congru-demo -- tour docs/figures/scenes.gif
     cargo run --release -q -p congru-demo -- breakdown docs/figures/breakdown.gif
 
+[doc("Film every scene under every box, keep those that fail: writes docs/failing.md")]
+failing:
+    cargo run --release -q -p congru-demo -- failing
+
 [doc("The published benchmark, on the evaluation seeds: resumes where it stopped, rewrites docs/benchmark/results.md as cells finish")]
 bench:
     cargo run --release -q -p congru-bench -- docs/benchmark/results.md

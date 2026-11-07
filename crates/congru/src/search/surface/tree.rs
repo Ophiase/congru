@@ -53,6 +53,12 @@ impl MeshIndex {
         Ok(Self { faces, nodes })
     }
 
+    /// The middle of the box around the whole mesh.
+    #[must_use]
+    pub fn centre(&self) -> Vector {
+        (self.nodes[0].low + self.nodes[0].high) / 2.0
+    }
+
     fn visit(&self, query: &Point, node: usize, best: &mut (f64, Option<(Point, usize)>)) {
         let here = &self.nodes[node];
         if here.faces > 0 {

@@ -39,7 +39,18 @@ pub fn region_of_interest(
     truth: &RigidTransform,
     frame: u64,
 ) -> DepthImage {
-    let (shift, growth) = box_noise();
+    noisy_region(depth, camera, model, truth, frame, box_noise())
+}
+
+/// As [`region_of_interest`], with `(shift, growth)` as shares of the object's size.
+pub fn noisy_region(
+    depth: &DepthImage,
+    camera: &Camera,
+    model: &TriangleMesh,
+    truth: &RigidTransform,
+    frame: u64,
+    (shift, growth): (f64, f64),
+) -> DepthImage {
     let mut random = ChaCha8Rng::seed_from_u64(frame + ROI_SEED + seed());
     let mut offset = || shift * (random.random::<f64>() * 2.0 - 1.0);
     let shifts = [offset(), offset()];
@@ -54,7 +65,7 @@ pub fn seed() -> u64 {
         .map_or(0, |seed: u64| seed * SEED_STRIDE)
 }
 
-fn box_noise() -> (f64, f64) {
+pub fn box_noise() -> (f64, f64) {
     std::env::var(BOX_VARIABLE)
         .ok()
         .and_then(|value| {

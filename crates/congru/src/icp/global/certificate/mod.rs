@@ -3,6 +3,8 @@ mod attacks;
 mod best;
 mod cube;
 #[cfg(test)]
+mod proof;
+#[cfg(test)]
 mod shapes;
 #[cfg(test)]
 mod tests;
@@ -10,10 +12,12 @@ mod tests;
 use std::collections::BinaryHeap;
 
 use best::Best;
-use cube::{Cube, Problem};
+use cube::{Cube, Problem, Shape};
 
 use crate::search::map;
-use crate::{Distance, Error, NearestNeighbors, Point, PointCloud, RigidTransform, Vector};
+use crate::{
+    Distance, Error, MeshIndex, NearestNeighbors, Point, PointCloud, RigidTransform, Vector,
+};
 
 /// Cubes split at once between two looks at the upper bound.
 const BATCH: usize = 512;
@@ -75,6 +79,31 @@ impl Certifier {
         target: &PointCloud,
         seeds: &[RigidTransform],
     ) -> Result<Certificate, Error> {
+        self.check()?;
+        let index = NearestNeighbors::new(target)?;
+        let shape = Shape::Points {
+            index: &index,
+            cloud: target,
+        };
+        Ok(self.certified(source, shape, target.centroid().coords, seeds))
+    }
+
+    /// As [`Certifier::run`], on the mesh itself rather than samples of it: the proof
+    /// is about the surface. Each query costs more than on samples.
+    ///
+    /// # Errors
+    /// [`Error::InvalidParameter`] for a resolution that is not positive.
+    pub fn run_on_mesh(
+        &self,
+        source: &PointCloud,
+        mesh: &MeshIndex,
+        seeds: &[RigidTransform],
+    ) -> Result<Certificate, Error> {
+        self.check()?;
+        Ok(self.certified(source, Shape::Mesh(mesh), mesh.centre(), seeds))
+    }
+
+    fn check(&self) -> Result<(), Error> {
         if self.resolution.iter().any(|side| *side <= 0.0) {
             return Err(Error::InvalidParameter {
                 name: "resolution",
@@ -82,13 +111,22 @@ impl Certifier {
                 value: self.resolution[0].min(self.resolution[1]),
             });
         }
-        let index = NearestNeighbors::new(target)?;
-        let problem = problem_of(source, &index, self.truncation.get());
+        Ok(())
+    }
+
+    fn certified(
+        &self,
+        source: &PointCloud,
+        shape: Shape<'_>,
+        centre: Vector,
+        seeds: &[RigidTransform],
+    ) -> Certificate {
+        let problem = problem_of(source, shape, self.truncation.get());
         let mut best = Best::of(&problem, seeds);
         let root = problem.measured(
             Cube {
                 rotation: Vector::zeros(),
-                translation: target.centroid().coords,
+                translation: centre,
                 half_rotation: std::f64::consts::PI,
                 half_translation: self.reach.get(),
                 lower: 0.0,
@@ -97,17 +135,11 @@ impl Certifier {
             f64::INFINITY,
         );
         best.offer(problem.pose(&root), root.value);
-        best.polish_from(&problem, target, &[best.pose]);
-        Ok(self.search(&problem, target, root, best))
+        best.polish_from(&problem, &[best.pose]);
+        self.search(&problem, root, best)
     }
 
-    fn search(
-        &self,
-        problem: &Problem<'_>,
-        target: &PointCloud,
-        root: Cube,
-        mut best: Best,
-    ) -> Certificate {
+    fn search(&self, problem: &Problem<'_>, root: Cube, mut best: Best) -> Certificate {
         let mut open = BinaryHeap::from([root]);
         let mut settled: Vec<Cube> = Vec::new();
         let mut measured = 1;
@@ -119,7 +151,7 @@ impl Certifier {
             let ceiling = best.value + self.margin;
             let children = map(&batch, |cube| problem.measured(*cube, ceiling));
             measured += children.len();
-            best.polish_lowest(problem, target, &children);
+            best.polish_lowest(problem, &children);
             open.extend(
                 children
                     .into_iter()
@@ -167,11 +199,7 @@ impl Certifier {
     }
 }
 
-fn problem_of<'data>(
-    source: &PointCloud,
-    index: &'data NearestNeighbors,
-    truncation: f64,
-) -> Problem<'data> {
+fn problem_of<'data>(source: &PointCloud, shape: Shape<'data>, truncation: f64) -> Problem<'data> {
     let centre = source.centroid().coords;
     let centred: Vec<Point> = source
         .points()
@@ -186,7 +214,7 @@ fn problem_of<'data>(
         centred,
         centre,
         reach,
-        index,
+        shape,
         truncation_squared: truncation * truncation,
     }
 }

@@ -25,6 +25,7 @@ fn main() -> anyhow::Result<()> {
         Some("diagnose") => return diagnose::run(),
         Some("detection") => return diagnose::detection(),
         Some("cases") => return diagnose::cases(),
+        Some("failing") => return tour::failing(std::path::Path::new("docs")),
         _ => {}
     }
     let summaries = match demo.as_deref() {

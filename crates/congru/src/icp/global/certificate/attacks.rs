@@ -14,7 +14,14 @@ fn a_stopped_sum_keeps_every_cube_the_full_sum_keeps() -> Result<(), Error> {
     let target = sheet()?;
     let source = marks(&target, 12)?;
     let index = NearestNeighbors::new(&target)?;
-    let problem = problem_of(&source, &index, TRUNCATION);
+    let problem = problem_of(
+        &source,
+        Shape::Points {
+            index: &index,
+            cloud: &target,
+        },
+        TRUNCATION,
+    );
     let mut random = ChaCha8Rng::seed_from_u64(13);
     let tau_squared = TRUNCATION * TRUNCATION;
     for _ in 0..3000 {
