@@ -1,739 +1,757 @@
 suite,model,method,situation,class,trials,success,success_low,success_high,confidently_wrong,median_degrees,worst_tenth_degrees,median_milliseconds
-scenes,scenes,icp-point,"bin of parts",realistic,16,0.0000,0.0000,0.1936,1.0000,9.9818,13.1568,217.026
-scenes,scenes,icp-point,"bracket behind a crate",realistic,16,0.0000,0.0000,0.1936,1.0000,31.5996,35.3316,39.024
-scenes,scenes,icp-point,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,1.0000,29.6792,57.5262,622.579
-scenes,scenes,icp-point,"bracket at a low angle",realistic,16,0.0000,0.0000,0.1936,1.0000,5.4951,24.8574,92.326
-scenes,scenes,icp-point,"car close by",realistic,16,0.0000,0.0000,0.1936,1.0000,3.3665,4.5143,265.262
-scenes,scenes,icp-point,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,16.7248,20.8768,109.485
-scenes,scenes,icp-point,"crate among crates",realistic,16,0.0000,0.0000,0.1936,1.0000,28.9643,31.9539,530.087
-scenes,scenes,icp-point,"gear from above",realistic,16,0.0000,0.0000,0.1936,1.0000,4.2052,7.1161,74.434
-scenes,scenes,icp-point,"gear on a bench",realistic,16,0.2500,0.1018,0.4950,0.7500,1.8762,3.4739,24.171
-scenes,scenes,icp-point,"mug close up",realistic,16,0.0000,0.0000,0.1936,1.0000,12.6028,13.7825,186.631
-scenes,scenes,icp-point,"part on a table",realistic,16,0.0000,0.0000,0.1936,1.0000,3.7699,5.7260,57.804
-scenes,scenes,icp-point,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,1.0000,58.0092,60.0054,80.267
-scenes,scenes,icp-point,"street corner",realistic,16,0.0000,0.0000,0.1936,1.0000,49.9253,51.5514,84.944
-scenes,scenes,icp-point,"twin brackets",realistic,16,0.0000,0.0000,0.1936,1.0000,7.0813,11.0234,67.372
-scenes,scenes,icp-plane,"bin of parts",realistic,16,0.0000,0.0000,0.1936,1.0000,100.1452,144.5686,267.826
-scenes,scenes,icp-plane,"bracket behind a crate",realistic,16,0.0000,0.0000,0.1936,1.0000,32.2350,34.1872,41.959
-scenes,scenes,icp-plane,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,1.0000,93.5987,106.9100,793.657
-scenes,scenes,icp-plane,"bracket at a low angle",realistic,16,0.0000,0.0000,0.1936,1.0000,12.7422,43.1311,82.720
-scenes,scenes,icp-plane,"car close by",realistic,16,0.3750,0.1848,0.6136,0.6250,2.0655,3.5117,298.813
-scenes,scenes,icp-plane,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,57.8668,91.8309,126.531
-scenes,scenes,icp-plane,"crate among crates",realistic,16,0.0000,0.0000,0.1936,1.0000,34.0270,35.7378,478.033
-scenes,scenes,icp-plane,"gear from above",realistic,16,0.0000,0.0000,0.1936,1.0000,119.7547,168.2759,115.727
-scenes,scenes,icp-plane,"gear on a bench",realistic,16,0.0000,0.0000,0.1936,1.0000,152.5099,169.3214,35.241
-scenes,scenes,icp-plane,"mug close up",realistic,16,0.0000,0.0000,0.1936,1.0000,13.8712,16.4735,181.166
-scenes,scenes,icp-plane,"part on a table",realistic,16,0.0000,0.0000,0.1936,1.0000,9.9862,12.9029,58.773
-scenes,scenes,icp-plane,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,1.0000,51.4443,67.0554,87.911
-scenes,scenes,icp-plane,"street corner",realistic,16,0.0000,0.0000,0.1936,1.0000,55.6015,62.8255,86.705
-scenes,scenes,icp-plane,"twin brackets",realistic,16,0.0000,0.0000,0.1936,1.0000,17.0197,20.6527,83.954
-scenes,scenes,icp-tukey,"bin of parts",realistic,16,0.1250,0.0350,0.3602,0.0000,4.7176,5.5418,224.974
-scenes,scenes,icp-tukey,"bracket behind a crate",realistic,16,0.5625,0.3318,0.7690,0.4375,1.1307,5.9719,47.736
-scenes,scenes,icp-tukey,"bracket in a bin",realistic,16,0.0625,0.0111,0.2833,0.0000,1.3420,6.4347,722.199
-scenes,scenes,icp-tukey,"bracket at a low angle",realistic,16,0.6875,0.4440,0.8584,0.3125,0.4650,7.6827,68.812
-scenes,scenes,icp-tukey,"car close by",realistic,16,1.0000,0.8064,1.0000,0.0000,0.2758,0.3854,827.390
-scenes,scenes,icp-tukey,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,7.1371,10.0974,243.058
-scenes,scenes,icp-tukey,"crate among crates",realistic,16,1.0000,0.8064,1.0000,0.0000,0.2180,0.4956,1978.856
-scenes,scenes,icp-tukey,"gear from above",realistic,16,0.8750,0.6398,0.9650,0.1250,0.4281,1.9776,230.649
-scenes,scenes,icp-tukey,"gear on a bench",realistic,16,1.0000,0.8064,1.0000,0.0000,0.4755,0.6371,45.471
-scenes,scenes,icp-tukey,"mug close up",realistic,16,0.8125,0.5699,0.9341,0.1875,0.0833,6.8465,90.875
-scenes,scenes,icp-tukey,"part on a table",realistic,16,0.8750,0.6398,0.9650,0.1250,0.2307,0.4585,57.381
-scenes,scenes,icp-tukey,"shelf of mugs",realistic,16,0.3750,0.1848,0.6136,0.0000,2.2515,5.6234,121.116
-scenes,scenes,icp-tukey,"street corner",realistic,16,0.0000,0.0000,0.1936,0.1250,10.1471,14.6081,148.379
-scenes,scenes,icp-tukey,"twin brackets",realistic,16,0.8750,0.6398,0.9650,0.1250,0.4358,0.6533,117.267
-scenes,scenes,icp-trimmed,"bin of parts",realistic,16,0.0000,0.0000,0.1936,1.0000,48.1781,54.8664,266.820
-scenes,scenes,icp-trimmed,"bracket behind a crate",realistic,16,0.4375,0.2310,0.6682,0.5625,2.4690,6.2428,32.726
-scenes,scenes,icp-trimmed,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,1.0000,21.9416,25.1334,724.970
-scenes,scenes,icp-trimmed,"bracket at a low angle",realistic,16,0.6250,0.3864,0.8152,0.3750,1.2076,8.2495,62.397
-scenes,scenes,icp-trimmed,"car close by",realistic,16,1.0000,0.8064,1.0000,0.0000,0.2637,0.5504,262.496
-scenes,scenes,icp-trimmed,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,4.0236,11.4920,119.098
-scenes,scenes,icp-trimmed,"crate among crates",realistic,16,0.8750,0.6398,0.9650,0.1250,0.2580,0.4725,255.282
-scenes,scenes,icp-trimmed,"gear from above",realistic,16,1.0000,0.8064,1.0000,0.0000,0.9644,1.8625,97.687
-scenes,scenes,icp-trimmed,"gear on a bench",realistic,16,1.0000,0.8064,1.0000,0.0000,0.5496,0.6461,17.579
-scenes,scenes,icp-trimmed,"mug close up",realistic,16,0.7500,0.5050,0.8982,0.2500,0.0863,7.6182,59.264
-scenes,scenes,icp-trimmed,"part on a table",realistic,16,0.8750,0.6398,0.9650,0.1250,0.2831,0.6034,46.265
-scenes,scenes,icp-trimmed,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,1.0000,27.9318,73.2346,94.087
-scenes,scenes,icp-trimmed,"street corner",realistic,16,0.0000,0.0000,0.1936,1.0000,12.9218,21.7719,95.498
-scenes,scenes,icp-trimmed,"twin brackets",realistic,16,0.8125,0.5699,0.9341,0.1875,0.3688,4.8375,46.197
-scenes,scenes,annealed,"bin of parts",realistic,16,0.0000,0.0000,0.1936,0.0000,136.5027,158.7264,1456.003
-scenes,scenes,annealed,"bracket behind a crate",realistic,16,0.1875,0.0659,0.4301,0.8125,9.2120,33.0231,265.390
-scenes,scenes,annealed,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,0.0000,33.9506,41.5791,3584.175
-scenes,scenes,annealed,"bracket at a low angle",realistic,16,0.5625,0.3318,0.7690,0.4375,0.5910,0.8565,223.935
-scenes,scenes,annealed,"car close by",realistic,16,1.0000,0.8064,1.0000,0.0000,0.2397,0.3108,1306.063
-scenes,scenes,annealed,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,7.2722,11.5858,578.491
-scenes,scenes,annealed,"crate among crates",realistic,16,1.0000,0.8064,1.0000,0.0000,0.2095,0.3811,1465.624
-scenes,scenes,annealed,"gear from above",realistic,16,0.0000,0.0000,0.1936,1.0000,121.4535,177.8420,483.952
-scenes,scenes,annealed,"gear on a bench",realistic,16,0.1250,0.0350,0.3602,0.8750,60.1307,120.4519,138.316
-scenes,scenes,annealed,"mug close up",realistic,16,0.0625,0.0111,0.2833,0.9375,6.6160,6.7587,395.756
-scenes,scenes,annealed,"part on a table",realistic,16,0.8125,0.5699,0.9341,0.1875,0.2088,0.7816,156.533
-scenes,scenes,annealed,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,0.0000,89.3639,116.2902,459.670
-scenes,scenes,annealed,"street corner",realistic,16,0.0000,0.0000,0.1936,0.0000,30.9739,54.4165,440.418
-scenes,scenes,annealed,"twin brackets",realistic,16,0.8750,0.6398,0.9650,0.1250,0.3642,0.5633,200.054
-scenes,scenes,adaptive,"bin of parts",realistic,16,0.0000,0.0000,0.1936,1.0000,126.8510,160.9442,1126.672
-scenes,scenes,adaptive,"bracket behind a crate",realistic,16,0.3125,0.1416,0.5560,0.6875,5.5528,9.0761,106.466
-scenes,scenes,adaptive,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,1.0000,23.1902,24.5818,2720.649
-scenes,scenes,adaptive,"bracket at a low angle",realistic,16,0.5625,0.3318,0.7690,0.4375,0.5934,7.4814,151.598
-scenes,scenes,adaptive,"car close by",realistic,16,1.0000,0.8064,1.0000,0.0000,0.2359,0.3783,1019.272
-scenes,scenes,adaptive,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,6.6805,8.4911,457.622
-scenes,scenes,adaptive,"crate among crates",realistic,16,1.0000,0.8064,1.0000,0.0000,0.1524,0.2832,679.245
-scenes,scenes,adaptive,"gear from above",realistic,16,0.0000,0.0000,0.1936,1.0000,121.6084,151.3042,290.181
-scenes,scenes,adaptive,"gear on a bench",realistic,16,0.9375,0.7167,0.9889,0.0625,0.4540,0.6827,91.373
-scenes,scenes,adaptive,"mug close up",realistic,16,0.8750,0.6398,0.9650,0.1250,0.0672,0.1288,109.097
-scenes,scenes,adaptive,"part on a table",realistic,16,1.0000,0.8064,1.0000,0.0000,0.2501,0.4117,108.922
-scenes,scenes,adaptive,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,1.0000,106.3155,148.8990,365.191
-scenes,scenes,adaptive,"street corner",realistic,16,0.0000,0.0000,0.1936,1.0000,27.4710,38.3970,365.402
-scenes,scenes,adaptive,"twin brackets",realistic,16,1.0000,0.8064,1.0000,0.0000,0.3047,0.5850,162.404
-scenes,scenes,search,"bin of parts",realistic,16,0.0000,0.0000,0.1936,1.0000,155.5971,163.8873,10734.882
-scenes,scenes,search,"bracket behind a crate",realistic,16,0.0625,0.0111,0.2833,0.9375,7.3428,14.4561,1778.040
-scenes,scenes,search,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,1.0000,174.9655,175.7133,25114.854
-scenes,scenes,search,"bracket at a low angle",realistic,16,0.1250,0.0350,0.3602,0.8750,1.0190,2.7699,2454.346
-scenes,scenes,search,"car close by",realistic,16,1.0000,0.8064,1.0000,0.0000,0.4243,0.5280,12567.876
-scenes,scenes,search,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,6.9952,9.3074,4352.586
-scenes,scenes,search,"crate among crates",realistic,16,0.0625,0.0111,0.2833,0.9375,90.1115,179.8398,15514.064
-scenes,scenes,search,"gear from above",realistic,16,0.0000,0.0000,0.1936,1.0000,114.7150,145.0479,3634.939
-scenes,scenes,search,"gear on a bench",realistic,16,0.1250,0.0350,0.3602,0.8750,121.1419,179.1920,1333.663
-scenes,scenes,search,"mug close up",realistic,16,0.9375,0.7167,0.9889,0.0625,0.1565,0.2328,4866.433
-scenes,scenes,search,"part on a table",realistic,16,1.0000,0.8064,1.0000,0.0000,0.2899,0.6990,2491.435
-scenes,scenes,search,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,1.0000,118.0180,177.3882,3299.937
-scenes,scenes,search,"street corner",realistic,16,0.0000,0.0000,0.1936,1.0000,47.7702,172.0360,3282.461
-scenes,scenes,search,"twin brackets",realistic,16,1.0000,0.8064,1.0000,0.0000,0.3153,0.4884,3107.007
-scenes,scenes,consensus,"bin of parts",realistic,16,0.0000,0.0000,0.1936,0.0000,134.0510,inf,519.875
-scenes,scenes,consensus,"bracket behind a crate",realistic,16,0.0625,0.0111,0.2833,0.9375,7.2276,20.8809,87.090
-scenes,scenes,consensus,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,0.0000,151.7661,inf,1090.136
-scenes,scenes,consensus,"bracket at a low angle",realistic,16,0.0625,0.0111,0.2833,0.8750,115.3488,147.8172,180.485
-scenes,scenes,consensus,"car close by",realistic,16,0.3125,0.1416,0.5560,0.6875,26.4226,165.3291,658.099
-scenes,scenes,consensus,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,115.4813,163.1405,284.652
-scenes,scenes,consensus,"crate among crates",realistic,16,0.0000,0.0000,0.1936,0.8125,151.2363,179.3059,969.599
-scenes,scenes,consensus,"gear from above",realistic,16,0.0000,0.0000,0.1936,0.8750,162.2704,179.9174,184.773
-scenes,scenes,consensus,"gear on a bench",realistic,16,0.0625,0.0111,0.2833,0.9375,120.2645,150.3100,81.028
-scenes,scenes,consensus,"mug close up",realistic,16,0.1250,0.0350,0.3602,0.8750,179.8521,179.9465,164.714
-scenes,scenes,consensus,"part on a table",realistic,16,0.0625,0.0111,0.2833,0.9375,7.2487,166.1196,131.391
-scenes,scenes,consensus,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,0.2500,137.5530,156.1605,195.281
-scenes,scenes,consensus,"street corner",realistic,16,0.0000,0.0000,0.1936,0.0000,113.9637,152.2643,213.967
-scenes,scenes,consensus,"twin brackets",realistic,16,0.0625,0.0111,0.2833,0.9375,12.7506,139.4251,176.200
-scenes,scenes,guarded,"bin of parts",realistic,16,0.0000,0.0000,0.1936,1.0000,155.5971,163.8873,10683.297
-scenes,scenes,guarded,"bracket behind a crate",realistic,16,0.1875,0.0659,0.4301,0.8125,7.3428,14.4561,5906.327
-scenes,scenes,guarded,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,1.0000,174.9655,175.7133,31018.932
-scenes,scenes,guarded,"bracket at a low angle",realistic,16,0.4375,0.2310,0.6682,0.5625,2.2540,3.3668,1049.270
-scenes,scenes,guarded,"car close by",realistic,16,1.0000,0.8064,1.0000,0.0000,0.2758,0.3854,272.267
-scenes,scenes,guarded,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,6.9952,9.3074,5610.502
-scenes,scenes,guarded,"crate among crates",realistic,16,0.0625,0.0111,0.2833,0.9375,90.1115,179.8398,25238.437
-scenes,scenes,guarded,"gear from above",realistic,16,0.1875,0.0659,0.4301,0.8125,84.9495,145.0479,4352.514
-scenes,scenes,guarded,"gear on a bench",realistic,16,1.0000,0.8064,1.0000,0.0000,0.4755,0.6371,57.682
-scenes,scenes,guarded,"mug close up",realistic,16,0.8125,0.5699,0.9341,0.1875,0.0833,6.8465,109.627
-scenes,scenes,guarded,"part on a table",realistic,16,0.8750,0.6398,0.9650,0.1250,0.2307,0.4585,117.168
-scenes,scenes,guarded,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,1.0000,118.0180,177.3882,3802.405
-scenes,scenes,guarded,"street corner",realistic,16,0.0000,0.0000,0.1936,1.0000,47.7702,172.0360,4272.586
-scenes,scenes,guarded,"twin brackets",realistic,16,0.8750,0.6398,0.9650,0.1250,0.4358,0.6533,79.639
-registration,bracket,icp-point,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.0728,0.1290,16.351
-registration,bracket,icp-point,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.5612,0.7886,29.705
-registration,bracket,icp-point,"noise 5 %",noise,16,0.9375,0.7167,0.9889,0.0625,1.1375,1.5806,36.164
-registration,bracket,icp-point,"outliers 30 %",outliers,16,0.0000,0.0000,0.1936,1.0000,3.4838,4.0945,47.647
-registration,bracket,icp-point,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,4.4167,5.2446,87.351
-registration,bracket,icp-point,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,5.3764,6.5248,190.616
-registration,bracket,icp-point,"half visible",partial view,16,0.9375,0.7167,0.9889,0.0625,0.1599,0.1963,15.707
-registration,bracket,icp-point,"quarter visible",partial view,16,0.8750,0.6398,0.9650,0.1250,0.3585,0.8001,6.106
-registration,bracket,icp-point,"sparse",sparse,16,0.8125,0.5699,0.9341,0.1875,0.7004,2.0179,1.080
-registration,bracket,icp-point,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0655,0.1290,35.690
-registration,bracket,icp-point,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0648,0.1290,41.545
-registration,bracket,icp-point,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,175.3946,178.1934,57.225
-registration,bracket,icp-point,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,9.8313,16.0727,13.019
-registration,bracket,icp-plane,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.1053,0.1582,8.433
-registration,bracket,icp-plane,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.6270,0.8772,28.711
-registration,bracket,icp-plane,"noise 5 %",noise,16,0.9375,0.7167,0.9889,0.0625,0.9442,1.4594,55.582
-registration,bracket,icp-plane,"outliers 30 %",outliers,16,0.0000,0.0000,0.1936,1.0000,3.6881,5.4503,64.964
-registration,bracket,icp-plane,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,3.7751,6.7163,143.288
-registration,bracket,icp-plane,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,6.1114,6.6826,270.882
-registration,bracket,icp-plane,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1591,0.2482,4.188
-registration,bracket,icp-plane,"quarter visible",partial view,16,0.9375,0.7167,0.9889,0.0625,0.3311,0.6881,3.144
-registration,bracket,icp-plane,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.4223,0.6970,0.443
-registration,bracket,icp-plane,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.1053,0.1582,9.947
-registration,bracket,icp-plane,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.1053,0.1582,15.921
-registration,bracket,icp-plane,"no guess",no guess,16,0.0625,0.0111,0.2833,0.9375,164.6079,174.3006,61.382
-registration,bracket,icp-plane,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,9.3072,16.3943,15.011
-registration,bracket,icp-tukey,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.0998,0.1564,20.363
-registration,bracket,icp-tukey,"noise 2 %",noise,16,0.8750,0.6398,0.9650,0.1250,1.1860,1.8603,40.531
-registration,bracket,icp-tukey,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,4.3669,6.8727,68.844
-registration,bracket,icp-tukey,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1069,0.2165,44.881
-registration,bracket,icp-tukey,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1224,0.1628,129.029
-registration,bracket,icp-tukey,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.2341,0.3373,290.396
-registration,bracket,icp-tukey,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1561,0.2419,8.279
-registration,bracket,icp-tukey,"quarter visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.4787,0.7865,4.588
-registration,bracket,icp-tukey,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,0.6427,7.7580,0.939
-registration,bracket,icp-tukey,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0998,0.1563,37.854
-registration,bracket,icp-tukey,"guess 60°",far guess,16,0.0625,0.0111,0.2833,0.9375,32.0518,38.5938,63.415
-registration,bracket,icp-tukey,"no guess",no guess,16,0.0000,0.0000,0.1936,0.7500,172.9649,179.3503,89.108
-registration,bracket,icp-tukey,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,11.7541,16.1447,16.886
-registration,bracket,icp-trimmed,"nominal",nominal,16,0.8750,0.6398,0.9650,0.1250,0.1867,0.3117,21.869
-registration,bracket,icp-trimmed,"noise 2 %",noise,16,0.6250,0.3864,0.8152,0.3750,1.8056,3.1874,45.360
-registration,bracket,icp-trimmed,"noise 5 %",noise,16,0.3125,0.1416,0.5560,0.6875,3.1152,4.9809,53.101
-registration,bracket,icp-trimmed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1393,0.1931,30.481
-registration,bracket,icp-trimmed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1353,0.2388,55.798
-registration,bracket,icp-trimmed,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3873,0.5913,290.663
-registration,bracket,icp-trimmed,"half visible",partial view,16,0.7500,0.5050,0.8982,0.2500,0.3731,5.6348,112.073
-registration,bracket,icp-trimmed,"quarter visible",partial view,16,0.6875,0.4440,0.8584,0.3125,0.6735,2.7505,122.518
-registration,bracket,icp-trimmed,"sparse",sparse,16,0.3125,0.1416,0.5560,0.6875,5.0427,9.3873,1.148
-registration,bracket,icp-trimmed,"guess 30°",far guess,16,0.6875,0.4440,0.8584,0.3125,0.2652,6.5952,584.899
-registration,bracket,icp-trimmed,"guess 60°",far guess,16,0.3125,0.1416,0.5560,0.6875,5.9886,11.4471,745.388
-registration,bracket,icp-trimmed,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,179.2850,179.7813,417.836
-registration,bracket,icp-trimmed,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,4.5813,9.6092,52.943
-registration,bracket,annealed,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.0977,0.1513,53.544
-registration,bracket,annealed,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.8741,1.3318,254.594
-registration,bracket,annealed,"noise 5 %",noise,16,0.3125,0.1416,0.5560,0.6875,2.4751,3.7347,285.558
-registration,bracket,annealed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.0997,0.2079,317.757
-registration,bracket,annealed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1069,0.1626,700.558
-registration,bracket,annealed,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1818,0.3176,1500.884
-registration,bracket,annealed,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1515,0.2381,23.916
-registration,bracket,annealed,"quarter visible",partial view,16,0.9375,0.7167,0.9889,0.0625,0.2968,0.6553,19.180
-registration,bracket,annealed,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.4078,0.6721,1.452
-registration,bracket,annealed,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0977,0.1513,42.680
-registration,bracket,annealed,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0977,0.1513,32.606
-registration,bracket,annealed,"no guess",no guess,16,0.0000,0.0000,0.1936,0.8750,179.7574,179.9693,266.722
-registration,bracket,annealed,"everything",combined,16,0.1250,0.0350,0.3602,0.8750,2.2735,5.6888,75.474
-registration,bracket,adaptive,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.0992,0.1506,32.843
-registration,bracket,adaptive,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.8779,1.2555,162.984
-registration,bracket,adaptive,"noise 5 %",noise,16,0.5625,0.3318,0.7690,0.4375,1.7443,2.6997,216.432
-registration,bracket,adaptive,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1046,0.1803,171.298
-registration,bracket,adaptive,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1511,0.2146,402.283
-registration,bracket,adaptive,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.8584,1.4704,1135.286
-registration,bracket,adaptive,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1566,0.2383,16.214
-registration,bracket,adaptive,"quarter visible",partial view,16,0.9375,0.7167,0.9889,0.0625,0.3203,0.6627,15.631
-registration,bracket,adaptive,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.4810,0.7200,1.538
-registration,bracket,adaptive,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0992,0.1506,28.465
-registration,bracket,adaptive,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0992,0.1506,36.712
-registration,bracket,adaptive,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,179.7582,179.9869,157.401
-registration,bracket,adaptive,"everything",combined,16,0.1875,0.0659,0.4301,0.8125,2.8645,7.2124,56.287
-registration,bracket,search,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.0997,0.1467,1798.574
-registration,bracket,search,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.7368,0.9253,2088.990
-registration,bracket,search,"noise 5 %",noise,16,0.6875,0.4440,0.8584,0.3125,1.6951,3.1442,2263.990
-registration,bracket,search,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1835,0.3733,3892.393
-registration,bracket,search,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.6390,0.8644,5434.078
-registration,bracket,search,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,4.9873,6.1099,11623.069
-registration,bracket,search,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1529,0.2287,2308.249
-registration,bracket,search,"quarter visible",partial view,16,0.5000,0.2800,0.7200,0.5000,0.7844,139.4108,1335.051
-registration,bracket,search,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.4114,0.6825,492.389
-registration,bracket,search,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0997,0.1467,4452.484
-registration,bracket,search,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0997,0.1467,1944.449
-registration,bracket,search,"no guess",no guess,16,1.0000,0.8064,1.0000,0.0000,0.0997,0.1467,1822.096
-registration,bracket,search,"everything",combined,16,0.1250,0.0350,0.3602,0.8750,4.8863,172.4465,704.617
-registration,bracket,consensus,"nominal",nominal,16,0.9375,0.7167,0.9889,0.0625,0.0998,0.1811,88.582
-registration,bracket,consensus,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,1.2079,1.7140,160.194
-registration,bracket,consensus,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,23.8500,145.3614,185.778
-registration,bracket,consensus,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1047,0.2165,203.888
-registration,bracket,consensus,"outliers 100 %",outliers,16,0.6250,0.3864,0.8152,0.3750,0.1581,170.0600,436.642
-registration,bracket,consensus,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,0.8750,106.6663,175.5444,1213.098
-registration,bracket,consensus,"half visible",partial view,16,0.6250,0.3864,0.8152,0.3750,0.1868,94.9598,80.458
-registration,bracket,consensus,"quarter visible",partial view,16,0.2500,0.1018,0.4950,0.7500,92.9875,166.9291,33.787
-registration,bracket,consensus,"sparse",sparse,16,0.0000,0.0000,0.1936,0.7500,174.6094,inf,8.392
-registration,bracket,consensus,"guess 30°",far guess,16,0.9375,0.7167,0.9889,0.0625,0.0998,0.1811,102.370
-registration,bracket,consensus,"guess 60°",far guess,16,0.9375,0.7167,0.9889,0.0625,0.0998,0.1811,109.145
-registration,bracket,consensus,"no guess",no guess,16,0.9375,0.7167,0.9889,0.0625,0.0998,0.1811,101.358
-registration,bracket,consensus,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,93.3469,173.0105,54.058
-registration,bracket,guarded,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.0998,0.1564,23.103
-registration,bracket,guarded,"noise 2 %",noise,16,0.8750,0.6398,0.9650,0.1250,1.1860,1.8603,104.326
-registration,bracket,guarded,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,4.3669,6.8727,92.586
-registration,bracket,guarded,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1069,0.2165,91.526
-registration,bracket,guarded,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1224,0.2066,639.944
-registration,bracket,guarded,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,4.9873,6.1099,10836.879
-registration,bracket,guarded,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1561,0.2419,30.704
-registration,bracket,guarded,"quarter visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.4787,0.7865,10.161
-registration,bracket,guarded,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,0.6427,7.7580,7.049
-registration,bracket,guarded,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0998,0.1563,164.530
-registration,bracket,guarded,"guess 60°",far guess,16,0.3125,0.1416,0.5560,0.6875,20.1093,37.0490,94.419
-registration,bracket,guarded,"no guess",no guess,16,0.9375,0.7167,0.9889,0.0625,0.1087,0.1823,2163.152
-registration,bracket,guarded,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,11.7541,16.1447,23.170
-registration,blob,icp-point,"nominal",nominal,16,0.3750,0.1848,0.6136,0.6250,2.7868,4.0293,27.205
-registration,blob,icp-point,"noise 2 %",noise,16,0.1875,0.0659,0.4301,0.8125,2.9477,4.2622,41.173
-registration,blob,icp-point,"noise 5 %",noise,16,0.1250,0.0350,0.3602,0.8750,4.1928,6.3954,77.526
-registration,blob,icp-point,"outliers 30 %",outliers,16,0.0000,0.0000,0.1936,1.0000,8.7849,12.2004,70.575
-registration,blob,icp-point,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,20.2128,21.6574,170.292
-registration,blob,icp-point,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,27.1154,28.4131,438.570
-registration,blob,icp-point,"half visible",partial view,16,0.0625,0.0111,0.2833,0.9375,3.4195,4.1985,13.638
-registration,blob,icp-point,"quarter visible",partial view,16,0.0625,0.0111,0.2833,0.9375,5.1570,6.5868,4.888
-registration,blob,icp-point,"sparse",sparse,16,0.0000,0.0000,0.1936,1.0000,5.5826,7.3899,0.861
-registration,blob,icp-point,"guess 30°",far guess,16,0.0000,0.0000,0.1936,1.0000,6.7873,12.4271,31.854
-registration,blob,icp-point,"guess 60°",far guess,16,0.0000,0.0000,0.1936,1.0000,19.1497,35.7251,43.016
-registration,blob,icp-point,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,178.5928,179.7765,53.641
-registration,blob,icp-point,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,18.8971,23.3756,18.755
-registration,blob,icp-plane,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.3966,0.4341,27.343
-registration,blob,icp-plane,"noise 2 %",noise,16,0.5625,0.3318,0.7690,0.4375,1.5001,2.9411,42.724
-registration,blob,icp-plane,"noise 5 %",noise,16,0.1250,0.0350,0.3602,0.8750,5.9416,13.3970,78.838
-registration,blob,icp-plane,"outliers 30 %",outliers,16,0.0000,0.0000,0.1936,1.0000,12.0142,13.5732,73.532
-registration,blob,icp-plane,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,22.0517,24.0949,174.305
-registration,blob,icp-plane,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,29.1958,31.2298,459.828
-registration,blob,icp-plane,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.4470,0.8557,15.090
-registration,blob,icp-plane,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.7796,1.2000,6.812
-registration,blob,icp-plane,"sparse",sparse,16,0.6250,0.3864,0.8152,0.3750,1.4565,3.0089,1.328
-registration,blob,icp-plane,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.3967,0.4363,23.748
-registration,blob,icp-plane,"guess 60°",far guess,16,0.9375,0.7167,0.9889,0.0625,0.3986,0.4348,29.239
-registration,blob,icp-plane,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,123.3327,178.5285,225.701
-registration,blob,icp-plane,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,25.0195,94.6194,20.912
-registration,blob,icp-tukey,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.3665,0.4869,23.183
-registration,blob,icp-tukey,"noise 2 %",noise,16,0.1875,0.0659,0.4301,0.8125,3.0824,4.5887,43.371
-registration,blob,icp-tukey,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,12.3504,19.2089,81.202
-registration,blob,icp-tukey,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.4027,0.5896,67.414
-registration,blob,icp-tukey,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3923,0.8252,145.356
-registration,blob,icp-tukey,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.4016,1.3280,420.066
-registration,blob,icp-tukey,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.4296,1.0223,10.992
-registration,blob,icp-tukey,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.7674,1.1522,6.503
-registration,blob,icp-tukey,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,1.5397,2.6605,1.384
-registration,blob,icp-tukey,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.3701,0.4795,27.343
-registration,blob,icp-tukey,"guess 60°",far guess,16,0.8750,0.6398,0.9650,0.1250,0.3990,0.8093,40.064
-registration,blob,icp-tukey,"no guess",no guess,16,0.0000,0.0000,0.1936,0.9375,177.7921,179.2589,106.480
-registration,blob,icp-tukey,"everything",combined,16,0.0625,0.0111,0.2833,0.9375,4.6203,14.9935,20.696
-registration,blob,icp-trimmed,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.5621,1.2228,28.097
-registration,blob,icp-trimmed,"noise 2 %",noise,16,0.0000,0.0000,0.1936,1.0000,3.0971,6.1053,43.983
-registration,blob,icp-trimmed,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,9.3282,18.0895,80.739
-registration,blob,icp-trimmed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.5641,0.8190,58.386
-registration,blob,icp-trimmed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.7044,1.2900,162.811
-registration,blob,icp-trimmed,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,1.3016,1.7057,421.908
-registration,blob,icp-trimmed,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,1.0144,1.3031,13.555
-registration,blob,icp-trimmed,"quarter visible",partial view,16,0.8125,0.5699,0.9341,0.1875,1.1056,2.2456,6.607
-registration,blob,icp-trimmed,"sparse",sparse,16,0.1250,0.0350,0.3602,0.8750,2.8601,4.3672,1.483
-registration,blob,icp-trimmed,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.5328,1.1179,24.950
-registration,blob,icp-trimmed,"guess 60°",far guess,16,0.9375,0.7167,0.9889,0.0625,0.6121,1.4416,33.114
-registration,blob,icp-trimmed,"no guess",no guess,16,0.0625,0.0111,0.2833,0.9375,155.3535,179.9295,196.232
-registration,blob,icp-trimmed,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,4.1696,7.5710,20.007
-registration,blob,annealed,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.3853,0.5187,126.132
-registration,blob,annealed,"noise 2 %",noise,16,0.3750,0.1848,0.6136,0.6250,2.1755,3.9828,230.103
-registration,blob,annealed,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,12.7938,22.3544,398.370
-registration,blob,annealed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3713,0.6152,338.004
-registration,blob,annealed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.5025,0.9417,823.985
-registration,blob,annealed,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.4886,1.2268,2155.564
-registration,blob,annealed,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.4469,1.0451,57.541
-registration,blob,annealed,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.7837,1.1955,27.866
-registration,blob,annealed,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,1.5370,2.9430,7.381
-registration,blob,annealed,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.3858,0.5198,119.404
-registration,blob,annealed,"guess 60°",far guess,16,0.8750,0.6398,0.9650,0.1250,0.3845,0.8653,142.224
-registration,blob,annealed,"no guess",no guess,16,0.0000,0.0000,0.1936,0.1250,inf,inf,27.260
-registration,blob,annealed,"everything",combined,16,0.1250,0.0350,0.3602,0.8750,3.6192,8.3294,106.771
-registration,blob,adaptive,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.4641,0.6250,110.951
-registration,blob,adaptive,"noise 2 %",noise,16,0.2500,0.1018,0.4950,0.7500,2.5552,4.1329,256.693
-registration,blob,adaptive,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,10.6952,16.4749,329.653
-registration,blob,adaptive,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.4154,0.5524,254.818
-registration,blob,adaptive,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3934,0.7901,596.547
-registration,blob,adaptive,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,5.4417,8.8820,1749.063
-registration,blob,adaptive,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.4648,1.0068,50.866
-registration,blob,adaptive,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.9096,1.2593,25.139
-registration,blob,adaptive,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,1.8731,3.8547,7.386
-registration,blob,adaptive,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.4559,0.6309,105.601
-registration,blob,adaptive,"guess 60°",far guess,16,0.8750,0.6398,0.9650,0.1250,0.4598,0.9375,103.551
-registration,blob,adaptive,"no guess",no guess,16,0.0000,0.0000,0.1936,0.1875,inf,inf,46.437
-registration,blob,adaptive,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,4.3145,5.8631,83.856
-registration,blob,search,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.3762,0.4757,1263.060
-registration,blob,search,"noise 2 %",noise,16,0.4375,0.2310,0.6682,0.5625,2.0784,3.6008,1671.756
-registration,blob,search,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,8.7664,17.7970,2793.520
-registration,blob,search,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.5603,1.0329,2844.700
-registration,blob,search,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,1.1275,1.4738,6403.379
-registration,blob,search,"outliers 300 %",outliers,16,0.3750,0.1848,0.6136,0.6250,2.3228,2.9792,24401.478
-registration,blob,search,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.4447,0.9609,648.752
-registration,blob,search,"quarter visible",partial view,16,0.8750,0.6398,0.9650,0.1250,0.9036,1.7363,547.882
-registration,blob,search,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,1.4748,3.0248,66.107
-registration,blob,search,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.3762,0.4757,1302.707
-registration,blob,search,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.3762,0.4757,1267.876
-registration,blob,search,"no guess",no guess,16,1.0000,0.8064,1.0000,0.0000,0.3762,0.4757,1380.111
-registration,blob,search,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,4.7489,6.8813,720.811
-registration,blob,consensus,"nominal",nominal,16,0.5625,0.3318,0.7690,0.4375,0.4868,179.6089,100.066
-registration,blob,consensus,"noise 2 %",noise,16,0.0000,0.0000,0.1936,0.9375,149.4785,178.5092,122.564
-registration,blob,consensus,"noise 5 %",noise,16,0.0000,0.0000,0.1936,0.0000,inf,inf,94.270
-registration,blob,consensus,"outliers 30 %",outliers,16,0.4375,0.2310,0.6682,0.5625,105.9712,179.3965,187.409
-registration,blob,consensus,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,0.2500,inf,inf,204.334
-registration,blob,consensus,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,0.0000,inf,inf,811.921
-registration,blob,consensus,"half visible",partial view,16,0.4375,0.2310,0.6682,0.5625,117.8811,175.7625,43.266
-registration,blob,consensus,"quarter visible",partial view,16,0.3125,0.1416,0.5560,0.6875,115.7441,168.5279,21.567
-registration,blob,consensus,"sparse",sparse,16,0.0000,0.0000,0.1936,0.0000,inf,inf,3.244
-registration,blob,consensus,"guess 30°",far guess,16,0.5625,0.3318,0.7690,0.4375,0.4868,179.6089,95.680
-registration,blob,consensus,"guess 60°",far guess,16,0.5625,0.3318,0.7690,0.4375,0.4868,179.6089,100.656
-registration,blob,consensus,"no guess",no guess,16,0.5625,0.3318,0.7690,0.4375,0.4868,179.6089,99.823
-registration,blob,consensus,"everything",combined,16,0.0000,0.0000,0.1936,0.3125,155.6851,inf,27.621
-registration,blob,guarded,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.3665,0.4869,22.920
-registration,blob,guarded,"noise 2 %",noise,16,0.1875,0.0659,0.4301,0.8125,3.0824,4.5887,43.732
-registration,blob,guarded,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,12.3504,19.2089,82.430
-registration,blob,guarded,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.4027,0.5896,67.419
-registration,blob,guarded,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,1.1275,1.4738,7774.614
-registration,blob,guarded,"outliers 300 %",outliers,16,0.3750,0.1848,0.6136,0.6250,2.3228,2.9792,12593.837
-registration,blob,guarded,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.4296,1.0223,12.788
-registration,blob,guarded,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.7674,1.1522,6.419
-registration,blob,guarded,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,1.5397,2.6605,1.641
-registration,blob,guarded,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.3701,0.4795,30.829
-registration,blob,guarded,"guess 60°",far guess,16,0.8750,0.6398,0.9650,0.1250,0.3990,0.8093,42.645
-registration,blob,guarded,"no guess",no guess,16,0.1250,0.0350,0.3602,0.8750,177.7921,179.2589,280.347
-registration,blob,guarded,"everything",combined,16,0.0625,0.0111,0.2833,0.9375,4.6203,14.9935,21.856
-registration,patch,icp-point,"nominal",nominal,16,0.8750,0.6398,0.9650,0.1250,1.4505,1.7872,113.620
-registration,patch,icp-point,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.8792,1.6814,81.751
-registration,patch,icp-point,"noise 5 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.8178,1.6396,180.008
-registration,patch,icp-point,"outliers 30 %",outliers,16,0.0000,0.0000,0.1936,1.0000,2.9679,3.2281,144.222
-registration,patch,icp-point,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,5.5218,5.7920,213.036
-registration,patch,icp-point,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,7.6604,7.8612,439.042
-registration,patch,icp-point,"half visible",partial view,16,0.3750,0.1848,0.6136,0.6250,2.0764,3.2677,52.710
-registration,patch,icp-point,"quarter visible",partial view,16,0.1250,0.0350,0.3602,0.8750,3.2556,4.2702,21.265
-registration,patch,icp-point,"sparse",sparse,16,0.2500,0.1018,0.4950,0.7500,3.1866,4.4088,9.842
-registration,patch,icp-point,"guess 30°",far guess,16,0.1250,0.0350,0.3602,0.8750,3.0215,4.3125,72.877
-registration,patch,icp-point,"guess 60°",far guess,16,0.0625,0.0111,0.2833,0.9375,8.4654,69.4861,129.443
-registration,patch,icp-point,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,178.8274,179.4733,117.670
-registration,patch,icp-point,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,5.8130,8.0216,39.701
-registration,patch,icp-plane,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.2475,0.5466,83.466
-registration,patch,icp-plane,"noise 2 %",noise,16,0.6875,0.4440,0.8584,0.3125,1.1501,2.2509,146.198
-registration,patch,icp-plane,"noise 5 %",noise,16,0.1250,0.0350,0.3602,0.8750,2.7802,6.1817,99.008
-registration,patch,icp-plane,"outliers 30 %",outliers,16,0.0000,0.0000,0.1936,1.0000,5.1305,9.0421,178.245
-registration,patch,icp-plane,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,11.2006,20.5792,241.541
-registration,patch,icp-plane,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,27.8563,38.4999,502.950
-registration,patch,icp-plane,"half visible",partial view,16,0.8750,0.6398,0.9650,0.1250,0.5127,1.7276,47.180
-registration,patch,icp-plane,"quarter visible",partial view,16,0.3750,0.1848,0.6136,0.6250,1.6707,4.0937,26.790
-registration,patch,icp-plane,"sparse",sparse,16,0.6250,0.3864,0.8152,0.3750,0.8825,2.0150,2.766
-registration,patch,icp-plane,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2475,0.5398,71.341
-registration,patch,icp-plane,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2475,0.5466,70.094
-registration,patch,icp-plane,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,165.1135,175.5485,153.032
-registration,patch,icp-plane,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,18.8762,38.4229,67.726
-registration,patch,icp-tukey,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.2276,0.5552,74.404
-registration,patch,icp-tukey,"noise 2 %",noise,16,0.6250,0.3864,0.8152,0.3750,1.4178,3.3297,137.830
-registration,patch,icp-tukey,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,8.6845,17.7584,183.962
-registration,patch,icp-tukey,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3077,0.5837,97.975
-registration,patch,icp-tukey,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3602,0.5586,243.480
-registration,patch,icp-tukey,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.5719,0.9158,466.640
-registration,patch,icp-tukey,"half visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.4932,1.7513,54.756
-registration,patch,icp-tukey,"quarter visible",partial view,16,0.3750,0.1848,0.6136,0.6250,1.6848,4.0300,44.208
-registration,patch,icp-tukey,"sparse",sparse,16,0.6250,0.3864,0.8152,0.3750,0.9087,2.4272,8.944
-registration,patch,icp-tukey,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2278,0.5568,57.073
-registration,patch,icp-tukey,"guess 60°",far guess,16,0.8125,0.5699,0.9341,0.0000,0.2527,41.4520,120.451
-registration,patch,icp-tukey,"no guess",no guess,16,0.0000,0.0000,0.1936,0.0000,178.7169,179.8497,148.271
-registration,patch,icp-tukey,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,7.7263,23.0714,44.648
-registration,patch,icp-trimmed,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.4302,0.9416,63.538
-registration,patch,icp-trimmed,"noise 2 %",noise,16,0.3125,0.1416,0.5560,0.6875,1.9196,3.4283,107.773
-registration,patch,icp-trimmed,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,4.6374,12.0636,224.098
-registration,patch,icp-trimmed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.2614,0.6585,143.743
-registration,patch,icp-trimmed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.6174,1.2258,196.870
-registration,patch,icp-trimmed,"outliers 300 %",outliers,16,0.7500,0.5050,0.8982,0.2500,1.5338,2.1624,597.695
-registration,patch,icp-trimmed,"half visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.8029,1.7737,53.907
-registration,patch,icp-trimmed,"quarter visible",partial view,16,0.1875,0.0659,0.4301,0.8125,2.8902,6.9721,11.468
-registration,patch,icp-trimmed,"sparse",sparse,16,0.4375,0.2310,0.6682,0.5625,1.8683,4.0015,5.279
-registration,patch,icp-trimmed,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.4299,1.0657,52.795
-registration,patch,icp-trimmed,"guess 60°",far guess,16,0.8750,0.6398,0.9650,0.1250,0.4207,1.3989,100.442
-registration,patch,icp-trimmed,"no guess",no guess,16,0.0625,0.0111,0.2833,0.9375,175.3117,178.3903,177.623
-registration,patch,icp-trimmed,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,4.7070,12.8499,47.636
-registration,patch,annealed,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.2254,0.5742,301.584
-registration,patch,annealed,"noise 2 %",noise,16,0.5625,0.3318,0.7690,0.4375,1.3099,2.0048,867.835
-registration,patch,annealed,"noise 5 %",noise,16,0.0625,0.0111,0.2833,0.9375,7.3008,25.4160,798.968
-registration,patch,annealed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3059,0.5239,602.132
-registration,patch,annealed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3573,0.7908,1202.600
-registration,patch,annealed,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.4372,1.3217,2479.508
-registration,patch,annealed,"half visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.5064,1.6579,225.021
-registration,patch,annealed,"quarter visible",partial view,16,0.3125,0.1416,0.5560,0.6875,1.7081,3.9717,190.548
-registration,patch,annealed,"sparse",sparse,16,0.6250,0.3864,0.8152,0.3750,0.9080,2.7671,21.916
-registration,patch,annealed,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2254,0.5742,367.489
-registration,patch,annealed,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2254,0.5742,392.190
-registration,patch,annealed,"no guess",no guess,16,0.0000,0.0000,0.1936,0.0000,178.7039,inf,680.065
-registration,patch,annealed,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,8.8460,14.3028,146.324
-registration,patch,adaptive,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.2374,0.5513,318.347
-registration,patch,adaptive,"noise 2 %",noise,16,0.6250,0.3864,0.8152,0.3750,1.3833,2.3978,4250.906
-registration,patch,adaptive,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,3.3338,5.0733,908.122
-registration,patch,adaptive,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.2943,0.5305,693.661
-registration,patch,adaptive,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3592,0.5465,1145.553
-registration,patch,adaptive,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,10.0887,25.5925,2198.745
-registration,patch,adaptive,"half visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.4954,1.5422,105.196
-registration,patch,adaptive,"quarter visible",partial view,16,0.3125,0.1416,0.5560,0.6875,1.8974,3.8921,139.835
-registration,patch,adaptive,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,1.0261,3.6152,10.417
-registration,patch,adaptive,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2374,0.5513,295.217
-registration,patch,adaptive,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2363,0.5513,204.640
-registration,patch,adaptive,"no guess",no guess,16,0.0000,0.0000,0.1936,0.6250,179.2095,inf,335.312
-registration,patch,adaptive,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,10.8254,18.8208,181.211
-registration,patch,search,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.2282,0.5472,3565.757
-registration,patch,search,"noise 2 %",noise,16,0.6875,0.4440,0.8584,0.3125,1.1421,2.1732,4376.459
-registration,patch,search,"noise 5 %",noise,16,0.0625,0.0111,0.2833,0.9375,2.9891,5.3354,4378.107
-registration,patch,search,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.5610,0.7666,4650.789
-registration,patch,search,"outliers 100 %",outliers,16,0.5625,0.3318,0.7690,0.4375,1.5089,1.9102,9172.606
-registration,patch,search,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,4.0099,4.6905,16199.692
-registration,patch,search,"half visible",partial view,16,0.8750,0.6398,0.9650,0.1250,0.4676,1.6468,1605.214
-registration,patch,search,"quarter visible",partial view,16,0.3125,0.1416,0.5560,0.6875,1.8279,7.0915,988.181
-registration,patch,search,"sparse",sparse,16,0.6250,0.3864,0.8152,0.3750,0.8363,2.2847,230.231
-registration,patch,search,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2282,0.5472,3561.243
-registration,patch,search,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2282,0.5472,3405.051
-registration,patch,search,"no guess",no guess,16,1.0000,0.8064,1.0000,0.0000,0.2282,0.5472,3567.273
-registration,patch,search,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,9.9371,19.4511,1182.992
-registration,patch,consensus,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.2276,0.5585,101.074
-registration,patch,consensus,"noise 2 %",noise,16,0.0000,0.0000,0.1936,0.0000,inf,inf,48.767
-registration,patch,consensus,"noise 5 %",noise,16,0.0000,0.0000,0.1936,0.0000,inf,inf,75.817
-registration,patch,consensus,"outliers 30 %",outliers,16,0.2500,0.1018,0.4950,0.0625,173.6078,inf,190.943
-registration,patch,consensus,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,0.0000,inf,inf,138.245
-registration,patch,consensus,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,0.0000,inf,inf,381.236
-registration,patch,consensus,"half visible",partial view,16,0.6875,0.4440,0.8584,0.1250,0.8104,175.5092,44.209
-registration,patch,consensus,"quarter visible",partial view,16,0.1250,0.0350,0.3602,0.3125,174.2039,inf,31.622
-registration,patch,consensus,"sparse",sparse,16,0.0000,0.0000,0.1936,0.0000,inf,inf,2.666
-registration,patch,consensus,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2276,0.5585,98.629
-registration,patch,consensus,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2276,0.5585,73.699
-registration,patch,consensus,"no guess",no guess,16,1.0000,0.8064,1.0000,0.0000,0.2276,0.5585,89.036
-registration,patch,consensus,"everything",combined,16,0.0000,0.0000,0.1936,0.0000,inf,inf,14.326
-registration,patch,guarded,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.2276,0.5552,72.846
-registration,patch,guarded,"noise 2 %",noise,16,0.6250,0.3864,0.8152,0.3750,1.4178,3.3297,87.012
-registration,patch,guarded,"noise 5 %",noise,16,0.0625,0.0111,0.2833,0.9375,6.4129,14.8201,149.465
-registration,patch,guarded,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3077,0.5837,97.238
-registration,patch,guarded,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3602,0.5586,244.451
-registration,patch,guarded,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.5719,0.9158,576.930
-registration,patch,guarded,"half visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.4932,1.7513,22.226
-registration,patch,guarded,"quarter visible",partial view,16,0.3750,0.1848,0.6136,0.6250,1.6848,4.0300,26.722
-registration,patch,guarded,"sparse",sparse,16,0.6250,0.3864,0.8152,0.3750,0.9087,2.4272,1.023
-registration,patch,guarded,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2278,0.5568,65.792
-registration,patch,guarded,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2276,0.5585,71.307
-registration,patch,guarded,"no guess",no guess,16,1.0000,0.8064,1.0000,0.0000,0.2282,0.5472,4246.020
-registration,patch,guarded,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,7.6612,19.2923,494.172
-registration,gear,icp-point,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.0956,0.1762,21.450
-registration,gear,icp-point,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.4799,1.1946,44.988
-registration,gear,icp-point,"noise 5 %",noise,16,0.1875,0.0659,0.4301,0.8125,4.1803,6.9415,57.265
-registration,gear,icp-point,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.6596,1.1576,56.343
-registration,gear,icp-point,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,2.6171,3.5919,100.606
-registration,gear,icp-point,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,5.7053,10.0759,169.164
-registration,gear,icp-point,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.2152,0.3536,20.700
-registration,gear,icp-point,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.2908,0.6996,3.062
-registration,gear,icp-point,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.5471,0.8202,0.393
-registration,gear,icp-point,"guess 30°",far guess,16,0.2500,0.1018,0.4950,0.7500,29.9976,30.0602,25.544
-registration,gear,icp-point,"guess 60°",far guess,16,0.1875,0.0659,0.4301,0.8125,30.1162,60.0689,41.899
-registration,gear,icp-point,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,179.9233,179.9739,58.435
-registration,gear,icp-point,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,12.6164,17.4655,16.691
-registration,gear,icp-plane,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.1086,0.1784,12.802
-registration,gear,icp-plane,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.5245,1.0321,25.278
-registration,gear,icp-plane,"noise 5 %",noise,16,0.1875,0.0659,0.4301,0.8125,4.1172,6.5870,83.922
-registration,gear,icp-plane,"outliers 30 %",outliers,16,0.8125,0.5699,0.9341,0.1875,1.0185,2.2711,65.223
-registration,gear,icp-plane,"outliers 100 %",outliers,16,0.2500,0.1018,0.4950,0.7500,2.9105,4.6717,121.998
-registration,gear,icp-plane,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,4.0800,7.7045,208.757
-registration,gear,icp-plane,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1920,0.3322,16.960
-registration,gear,icp-plane,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.3769,0.5922,7.902
-registration,gear,icp-plane,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.5910,0.7619,1.041
-registration,gear,icp-plane,"guess 30°",far guess,16,0.2500,0.1018,0.4950,0.7500,30.0293,30.0947,19.562
-registration,gear,icp-plane,"guess 60°",far guess,16,0.1875,0.0659,0.4301,0.8125,30.0974,60.1083,25.335
-registration,gear,icp-plane,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,179.8942,179.9553,39.394
-registration,gear,icp-plane,"everything",combined,16,0.0625,0.0111,0.2833,0.9375,13.8009,31.9640,46.093
-registration,gear,icp-tukey,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.1089,0.1813,46.078
-registration,gear,icp-tukey,"noise 2 %",noise,16,0.9375,0.7167,0.9889,0.0625,0.7377,1.6806,59.559
-registration,gear,icp-tukey,"noise 5 %",noise,16,0.0625,0.0111,0.2833,0.9375,7.1064,9.9850,91.395
-registration,gear,icp-tukey,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1348,0.2182,64.676
-registration,gear,icp-tukey,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1463,0.2498,84.943
-registration,gear,icp-tukey,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1778,0.3762,156.290
-registration,gear,icp-tukey,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1829,0.3361,15.721
-registration,gear,icp-tukey,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.3594,0.5536,7.523
-registration,gear,icp-tukey,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.6277,0.8013,1.176
-registration,gear,icp-tukey,"guess 30°",far guess,16,0.1875,0.0659,0.4301,0.8125,30.0230,30.0959,47.362
-registration,gear,icp-tukey,"guess 60°",far guess,16,0.0000,0.0000,0.1936,1.0000,52.2537,59.9985,74.573
-registration,gear,icp-tukey,"no guess",no guess,16,0.0000,0.0000,0.1936,0.5000,173.8039,179.7374,66.312
-registration,gear,icp-tukey,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,13.1787,24.5034,31.851
-registration,gear,icp-trimmed,"nominal",nominal,16,0.8750,0.6398,0.9650,0.1250,0.1952,0.3775,31.613
-registration,gear,icp-trimmed,"noise 2 %",noise,16,0.8750,0.6398,0.9650,0.1250,0.8783,1.8568,41.359
-registration,gear,icp-trimmed,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,4.7803,8.1796,72.119
-registration,gear,icp-trimmed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1988,0.3043,48.181
-registration,gear,icp-trimmed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.2348,0.3200,62.297
-registration,gear,icp-trimmed,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3907,0.6790,159.994
-registration,gear,icp-trimmed,"half visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.3988,4.9404,19.736
-registration,gear,icp-trimmed,"quarter visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.5566,2.2990,6.482
-registration,gear,icp-trimmed,"sparse",sparse,16,0.6250,0.3864,0.8152,0.3750,1.1139,8.0100,0.508
-registration,gear,icp-trimmed,"guess 30°",far guess,16,0.2500,0.1018,0.4950,0.7500,29.8532,30.1644,29.291
-registration,gear,icp-trimmed,"guess 60°",far guess,16,0.1250,0.0350,0.3602,0.8750,30.1750,59.8618,56.720
-registration,gear,icp-trimmed,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,176.6391,179.8414,76.537
-registration,gear,icp-trimmed,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,11.4188,22.6775,8.365
-registration,gear,annealed,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.1160,0.1920,120.299
-registration,gear,annealed,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.6466,1.1920,252.930
-registration,gear,annealed,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,4.5967,7.9366,223.673
-registration,gear,annealed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1329,0.2104,227.689
-registration,gear,annealed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1806,0.2542,376.183
-registration,gear,annealed,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1870,0.3448,1124.498
-registration,gear,annealed,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1878,0.3476,32.459
-registration,gear,annealed,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.3565,0.5190,24.314
-registration,gear,annealed,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.6443,0.7895,4.747
-registration,gear,annealed,"guess 30°",far guess,16,0.2500,0.1018,0.4950,0.7500,30.0150,30.1026,91.833
-registration,gear,annealed,"guess 60°",far guess,16,0.1875,0.0659,0.4301,0.8125,30.1026,60.0937,81.368
-registration,gear,annealed,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,179.9159,179.9644,61.900
-registration,gear,annealed,"everything",combined,16,0.0625,0.0111,0.2833,0.9375,8.8845,25.5721,130.722
-registration,gear,adaptive,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.1219,0.1929,103.607
-registration,gear,adaptive,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.6366,1.2198,154.866
-registration,gear,adaptive,"noise 5 %",noise,16,0.0625,0.0111,0.2833,0.9375,3.4594,7.3751,268.570
-registration,gear,adaptive,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1279,0.2218,121.363
-registration,gear,adaptive,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1737,0.2747,226.398
-registration,gear,adaptive,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.6224,0.8962,641.339
-registration,gear,adaptive,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1812,0.3499,24.218
-registration,gear,adaptive,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.3374,0.5345,20.084
-registration,gear,adaptive,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.6443,0.8000,7.364
-registration,gear,adaptive,"guess 30°",far guess,16,0.2500,0.1018,0.4950,0.7500,30.0169,30.1024,79.712
-registration,gear,adaptive,"guess 60°",far guess,16,0.1875,0.0659,0.4301,0.8125,30.1040,60.0753,99.311
-registration,gear,adaptive,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,179.8988,179.9695,84.236
-registration,gear,adaptive,"everything",combined,16,0.0625,0.0111,0.2833,0.9375,10.8455,22.7889,109.341
-registration,gear,search,"nominal",nominal,16,0.1250,0.0350,0.3602,0.8750,90.0817,179.9619,1051.747
-registration,gear,search,"noise 2 %",noise,16,0.0625,0.0111,0.2833,0.9375,91.1357,179.5910,1172.974
-registration,gear,search,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,94.0577,147.9624,1533.232
-registration,gear,search,"outliers 30 %",outliers,16,0.3125,0.1416,0.5560,0.6875,89.9016,179.9334,1733.946
-registration,gear,search,"outliers 100 %",outliers,16,0.3125,0.1416,0.5560,0.6875,89.7831,120.7336,3066.757
-registration,gear,search,"outliers 300 %",outliers,16,0.1250,0.0350,0.3602,0.8750,89.0787,179.6867,6443.851
-registration,gear,search,"half visible",partial view,16,0.1250,0.0350,0.3602,0.8750,89.5106,121.7640,648.697
-registration,gear,search,"quarter visible",partial view,16,0.0000,0.0000,0.1936,1.0000,158.4888,179.6054,386.667
-registration,gear,search,"sparse",sparse,16,0.0625,0.0111,0.2833,0.9375,89.6692,149.9905,74.145
-registration,gear,search,"guess 30°",far guess,16,0.1250,0.0350,0.3602,0.8750,90.0817,179.9619,938.317
-registration,gear,search,"guess 60°",far guess,16,0.1250,0.0350,0.3602,0.8750,90.0817,179.9619,874.484
-registration,gear,search,"no guess",no guess,16,0.1250,0.0350,0.3602,0.8750,90.0817,179.9619,924.507
-registration,gear,search,"everything",combined,16,0.0625,0.0111,0.2833,0.9375,61.0021,148.2373,494.379
-registration,gear,consensus,"nominal",nominal,16,0.0000,0.0000,0.1936,1.0000,90.2419,150.1104,58.620
-registration,gear,consensus,"noise 2 %",noise,16,0.0625,0.0111,0.2833,0.9375,90.2496,170.7657,103.839
-registration,gear,consensus,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,107.1275,166.2428,127.440
-registration,gear,consensus,"outliers 30 %",outliers,16,0.0625,0.0111,0.2833,0.9375,119.8852,179.8701,113.117
-registration,gear,consensus,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,119.7806,178.3952,280.366
-registration,gear,consensus,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,0.5625,167.5930,inf,454.182
-registration,gear,consensus,"half visible",partial view,16,0.0000,0.0000,0.1936,1.0000,79.9160,119.9862,65.424
-registration,gear,consensus,"quarter visible",partial view,16,0.0000,0.0000,0.1936,1.0000,118.9172,179.3784,32.798
-registration,gear,consensus,"sparse",sparse,16,0.0000,0.0000,0.1936,0.1875,inf,inf,2.709
-registration,gear,consensus,"guess 30°",far guess,16,0.0000,0.0000,0.1936,1.0000,90.2419,150.1104,59.493
-registration,gear,consensus,"guess 60°",far guess,16,0.0000,0.0000,0.1936,1.0000,90.2419,150.1104,57.556
-registration,gear,consensus,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,90.2419,150.1104,63.424
-registration,gear,consensus,"everything",combined,16,0.0625,0.0111,0.2833,0.6875,135.0744,inf,34.520
-registration,gear,guarded,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.1089,0.1813,37.231
-registration,gear,guarded,"noise 2 %",noise,16,0.9375,0.7167,0.9889,0.0625,0.7377,1.6806,34.326
-registration,gear,guarded,"noise 5 %",noise,16,0.0625,0.0111,0.2833,0.9375,7.1064,9.9850,57.222
-registration,gear,guarded,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1348,0.2182,79.529
-registration,gear,guarded,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1463,0.2498,79.305
-registration,gear,guarded,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1778,0.3762,176.752
-registration,gear,guarded,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1829,0.3361,11.553
-registration,gear,guarded,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.3594,0.5536,10.998
-registration,gear,guarded,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.6277,0.8013,3.009
-registration,gear,guarded,"guess 30°",far guess,16,0.1875,0.0659,0.4301,0.8125,30.0230,30.0959,28.091
-registration,gear,guarded,"guess 60°",far guess,16,0.0000,0.0000,0.1936,1.0000,52.2537,90.0817,210.163
-registration,gear,guarded,"no guess",no guess,16,0.1250,0.0350,0.3602,0.8750,90.2462,179.9619,1061.929
-registration,gear,guarded,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,13.1787,24.5034,21.047
-tracking,bracket,icp-tukey,"noise",noise,160,0.1313,0.0875,0.1923,0.8688,3.4866,5.6195,7.162
-tracking,bracket,icp-tukey,"shake",shake,160,0.1000,0.0625,0.1563,0.9000,3.2591,5.8625,6.724
-tracking,bracket,icp-tukey,"bend",bend,160,0.1125,0.0724,0.1708,0.8875,3.1483,5.3579,6.169
-tracking,bracket,icp-tukey,"occluder",occluder,160,0.0563,0.0299,0.1034,0.9437,3.8868,5.6480,8.064
-tracking,bracket,icp-tukey,"lens",lens,160,0.0625,0.0343,0.1112,0.9375,3.9680,5.9837,5.843
-tracking,bracket,icp-tukey,"knocks",knocks,160,0.0437,0.0214,0.0875,0.7688,4.7419,90.1553,5.974
-tracking,bracket,adaptive,"noise",noise,160,0.3500,0.2804,0.4266,0.6500,2.2732,3.8085,15.759
-tracking,bracket,adaptive,"shake",shake,160,0.3312,0.2630,0.4074,0.6687,2.2503,4.1069,14.635
-tracking,bracket,adaptive,"bend",bend,160,0.2875,0.2230,0.3620,0.7125,2.3294,3.6938,15.508
-tracking,bracket,adaptive,"occluder",occluder,160,0.2938,0.2287,0.3685,0.7063,2.4591,4.4433,20.198
-tracking,bracket,adaptive,"lens",lens,160,0.2687,0.2061,0.3423,0.7312,2.4547,3.8874,14.968
-tracking,bracket,adaptive,"knocks",knocks,160,0.2437,0.1837,0.3158,0.7562,2.4922,3.8480,14.087
-tracking,bracket,guarded,"noise",noise,160,0.1313,0.0875,0.1923,0.8688,3.4866,5.6195,5.420
-tracking,bracket,guarded,"shake",shake,160,0.1000,0.0625,0.1563,0.9000,3.2591,5.8625,7.747
-tracking,bracket,guarded,"bend",bend,160,0.1125,0.0724,0.1708,0.8875,3.1483,5.3579,6.855
-tracking,bracket,guarded,"occluder",occluder,160,0.1250,0.0824,0.1852,0.8750,3.6706,9.5474,208.332
-tracking,bracket,guarded,"lens",lens,160,0.0625,0.0343,0.1112,0.9375,3.9680,5.9837,5.160
-tracking,bracket,guarded,"knocks",knocks,160,0.0875,0.0528,0.1415,0.9125,3.6242,5.8358,4.872
-tracking,bracket,tracker,"noise",noise,160,0.8625,0.8006,0.9074,0.1375,1.3943,2.1320,2.267
-tracking,bracket,tracker,"shake",shake,160,0.3312,0.2630,0.4074,0.6687,1.6197,2.5549,2.249
-tracking,bracket,tracker,"bend",bend,160,0.6375,0.5606,0.7080,0.3625,1.5759,2.8978,2.207
-tracking,bracket,tracker,"occluder",occluder,160,0.5312,0.4541,0.6069,0.4688,1.8391,50.4236,3.085
-tracking,bracket,tracker,"lens",lens,160,0.6625,0.5862,0.7312,0.3375,1.6013,2.4818,2.279
-tracking,bracket,tracker,"knocks",knocks,160,0.7125,0.6380,0.7770,0.2875,1.6431,2.7526,2.235
-tracking,bracket,tracker-whole,"noise",noise,160,0.5312,0.4541,0.6069,0.4688,1.8133,3.3717,2.175
-tracking,bracket,tracker-whole,"shake",shake,160,0.1562,0.1081,0.2205,0.8438,2.0777,3.3821,2.259
-tracking,bracket,tracker-whole,"bend",bend,160,0.4000,0.3273,0.4774,0.6000,1.9643,3.4883,2.213
-tracking,bracket,tracker-whole,"occluder",occluder,160,0.3312,0.2630,0.4074,0.6687,2.4446,165.2688,3.342
-tracking,bracket,tracker-whole,"lens",lens,160,0.3187,0.2515,0.3945,0.6813,2.3314,4.1016,2.294
-tracking,bracket,tracker-whole,"knocks",knocks,160,0.3625,0.2920,0.4394,0.6375,2.2313,3.5279,2.213
-tracking,bracket,tracker-loose,"noise",noise,160,0.7688,0.6976,0.8273,0.2313,1.4928,2.4080,2.201
-tracking,bracket,tracker-loose,"shake",shake,160,0.3000,0.2344,0.3750,0.7000,1.5876,2.7988,2.322
-tracking,bracket,tracker-loose,"bend",bend,160,0.7250,0.6511,0.7883,0.2750,1.5431,2.5859,2.242
-tracking,bracket,tracker-loose,"occluder",occluder,160,0.3563,0.2862,0.4330,0.6438,2.2909,173.2920,3.184
-tracking,bracket,tracker-loose,"lens",lens,160,0.6625,0.5862,0.7312,0.3375,1.5157,2.5426,2.246
-tracking,bracket,tracker-loose,"knocks",knocks,160,0.6375,0.5606,0.7080,0.3625,1.6248,2.7207,2.215
-tracking,blob,icp-tukey,"noise",noise,160,0.0063,0.0011,0.0345,0.9938,10.2443,20.4964,5.299
-tracking,blob,icp-tukey,"shake",shake,160,0.0063,0.0011,0.0345,0.9938,10.6739,20.7719,5.286
-tracking,blob,icp-tukey,"bend",bend,160,0.0125,0.0034,0.0444,0.9875,10.9792,20.3641,5.339
-tracking,blob,icp-tukey,"occluder",occluder,160,0.0063,0.0011,0.0345,0.8812,12.0486,28.5300,10.035
-tracking,blob,icp-tukey,"lens",lens,160,0.0000,0.0000,0.0234,1.0000,10.4719,18.6160,5.342
-tracking,blob,icp-tukey,"knocks",knocks,160,0.0000,0.0000,0.0234,1.0000,15.5213,152.3936,5.386
-tracking,blob,adaptive,"noise",noise,160,0.0563,0.0299,0.1034,0.9437,6.2008,12.6757,23.449
-tracking,blob,adaptive,"shake",shake,160,0.0250,0.0098,0.0625,0.9750,6.5677,15.4928,24.767
-tracking,blob,adaptive,"bend",bend,160,0.0312,0.0134,0.0711,0.9688,6.2350,11.6224,30.436
-tracking,blob,adaptive,"occluder",occluder,160,0.0250,0.0098,0.0625,0.7875,35.5710,inf,49.256
-tracking,blob,adaptive,"lens",lens,160,0.0563,0.0299,0.1034,0.9437,6.4053,13.5738,25.359
-tracking,blob,adaptive,"knocks",knocks,160,0.0250,0.0098,0.0625,0.9688,8.8077,115.1890,24.127
-tracking,blob,guarded,"noise",noise,160,0.0063,0.0011,0.0345,0.9938,10.2443,20.4964,6.102
-tracking,blob,guarded,"shake",shake,160,0.0063,0.0011,0.0345,0.9938,10.6739,20.7719,7.900
-tracking,blob,guarded,"bend",bend,160,0.0125,0.0034,0.0444,0.9875,10.9792,20.3641,6.386
-tracking,blob,guarded,"occluder",occluder,160,0.0125,0.0034,0.0444,0.9875,113.8313,172.9585,349.124
-tracking,blob,guarded,"lens",lens,160,0.0000,0.0000,0.0234,1.0000,10.4719,18.6160,14.134
-tracking,blob,guarded,"knocks",knocks,160,0.0063,0.0011,0.0345,0.9938,11.3679,107.0518,14.835
-tracking,blob,tracker,"noise",noise,160,0.1375,0.0926,0.1994,0.8625,3.8994,6.8638,4.668
-tracking,blob,tracker,"shake",shake,160,0.0813,0.0481,0.1340,0.9187,4.0873,8.2894,4.899
-tracking,blob,tracker,"bend",bend,160,0.1437,0.0977,0.2065,0.8562,3.8594,7.9853,4.746
-tracking,blob,tracker,"occluder",occluder,160,0.0813,0.0481,0.1340,0.9187,10.8662,125.7828,6.182
-tracking,blob,tracker,"lens",lens,160,0.1437,0.0977,0.2065,0.8562,3.8494,9.5868,4.471
-tracking,blob,tracker,"knocks",knocks,160,0.0625,0.0343,0.1112,0.9375,128.4244,175.1151,5.262
-tracking,blob,tracker-whole,"noise",noise,160,0.0563,0.0299,0.1034,0.9437,5.2194,14.3340,6.191
-tracking,blob,tracker-whole,"shake",shake,160,0.0500,0.0256,0.0956,0.9500,5.3903,13.1326,6.309
-tracking,blob,tracker-whole,"bend",bend,160,0.0938,0.0576,0.1489,0.9062,4.7630,15.2616,6.320
-tracking,blob,tracker-whole,"occluder",occluder,160,0.0563,0.0299,0.1034,0.9437,72.6965,167.7078,9.380
-tracking,blob,tracker-whole,"lens",lens,160,0.0938,0.0576,0.1489,0.9062,6.1513,31.5375,7.329
-tracking,blob,tracker-whole,"knocks",knocks,160,0.0500,0.0256,0.0956,0.9500,114.1262,175.3532,7.364
-tracking,blob,tracker-loose,"noise",noise,160,0.0938,0.0576,0.1489,0.9062,5.5326,27.5819,5.820
-tracking,blob,tracker-loose,"shake",shake,160,0.0500,0.0256,0.0956,0.9500,5.7413,14.3831,6.205
-tracking,blob,tracker-loose,"bend",bend,160,0.0625,0.0343,0.1112,0.9375,5.3345,14.1957,8.330
-tracking,blob,tracker-loose,"occluder",occluder,160,0.0500,0.0256,0.0956,0.9500,16.3958,126.7484,11.896
-tracking,blob,tracker-loose,"lens",lens,160,0.0813,0.0481,0.1340,0.9187,4.7244,18.0664,7.411
-tracking,blob,tracker-loose,"knocks",knocks,160,0.0375,0.0173,0.0794,0.9625,118.0841,176.5874,7.851
-tracking,patch,icp-tukey,"noise",noise,160,0.0563,0.0299,0.1034,0.6875,6.5089,inf,14.675
-tracking,patch,icp-tukey,"shake",shake,160,0.0250,0.0098,0.0625,0.6687,6.9589,inf,25.986
-tracking,patch,icp-tukey,"bend",bend,160,0.0250,0.0098,0.0625,0.9313,5.9737,13.8654,28.422
-tracking,patch,icp-tukey,"occluder",occluder,160,0.0250,0.0098,0.0625,0.6062,6.9898,inf,35.289
-tracking,patch,icp-tukey,"lens",lens,160,0.0000,0.0000,0.0234,0.4688,49.6943,inf,20.486
-tracking,patch,icp-tukey,"knocks",knocks,160,0.0563,0.0299,0.1034,0.7188,9.1047,inf,27.113
-tracking,patch,adaptive,"noise",noise,160,0.1375,0.0926,0.1994,0.8187,3.3136,8.4710,119.050
-tracking,patch,adaptive,"shake",shake,160,0.1750,0.1239,0.2413,0.8125,2.8928,6.5938,127.953
-tracking,patch,adaptive,"bend",bend,160,0.0125,0.0034,0.0444,0.9688,4.1892,9.0275,166.444
-tracking,patch,adaptive,"occluder",occluder,160,0.1250,0.0824,0.1852,0.4875,4.7247,inf,178.236
-tracking,patch,adaptive,"lens",lens,160,0.0187,0.0064,0.0537,0.9563,4.5908,8.4700,171.964
-tracking,patch,adaptive,"knocks",knocks,160,0.0875,0.0528,0.1415,0.8375,3.5926,159.9612,162.017
-tracking,patch,guarded,"noise",noise,160,0.0750,0.0434,0.1265,0.9250,4.9488,14.3086,48.409
-tracking,patch,guarded,"shake",shake,160,0.0688,0.0388,0.1189,0.9313,4.6291,13.5491,48.002
-tracking,patch,guarded,"bend",bend,160,0.0250,0.0098,0.0625,0.9750,5.9737,15.0853,53.661
-tracking,patch,guarded,"occluder",occluder,160,0.0063,0.0011,0.0345,0.9938,9.1327,161.7068,435.528
-tracking,patch,guarded,"lens",lens,160,0.0063,0.0011,0.0345,0.9938,5.9604,15.5733,55.660
-tracking,patch,guarded,"knocks",knocks,160,0.0750,0.0434,0.1265,0.9250,6.3845,118.2743,58.483
-tracking,patch,tracker,"noise",noise,160,0.0000,0.0000,0.0234,1.0000,9.8703,54.9784,16.556
-tracking,patch,tracker,"shake",shake,160,0.0125,0.0034,0.0444,0.9875,7.8806,17.0112,16.424
-tracking,patch,tracker,"bend",bend,160,0.0000,0.0000,0.0234,1.0000,14.1074,151.9546,18.921
-tracking,patch,tracker,"occluder",occluder,160,0.0125,0.0034,0.0444,0.9875,34.6755,118.4055,18.954
-tracking,patch,tracker,"lens",lens,160,0.0000,0.0000,0.0234,1.0000,13.7856,33.3951,17.429
-tracking,patch,tracker,"knocks",knocks,160,0.0125,0.0034,0.0444,0.9875,11.7734,34.2077,15.532
-tracking,patch,tracker-whole,"noise",noise,160,0.0125,0.0034,0.0444,0.9875,12.0288,67.2935,17.908
-tracking,patch,tracker-whole,"shake",shake,160,0.0187,0.0064,0.0537,0.9812,10.6463,75.0610,19.755
-tracking,patch,tracker-whole,"bend",bend,160,0.0063,0.0011,0.0345,0.9938,11.9106,151.9546,18.594
-tracking,patch,tracker-whole,"occluder",occluder,160,0.0125,0.0034,0.0444,0.9812,34.2207,52.3397,25.521
-tracking,patch,tracker-whole,"lens",lens,160,0.0000,0.0000,0.0234,1.0000,16.8700,29.0790,16.451
-tracking,patch,tracker-whole,"knocks",knocks,160,0.0063,0.0011,0.0345,0.9938,13.8989,125.1059,15.285
-tracking,patch,tracker-loose,"noise",noise,160,0.0688,0.0388,0.1189,0.9313,7.7075,19.7783,14.737
-tracking,patch,tracker-loose,"shake",shake,160,0.0125,0.0034,0.0444,0.9875,11.0275,26.0711,16.808
-tracking,patch,tracker-loose,"bend",bend,160,0.0000,0.0000,0.0234,1.0000,11.2341,24.6580,18.077
-tracking,patch,tracker-loose,"occluder",occluder,160,0.0125,0.0034,0.0444,0.9313,23.8888,165.7344,26.936
-tracking,patch,tracker-loose,"lens",lens,160,0.0000,0.0000,0.0234,1.0000,9.3820,19.7010,11.134
-tracking,patch,tracker-loose,"knocks",knocks,160,0.0063,0.0011,0.0345,0.9938,9.8847,48.9358,13.659
-tracking,gear,icp-tukey,"noise",noise,160,0.2437,0.1837,0.3158,0.7562,2.7757,4.7668,13.369
-tracking,gear,icp-tukey,"shake",shake,160,0.2062,0.1508,0.2755,0.7937,2.9950,7.0292,16.657
-tracking,gear,icp-tukey,"bend",bend,160,0.2375,0.1782,0.3091,0.7625,3.0272,5.2778,13.629
-tracking,gear,icp-tukey,"occluder",occluder,160,0.1875,0.1346,0.2550,0.7688,3.2639,5.1222,24.467
-tracking,gear,icp-tukey,"lens",lens,160,0.1938,0.1400,0.2619,0.8063,3.0201,5.0876,15.163
-tracking,gear,icp-tukey,"knocks",knocks,160,0.1000,0.0625,0.1563,0.9000,5.9356,175.2754,16.880
-tracking,gear,adaptive,"noise",noise,160,0.5437,0.4664,0.6190,0.4562,1.8713,3.1235,38.766
-tracking,gear,adaptive,"shake",shake,160,0.5062,0.4295,0.5827,0.4938,1.9666,3.2509,35.492
-tracking,gear,adaptive,"bend",bend,160,0.4688,0.3931,0.5459,0.5312,2.0258,3.6262,36.474
-tracking,gear,adaptive,"occluder",occluder,160,0.2188,0.1617,0.2890,0.7812,29.5084,179.1727,58.479
-tracking,gear,adaptive,"lens",lens,160,0.4437,0.3690,0.5212,0.5563,2.1450,3.3163,34.689
-tracking,gear,adaptive,"knocks",knocks,160,0.4000,0.3273,0.4774,0.6000,2.3531,59.9823,40.073
-tracking,gear,guarded,"noise",noise,160,0.0688,0.0388,0.1189,0.9313,177.1303,179.7181,16.696
-tracking,gear,guarded,"shake",shake,160,0.0688,0.0388,0.1189,0.9313,119.4739,179.1273,15.950
-tracking,gear,guarded,"bend",bend,160,0.0875,0.0528,0.1415,0.9125,59.7450,91.3817,17.253
-tracking,gear,guarded,"occluder",occluder,160,0.0125,0.0034,0.0444,0.9875,119.2554,178.3339,315.144
-tracking,gear,guarded,"lens",lens,160,0.0688,0.0388,0.1189,0.9313,59.6698,178.7833,18.207
-tracking,gear,guarded,"knocks",knocks,160,0.0750,0.0434,0.1265,0.9250,26.3775,148.1650,20.469
-tracking,gear,tracker,"noise",noise,160,0.8000,0.7313,0.8546,0.2000,1.3762,2.3941,8.139
-tracking,gear,tracker,"shake",shake,160,0.5563,0.4788,0.6310,0.4437,1.3964,2.3458,8.482
-tracking,gear,tracker,"bend",bend,160,0.7500,0.6776,0.8107,0.2500,1.4628,2.5547,8.649
-tracking,gear,tracker,"occluder",occluder,160,0.3063,0.2401,0.3815,0.6937,136.9875,178.3625,10.946
-tracking,gear,tracker,"lens",lens,160,0.7250,0.6511,0.7883,0.2750,1.5823,2.4346,8.412
-tracking,gear,tracker,"knocks",knocks,160,0.5188,0.4418,0.5948,0.4813,1.8898,148.9017,7.750
-tracking,gear,tracker-whole,"noise",noise,160,0.8063,0.7381,0.8600,0.1938,1.4573,2.2787,8.408
-tracking,gear,tracker-whole,"shake",shake,160,0.5813,0.5038,0.6549,0.4188,1.3990,2.3217,8.766
-tracking,gear,tracker-whole,"bend",bend,160,0.7500,0.6776,0.8107,0.2500,1.3760,2.7445,6.759
-tracking,gear,tracker-whole,"occluder",occluder,160,0.3000,0.2344,0.3750,0.7000,115.3851,166.9712,13.821
-tracking,gear,tracker-whole,"lens",lens,160,0.6750,0.5991,0.7427,0.3250,1.6663,2.5961,9.196
-tracking,gear,tracker-whole,"knocks",knocks,160,0.5125,0.4357,0.5887,0.4875,1.9330,149.0354,7.708
-tracking,gear,tracker-loose,"noise",noise,160,0.7812,0.7110,0.8383,0.2188,1.4478,2.3212,9.126
-tracking,gear,tracker-loose,"shake",shake,160,0.5188,0.4418,0.5948,0.4813,1.5054,2.4802,8.565
-tracking,gear,tracker-loose,"bend",bend,160,0.7562,0.6842,0.8163,0.2437,1.5181,2.5713,8.672
-tracking,gear,tracker-loose,"occluder",occluder,160,0.2938,0.2287,0.3685,0.7063,93.8972,176.0845,13.401
-tracking,gear,tracker-loose,"lens",lens,160,0.7438,0.6709,0.8051,0.2562,1.5902,2.3949,9.245
-tracking,gear,tracker-loose,"knocks",knocks,160,0.5500,0.4726,0.6250,0.4500,1.7273,86.1019,7.694
+scenes,scenes,icp-point,"bin of parts",realistic,16,0.0000,0.0000,0.1936,1.0000,9.9818,13.1568,769.263
+scenes,scenes,icp-point,"bracket behind a crate",realistic,16,0.0000,0.0000,0.1936,1.0000,31.5996,35.3316,225.943
+scenes,scenes,icp-point,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,1.0000,29.6792,57.5262,2268.371
+scenes,scenes,icp-point,"bracket at a low angle",realistic,16,0.0000,0.0000,0.1936,1.0000,5.4951,24.8574,1287.265
+scenes,scenes,icp-point,"car close by",realistic,16,0.0000,0.0000,0.1936,1.0000,4.6010,7.3372,2951.766
+scenes,scenes,icp-point,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,20.0378,38.3541,1629.604
+scenes,scenes,icp-point,"crate among crates",realistic,16,0.0000,0.0000,0.1936,1.0000,28.9643,31.9539,2667.259
+scenes,scenes,icp-point,"gear from above",realistic,16,0.0000,0.0000,0.1936,1.0000,4.2052,7.1161,505.420
+scenes,scenes,icp-point,"gear on a bench",realistic,16,0.2500,0.1018,0.4950,0.7500,1.8762,3.4739,160.464
+scenes,scenes,icp-point,"mug close up",realistic,16,0.0000,0.0000,0.1936,1.0000,12.6028,13.7825,453.824
+scenes,scenes,icp-point,"parking lot",realistic,16,0.0000,0.0000,0.1936,1.0000,84.2477,92.1846,1406.833
+scenes,scenes,icp-point,"part on a table",realistic,16,0.0000,0.0000,0.1936,1.0000,3.7699,5.7260,191.113
+scenes,scenes,icp-point,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,1.0000,58.0092,60.0054,134.907
+scenes,scenes,icp-point,"street corner",realistic,16,0.0000,0.0000,0.1936,1.0000,51.0409,54.5927,171.950
+scenes,scenes,icp-point,"twin brackets",realistic,16,0.0000,0.0000,0.1936,1.0000,7.0813,11.0234,131.511
+scenes,scenes,icp-point,"workshop",realistic,16,0.0000,0.0000,0.1936,1.0000,3.2694,7.2817,221.938
+scenes,scenes,icp-plane,"bin of parts",realistic,16,0.0000,0.0000,0.1936,1.0000,100.1452,144.5686,867.268
+scenes,scenes,icp-plane,"bracket behind a crate",realistic,16,0.0000,0.0000,0.1936,1.0000,32.2350,34.1872,308.436
+scenes,scenes,icp-plane,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,1.0000,93.5987,106.9100,1889.157
+scenes,scenes,icp-plane,"bracket at a low angle",realistic,16,0.0000,0.0000,0.1936,1.0000,12.7422,43.1311,568.494
+scenes,scenes,icp-plane,"car close by",realistic,16,0.0000,0.0000,0.1936,1.0000,4.4873,7.6339,3064.379
+scenes,scenes,icp-plane,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,57.3044,74.2058,736.466
+scenes,scenes,icp-plane,"crate among crates",realistic,16,0.0000,0.0000,0.1936,1.0000,34.0270,35.7378,3001.847
+scenes,scenes,icp-plane,"gear from above",realistic,16,0.0000,0.0000,0.1936,1.0000,119.7547,168.2759,599.186
+scenes,scenes,icp-plane,"gear on a bench",realistic,16,0.0000,0.0000,0.1936,1.0000,152.5099,169.3214,348.126
+scenes,scenes,icp-plane,"mug close up",realistic,16,0.0000,0.0000,0.1936,1.0000,13.8712,16.4735,1934.705
+scenes,scenes,icp-plane,"parking lot",realistic,16,0.0000,0.0000,0.1936,1.0000,89.3746,101.3732,2040.398
+scenes,scenes,icp-plane,"part on a table",realistic,16,0.0000,0.0000,0.1936,1.0000,9.9862,12.9029,222.566
+scenes,scenes,icp-plane,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,1.0000,51.4443,67.0554,254.682
+scenes,scenes,icp-plane,"street corner",realistic,16,0.0000,0.0000,0.1936,1.0000,71.4701,76.4641,824.855
+scenes,scenes,icp-plane,"twin brackets",realistic,16,0.0000,0.0000,0.1936,1.0000,17.0197,20.6527,220.173
+scenes,scenes,icp-plane,"workshop",realistic,16,0.0000,0.0000,0.1936,1.0000,15.1549,18.8116,1224.847
+scenes,scenes,icp-tukey,"bin of parts",realistic,16,0.1250,0.0350,0.3602,0.0000,4.7176,5.5418,1067.383
+scenes,scenes,icp-tukey,"bracket behind a crate",realistic,16,0.5625,0.3318,0.7690,0.4375,1.1307,5.9719,409.389
+scenes,scenes,icp-tukey,"bracket in a bin",realistic,16,0.0625,0.0111,0.2833,0.0000,1.3420,6.4347,2129.542
+scenes,scenes,icp-tukey,"bracket at a low angle",realistic,16,0.6875,0.4440,0.8584,0.3125,0.4650,7.6827,758.976
+scenes,scenes,icp-tukey,"car close by",realistic,16,0.1875,0.0659,0.4301,0.8125,2.1938,2.4091,1847.216
+scenes,scenes,icp-tukey,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,9.9891,12.0628,1163.783
+scenes,scenes,icp-tukey,"crate among crates",realistic,16,1.0000,0.8064,1.0000,0.0000,0.2180,0.4956,1063.405
+scenes,scenes,icp-tukey,"gear from above",realistic,16,0.8750,0.6398,0.9650,0.1250,0.4281,1.9776,650.010
+scenes,scenes,icp-tukey,"gear on a bench",realistic,16,1.0000,0.8064,1.0000,0.0000,0.4755,0.6371,604.971
+scenes,scenes,icp-tukey,"mug close up",realistic,16,0.8125,0.5699,0.9341,0.1875,0.0833,6.8465,640.317
+scenes,scenes,icp-tukey,"parking lot",realistic,16,0.0000,0.0000,0.1936,0.0000,5.4499,10.3240,1880.242
+scenes,scenes,icp-tukey,"part on a table",realistic,16,0.8750,0.6398,0.9650,0.1250,0.2307,0.4585,387.512
+scenes,scenes,icp-tukey,"shelf of mugs",realistic,16,0.3750,0.1848,0.6136,0.0000,2.2515,5.6234,506.564
+scenes,scenes,icp-tukey,"street corner",realistic,16,0.0000,0.0000,0.1936,0.0000,11.7093,14.8366,411.452
+scenes,scenes,icp-tukey,"twin brackets",realistic,16,0.8750,0.6398,0.9650,0.1250,0.4358,0.6533,568.197
+scenes,scenes,icp-tukey,"workshop",realistic,16,0.9375,0.7167,0.9889,0.0625,0.5258,0.7896,434.448
+scenes,scenes,icp-trimmed,"bin of parts",realistic,16,0.0000,0.0000,0.1936,1.0000,48.1781,54.8664,564.427
+scenes,scenes,icp-trimmed,"bracket behind a crate",realistic,16,0.4375,0.2310,0.6682,0.5625,2.4690,6.2428,675.367
+scenes,scenes,icp-trimmed,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,1.0000,21.9416,25.1334,1703.400
+scenes,scenes,icp-trimmed,"bracket at a low angle",realistic,16,0.6250,0.3864,0.8152,0.3750,1.2076,8.2495,152.633
+scenes,scenes,icp-trimmed,"car close by",realistic,16,1.0000,0.8064,1.0000,0.0000,1.2242,1.6132,2985.883
+scenes,scenes,icp-trimmed,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,10.5071,11.9368,1658.651
+scenes,scenes,icp-trimmed,"crate among crates",realistic,16,0.8750,0.6398,0.9650,0.1250,0.2580,0.4725,2399.771
+scenes,scenes,icp-trimmed,"gear from above",realistic,16,1.0000,0.8064,1.0000,0.0000,0.9644,1.8625,1352.917
+scenes,scenes,icp-trimmed,"gear on a bench",realistic,16,1.0000,0.8064,1.0000,0.0000,0.5496,0.6461,73.943
+scenes,scenes,icp-trimmed,"mug close up",realistic,16,0.7500,0.5050,0.8982,0.2500,0.0863,7.6182,336.650
+scenes,scenes,icp-trimmed,"parking lot",realistic,16,0.0000,0.0000,0.1936,1.0000,45.6383,74.7581,1594.207
+scenes,scenes,icp-trimmed,"part on a table",realistic,16,0.8750,0.6398,0.9650,0.1250,0.2831,0.6034,354.439
+scenes,scenes,icp-trimmed,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,1.0000,27.9318,73.2346,1400.573
+scenes,scenes,icp-trimmed,"street corner",realistic,16,0.0000,0.0000,0.1936,1.0000,25.0917,40.9377,448.843
+scenes,scenes,icp-trimmed,"twin brackets",realistic,16,0.8125,0.5699,0.9341,0.1875,0.3688,4.8375,877.588
+scenes,scenes,icp-trimmed,"workshop",realistic,16,0.9375,0.7167,0.9889,0.0625,0.3697,0.6900,830.663
+scenes,scenes,annealed,"bin of parts",realistic,16,0.0000,0.0000,0.1936,0.0000,136.5027,158.7264,12960.833
+scenes,scenes,annealed,"bracket behind a crate",realistic,16,0.1875,0.0659,0.4301,0.8125,9.2120,33.0231,1324.275
+scenes,scenes,annealed,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,0.0000,33.9506,41.5791,9783.364
+scenes,scenes,annealed,"bracket at a low angle",realistic,16,0.5625,0.3318,0.7690,0.4375,0.5910,0.8565,3778.475
+scenes,scenes,annealed,"car close by",realistic,16,0.5000,0.2800,0.7200,0.5000,1.9387,2.2789,7735.253
+scenes,scenes,annealed,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,18.0063,59.2287,2282.234
+scenes,scenes,annealed,"crate among crates",realistic,16,1.0000,0.8064,1.0000,0.0000,0.2095,0.3811,11594.351
+scenes,scenes,annealed,"gear from above",realistic,16,0.0000,0.0000,0.1936,1.0000,121.4535,177.8420,2303.377
+scenes,scenes,annealed,"gear on a bench",realistic,16,0.1250,0.0350,0.3602,0.8750,60.1307,120.4519,1160.914
+scenes,scenes,annealed,"mug close up",realistic,16,0.0625,0.0111,0.2833,0.9375,6.6160,6.7587,4850.738
+scenes,scenes,annealed,"parking lot",realistic,16,0.0000,0.0000,0.1936,0.0000,96.6289,103.5560,9774.133
+scenes,scenes,annealed,"part on a table",realistic,16,0.8125,0.5699,0.9341,0.1875,0.2088,0.7816,1804.959
+scenes,scenes,annealed,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,0.0000,89.3639,116.2902,1287.705
+scenes,scenes,annealed,"street corner",realistic,16,0.0000,0.0000,0.1936,0.0000,48.7607,59.1066,2345.389
+scenes,scenes,annealed,"twin brackets",realistic,16,0.8750,0.6398,0.9650,0.1250,0.3642,0.5633,4759.847
+scenes,scenes,annealed,"workshop",realistic,16,0.2500,0.1018,0.4950,0.7500,0.5798,1.0637,3640.624
+scenes,scenes,adaptive,"bin of parts",realistic,16,0.0000,0.0000,0.1936,1.0000,126.8510,160.9442,7826.174
+scenes,scenes,adaptive,"bracket behind a crate",realistic,16,0.3125,0.1416,0.5560,0.6875,5.5528,9.0761,1169.465
+scenes,scenes,adaptive,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,1.0000,23.1902,24.5818,11910.785
+scenes,scenes,adaptive,"bracket at a low angle",realistic,16,0.5625,0.3318,0.7690,0.4375,0.5934,7.4814,1321.430
+scenes,scenes,adaptive,"car close by",realistic,16,0.4375,0.2310,0.6682,0.5625,2.0265,2.2658,3159.381
+scenes,scenes,adaptive,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,14.0505,29.7226,1041.323
+scenes,scenes,adaptive,"crate among crates",realistic,16,1.0000,0.8064,1.0000,0.0000,0.1524,0.2832,1414.386
+scenes,scenes,adaptive,"gear from above",realistic,16,0.0000,0.0000,0.1936,1.0000,121.6084,151.3042,1528.896
+scenes,scenes,adaptive,"gear on a bench",realistic,16,0.9375,0.7167,0.9889,0.0625,0.4540,0.6827,287.856
+scenes,scenes,adaptive,"mug close up",realistic,16,0.8750,0.6398,0.9650,0.1250,0.0672,0.1288,346.398
+scenes,scenes,adaptive,"parking lot",realistic,16,0.0000,0.0000,0.1936,1.0000,95.6445,97.7383,2414.408
+scenes,scenes,adaptive,"part on a table",realistic,16,1.0000,0.8064,1.0000,0.0000,0.2501,0.4117,1072.666
+scenes,scenes,adaptive,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,1.0000,106.3155,148.8990,1348.825
+scenes,scenes,adaptive,"street corner",realistic,16,0.0000,0.0000,0.1936,1.0000,48.8584,66.5267,1558.464
+scenes,scenes,adaptive,"twin brackets",realistic,16,1.0000,0.8064,1.0000,0.0000,0.3047,0.5850,239.684
+scenes,scenes,adaptive,"workshop",realistic,16,1.0000,0.8064,1.0000,0.0000,0.3709,0.5965,779.149
+scenes,scenes,search,"bin of parts",realistic,16,0.0000,0.0000,0.1936,1.0000,155.5971,163.8873,18016.169
+scenes,scenes,search,"bracket behind a crate",realistic,16,0.0625,0.0111,0.2833,0.9375,7.3428,14.4561,2772.787
+scenes,scenes,search,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,1.0000,174.9655,175.7133,47088.625
+scenes,scenes,search,"bracket at a low angle",realistic,16,0.1250,0.0350,0.3602,0.8750,1.0190,2.7699,3717.430
+scenes,scenes,search,"car close by",realistic,16,0.0000,0.0000,0.1936,1.0000,2.7350,3.1082,21594.389
+scenes,scenes,search,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,7.9961,176.3589,7704.492
+scenes,scenes,search,"crate among crates",realistic,16,0.0625,0.0111,0.2833,0.9375,90.1115,179.8398,28667.804
+scenes,scenes,search,"gear from above",realistic,16,0.0000,0.0000,0.1936,1.0000,114.7150,145.0479,6394.523
+scenes,scenes,search,"gear on a bench",realistic,16,0.1250,0.0350,0.3602,0.8750,121.1419,179.1920,2151.825
+scenes,scenes,search,"mug close up",realistic,16,0.9375,0.7167,0.9889,0.0625,0.1565,0.2328,9703.774
+scenes,scenes,search,"parking lot",realistic,16,0.0000,0.0000,0.1936,1.0000,158.2830,169.6688,28618.694
+scenes,scenes,search,"part on a table",realistic,16,1.0000,0.8064,1.0000,0.0000,0.2899,0.6990,4712.538
+scenes,scenes,search,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,1.0000,118.0180,177.3882,6002.420
+scenes,scenes,search,"street corner",realistic,16,0.0000,0.0000,0.1936,1.0000,52.2735,166.7566,7156.328
+scenes,scenes,search,"twin brackets",realistic,16,1.0000,0.8064,1.0000,0.0000,0.3153,0.4884,5158.353
+scenes,scenes,search,"workshop",realistic,16,1.0000,0.8064,1.0000,0.0000,0.3363,0.6235,5798.533
+scenes,scenes,consensus,"bin of parts",realistic,16,0.0000,0.0000,0.1936,0.0000,134.0510,inf,2695.407
+scenes,scenes,consensus,"bracket behind a crate",realistic,16,0.0625,0.0111,0.2833,0.9375,7.2276,20.8809,295.624
+scenes,scenes,consensus,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,0.0000,151.7661,inf,2566.075
+scenes,scenes,consensus,"bracket at a low angle",realistic,16,0.0625,0.0111,0.2833,0.8750,115.3488,147.8172,966.177
+scenes,scenes,consensus,"car close by",realistic,16,0.0000,0.0000,0.1936,1.0000,142.3732,178.4572,2271.912
+scenes,scenes,consensus,"car on a road",realistic,16,0.0000,0.0000,0.1936,0.8125,158.5341,179.9156,595.912
+scenes,scenes,consensus,"crate among crates",realistic,16,0.0000,0.0000,0.1936,0.8125,151.2363,179.3059,3637.758
+scenes,scenes,consensus,"gear from above",realistic,16,0.0000,0.0000,0.1936,0.8750,162.2704,179.9174,1504.621
+scenes,scenes,consensus,"gear on a bench",realistic,16,0.0625,0.0111,0.2833,0.9375,120.2645,150.3100,168.612
+scenes,scenes,consensus,"mug close up",realistic,16,0.1250,0.0350,0.3602,0.8750,179.8521,179.9465,540.239
+scenes,scenes,consensus,"parking lot",realistic,16,0.0000,0.0000,0.1936,0.1875,108.3239,149.1720,3462.029
+scenes,scenes,consensus,"part on a table",realistic,16,0.0625,0.0111,0.2833,0.9375,7.2487,166.1196,275.543
+scenes,scenes,consensus,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,0.2500,137.5530,156.1605,518.294
+scenes,scenes,consensus,"street corner",realistic,16,0.0000,0.0000,0.1936,0.0625,94.4535,175.3519,374.540
+scenes,scenes,consensus,"twin brackets",realistic,16,0.0625,0.0111,0.2833,0.9375,12.7506,139.4251,331.709
+scenes,scenes,consensus,"workshop",realistic,16,0.1250,0.0350,0.3602,0.8125,11.3806,39.2046,373.862
+scenes,scenes,guarded,"bin of parts",realistic,16,0.0000,0.0000,0.1936,1.0000,155.5971,163.8873,18157.834
+scenes,scenes,guarded,"bracket behind a crate",realistic,16,0.1875,0.0659,0.4301,0.8125,7.3428,14.4561,5222.210
+scenes,scenes,guarded,"bracket in a bin",realistic,16,0.0000,0.0000,0.1936,1.0000,174.9655,175.7133,39710.700
+scenes,scenes,guarded,"bracket at a low angle",realistic,16,0.4375,0.2310,0.6682,0.5625,2.2540,3.3668,3221.054
+scenes,scenes,guarded,"car close by",realistic,16,0.1875,0.0659,0.4301,0.8125,2.1938,2.4091,285.134
+scenes,scenes,guarded,"car on a road",realistic,16,0.0000,0.0000,0.1936,1.0000,7.9961,176.3589,8519.276
+scenes,scenes,guarded,"crate among crates",realistic,16,0.0625,0.0111,0.2833,0.9375,90.1115,179.8398,36902.896
+scenes,scenes,guarded,"gear from above",realistic,16,0.1875,0.0659,0.4301,0.8125,84.9495,145.0479,6866.077
+scenes,scenes,guarded,"gear on a bench",realistic,16,1.0000,0.8064,1.0000,0.0000,0.4755,0.6371,383.400
+scenes,scenes,guarded,"mug close up",realistic,16,0.8125,0.5699,0.9341,0.1875,0.0833,6.8465,364.486
+scenes,scenes,guarded,"parking lot",realistic,16,0.0000,0.0000,0.1936,1.0000,158.2830,169.6688,35510.344
+scenes,scenes,guarded,"part on a table",realistic,16,0.8750,0.6398,0.9650,0.1250,0.2307,0.4585,91.915
+scenes,scenes,guarded,"shelf of mugs",realistic,16,0.0000,0.0000,0.1936,1.0000,118.0180,177.3882,6688.620
+scenes,scenes,guarded,"street corner",realistic,16,0.0000,0.0000,0.1936,1.0000,52.2735,166.7566,9375.208
+scenes,scenes,guarded,"twin brackets",realistic,16,0.8750,0.6398,0.9650,0.1250,0.4358,0.6533,639.118
+scenes,scenes,guarded,"workshop",realistic,16,1.0000,0.8064,1.0000,0.0000,0.4080,0.6086,241.442
+registration,bracket,icp-point,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.0728,0.1290,53.708
+registration,bracket,icp-point,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.5612,0.7886,143.604
+registration,bracket,icp-point,"noise 5 %",noise,16,0.9375,0.7167,0.9889,0.0625,1.1375,1.5806,490.247
+registration,bracket,icp-point,"outliers 30 %",outliers,16,0.0000,0.0000,0.1936,1.0000,3.4838,4.0945,1001.984
+registration,bracket,icp-point,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,4.4167,5.2446,284.447
+registration,bracket,icp-point,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,5.3764,6.5248,563.233
+registration,bracket,icp-point,"half visible",partial view,16,0.9375,0.7167,0.9889,0.0625,0.1599,0.1963,34.800
+registration,bracket,icp-point,"quarter visible",partial view,16,0.8750,0.6398,0.9650,0.1250,0.3585,0.8001,14.812
+registration,bracket,icp-point,"sparse",sparse,16,0.8125,0.5699,0.9341,0.1875,0.7004,2.0179,1.246
+registration,bracket,icp-point,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0655,0.1290,71.410
+registration,bracket,icp-point,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0648,0.1290,915.987
+registration,bracket,icp-point,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,175.3946,178.1934,1248.222
+registration,bracket,icp-point,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,9.8313,16.0727,38.605
+registration,bracket,icp-plane,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.1053,0.1582,26.224
+registration,bracket,icp-plane,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.6270,0.8772,51.662
+registration,bracket,icp-plane,"noise 5 %",noise,16,0.9375,0.7167,0.9889,0.0625,0.9442,1.4594,216.041
+registration,bracket,icp-plane,"outliers 30 %",outliers,16,0.0000,0.0000,0.1936,1.0000,3.6881,5.4503,520.153
+registration,bracket,icp-plane,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,3.7751,6.7163,341.799
+registration,bracket,icp-plane,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,6.1114,6.6826,1278.816
+registration,bracket,icp-plane,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1591,0.2482,15.686
+registration,bracket,icp-plane,"quarter visible",partial view,16,0.9375,0.7167,0.9889,0.0625,0.3311,0.6881,6.969
+registration,bracket,icp-plane,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.4223,0.6970,0.458
+registration,bracket,icp-plane,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.1053,0.1582,31.224
+registration,bracket,icp-plane,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.1053,0.1582,37.175
+registration,bracket,icp-plane,"no guess",no guess,16,0.0625,0.0111,0.2833,0.9375,164.6079,174.3006,139.235
+registration,bracket,icp-plane,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,9.3072,16.3943,47.137
+registration,bracket,icp-tukey,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.0998,0.1564,39.626
+registration,bracket,icp-tukey,"noise 2 %",noise,16,0.8750,0.6398,0.9650,0.1250,1.1860,1.8603,89.893
+registration,bracket,icp-tukey,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,4.3669,6.8727,182.048
+registration,bracket,icp-tukey,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1069,0.2165,152.294
+registration,bracket,icp-tukey,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1224,0.1628,387.190
+registration,bracket,icp-tukey,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.2341,0.3373,1630.135
+registration,bracket,icp-tukey,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1561,0.2419,43.269
+registration,bracket,icp-tukey,"quarter visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.4787,0.7865,17.192
+registration,bracket,icp-tukey,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,0.6427,7.7580,0.764
+registration,bracket,icp-tukey,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0998,0.1563,83.463
+registration,bracket,icp-tukey,"guess 60°",far guess,16,0.0625,0.0111,0.2833,0.9375,32.0518,38.5938,108.203
+registration,bracket,icp-tukey,"no guess",no guess,16,0.0000,0.0000,0.1936,0.7500,172.9649,179.3503,215.294
+registration,bracket,icp-tukey,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,11.7541,16.1447,43.255
+registration,bracket,icp-trimmed,"nominal",nominal,16,0.8750,0.6398,0.9650,0.1250,0.1867,0.3117,62.659
+registration,bracket,icp-trimmed,"noise 2 %",noise,16,0.6250,0.3864,0.8152,0.3750,1.8056,3.1874,89.023
+registration,bracket,icp-trimmed,"noise 5 %",noise,16,0.3125,0.1416,0.5560,0.6875,3.1152,4.9809,121.358
+registration,bracket,icp-trimmed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1393,0.1931,78.967
+registration,bracket,icp-trimmed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1353,0.2388,142.577
+registration,bracket,icp-trimmed,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3873,0.5913,461.140
+registration,bracket,icp-trimmed,"half visible",partial view,16,0.7500,0.5050,0.8982,0.2500,0.3731,5.6348,31.500
+registration,bracket,icp-trimmed,"quarter visible",partial view,16,0.6875,0.4440,0.8584,0.3125,0.6735,2.7505,17.159
+registration,bracket,icp-trimmed,"sparse",sparse,16,0.3125,0.1416,0.5560,0.6875,5.0427,9.3873,0.861
+registration,bracket,icp-trimmed,"guess 30°",far guess,16,0.6875,0.4440,0.8584,0.3125,0.2652,6.5952,58.199
+registration,bracket,icp-trimmed,"guess 60°",far guess,16,0.3125,0.1416,0.5560,0.6875,5.9886,11.4471,74.537
+registration,bracket,icp-trimmed,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,179.2850,179.7813,97.884
+registration,bracket,icp-trimmed,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,4.5813,9.6092,80.790
+registration,bracket,annealed,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.0977,0.1513,151.686
+registration,bracket,annealed,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.8741,1.3318,2396.615
+registration,bracket,annealed,"noise 5 %",noise,16,0.3125,0.1416,0.5560,0.6875,2.4751,3.7347,506.732
+registration,bracket,annealed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.0997,0.2079,509.366
+registration,bracket,annealed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1069,0.1626,2890.041
+registration,bracket,annealed,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1818,0.3176,2897.726
+registration,bracket,annealed,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1515,0.2381,31.521
+registration,bracket,annealed,"quarter visible",partial view,16,0.9375,0.7167,0.9889,0.0625,0.2968,0.6553,24.728
+registration,bracket,annealed,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.4078,0.6721,4.252
+registration,bracket,annealed,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0977,0.1513,74.143
+registration,bracket,annealed,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0977,0.1513,79.074
+registration,bracket,annealed,"no guess",no guess,16,0.0000,0.0000,0.1936,0.8750,179.7574,179.9693,542.333
+registration,bracket,annealed,"everything",combined,16,0.1250,0.0350,0.3602,0.8750,2.2735,5.6888,123.760
+registration,bracket,adaptive,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.0992,0.1506,42.395
+registration,bracket,adaptive,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.8779,1.2555,240.347
+registration,bracket,adaptive,"noise 5 %",noise,16,0.5625,0.3318,0.7690,0.4375,1.7443,2.6997,406.397
+registration,bracket,adaptive,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1046,0.1803,268.764
+registration,bracket,adaptive,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1511,0.2146,759.068
+registration,bracket,adaptive,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.8584,1.4704,1740.260
+registration,bracket,adaptive,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1566,0.2383,52.616
+registration,bracket,adaptive,"quarter visible",partial view,16,0.9375,0.7167,0.9889,0.0625,0.3203,0.6627,204.827
+registration,bracket,adaptive,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.4810,0.7200,1.885
+registration,bracket,adaptive,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0992,0.1506,88.913
+registration,bracket,adaptive,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0992,0.1506,71.976
+registration,bracket,adaptive,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,179.7582,179.9869,1049.244
+registration,bracket,adaptive,"everything",combined,16,0.1875,0.0659,0.4301,0.8125,2.8645,7.2124,487.550
+registration,bracket,search,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.0997,0.1467,3045.782
+registration,bracket,search,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.7368,0.9253,3697.359
+registration,bracket,search,"noise 5 %",noise,16,0.6875,0.4440,0.8584,0.3125,1.6951,3.1442,3843.154
+registration,bracket,search,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1835,0.3733,6614.363
+registration,bracket,search,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.6390,0.8644,10766.791
+registration,bracket,search,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,4.9873,6.1099,20145.996
+registration,bracket,search,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1529,0.2287,2096.210
+registration,bracket,search,"quarter visible",partial view,16,0.5000,0.2800,0.7200,0.5000,0.7844,139.4108,383.815
+registration,bracket,search,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.4114,0.6825,91.709
+registration,bracket,search,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0997,0.1467,2928.567
+registration,bracket,search,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0997,0.1467,2622.687
+registration,bracket,search,"no guess",no guess,16,1.0000,0.8064,1.0000,0.0000,0.0997,0.1467,4042.794
+registration,bracket,search,"everything",combined,16,0.1250,0.0350,0.3602,0.8750,4.8863,172.4465,1098.861
+registration,bracket,consensus,"nominal",nominal,16,0.9375,0.7167,0.9889,0.0625,0.0998,0.1811,143.430
+registration,bracket,consensus,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,1.2079,1.7140,314.975
+registration,bracket,consensus,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,23.8500,145.3614,264.184
+registration,bracket,consensus,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1047,0.2165,732.934
+registration,bracket,consensus,"outliers 100 %",outliers,16,0.6250,0.3864,0.8152,0.3750,0.1581,170.0600,3009.134
+registration,bracket,consensus,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,0.8750,106.6663,175.5444,3693.969
+registration,bracket,consensus,"half visible",partial view,16,0.6250,0.3864,0.8152,0.3750,0.1868,94.9598,77.994
+registration,bracket,consensus,"quarter visible",partial view,16,0.2500,0.1018,0.4950,0.7500,92.9875,166.9291,58.611
+registration,bracket,consensus,"sparse",sparse,16,0.0000,0.0000,0.1936,0.7500,174.6094,inf,6.942
+registration,bracket,consensus,"guess 30°",far guess,16,0.9375,0.7167,0.9889,0.0625,0.0998,0.1811,116.977
+registration,bracket,consensus,"guess 60°",far guess,16,0.9375,0.7167,0.9889,0.0625,0.0998,0.1811,194.463
+registration,bracket,consensus,"no guess",no guess,16,0.9375,0.7167,0.9889,0.0625,0.0998,0.1811,381.888
+registration,bracket,consensus,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,93.3469,173.0105,103.062
+registration,bracket,guarded,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.0998,0.1564,251.027
+registration,bracket,guarded,"noise 2 %",noise,16,0.8750,0.6398,0.9650,0.1250,1.1860,1.8603,315.104
+registration,bracket,guarded,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,4.3669,6.8727,142.844
+registration,bracket,guarded,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1069,0.2165,113.036
+registration,bracket,guarded,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1224,0.2066,336.498
+registration,bracket,guarded,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,4.9873,6.1099,19628.174
+registration,bracket,guarded,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1561,0.2419,32.636
+registration,bracket,guarded,"quarter visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.4787,0.7865,15.458
+registration,bracket,guarded,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,0.6427,7.7580,1.068
+registration,bracket,guarded,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.0998,0.1563,120.895
+registration,bracket,guarded,"guess 60°",far guess,16,0.3125,0.1416,0.5560,0.6875,20.1093,37.0490,2046.156
+registration,bracket,guarded,"no guess",no guess,16,0.9375,0.7167,0.9889,0.0625,0.1087,0.1823,5772.150
+registration,bracket,guarded,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,11.7541,16.1447,64.710
+registration,blob,icp-point,"nominal",nominal,16,0.3750,0.1848,0.6136,0.6250,2.7868,4.0293,26.539
+registration,blob,icp-point,"noise 2 %",noise,16,0.1875,0.0659,0.4301,0.8125,2.9477,4.2622,46.818
+registration,blob,icp-point,"noise 5 %",noise,16,0.1250,0.0350,0.3602,0.8750,4.1928,6.3954,134.455
+registration,blob,icp-point,"outliers 30 %",outliers,16,0.0000,0.0000,0.1936,1.0000,8.7849,12.2004,116.958
+registration,blob,icp-point,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,20.2128,21.6574,246.088
+registration,blob,icp-point,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,27.1154,28.4131,626.469
+registration,blob,icp-point,"half visible",partial view,16,0.0625,0.0111,0.2833,0.9375,3.4195,4.1985,131.233
+registration,blob,icp-point,"quarter visible",partial view,16,0.0625,0.0111,0.2833,0.9375,5.1570,6.5868,81.830
+registration,blob,icp-point,"sparse",sparse,16,0.0000,0.0000,0.1936,1.0000,5.5826,7.3899,9.901
+registration,blob,icp-point,"guess 30°",far guess,16,0.0000,0.0000,0.1936,1.0000,6.7873,12.4271,94.970
+registration,blob,icp-point,"guess 60°",far guess,16,0.0000,0.0000,0.1936,1.0000,19.1497,35.7251,76.219
+registration,blob,icp-point,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,178.5928,179.7765,82.445
+registration,blob,icp-point,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,18.8971,23.3756,283.182
+registration,blob,icp-plane,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.3966,0.4341,667.526
+registration,blob,icp-plane,"noise 2 %",noise,16,0.5625,0.3318,0.7690,0.4375,1.5001,2.9411,770.624
+registration,blob,icp-plane,"noise 5 %",noise,16,0.1250,0.0350,0.3602,0.8750,5.9416,13.3970,1766.929
+registration,blob,icp-plane,"outliers 30 %",outliers,16,0.0000,0.0000,0.1936,1.0000,12.0142,13.5732,75.125
+registration,blob,icp-plane,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,22.0517,24.0949,250.106
+registration,blob,icp-plane,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,29.1958,31.2298,497.904
+registration,blob,icp-plane,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.4470,0.8557,25.778
+registration,blob,icp-plane,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.7796,1.2000,14.562
+registration,blob,icp-plane,"sparse",sparse,16,0.6250,0.3864,0.8152,0.3750,1.4565,3.0089,1.753
+registration,blob,icp-plane,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.3967,0.4363,40.579
+registration,blob,icp-plane,"guess 60°",far guess,16,0.9375,0.7167,0.9889,0.0625,0.3986,0.4348,36.482
+registration,blob,icp-plane,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,123.3327,178.5285,458.602
+registration,blob,icp-plane,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,25.0195,94.6194,36.000
+registration,blob,icp-tukey,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.3665,0.4869,52.009
+registration,blob,icp-tukey,"noise 2 %",noise,16,0.1875,0.0659,0.4301,0.8125,3.0824,4.5887,45.385
+registration,blob,icp-tukey,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,12.3504,19.2089,82.312
+registration,blob,icp-tukey,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.4027,0.5896,68.056
+registration,blob,icp-tukey,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3923,0.8252,233.935
+registration,blob,icp-tukey,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.4016,1.3280,441.148
+registration,blob,icp-tukey,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.4296,1.0223,77.610
+registration,blob,icp-tukey,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.7674,1.1522,28.739
+registration,blob,icp-tukey,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,1.5397,2.6605,7.207
+registration,blob,icp-tukey,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.3701,0.4795,185.782
+registration,blob,icp-tukey,"guess 60°",far guess,16,0.8750,0.6398,0.9650,0.1250,0.3990,0.8093,48.091
+registration,blob,icp-tukey,"no guess",no guess,16,0.0000,0.0000,0.1936,0.9375,177.7921,179.2589,132.595
+registration,blob,icp-tukey,"everything",combined,16,0.0625,0.0111,0.2833,0.9375,4.6203,14.9935,110.680
+registration,blob,icp-trimmed,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.5621,1.2228,455.309
+registration,blob,icp-trimmed,"noise 2 %",noise,16,0.0000,0.0000,0.1936,1.0000,3.0971,6.1053,89.983
+registration,blob,icp-trimmed,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,9.3282,18.0895,422.176
+registration,blob,icp-trimmed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.5641,0.8190,1326.885
+registration,blob,icp-trimmed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.7044,1.2900,155.535
+registration,blob,icp-trimmed,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,1.3016,1.7057,421.642
+registration,blob,icp-trimmed,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,1.0144,1.3031,13.332
+registration,blob,icp-trimmed,"quarter visible",partial view,16,0.8125,0.5699,0.9341,0.1875,1.1056,2.2456,6.021
+registration,blob,icp-trimmed,"sparse",sparse,16,0.1250,0.0350,0.3602,0.8750,2.8601,4.3672,1.349
+registration,blob,icp-trimmed,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.5328,1.1179,37.200
+registration,blob,icp-trimmed,"guess 60°",far guess,16,0.9375,0.7167,0.9889,0.0625,0.6121,1.4416,34.372
+registration,blob,icp-trimmed,"no guess",no guess,16,0.0625,0.0111,0.2833,0.9375,155.3535,179.9295,268.318
+registration,blob,icp-trimmed,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,4.1696,7.5710,27.996
+registration,blob,annealed,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.3853,0.5187,218.362
+registration,blob,annealed,"noise 2 %",noise,16,0.3750,0.1848,0.6136,0.6250,2.1755,3.9828,331.538
+registration,blob,annealed,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,12.7938,22.3544,480.354
+registration,blob,annealed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3713,0.6152,2791.179
+registration,blob,annealed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.5025,0.9417,1342.350
+registration,blob,annealed,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.4886,1.2268,2492.340
+registration,blob,annealed,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.4469,1.0451,103.705
+registration,blob,annealed,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.7837,1.1955,49.705
+registration,blob,annealed,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,1.5370,2.9430,14.094
+registration,blob,annealed,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.3858,0.5198,938.720
+registration,blob,annealed,"guess 60°",far guess,16,0.8750,0.6398,0.9650,0.1250,0.3845,0.8653,1617.362
+registration,blob,annealed,"no guess",no guess,16,0.0000,0.0000,0.1936,0.1250,inf,inf,194.969
+registration,blob,annealed,"everything",combined,16,0.1250,0.0350,0.3602,0.8750,3.6192,8.3294,215.010
+registration,blob,adaptive,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.4641,0.6250,173.079
+registration,blob,adaptive,"noise 2 %",noise,16,0.2500,0.1018,0.4950,0.7500,2.5552,4.1329,433.351
+registration,blob,adaptive,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,10.6952,16.4749,407.338
+registration,blob,adaptive,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.4154,0.5524,276.137
+registration,blob,adaptive,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3934,0.7901,674.371
+registration,blob,adaptive,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,5.4417,8.8820,7920.268
+registration,blob,adaptive,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.4648,1.0068,60.207
+registration,blob,adaptive,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.9096,1.2593,81.869
+registration,blob,adaptive,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,1.8731,3.8547,8.482
+registration,blob,adaptive,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.4559,0.6309,111.186
+registration,blob,adaptive,"guess 60°",far guess,16,0.8750,0.6398,0.9650,0.1250,0.4598,0.9375,144.838
+registration,blob,adaptive,"no guess",no guess,16,0.0000,0.0000,0.1936,0.1875,inf,inf,50.236
+registration,blob,adaptive,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,4.3145,5.8631,97.110
+registration,blob,search,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.3762,0.4757,1304.810
+registration,blob,search,"noise 2 %",noise,16,0.4375,0.2310,0.6682,0.5625,2.0784,3.6008,3306.430
+registration,blob,search,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,8.7664,17.7970,2449.086
+registration,blob,search,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.5603,1.0329,4739.103
+registration,blob,search,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,1.1275,1.4738,10318.403
+registration,blob,search,"outliers 300 %",outliers,16,0.3750,0.1848,0.6136,0.6250,2.3228,2.9792,25620.208
+registration,blob,search,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.4447,0.9609,612.751
+registration,blob,search,"quarter visible",partial view,16,0.8750,0.6398,0.9650,0.1250,0.9036,1.7363,694.681
+registration,blob,search,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,1.4748,3.0248,71.463
+registration,blob,search,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.3762,0.4757,2710.286
+registration,blob,search,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.3762,0.4757,1226.601
+registration,blob,search,"no guess",no guess,16,1.0000,0.8064,1.0000,0.0000,0.3762,0.4757,2354.653
+registration,blob,search,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,4.7489,6.8813,2255.036
+registration,blob,consensus,"nominal",nominal,16,0.5625,0.3318,0.7690,0.4375,0.4868,179.6089,429.429
+registration,blob,consensus,"noise 2 %",noise,16,0.0000,0.0000,0.1936,0.9375,149.4785,178.5092,1320.155
+registration,blob,consensus,"noise 5 %",noise,16,0.0000,0.0000,0.1936,0.0000,inf,inf,221.763
+registration,blob,consensus,"outliers 30 %",outliers,16,0.4375,0.2310,0.6682,0.5625,105.9712,179.3965,308.727
+registration,blob,consensus,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,0.2500,inf,inf,211.761
+registration,blob,consensus,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,0.0000,inf,inf,904.089
+registration,blob,consensus,"half visible",partial view,16,0.4375,0.2310,0.6682,0.5625,117.8811,175.7625,53.800
+registration,blob,consensus,"quarter visible",partial view,16,0.3125,0.1416,0.5560,0.6875,115.7441,168.5279,26.423
+registration,blob,consensus,"sparse",sparse,16,0.0000,0.0000,0.1936,0.0000,inf,inf,3.353
+registration,blob,consensus,"guess 30°",far guess,16,0.5625,0.3318,0.7690,0.4375,0.4868,179.6089,115.515
+registration,blob,consensus,"guess 60°",far guess,16,0.5625,0.3318,0.7690,0.4375,0.4868,179.6089,115.780
+registration,blob,consensus,"no guess",no guess,16,0.5625,0.3318,0.7690,0.4375,0.4868,179.6089,107.486
+registration,blob,consensus,"everything",combined,16,0.0000,0.0000,0.1936,0.3125,155.6851,inf,21.423
+registration,blob,guarded,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.3665,0.4869,27.474
+registration,blob,guarded,"noise 2 %",noise,16,0.1875,0.0659,0.4301,0.8125,3.0824,4.5887,79.247
+registration,blob,guarded,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,12.3504,19.2089,156.401
+registration,blob,guarded,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.4027,0.5896,77.228
+registration,blob,guarded,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,1.1275,1.4738,5524.422
+registration,blob,guarded,"outliers 300 %",outliers,16,0.3750,0.1848,0.6136,0.6250,2.3228,2.9792,27000.663
+registration,blob,guarded,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.4296,1.0223,12.523
+registration,blob,guarded,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.7674,1.1522,26.774
+registration,blob,guarded,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,1.5397,2.6605,1.253
+registration,blob,guarded,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.3701,0.4795,125.819
+registration,blob,guarded,"guess 60°",far guess,16,0.8750,0.6398,0.9650,0.1250,0.3990,0.8093,206.943
+registration,blob,guarded,"no guess",no guess,16,0.1250,0.0350,0.3602,0.8750,177.7921,179.2589,1954.165
+registration,blob,guarded,"everything",combined,16,0.0625,0.0111,0.2833,0.9375,4.6203,14.9935,37.124
+registration,patch,icp-point,"nominal",nominal,16,0.8750,0.6398,0.9650,0.1250,1.4505,1.7872,41.598
+registration,patch,icp-point,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.8792,1.6814,88.623
+registration,patch,icp-point,"noise 5 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.8178,1.6396,181.639
+registration,patch,icp-point,"outliers 30 %",outliers,16,0.0000,0.0000,0.1936,1.0000,2.9679,3.2281,172.709
+registration,patch,icp-point,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,5.5218,5.7920,276.011
+registration,patch,icp-point,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,7.6604,7.8612,646.854
+registration,patch,icp-point,"half visible",partial view,16,0.3750,0.1848,0.6136,0.6250,2.0764,3.2677,372.138
+registration,patch,icp-point,"quarter visible",partial view,16,0.1250,0.0350,0.3602,0.8750,3.2556,4.2702,108.099
+registration,patch,icp-point,"sparse",sparse,16,0.2500,0.1018,0.4950,0.7500,3.1866,4.4088,1.508
+registration,patch,icp-point,"guess 30°",far guess,16,0.1250,0.0350,0.3602,0.8750,3.0215,4.3125,46.627
+registration,patch,icp-point,"guess 60°",far guess,16,0.0625,0.0111,0.2833,0.9375,8.4654,69.4861,67.724
+registration,patch,icp-point,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,178.8274,179.4733,78.239
+registration,patch,icp-point,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,5.8130,8.0216,22.358
+registration,patch,icp-plane,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.2475,0.5466,42.342
+registration,patch,icp-plane,"noise 2 %",noise,16,0.6875,0.4440,0.8584,0.3125,1.1501,2.2509,60.524
+registration,patch,icp-plane,"noise 5 %",noise,16,0.1250,0.0350,0.3602,0.8750,2.7802,6.1817,100.728
+registration,patch,icp-plane,"outliers 30 %",outliers,16,0.0000,0.0000,0.1936,1.0000,5.1305,9.0421,99.298
+registration,patch,icp-plane,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,11.2006,20.5792,200.337
+registration,patch,icp-plane,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,27.8563,38.4999,514.756
+registration,patch,icp-plane,"half visible",partial view,16,0.8750,0.6398,0.9650,0.1250,0.5127,1.7276,27.202
+registration,patch,icp-plane,"quarter visible",partial view,16,0.3750,0.1848,0.6136,0.6250,1.6707,4.0937,15.190
+registration,patch,icp-plane,"sparse",sparse,16,0.6250,0.3864,0.8152,0.3750,0.8825,2.0150,4.002
+registration,patch,icp-plane,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2475,0.5398,50.771
+registration,patch,icp-plane,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2475,0.5466,47.821
+registration,patch,icp-plane,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,165.1135,175.5485,746.317
+registration,patch,icp-plane,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,18.8762,38.4229,42.163
+registration,patch,icp-tukey,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.2276,0.5552,54.612
+registration,patch,icp-tukey,"noise 2 %",noise,16,0.6250,0.3864,0.8152,0.3750,1.4178,3.3297,84.786
+registration,patch,icp-tukey,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,8.6845,17.7584,149.547
+registration,patch,icp-tukey,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3077,0.5837,64.082
+registration,patch,icp-tukey,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3602,0.5586,259.152
+registration,patch,icp-tukey,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.5719,0.9158,597.010
+registration,patch,icp-tukey,"half visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.4932,1.7513,31.192
+registration,patch,icp-tukey,"quarter visible",partial view,16,0.3750,0.1848,0.6136,0.6250,1.6848,4.0300,16.559
+registration,patch,icp-tukey,"sparse",sparse,16,0.6250,0.3864,0.8152,0.3750,0.9087,2.4272,1.569
+registration,patch,icp-tukey,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2278,0.5568,46.392
+registration,patch,icp-tukey,"guess 60°",far guess,16,0.8125,0.5699,0.9341,0.0000,0.2527,41.4520,257.313
+registration,patch,icp-tukey,"no guess",no guess,16,0.0000,0.0000,0.1936,0.0000,178.7169,179.8497,581.266
+registration,patch,icp-tukey,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,7.7263,23.0714,41.667
+registration,patch,icp-trimmed,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.4302,0.9416,55.163
+registration,patch,icp-trimmed,"noise 2 %",noise,16,0.3125,0.1416,0.5560,0.6875,1.9196,3.4283,87.545
+registration,patch,icp-trimmed,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,4.6374,12.0636,149.498
+registration,patch,icp-trimmed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.2614,0.6585,109.929
+registration,patch,icp-trimmed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.6174,1.2258,234.251
+registration,patch,icp-trimmed,"outliers 300 %",outliers,16,0.7500,0.5050,0.8982,0.2500,1.5338,2.1624,583.958
+registration,patch,icp-trimmed,"half visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.8029,1.7737,35.939
+registration,patch,icp-trimmed,"quarter visible",partial view,16,0.1875,0.0659,0.4301,0.8125,2.8902,6.9721,21.399
+registration,patch,icp-trimmed,"sparse",sparse,16,0.4375,0.2310,0.6682,0.5625,1.8683,4.0015,4.900
+registration,patch,icp-trimmed,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.4299,1.0657,499.464
+registration,patch,icp-trimmed,"guess 60°",far guess,16,0.8750,0.6398,0.9650,0.1250,0.4207,1.3989,510.048
+registration,patch,icp-trimmed,"no guess",no guess,16,0.0625,0.0111,0.2833,0.9375,175.3117,178.3903,247.551
+registration,patch,icp-trimmed,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,4.7070,12.8499,29.264
+registration,patch,annealed,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.2254,0.5742,186.598
+registration,patch,annealed,"noise 2 %",noise,16,0.5625,0.3318,0.7690,0.4375,1.3099,2.0048,294.764
+registration,patch,annealed,"noise 5 %",noise,16,0.0625,0.0111,0.2833,0.9375,7.3008,25.4160,659.245
+registration,patch,annealed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3059,0.5239,1357.592
+registration,patch,annealed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3573,0.7908,853.191
+registration,patch,annealed,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.4372,1.3217,2057.021
+registration,patch,annealed,"half visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.5064,1.6579,162.189
+registration,patch,annealed,"quarter visible",partial view,16,0.3125,0.1416,0.5560,0.6875,1.7081,3.9717,150.307
+registration,patch,annealed,"sparse",sparse,16,0.6250,0.3864,0.8152,0.3750,0.9080,2.7671,17.695
+registration,patch,annealed,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2254,0.5742,198.419
+registration,patch,annealed,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2254,0.5742,321.048
+registration,patch,annealed,"no guess",no guess,16,0.0000,0.0000,0.1936,0.0000,178.7039,inf,2118.807
+registration,patch,annealed,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,8.8460,14.3028,199.765
+registration,patch,adaptive,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.2374,0.5513,157.153
+registration,patch,adaptive,"noise 2 %",noise,16,0.6250,0.3864,0.8152,0.3750,1.3833,2.3978,362.747
+registration,patch,adaptive,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,3.3338,5.0733,2011.422
+registration,patch,adaptive,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.2943,0.5305,471.953
+registration,patch,adaptive,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3592,0.5465,780.101
+registration,patch,adaptive,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,10.0887,25.5925,3254.858
+registration,patch,adaptive,"half visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.4954,1.5422,69.787
+registration,patch,adaptive,"quarter visible",partial view,16,0.3125,0.1416,0.5560,0.6875,1.8974,3.8921,46.817
+registration,patch,adaptive,"sparse",sparse,16,0.5625,0.3318,0.7690,0.4375,1.0261,3.6152,8.521
+registration,patch,adaptive,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2374,0.5513,134.936
+registration,patch,adaptive,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2363,0.5513,174.002
+registration,patch,adaptive,"no guess",no guess,16,0.0000,0.0000,0.1936,0.6250,179.2095,inf,1005.471
+registration,patch,adaptive,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,10.8254,18.8208,1032.532
+registration,patch,search,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.2282,0.5472,3923.781
+registration,patch,search,"noise 2 %",noise,16,0.6875,0.4440,0.8584,0.3125,1.1421,2.1732,4409.482
+registration,patch,search,"noise 5 %",noise,16,0.0625,0.0111,0.2833,0.9375,2.9891,5.3354,4635.171
+registration,patch,search,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.5610,0.7666,5000.977
+registration,patch,search,"outliers 100 %",outliers,16,0.5625,0.3318,0.7690,0.4375,1.5089,1.9102,9998.673
+registration,patch,search,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,4.0099,4.6905,24215.107
+registration,patch,search,"half visible",partial view,16,0.8750,0.6398,0.9650,0.1250,0.4676,1.6468,3472.735
+registration,patch,search,"quarter visible",partial view,16,0.3125,0.1416,0.5560,0.6875,1.8279,7.0915,1400.338
+registration,patch,search,"sparse",sparse,16,0.6250,0.3864,0.8152,0.3750,0.8363,2.2847,251.896
+registration,patch,search,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2282,0.5472,5286.233
+registration,patch,search,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2282,0.5472,4256.622
+registration,patch,search,"no guess",no guess,16,1.0000,0.8064,1.0000,0.0000,0.2282,0.5472,5597.530
+registration,patch,search,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,9.9371,19.4511,2639.877
+registration,patch,consensus,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.2276,0.5585,968.075
+registration,patch,consensus,"noise 2 %",noise,16,0.0000,0.0000,0.1936,0.0000,inf,inf,111.758
+registration,patch,consensus,"noise 5 %",noise,16,0.0000,0.0000,0.1936,0.0000,inf,inf,170.883
+registration,patch,consensus,"outliers 30 %",outliers,16,0.2500,0.1018,0.4950,0.0625,173.6078,inf,236.438
+registration,patch,consensus,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,0.0000,inf,inf,139.300
+registration,patch,consensus,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,0.0000,inf,inf,632.315
+registration,patch,consensus,"half visible",partial view,16,0.6875,0.4440,0.8584,0.1250,0.8104,175.5092,504.556
+registration,patch,consensus,"quarter visible",partial view,16,0.1250,0.0350,0.3602,0.3125,174.2039,inf,34.155
+registration,patch,consensus,"sparse",sparse,16,0.0000,0.0000,0.1936,0.0000,inf,inf,2.828
+registration,patch,consensus,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2276,0.5585,197.132
+registration,patch,consensus,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2276,0.5585,759.802
+registration,patch,consensus,"no guess",no guess,16,1.0000,0.8064,1.0000,0.0000,0.2276,0.5585,135.216
+registration,patch,consensus,"everything",combined,16,0.0000,0.0000,0.1936,0.0000,inf,inf,17.540
+registration,patch,guarded,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.2276,0.5552,64.231
+registration,patch,guarded,"noise 2 %",noise,16,0.6250,0.3864,0.8152,0.3750,1.4178,3.3297,148.938
+registration,patch,guarded,"noise 5 %",noise,16,0.0625,0.0111,0.2833,0.9375,6.4129,14.8201,797.395
+registration,patch,guarded,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3077,0.5837,116.812
+registration,patch,guarded,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3602,0.5586,350.213
+registration,patch,guarded,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.5719,0.9158,464.172
+registration,patch,guarded,"half visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.4932,1.7513,456.706
+registration,patch,guarded,"quarter visible",partial view,16,0.3750,0.1848,0.6136,0.6250,1.6848,4.0300,223.797
+registration,patch,guarded,"sparse",sparse,16,0.6250,0.3864,0.8152,0.3750,0.9087,2.4272,1.484
+registration,patch,guarded,"guess 30°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2278,0.5568,107.238
+registration,patch,guarded,"guess 60°",far guess,16,1.0000,0.8064,1.0000,0.0000,0.2276,0.5585,101.019
+registration,patch,guarded,"no guess",no guess,16,1.0000,0.8064,1.0000,0.0000,0.2282,0.5472,5465.039
+registration,patch,guarded,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,7.6612,19.2923,91.028
+registration,gear,icp-point,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.0956,0.1762,30.325
+registration,gear,icp-point,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.4799,1.1946,75.545
+registration,gear,icp-point,"noise 5 %",noise,16,0.1875,0.0659,0.4301,0.8125,4.1803,6.9415,71.850
+registration,gear,icp-point,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.6596,1.1576,87.110
+registration,gear,icp-point,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,2.6171,3.5919,155.345
+registration,gear,icp-point,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,5.7053,10.0759,258.734
+registration,gear,icp-point,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.2152,0.3536,24.443
+registration,gear,icp-point,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.2908,0.6996,5.164
+registration,gear,icp-point,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.5471,0.8202,8.867
+registration,gear,icp-point,"guess 30°",far guess,16,0.2500,0.1018,0.4950,0.7500,29.9976,30.0602,164.316
+registration,gear,icp-point,"guess 60°",far guess,16,0.1875,0.0659,0.4301,0.8125,30.1162,60.0689,271.483
+registration,gear,icp-point,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,179.9233,179.9739,68.228
+registration,gear,icp-point,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,12.6164,17.4655,11.803
+registration,gear,icp-plane,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.1086,0.1784,12.597
+registration,gear,icp-plane,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.5245,1.0321,28.722
+registration,gear,icp-plane,"noise 5 %",noise,16,0.1875,0.0659,0.4301,0.8125,4.1172,6.5870,86.454
+registration,gear,icp-plane,"outliers 30 %",outliers,16,0.8125,0.5699,0.9341,0.1875,1.0185,2.2711,123.999
+registration,gear,icp-plane,"outliers 100 %",outliers,16,0.2500,0.1018,0.4950,0.7500,2.9105,4.6717,157.344
+registration,gear,icp-plane,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,1.0000,4.0800,7.7045,543.010
+registration,gear,icp-plane,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1920,0.3322,26.916
+registration,gear,icp-plane,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.3769,0.5922,24.193
+registration,gear,icp-plane,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.5910,0.7619,0.273
+registration,gear,icp-plane,"guess 30°",far guess,16,0.2500,0.1018,0.4950,0.7500,30.0293,30.0947,44.017
+registration,gear,icp-plane,"guess 60°",far guess,16,0.1875,0.0659,0.4301,0.8125,30.0974,60.1083,75.013
+registration,gear,icp-plane,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,179.8942,179.9553,51.284
+registration,gear,icp-plane,"everything",combined,16,0.0625,0.0111,0.2833,0.9375,13.8009,31.9640,30.918
+registration,gear,icp-tukey,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.1089,0.1813,45.090
+registration,gear,icp-tukey,"noise 2 %",noise,16,0.9375,0.7167,0.9889,0.0625,0.7377,1.6806,119.078
+registration,gear,icp-tukey,"noise 5 %",noise,16,0.0625,0.0111,0.2833,0.9375,7.1064,9.9850,304.825
+registration,gear,icp-tukey,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1348,0.2182,133.435
+registration,gear,icp-tukey,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1463,0.2498,173.024
+registration,gear,icp-tukey,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1778,0.3762,736.635
+registration,gear,icp-tukey,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1829,0.3361,12.199
+registration,gear,icp-tukey,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.3594,0.5536,8.837
+registration,gear,icp-tukey,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.6277,0.8013,0.387
+registration,gear,icp-tukey,"guess 30°",far guess,16,0.1875,0.0659,0.4301,0.8125,30.0230,30.0959,49.217
+registration,gear,icp-tukey,"guess 60°",far guess,16,0.0000,0.0000,0.1936,1.0000,52.2537,59.9985,240.241
+registration,gear,icp-tukey,"no guess",no guess,16,0.0000,0.0000,0.1936,0.5000,173.8039,179.7374,273.814
+registration,gear,icp-tukey,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,13.1787,24.5034,76.744
+registration,gear,icp-trimmed,"nominal",nominal,16,0.8750,0.6398,0.9650,0.1250,0.1952,0.3775,138.132
+registration,gear,icp-trimmed,"noise 2 %",noise,16,0.8750,0.6398,0.9650,0.1250,0.8783,1.8568,192.059
+registration,gear,icp-trimmed,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,4.7803,8.1796,820.739
+registration,gear,icp-trimmed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1988,0.3043,72.042
+registration,gear,icp-trimmed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.2348,0.3200,367.999
+registration,gear,icp-trimmed,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.3907,0.6790,460.448
+registration,gear,icp-trimmed,"half visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.3988,4.9404,27.147
+registration,gear,icp-trimmed,"quarter visible",partial view,16,0.8125,0.5699,0.9341,0.1875,0.5566,2.2990,13.538
+registration,gear,icp-trimmed,"sparse",sparse,16,0.6250,0.3864,0.8152,0.3750,1.1139,8.0100,0.457
+registration,gear,icp-trimmed,"guess 30°",far guess,16,0.2500,0.1018,0.4950,0.7500,29.8532,30.1644,54.841
+registration,gear,icp-trimmed,"guess 60°",far guess,16,0.1250,0.0350,0.3602,0.8750,30.1750,59.8618,76.439
+registration,gear,icp-trimmed,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,176.6391,179.8414,156.165
+registration,gear,icp-trimmed,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,11.4188,22.6775,26.591
+registration,gear,annealed,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.1160,0.1920,83.779
+registration,gear,annealed,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.6466,1.1920,509.370
+registration,gear,annealed,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,4.5967,7.9366,308.121
+registration,gear,annealed,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1329,0.2104,264.773
+registration,gear,annealed,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1806,0.2542,548.260
+registration,gear,annealed,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1870,0.3448,1163.924
+registration,gear,annealed,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1878,0.3476,39.889
+registration,gear,annealed,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.3565,0.5190,21.718
+registration,gear,annealed,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.6443,0.7895,1.313
+registration,gear,annealed,"guess 30°",far guess,16,0.2500,0.1018,0.4950,0.7500,30.0150,30.1026,77.589
+registration,gear,annealed,"guess 60°",far guess,16,0.1875,0.0659,0.4301,0.8125,30.1026,60.0937,71.653
+registration,gear,annealed,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,179.9159,179.9644,96.398
+registration,gear,annealed,"everything",combined,16,0.0625,0.0111,0.2833,0.9375,8.8845,25.5721,107.495
+registration,gear,adaptive,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.1219,0.1929,84.995
+registration,gear,adaptive,"noise 2 %",noise,16,1.0000,0.8064,1.0000,0.0000,0.6366,1.2198,204.766
+registration,gear,adaptive,"noise 5 %",noise,16,0.0625,0.0111,0.2833,0.9375,3.4594,7.3751,323.525
+registration,gear,adaptive,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1279,0.2218,211.141
+registration,gear,adaptive,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1737,0.2747,432.966
+registration,gear,adaptive,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.6224,0.8962,757.318
+registration,gear,adaptive,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1812,0.3499,39.174
+registration,gear,adaptive,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.3374,0.5345,10.752
+registration,gear,adaptive,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.6443,0.8000,0.930
+registration,gear,adaptive,"guess 30°",far guess,16,0.2500,0.1018,0.4950,0.7500,30.0169,30.1024,63.609
+registration,gear,adaptive,"guess 60°",far guess,16,0.1875,0.0659,0.4301,0.8125,30.1040,60.0753,71.477
+registration,gear,adaptive,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,179.8988,179.9695,528.529
+registration,gear,adaptive,"everything",combined,16,0.0625,0.0111,0.2833,0.9375,10.8455,22.7889,89.828
+registration,gear,search,"nominal",nominal,16,0.1250,0.0350,0.3602,0.8750,90.0817,179.9619,1033.255
+registration,gear,search,"noise 2 %",noise,16,0.0625,0.0111,0.2833,0.9375,91.1357,179.5910,2157.917
+registration,gear,search,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,94.0577,147.9624,2826.210
+registration,gear,search,"outliers 30 %",outliers,16,0.3125,0.1416,0.5560,0.6875,89.9016,179.9334,2061.722
+registration,gear,search,"outliers 100 %",outliers,16,0.3125,0.1416,0.5560,0.6875,89.7831,120.7336,3824.828
+registration,gear,search,"outliers 300 %",outliers,16,0.1250,0.0350,0.3602,0.8750,89.0787,179.6867,10069.146
+registration,gear,search,"half visible",partial view,16,0.1250,0.0350,0.3602,0.8750,89.5106,121.7640,713.303
+registration,gear,search,"quarter visible",partial view,16,0.0000,0.0000,0.1936,1.0000,158.4888,179.6054,514.807
+registration,gear,search,"sparse",sparse,16,0.0625,0.0111,0.2833,0.9375,89.6692,149.9905,105.178
+registration,gear,search,"guess 30°",far guess,16,0.1250,0.0350,0.3602,0.8750,90.0817,179.9619,1053.105
+registration,gear,search,"guess 60°",far guess,16,0.1250,0.0350,0.3602,0.8750,90.0817,179.9619,1206.443
+registration,gear,search,"no guess",no guess,16,0.1250,0.0350,0.3602,0.8750,90.0817,179.9619,957.825
+registration,gear,search,"everything",combined,16,0.0625,0.0111,0.2833,0.9375,61.0021,148.2373,611.899
+registration,gear,consensus,"nominal",nominal,16,0.0000,0.0000,0.1936,1.0000,90.2419,150.1104,204.569
+registration,gear,consensus,"noise 2 %",noise,16,0.0625,0.0111,0.2833,0.9375,90.2496,170.7657,365.332
+registration,gear,consensus,"noise 5 %",noise,16,0.0000,0.0000,0.1936,1.0000,107.1275,166.2428,231.610
+registration,gear,consensus,"outliers 30 %",outliers,16,0.0625,0.0111,0.2833,0.9375,119.8852,179.8701,286.218
+registration,gear,consensus,"outliers 100 %",outliers,16,0.0000,0.0000,0.1936,1.0000,119.7806,178.3952,881.193
+registration,gear,consensus,"outliers 300 %",outliers,16,0.0000,0.0000,0.1936,0.5625,167.5930,inf,1868.297
+registration,gear,consensus,"half visible",partial view,16,0.0000,0.0000,0.1936,1.0000,79.9160,119.9862,102.824
+registration,gear,consensus,"quarter visible",partial view,16,0.0000,0.0000,0.1936,1.0000,118.9172,179.3784,52.734
+registration,gear,consensus,"sparse",sparse,16,0.0000,0.0000,0.1936,0.1875,inf,inf,8.505
+registration,gear,consensus,"guess 30°",far guess,16,0.0000,0.0000,0.1936,1.0000,90.2419,150.1104,77.839
+registration,gear,consensus,"guess 60°",far guess,16,0.0000,0.0000,0.1936,1.0000,90.2419,150.1104,67.077
+registration,gear,consensus,"no guess",no guess,16,0.0000,0.0000,0.1936,1.0000,90.2419,150.1104,69.749
+registration,gear,consensus,"everything",combined,16,0.0625,0.0111,0.2833,0.6875,135.0744,inf,32.142
+registration,gear,guarded,"nominal",nominal,16,1.0000,0.8064,1.0000,0.0000,0.1089,0.1813,34.147
+registration,gear,guarded,"noise 2 %",noise,16,0.9375,0.7167,0.9889,0.0625,0.7377,1.6806,68.368
+registration,gear,guarded,"noise 5 %",noise,16,0.0625,0.0111,0.2833,0.9375,7.1064,9.9850,82.884
+registration,gear,guarded,"outliers 30 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1348,0.2182,221.062
+registration,gear,guarded,"outliers 100 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1463,0.2498,312.939
+registration,gear,guarded,"outliers 300 %",outliers,16,1.0000,0.8064,1.0000,0.0000,0.1778,0.3762,359.664
+registration,gear,guarded,"half visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.1829,0.3361,12.050
+registration,gear,guarded,"quarter visible",partial view,16,1.0000,0.8064,1.0000,0.0000,0.3594,0.5536,8.160
+registration,gear,guarded,"sparse",sparse,16,1.0000,0.8064,1.0000,0.0000,0.6277,0.8013,0.506
+registration,gear,guarded,"guess 30°",far guess,16,0.1875,0.0659,0.4301,0.8125,30.0230,30.0959,32.066
+registration,gear,guarded,"guess 60°",far guess,16,0.0000,0.0000,0.1936,1.0000,52.2537,90.0817,172.130
+registration,gear,guarded,"no guess",no guess,16,0.1250,0.0350,0.3602,0.8750,90.2462,179.9619,2389.944
+registration,gear,guarded,"everything",combined,16,0.0000,0.0000,0.1936,1.0000,13.1787,24.5034,30.143
+tracking,bracket,icp-tukey,"noise",noise,160,0.1313,0.0875,0.1923,0.8688,3.4866,5.6195,13.653
+tracking,bracket,icp-tukey,"shake",shake,160,0.1000,0.0625,0.1563,0.9000,3.2591,5.8625,8.931
+tracking,bracket,icp-tukey,"bend",bend,160,0.1125,0.0724,0.1708,0.8875,3.1483,5.3579,13.589
+tracking,bracket,icp-tukey,"occluder",occluder,160,0.0563,0.0299,0.1034,0.9437,3.8868,5.6480,26.140
+tracking,bracket,icp-tukey,"lens",lens,160,0.0625,0.0343,0.1112,0.9375,3.9680,5.9837,18.498
+tracking,bracket,icp-tukey,"knocks",knocks,160,0.0437,0.0214,0.0875,0.7688,4.7419,90.1553,29.396
+tracking,bracket,adaptive,"noise",noise,160,0.3500,0.2804,0.4266,0.6500,2.2732,3.8085,56.477
+tracking,bracket,adaptive,"shake",shake,160,0.3312,0.2630,0.4074,0.6687,2.2503,4.1069,25.488
+tracking,bracket,adaptive,"bend",bend,160,0.2875,0.2230,0.3620,0.7125,2.3294,3.6938,26.344
+tracking,bracket,adaptive,"occluder",occluder,160,0.2938,0.2287,0.3685,0.7063,2.4591,4.4433,52.806
+tracking,bracket,adaptive,"lens",lens,160,0.2687,0.2061,0.3423,0.7312,2.4547,3.8874,26.991
+tracking,bracket,adaptive,"knocks",knocks,160,0.2437,0.1837,0.3158,0.7562,2.4922,3.8480,21.878
+tracking,bracket,guarded,"noise",noise,160,0.1313,0.0875,0.1923,0.8688,3.4866,5.6195,7.116
+tracking,bracket,guarded,"shake",shake,160,0.1000,0.0625,0.1563,0.9000,3.2591,5.8625,6.662
+tracking,bracket,guarded,"bend",bend,160,0.1125,0.0724,0.1708,0.8875,3.1483,5.3579,6.361
+tracking,bracket,guarded,"occluder",occluder,160,0.1250,0.0824,0.1852,0.8750,3.6706,9.5474,278.534
+tracking,bracket,guarded,"lens",lens,160,0.0625,0.0343,0.1112,0.9375,3.9680,5.9837,8.645
+tracking,bracket,guarded,"knocks",knocks,160,0.0875,0.0528,0.1415,0.9125,3.6242,5.8358,7.816
+tracking,bracket,tracker,"noise",noise,160,0.8625,0.8006,0.9074,0.1375,1.3943,2.1320,3.236
+tracking,bracket,tracker,"shake",shake,160,0.3312,0.2630,0.4074,0.6687,1.6197,2.5549,2.792
+tracking,bracket,tracker,"bend",bend,160,0.6375,0.5606,0.7080,0.3625,1.5759,2.8978,3.120
+tracking,bracket,tracker,"occluder",occluder,160,0.5312,0.4541,0.6069,0.4688,1.8391,50.4236,4.719
+tracking,bracket,tracker,"lens",lens,160,0.6625,0.5862,0.7312,0.3375,1.6013,2.4818,3.419
+tracking,bracket,tracker,"knocks",knocks,160,0.7125,0.6380,0.7770,0.2875,1.6431,2.7526,6.465
+tracking,bracket,tracker-whole,"noise",noise,160,0.5312,0.4541,0.6069,0.4688,1.8133,3.3717,3.828
+tracking,bracket,tracker-whole,"shake",shake,160,0.1562,0.1081,0.2205,0.8438,2.0777,3.3821,3.068
+tracking,bracket,tracker-whole,"bend",bend,160,0.4000,0.3273,0.4774,0.6000,1.9643,3.4883,2.924
+tracking,bracket,tracker-whole,"occluder",occluder,160,0.3312,0.2630,0.4074,0.6687,2.4446,165.2688,5.143
+tracking,bracket,tracker-whole,"lens",lens,160,0.3187,0.2515,0.3945,0.6813,2.3314,4.1016,3.260
+tracking,bracket,tracker-whole,"knocks",knocks,160,0.3625,0.2920,0.4394,0.6375,2.2313,3.5279,2.907
+tracking,bracket,tracker-loose,"noise",noise,160,0.7688,0.6976,0.8273,0.2313,1.4928,2.4080,2.909
+tracking,bracket,tracker-loose,"shake",shake,160,0.3000,0.2344,0.3750,0.7000,1.5876,2.7988,2.962
+tracking,bracket,tracker-loose,"bend",bend,160,0.7250,0.6511,0.7883,0.2750,1.5431,2.5859,2.858
+tracking,bracket,tracker-loose,"occluder",occluder,160,0.3563,0.2862,0.4330,0.6438,2.2909,173.2920,5.150
+tracking,bracket,tracker-loose,"lens",lens,160,0.6625,0.5862,0.7312,0.3375,1.5157,2.5426,3.042
+tracking,bracket,tracker-loose,"knocks",knocks,160,0.6375,0.5606,0.7080,0.3625,1.6248,2.7207,2.876
+tracking,blob,icp-tukey,"noise",noise,160,0.0063,0.0011,0.0345,0.9938,10.2443,20.4964,8.289
+tracking,blob,icp-tukey,"shake",shake,160,0.0063,0.0011,0.0345,0.9938,10.6739,20.7719,8.329
+tracking,blob,icp-tukey,"bend",bend,160,0.0125,0.0034,0.0444,0.9875,10.9792,20.3641,8.251
+tracking,blob,icp-tukey,"occluder",occluder,160,0.0063,0.0011,0.0345,0.8812,12.0486,28.5300,16.265
+tracking,blob,icp-tukey,"lens",lens,160,0.0000,0.0000,0.0234,1.0000,10.4719,18.6160,8.128
+tracking,blob,icp-tukey,"knocks",knocks,160,0.0000,0.0000,0.0234,1.0000,15.5213,152.3936,6.785
+tracking,blob,adaptive,"noise",noise,160,0.0563,0.0299,0.1034,0.9437,6.2008,12.6757,26.355
+tracking,blob,adaptive,"shake",shake,160,0.0250,0.0098,0.0625,0.9750,6.5677,15.4928,33.373
+tracking,blob,adaptive,"bend",bend,160,0.0312,0.0134,0.0711,0.9688,6.2350,11.6224,31.519
+tracking,blob,adaptive,"occluder",occluder,160,0.0250,0.0098,0.0625,0.7875,35.5710,inf,63.632
+tracking,blob,adaptive,"lens",lens,160,0.0563,0.0299,0.1034,0.9437,6.4053,13.5738,28.351
+tracking,blob,adaptive,"knocks",knocks,160,0.0250,0.0098,0.0625,0.9688,8.8077,115.1890,27.734
+tracking,blob,guarded,"noise",noise,160,0.0063,0.0011,0.0345,0.9938,10.2443,20.4964,8.348
+tracking,blob,guarded,"shake",shake,160,0.0063,0.0011,0.0345,0.9938,10.6739,20.7719,9.180
+tracking,blob,guarded,"bend",bend,160,0.0125,0.0034,0.0444,0.9875,10.9792,20.3641,9.395
+tracking,blob,guarded,"occluder",occluder,160,0.0125,0.0034,0.0444,0.9875,113.8313,172.9585,360.360
+tracking,blob,guarded,"lens",lens,160,0.0000,0.0000,0.0234,1.0000,10.4719,18.6160,8.968
+tracking,blob,guarded,"knocks",knocks,160,0.0063,0.0011,0.0345,0.9938,11.3679,107.0518,8.514
+tracking,blob,tracker,"noise",noise,160,0.1375,0.0926,0.1994,0.4313,3.8994,6.8638,2.732
+tracking,blob,tracker,"shake",shake,160,0.0813,0.0481,0.1340,0.4562,4.0873,8.2894,2.690
+tracking,blob,tracker,"bend",bend,160,0.1437,0.0977,0.2065,0.4188,3.8594,7.9853,3.166
+tracking,blob,tracker,"occluder",occluder,160,0.0813,0.0481,0.1340,0.5563,10.8662,125.7828,5.596
+tracking,blob,tracker,"lens",lens,160,0.1437,0.0977,0.2065,0.4313,3.8494,9.5868,3.156
+tracking,blob,tracker,"knocks",knocks,160,0.0625,0.0343,0.1112,0.7688,128.4244,175.1151,3.104
+tracking,blob,tracker-whole,"noise",noise,160,0.0563,0.0299,0.1034,0.3812,5.2194,14.3340,3.863
+tracking,blob,tracker-whole,"shake",shake,160,0.0500,0.0256,0.0956,0.4062,5.3903,13.1326,3.431
+tracking,blob,tracker-whole,"bend",bend,160,0.0938,0.0576,0.1489,0.3688,4.7630,15.2616,2.849
+tracking,blob,tracker-whole,"occluder",occluder,160,0.0563,0.0299,0.1034,0.2625,72.6965,167.7078,5.240
+tracking,blob,tracker-whole,"lens",lens,160,0.0938,0.0576,0.1489,0.3312,6.1513,31.5375,2.741
+tracking,blob,tracker-whole,"knocks",knocks,160,0.0500,0.0256,0.0956,0.7500,114.1262,175.3532,2.990
+tracking,blob,tracker-loose,"noise",noise,160,0.0938,0.0576,0.1489,0.4562,5.5326,27.5819,2.316
+tracking,blob,tracker-loose,"shake",shake,160,0.0500,0.0256,0.0956,0.4375,5.7413,14.3831,2.336
+tracking,blob,tracker-loose,"bend",bend,160,0.0625,0.0343,0.1112,0.4562,5.3345,14.1957,2.346
+tracking,blob,tracker-loose,"occluder",occluder,160,0.0500,0.0256,0.0956,0.5875,16.3958,126.7484,4.448
+tracking,blob,tracker-loose,"lens",lens,160,0.0813,0.0481,0.1340,0.4938,4.7244,18.0664,3.163
+tracking,blob,tracker-loose,"knocks",knocks,160,0.0375,0.0173,0.0794,0.8438,118.0841,176.5874,2.745
+tracking,patch,icp-tukey,"noise",noise,160,0.0563,0.0299,0.1034,0.6875,6.5089,inf,24.705
+tracking,patch,icp-tukey,"shake",shake,160,0.0250,0.0098,0.0625,0.6687,6.9589,inf,16.451
+tracking,patch,icp-tukey,"bend",bend,160,0.0250,0.0098,0.0625,0.9313,5.9737,13.8654,22.524
+tracking,patch,icp-tukey,"occluder",occluder,160,0.0250,0.0098,0.0625,0.6062,6.9898,inf,12.222
+tracking,patch,icp-tukey,"lens",lens,160,0.0000,0.0000,0.0234,0.4688,49.6943,inf,6.676
+tracking,patch,icp-tukey,"knocks",knocks,160,0.0563,0.0299,0.1034,0.7188,9.1047,inf,13.034
+tracking,patch,adaptive,"noise",noise,160,0.1375,0.0926,0.1994,0.8187,3.3136,8.4710,122.183
+tracking,patch,adaptive,"shake",shake,160,0.1750,0.1239,0.2413,0.8125,2.8928,6.5938,72.129
+tracking,patch,adaptive,"bend",bend,160,0.0125,0.0034,0.0444,0.9688,4.1892,9.0275,77.766
+tracking,patch,adaptive,"occluder",occluder,160,0.1250,0.0824,0.1852,0.4875,4.7247,inf,62.101
+tracking,patch,adaptive,"lens",lens,160,0.0187,0.0064,0.0537,0.9563,4.5908,8.4700,68.680
+tracking,patch,adaptive,"knocks",knocks,160,0.0875,0.0528,0.1415,0.8375,3.5926,159.9612,84.750
+tracking,patch,guarded,"noise",noise,160,0.0750,0.0434,0.1265,0.9250,4.9488,14.3086,24.016
+tracking,patch,guarded,"shake",shake,160,0.0688,0.0388,0.1189,0.9313,4.6291,13.5491,22.117
+tracking,patch,guarded,"bend",bend,160,0.0250,0.0098,0.0625,0.9750,5.9737,15.0853,28.090
+tracking,patch,guarded,"occluder",occluder,160,0.0063,0.0011,0.0345,0.9938,9.1327,161.7068,535.571
+tracking,patch,guarded,"lens",lens,160,0.0063,0.0011,0.0345,0.9938,5.9604,15.5733,40.258
+tracking,patch,guarded,"knocks",knocks,160,0.0750,0.0434,0.1265,0.9250,6.3845,118.2743,20.025
+tracking,patch,tracker,"noise",noise,160,0.0000,0.0000,0.0234,0.0000,9.8703,54.9784,13.931
+tracking,patch,tracker,"shake",shake,160,0.0125,0.0034,0.0444,0.0000,7.8806,17.0112,11.002
+tracking,patch,tracker,"bend",bend,160,0.0000,0.0000,0.0234,0.0000,14.1074,151.9546,15.014
+tracking,patch,tracker,"occluder",occluder,160,0.0125,0.0034,0.0444,0.0000,34.6755,118.4055,13.065
+tracking,patch,tracker,"lens",lens,160,0.0000,0.0000,0.0234,0.0000,13.7856,33.3951,10.954
+tracking,patch,tracker,"knocks",knocks,160,0.0125,0.0034,0.0444,0.0000,11.7734,34.2077,11.392
+tracking,patch,tracker-whole,"noise",noise,160,0.0125,0.0034,0.0444,0.0000,12.0288,67.2935,6.994
+tracking,patch,tracker-whole,"shake",shake,160,0.0187,0.0064,0.0537,0.0000,10.6463,75.0610,13.660
+tracking,patch,tracker-whole,"bend",bend,160,0.0063,0.0011,0.0345,0.0000,11.9106,151.9546,14.061
+tracking,patch,tracker-whole,"occluder",occluder,160,0.0125,0.0034,0.0444,0.0000,34.2207,52.3397,19.083
+tracking,patch,tracker-whole,"lens",lens,160,0.0000,0.0000,0.0234,0.0000,16.8700,29.0790,8.132
+tracking,patch,tracker-whole,"knocks",knocks,160,0.0063,0.0011,0.0345,0.0000,13.8989,125.1059,9.227
+tracking,patch,tracker-loose,"noise",noise,160,0.0688,0.0388,0.1189,0.0000,7.7075,19.7783,9.218
+tracking,patch,tracker-loose,"shake",shake,160,0.0125,0.0034,0.0444,0.0000,11.0275,26.0711,9.615
+tracking,patch,tracker-loose,"bend",bend,160,0.0000,0.0000,0.0234,0.0000,11.2341,24.6580,8.766
+tracking,patch,tracker-loose,"occluder",occluder,160,0.0125,0.0034,0.0444,0.0000,23.8888,165.7344,22.247
+tracking,patch,tracker-loose,"lens",lens,160,0.0000,0.0000,0.0234,0.0000,9.3820,19.7010,9.432
+tracking,patch,tracker-loose,"knocks",knocks,160,0.0063,0.0011,0.0345,0.0000,9.8847,48.9358,8.826
+tracking,gear,icp-tukey,"noise",noise,160,0.2437,0.1837,0.3158,0.7562,2.7757,4.7668,12.649
+tracking,gear,icp-tukey,"shake",shake,160,0.2062,0.1508,0.2755,0.7937,2.9950,7.0292,10.289
+tracking,gear,icp-tukey,"bend",bend,160,0.2375,0.1782,0.3091,0.7625,3.0272,5.2778,8.672
+tracking,gear,icp-tukey,"occluder",occluder,160,0.1875,0.1346,0.2550,0.7688,3.2639,5.1222,14.904
+tracking,gear,icp-tukey,"lens",lens,160,0.1938,0.1400,0.2619,0.8063,3.0201,5.0876,8.557
+tracking,gear,icp-tukey,"knocks",knocks,160,0.1000,0.0625,0.1563,0.9000,5.9356,175.2754,16.382
+tracking,gear,adaptive,"noise",noise,160,0.5437,0.4664,0.6190,0.4562,1.8713,3.1235,64.858
+tracking,gear,adaptive,"shake",shake,160,0.5062,0.4295,0.5827,0.4938,1.9666,3.2509,30.002
+tracking,gear,adaptive,"bend",bend,160,0.4688,0.3931,0.5459,0.5312,2.0258,3.6262,18.935
+tracking,gear,adaptive,"occluder",occluder,160,0.2188,0.1617,0.2890,0.7812,29.5084,179.1727,56.546
+tracking,gear,adaptive,"lens",lens,160,0.4437,0.3690,0.5212,0.5563,2.1450,3.3163,47.726
+tracking,gear,adaptive,"knocks",knocks,160,0.4000,0.3273,0.4774,0.6000,2.3531,59.9823,31.866
+tracking,gear,guarded,"noise",noise,160,0.0688,0.0388,0.1189,0.9313,177.1303,179.7181,6.852
+tracking,gear,guarded,"shake",shake,160,0.0688,0.0388,0.1189,0.9313,119.4739,179.1273,6.653
+tracking,gear,guarded,"bend",bend,160,0.0875,0.0528,0.1415,0.9125,59.7450,91.3817,6.930
+tracking,gear,guarded,"occluder",occluder,160,0.0125,0.0034,0.0444,0.9875,119.2554,178.3339,394.451
+tracking,gear,guarded,"lens",lens,160,0.0688,0.0388,0.1189,0.9313,59.6698,178.7833,12.480
+tracking,gear,guarded,"knocks",knocks,160,0.0750,0.0434,0.1265,0.9250,26.3775,148.1650,9.477
+tracking,gear,tracker,"noise",noise,160,0.8000,0.7313,0.8546,0.2000,1.3762,2.3941,3.263
+tracking,gear,tracker,"shake",shake,160,0.5563,0.4788,0.6310,0.4437,1.3964,2.3458,5.063
+tracking,gear,tracker,"bend",bend,160,0.7500,0.6776,0.8107,0.2500,1.4628,2.5547,4.904
+tracking,gear,tracker,"occluder",occluder,160,0.3063,0.2401,0.3815,0.6937,136.9875,178.3625,5.233
+tracking,gear,tracker,"lens",lens,160,0.7250,0.6511,0.7883,0.2750,1.5823,2.4346,3.149
+tracking,gear,tracker,"knocks",knocks,160,0.5188,0.4418,0.5948,0.4813,1.8898,148.9017,3.199
+tracking,gear,tracker-whole,"noise",noise,160,0.8063,0.7381,0.8600,0.1938,1.4573,2.2787,3.097
+tracking,gear,tracker-whole,"shake",shake,160,0.5813,0.5038,0.6549,0.4188,1.3990,2.3217,3.176
+tracking,gear,tracker-whole,"bend",bend,160,0.7500,0.6776,0.8107,0.2500,1.3760,2.7445,4.471
+tracking,gear,tracker-whole,"occluder",occluder,160,0.3000,0.2344,0.3750,0.7000,115.3851,166.9712,5.593
+tracking,gear,tracker-whole,"lens",lens,160,0.6750,0.5991,0.7427,0.3250,1.6663,2.5961,5.756
+tracking,gear,tracker-whole,"knocks",knocks,160,0.5125,0.4357,0.5887,0.4875,1.9330,149.0354,5.399
+tracking,gear,tracker-loose,"noise",noise,160,0.7812,0.7110,0.8383,0.2188,1.4478,2.3212,4.611
+tracking,gear,tracker-loose,"shake",shake,160,0.5188,0.4418,0.5948,0.4813,1.5054,2.4802,4.569
+tracking,gear,tracker-loose,"bend",bend,160,0.7562,0.6842,0.8163,0.2437,1.5181,2.5713,3.743
+tracking,gear,tracker-loose,"occluder",occluder,160,0.2938,0.2287,0.3685,0.7063,93.8972,176.0845,5.794
+tracking,gear,tracker-loose,"lens",lens,160,0.7438,0.6709,0.8051,0.2562,1.5902,2.3949,8.162
+tracking,gear,tracker-loose,"knocks",knocks,160,0.5500,0.4726,0.6250,0.4500,1.7273,86.1019,5.396

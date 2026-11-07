@@ -15,30 +15,30 @@ tolerance: for a robot, the most dangerous outcome.
 
 | Method | Suite | Mean success | Worst situation | Confidently wrong | Median time |
 | --- | --- | --- | --- | --- | --- |
-| icp-point | scenes | 1.8 % | 0 % (bin of parts, scenes) | 98.2 % | 92.33 ms |
-| icp-plane | scenes | 2.7 % | 0 % (bin of parts, scenes) | 97.3 % | 115.73 ms |
-| icp-tukey | scenes | 58.9 % | 0 % (car on a road, scenes) | 17.4 % | 148.38 ms |
-| icp-trimmed | scenes | 52.7 % | 0 % (bin of parts, scenes) | 47.3 % | 95.50 ms |
-| annealed | scenes | 33.0 % | 0 % (bin of parts, scenes) | 38.4 % | 459.67 ms |
-| adaptive | scenes | 47.8 % | 0 % (bin of parts, scenes) | 52.2 % | 365.19 ms |
-| search | scenes | 30.8 % | 0 % (bin of parts, scenes) | 69.2 % | 3634.94 ms |
-| consensus | scenes | 5.4 % | 0 % (bin of parts, scenes) | 65.2 % | 195.28 ms |
-| guarded | scenes | 38.8 % | 0 % (bin of parts, scenes) | 61.2 % | 4272.59 ms |
-| icp-point | registration | 36.2 % | 0 % (outliers 30 %, bracket) | 63.8 % | 43.02 ms |
-| icp-plane | registration | 51.2 % | 0 % (outliers 30 %, bracket) | 48.8 % | 46.09 ms |
-| icp-tukey | registration | 64.3 % | 0 % (noise 5 %, bracket) | 31.9 % | 57.07 ms |
-| icp-trimmed | registration | 58.3 % | 0 % (no guess, bracket) | 41.7 % | 53.91 ms |
-| annealed | registration | 69.6 % | 0 % (no guess, bracket) | 26.6 % | 223.67 ms |
-| adaptive | registration | 65.9 % | 0 % (no guess, bracket) | 31.9 % | 139.84 ms |
-| search | registration | 56.2 % | 0 % (outliers 300 %, bracket) | 43.8 % | 1733.95 ms |
-| consensus | registration | 30.6 % | 0 % (noise 5 %, bracket) | 42.8 % | 95.68 ms |
-| guarded | registration | 66.3 % | 0 % (noise 5 %, bracket) | 33.7 % | 71.31 ms |
-| icp-tukey | tracking | 7.9 % | 0 % (lens, blob) | 83.5 % | 13.37 ms |
-| adaptive | tracking | 21.4 % | 1 % (bend, patch) | 75.5 % | 35.49 ms |
-| guarded | tracking | 5.4 % | 0 % (lens, blob) | 94.6 % | 17.25 ms |
-| tracker | tracking | 33.7 % | 0 % (noise, patch) | 66.3 % | 7.75 ms |
-| tracker-whole | tracking | 25.8 % | 0 % (lens, patch) | 74.2 % | 7.71 ms |
-| tracker-loose | tracking | 31.5 % | 0 % (bend, patch) | 68.2 % | 8.57 ms |
+| icp-point | scenes | 1.6 % | 0 % (bin of parts, scenes) | 98.4 % | 505.42 ms |
+| icp-plane | scenes | 0.0 % | 0 % (bin of parts, scenes) | 100.0 % | 824.86 ms |
+| icp-tukey | scenes | 52.3 % | 0 % (car on a road, scenes) | 19.9 % | 650.01 ms |
+| icp-trimmed | scenes | 52.0 % | 0 % (bin of parts, scenes) | 48.0 % | 877.59 ms |
+| annealed | scenes | 27.3 % | 0 % (bin of parts, scenes) | 41.4 % | 3778.48 ms |
+| adaptive | scenes | 44.5 % | 0 % (bin of parts, scenes) | 55.5 % | 1348.83 ms |
+| search | scenes | 27.0 % | 0 % (bin of parts, scenes) | 73.0 % | 7156.33 ms |
+| consensus | scenes | 3.5 % | 0 % (bin of parts, scenes) | 64.5 % | 595.91 ms |
+| guarded | scenes | 35.2 % | 0 % (bin of parts, scenes) | 64.8 % | 6688.62 ms |
+| icp-point | registration | 36.2 % | 0 % (outliers 30 %, bracket) | 63.8 % | 87.11 ms |
+| icp-plane | registration | 51.2 % | 0 % (outliers 30 %, bracket) | 48.8 % | 50.77 ms |
+| icp-tukey | registration | 64.3 % | 0 % (noise 5 %, bracket) | 31.9 % | 83.46 ms |
+| icp-trimmed | registration | 58.3 % | 0 % (no guess, bracket) | 41.7 % | 87.55 ms |
+| annealed | registration | 69.6 % | 0 % (no guess, bracket) | 26.6 % | 218.36 ms |
+| adaptive | registration | 65.9 % | 0 % (no guess, bracket) | 31.9 % | 204.77 ms |
+| search | registration | 56.2 % | 0 % (outliers 300 %, bracket) | 43.8 % | 2710.29 ms |
+| consensus | registration | 30.6 % | 0 % (noise 5 %, bracket) | 42.8 % | 170.88 ms |
+| guarded | registration | 66.3 % | 0 % (noise 5 %, bracket) | 33.7 % | 120.90 ms |
+| icp-tukey | tracking | 7.9 % | 0 % (lens, blob) | 83.5 % | 13.03 ms |
+| adaptive | tracking | 21.4 % | 1 % (bend, patch) | 75.5 % | 47.73 ms |
+| guarded | tracking | 5.4 % | 0 % (lens, blob) | 94.6 % | 9.39 ms |
+| tracker | tracking | 33.7 % | 0 % (noise, patch) | 32.0 % | 4.72 ms |
+| tracker-whole | tracking | 25.8 % | 0 % (lens, patch) | 36.6 % | 4.47 ms |
+| tracker-loose | tracking | 31.5 % | 0 % (bend, patch) | 34.1 % | 4.57 ms |
 
 ## Recommendations
 
@@ -47,14 +47,14 @@ ties broken by time.
 
 | Class | bracket | blob | patch | gear |
 | --- | --- | --- | --- | --- |
-| nominal | icp-plane (100 %) | guarded (100 %) | icp-trimmed (100 %) | icp-plane (100 %) |
-| noise | icp-point (97 %) | icp-plane (34 %) | icp-point (100 %) | icp-point (59 %) |
-| outliers | icp-trimmed (100 %) | icp-tukey (100 %) | icp-tukey (100 %) | icp-trimmed (100 %) |
-| partial view | icp-plane (97 %) | icp-tukey (100 %) | icp-plane (62 %) | guarded (100 %) |
-| sparse | icp-plane (100 %) | icp-plane (62 %) | guarded (62 %) | icp-point (100 %) |
-| far guess | icp-plane (100 %) | search (100 %) | guarded (100 %) | icp-plane (22 %) |
+| nominal | icp-plane (100 %) | guarded (100 %) | icp-plane (100 %) | icp-plane (100 %) |
+| noise | icp-plane (97 %) | icp-plane (34 %) | icp-point (100 %) | icp-plane (59 %) |
+| outliers | icp-trimmed (100 %) | icp-tukey (100 %) | icp-tukey (100 %) | guarded (100 %) |
+| partial view | icp-plane (97 %) | guarded (100 %) | icp-plane (62 %) | guarded (100 %) |
+| sparse | icp-plane (100 %) | icp-plane (62 %) | guarded (62 %) | icp-plane (100 %) |
+| far guess | icp-plane (100 %) | search (100 %) | icp-plane (100 %) | icp-plane (22 %) |
 | no guess | search (100 %) | search (100 %) | consensus (100 %) | search (12 %) |
-| combined | adaptive (19 %) | annealed (12 %) | consensus (0 %) | consensus (6 %) |
+| combined | adaptive (19 %) | annealed (12 %) | consensus (0 %) | icp-plane (6 %) |
 
 ## Methods and models
 
@@ -90,16 +90,18 @@ ties broken by time.
 | bracket behind a crate | 0 % · 31.60° | 0 % · 32.24° | 56 % · 1.13° | 44 % · 2.47° | 19 % · 9.21° | 31 % · 5.55° | 6 % · 7.34° | 6 % · 7.23° | 19 % · 7.34° |
 | bracket in a bin | 0 % · 29.68° | 0 % · 93.60° | 6 % · 1.34° | 0 % · 21.94° | 0 % · 33.95° | 0 % · 23.19° | 0 % · 174.97° | 0 % · 151.77° | 0 % · 174.97° |
 | bracket at a low angle | 0 % · 5.50° | 0 % · 12.74° | 69 % · 0.47° | 62 % · 1.21° | 56 % · 0.59° | 56 % · 0.59° | 12 % · 1.02° | 6 % · 115.35° | 44 % · 2.25° |
-| car close by | 0 % · 3.37° | 38 % · 2.07° | 100 % · 0.28° | 100 % · 0.26° | 100 % · 0.24° | 100 % · 0.24° | 100 % · 0.42° | 31 % · 26.42° | 100 % · 0.28° |
-| car on a road | 0 % · 16.72° | 0 % · 57.87° | 0 % · 7.14° | 0 % · 4.02° | 0 % · 7.27° | 0 % · 6.68° | 0 % · 7.00° | 0 % · 115.48° | 0 % · 7.00° |
+| car close by | 0 % · 4.60° | 0 % · 4.49° | 19 % · 2.19° | 100 % · 1.22° | 50 % · 1.94° | 44 % · 2.03° | 0 % · 2.74° | 0 % · 142.37° | 19 % · 2.19° |
+| car on a road | 0 % · 20.04° | 0 % · 57.30° | 0 % · 9.99° | 0 % · 10.51° | 0 % · 18.01° | 0 % · 14.05° | 0 % · 8.00° | 0 % · 158.53° | 0 % · 8.00° |
 | crate among crates | 0 % · 28.96° | 0 % · 34.03° | 100 % · 0.22° | 88 % · 0.26° | 100 % · 0.21° | 100 % · 0.15° | 6 % · 90.11° | 0 % · 151.24° | 6 % · 90.11° |
 | gear from above | 0 % · 4.21° | 0 % · 119.75° | 88 % · 0.43° | 100 % · 0.96° | 0 % · 121.45° | 0 % · 121.61° | 0 % · 114.71° | 0 % · 162.27° | 19 % · 84.95° |
 | gear on a bench | 25 % · 1.88° | 0 % · 152.51° | 100 % · 0.48° | 100 % · 0.55° | 12 % · 60.13° | 94 % · 0.45° | 12 % · 121.14° | 6 % · 120.26° | 100 % · 0.48° |
 | mug close up | 0 % · 12.60° | 0 % · 13.87° | 81 % · 0.08° | 75 % · 0.09° | 6 % · 6.62° | 88 % · 0.07° | 94 % · 0.16° | 12 % · 179.85° | 81 % · 0.08° |
+| parking lot | 0 % · 84.25° | 0 % · 89.37° | 0 % · 5.45° | 0 % · 45.64° | 0 % · 96.63° | 0 % · 95.64° | 0 % · 158.28° | 0 % · 108.32° | 0 % · 158.28° |
 | part on a table | 0 % · 3.77° | 0 % · 9.99° | 88 % · 0.23° | 88 % · 0.28° | 81 % · 0.21° | 100 % · 0.25° | 100 % · 0.29° | 6 % · 7.25° | 88 % · 0.23° |
 | shelf of mugs | 0 % · 58.01° | 0 % · 51.44° | 38 % · 2.25° | 0 % · 27.93° | 0 % · 89.36° | 0 % · 106.32° | 0 % · 118.02° | 0 % · 137.55° | 0 % · 118.02° |
-| street corner | 0 % · 49.93° | 0 % · 55.60° | 0 % · 10.15° | 0 % · 12.92° | 0 % · 30.97° | 0 % · 27.47° | 0 % · 47.77° | 0 % · 113.96° | 0 % · 47.77° |
+| street corner | 0 % · 51.04° | 0 % · 71.47° | 0 % · 11.71° | 0 % · 25.09° | 0 % · 48.76° | 0 % · 48.86° | 0 % · 52.27° | 0 % · 94.45° | 0 % · 52.27° |
 | twin brackets | 0 % · 7.08° | 0 % · 17.02° | 88 % · 0.44° | 81 % · 0.37° | 88 % · 0.36° | 100 % · 0.30° | 100 % · 0.32° | 6 % · 12.75° | 88 % · 0.44° |
+| workshop | 0 % · 3.27° | 0 % · 15.15° | 94 % · 0.53° | 94 % · 0.37° | 25 % · 0.58° | 100 % · 0.37° | 100 % · 0.34° | 12 % · 11.38° | 100 % · 0.41° |
 
 ## Registration, one frame
 
