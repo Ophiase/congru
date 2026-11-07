@@ -61,15 +61,18 @@ fn main() -> anyhow::Result<()> {
 
 /// The runs that write a page of their own, away from the tables.
 fn page_apart(flag: &impl Fn(&str) -> bool) -> Option<anyhow::Result<()>> {
+    use measure::pages;
     let at = std::path::Path::new;
     if flag("--scenes") {
         Some(draw_scenes())
     } else if flag("--breaking") {
-        Some(measure::breaking::run(at("docs/benchmark/breaking.md")))
+        Some(pages::breaking::run(at("docs/benchmark/breaking.md")))
+    } else if flag("--on-mesh") {
+        Some(pages::on_mesh::run(at("docs/benchmark/on-mesh.md")))
     } else if flag("--comparison") {
-        Some(measure::comparison::run(at("out/comparison")))
+        Some(pages::comparison::run(at("out/comparison")))
     } else if flag("--certified") {
-        Some(measure::certified::run(at("docs/benchmark/certified.md")))
+        Some(pages::certified::run(at("docs/benchmark/certified.md")))
     } else {
         None
     }

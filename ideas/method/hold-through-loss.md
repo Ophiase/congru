@@ -30,7 +30,7 @@ looks again when the space it should fill turns out empty.
 
 ## Measured
 
-**[defined]** [The step](../../docs/hold-step.md), [and the next](../../docs/answer-step.md).
+**[defined]** [The step](../../docs/hot/hold-step.md), [and the next](../../docs/hot/answer-step.md).
 
 - **After a knock, the place holds and the turn does not**: trying every
   orientation where the forecast stands finds it again, once the part is visible.

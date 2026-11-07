@@ -1,6 +1,4 @@
-pub mod breaking;
-pub mod certified;
-pub mod comparison;
+pub mod pages;
 mod realistic;
 mod registration;
 mod stats;

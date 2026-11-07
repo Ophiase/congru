@@ -91,8 +91,8 @@ Still frames of what goes right and wrong, with what each ray says:
 in for a detector.
 
 On two other paths, the room gives 83 and 83 of 90, all in a room 82 and 60
-([this step](answer-step.md), [holding on](hold-step.md), [the box](box-step.md),
-[the model's shape](shape-crop-step.md)).
+([this step](hot/answer-step.md), [holding on](hot/hold-step.md), [the box](hot/box-step.md),
+[the model's shape](hot/shape-crop-step.md)).
 
 - no crop from the truth but that box, no support plane removed;
 - computed offline by `just demo`. A detection in a room takes seconds on four

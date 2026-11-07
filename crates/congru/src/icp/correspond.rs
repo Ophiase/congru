@@ -1,7 +1,7 @@
 use crate::fit::Match;
 use crate::geometry::count_as_float;
 use crate::search::map;
-use crate::{Icp, Metric, PointCloud, RigidTransform, Target};
+use crate::{Icp, Metric, PointCloud, RigidTransform, Surface, Target};
 
 /// The kept, weighted pairs between the source moved by `pose` and the
 /// target: nearest neighbours, minus those beyond the correspondence
@@ -15,7 +15,7 @@ pub(crate) fn correspond(
     let limit = icp
         .max_correspondence_distance
         .map_or(f64::INFINITY, |distance| distance.get().powi(2));
-    let mut pairs: Vec<(f64, Match)> = map(source.points(), |point| {
+    let pairs: Vec<(f64, Match)> = map(source.points(), |point| {
         let moved = pose.apply(point);
         let nearest = target.index().nearest(&moved);
         let pair = Match {
@@ -29,6 +29,39 @@ pub(crate) fn correspond(
     .into_iter()
     .filter(|(squared_distance, _)| *squared_distance <= limit)
     .collect();
+    kept(pairs, source, icp)
+}
+
+/// As [`correspond`], the nearest points coming from a surface itself.
+pub(crate) fn correspond_on(
+    source: &PointCloud,
+    surface: &impl Surface,
+    pose: &RigidTransform,
+    icp: &Icp,
+) -> Vec<Match> {
+    let limit = icp
+        .max_correspondence_distance
+        .map_or(f64::INFINITY, |distance| distance.get().powi(2));
+    let pairs: Vec<(f64, Match)> = map(source.points(), |point| {
+        let moved = pose.apply(point);
+        surface.closest(&moved).map(|closest| {
+            let pair = Match {
+                source: moved,
+                target: closest.point,
+                normal: Some(closest.normal),
+                weight: 1.0,
+            };
+            (closest.squared_distance, pair)
+        })
+    })
+    .into_iter()
+    .flatten()
+    .filter(|(squared_distance, _)| *squared_distance <= limit)
+    .collect();
+    kept(pairs, source, icp)
+}
+
+fn kept(mut pairs: Vec<(f64, Match)>, source: &PointCloud, icp: &Icp) -> Vec<Match> {
     trim(&mut pairs, kept_count(source.count(), icp));
     pairs
         .into_iter()

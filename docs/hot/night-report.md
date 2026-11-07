@@ -6,16 +6,16 @@ independent.
 ## 2026-11-07, 0.1.27
 
 **Done**: the direction in
-[what would make it the reference](../ideas/reference.md), and these:
+[what would make it the reference](../../ideas/reference.md), and these:
 
 | Topic | Result |
 | --- | --- |
-| [Films](demos.md) | Thick outline, the box enlarged, all on one page |
-| [A wider box](../ideas/method/box-as-test.md) | Measured: it breaks some scenes |
-| [Doubt](../ideas/method/doubt.md) | Low-angle bracket, wider box: 0 to 60 of 72 |
-| [Certificate](benchmark/certified.md) | Closes on 27 of 32, strays included |
-| [Comparison](benchmark/comparison.md) | Same accuracy; Open3D 3 times faster |
-| [Off the model](benchmark/breaking.md) | A scale fixes a wrong size, not a bend |
+| [Films](../demos.md) | Thick outline, the box enlarged, all on one page |
+| [A wider box](../../ideas/method/box-as-test.md) | Measured: it breaks some scenes |
+| [Doubt](../../ideas/method/doubt.md) | Low-angle bracket, wider box: 0 to 60 of 72 |
+| [Certificate](../benchmark/certified.md) | Closes on 27 of 32, strays included |
+| [Comparison](../benchmark/comparison.md) | Same accuracy; Open3D 3 times faster |
+| [Off the model](../benchmark/breaking.md) | A scale fixes a wrong size, not a bend |
 | Public pages | Audited against the code by a second agent |
 
 **What fails**:
@@ -32,7 +32,7 @@ independent.
 **Decided alone, for the author to check**:
 
 - **No GPU**: rendering is 6 % of a frame and each call 0.18 ms
-  ([why](../ideas/architecture/acceleration.md)). Threads in tracking come first:
+  ([why](../../ideas/architecture/acceleration.md)). Threads in tracking come first:
   not done.
 - **The films keep the tight box**: wider ones are tabled. Doubt is on in the films,
   off by default in the library.
@@ -102,7 +102,7 @@ Other seeds, with the box, all in a room: 75, 78, 73, 78 at 0.75 turns; 60, 63,
 - **The short ICP**: every point of the box stays, 1 cm gate on pairs, judged on
   all rays. I read it as a gate, not the cut the author refused: its start is
   the rays' pose, not the truth. [The
-  argument](../ideas/method/what-answers.md).
+  argument](../../ideas/method/what-answers.md).
 - **Parametric forecast**: written, tested, not yet used by any scene.
 - **Contour term left out**: room +3, but in a room −7, shelf −6.
 

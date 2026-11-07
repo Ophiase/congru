@@ -5,7 +5,8 @@ use std::fmt::Write;
 use std::path::Path;
 
 use congru::{
-    Convergence, Distance, Icp, Metric, Point, PointCloud, RigidTransform, Target, Vector,
+    Convergence, Distance, DistanceField, Icp, Metric, Point, PointCloud, RigidTransform, Target,
+    Vector,
 };
 use congru_sim::bracket;
 use rand::rngs::ChaCha8Rng;
@@ -17,6 +18,10 @@ const SOURCE_SPACING: f64 = 0.0047;
 const GATE: f64 = 0.03;
 const ITERATIONS: u32 = 50;
 const STRAY_REACH: f64 = 0.2;
+const HEADER: &str =
+    "situation,seed,seconds,guess,truth,congru,early_seconds,early,field_seconds,field\n";
+const FIELD_VOXEL: f64 = 0.002;
+const FIELD_BAND: f64 = 0.035;
 /// The stopping steps of the fastest library's defaults, for a column on equal terms.
 const EARLY_ROTATION: f64 = 0.001_745;
 const EARLY_TRANSLATION: f64 = 0.001;
@@ -30,41 +35,35 @@ struct Situation {
     guess_degrees: f64,
 }
 
+const BASE: Situation = Situation {
+    name: "a_guess_10°_off",
+    noise: 0.001,
+    strays_percent: 0,
+    half_seen: false,
+    guess_degrees: 10.0,
+};
+
 const SITUATIONS: [Situation; 6] = [
-    Situation {
-        name: "a_guess_10°_off",
-        noise: 0.001,
-        strays_percent: 0,
-        half_seen: false,
-        guess_degrees: 10.0,
-    },
+    BASE,
     Situation {
         name: "a_guess_30°_off",
-        noise: 0.001,
-        strays_percent: 0,
-        half_seen: false,
         guess_degrees: 30.0,
+        ..BASE
     },
     Situation {
         name: "5_mm_of_noise",
         noise: 0.005,
-        strays_percent: 0,
-        half_seen: false,
-        guess_degrees: 10.0,
+        ..BASE
     },
     Situation {
         name: "30_%_strays",
-        noise: 0.001,
         strays_percent: 30,
-        half_seen: false,
-        guess_degrees: 10.0,
+        ..BASE
     },
     Situation {
         name: "half_of_it_seen",
-        noise: 0.001,
-        strays_percent: 0,
         half_seen: true,
-        guess_degrees: 10.0,
+        ..BASE
     },
     Situation {
         name: "all_of_them",
@@ -89,37 +88,48 @@ pub fn run(folder: &Path) -> anyhow::Result<()> {
         .cloud()
         .clone();
     let icp = aligner(Convergence::default())?;
-    let early = aligner(Convergence {
-        rotation: EARLY_ROTATION,
-        translation: EARLY_TRANSLATION,
-        ..Convergence::default()
-    })?;
-    let mut trials =
-        String::from("situation,seed,seconds,guess,truth,congru,early_seconds,early\n");
+    let early = early_aligner()?;
+    let (voxel, band) = (Distance::new(FIELD_VOXEL)?, Distance::new(FIELD_BAND)?);
+    let field = DistanceField::from_mesh(&model, voxel, band)?;
+    let mut trials = String::from(HEADER);
     for situation in &SITUATIONS {
         for seed in 0..SEEDS {
             let (source, truth, guess) = frame(&scan, situation, seed)?;
             let file = format!("source-{}-{seed}.csv", situation.name);
             write_points(&folder.join(file), &source)?;
-            let started = std::time::Instant::now();
-            let found = icp.align(&source, &target, &guess)?.transform;
-            let seconds = started.elapsed().as_secs_f64();
-            let started = std::time::Instant::now();
-            let stopped = early.align(&source, &target, &guess)?.transform;
-            let early_seconds = started.elapsed().as_secs_f64();
+            let (seconds, found) = timed(|| icp.align(&source, &target, &guess))?;
+            let (early_seconds, stopped) = timed(|| early.align(&source, &target, &guess))?;
+            let (field_seconds, read) = timed(|| early.align_on(&source, &field, &guess))?;
             writeln!(
                 trials,
-                "{},{seed},{seconds},{},{},{},{early_seconds},{}",
+                "{},{seed},{seconds},{},{},{},{early_seconds},{},{field_seconds},{}",
                 situation.name,
                 row(&guess),
                 row(&truth),
                 row(&found),
-                row(&stopped)
+                row(&stopped),
+                row(&read)
             )?;
         }
     }
     std::fs::write(folder.join("trials.csv"), trials)?;
     Ok(())
+}
+
+fn early_aligner() -> anyhow::Result<Icp> {
+    aligner(Convergence {
+        rotation: EARLY_ROTATION,
+        translation: EARLY_TRANSLATION,
+        ..Convergence::default()
+    })
+}
+
+fn timed(
+    align: impl Fn() -> Result<congru::Alignment, congru::Error>,
+) -> anyhow::Result<(f64, RigidTransform)> {
+    let started = std::time::Instant::now();
+    let found = align()?.transform;
+    Ok((started.elapsed().as_secs_f64(), found))
 }
 
 fn aligner(convergence: Convergence) -> anyhow::Result<Icp> {

@@ -1,5 +1,6 @@
 mod normals;
 mod parallel;
+mod surface;
 
 use std::num::NonZeroUsize;
 
@@ -9,6 +10,7 @@ use crate::{Error, Point, PointCloud};
 
 pub(crate) use normals::estimate_normals;
 pub(crate) use parallel::map;
+pub use surface::{Closest, DistanceField, MeshIndex, Surface};
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Neighbor {

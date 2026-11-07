@@ -48,7 +48,7 @@ pub use geometry::{
 };
 pub use icp::{Alignment, Convergence, Icp, Metric, StopReason, Target};
 pub use icp::{Certificate, Certifier, Multistart};
-pub use search::{NearestNeighbors, Neighbor};
+pub use search::{Closest, DistanceField, MeshIndex, NearestNeighbors, Neighbor, Surface};
 
 #[cfg(doctest)]
 #[doc = include_str!("../README.md")]

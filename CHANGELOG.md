@@ -5,6 +5,10 @@ crate of the workspace carries the same one.
 
 ## Unreleased
 
+- **Aligned on the mesh itself**: exact by a tree of boxes, or a read on a distance
+  field, faster than Open3D on the same simulated frames at the same accuracy.
+- **`docs/hot/`** holds what is under way; real data archives are allowed.
+
 ## 0.1.27 — 2026-11-07
 
 - **The certificate closes with strays**: 16 of 16, from 0, by a better upper bound.
@@ -35,7 +39,7 @@ crate of the workspace carries the same one.
 
 - **One pipeline in the library**: `Follower`, `Hold`, `CameraView` and a parametric
   `MotionModel` in `congru-track`; the scenes and demo B both run them
-  ([the step](docs/answer-step.md)).
+  ([the step](docs/hot/answer-step.md)).
 - **A flat view is read at last**: its confirmation was rounding, at $10^{150}$.
   Gear from above 47 to 72 of 72.
 - **The answer is what the frame says**, then a short alignment after the rays:
@@ -68,7 +72,7 @@ crate of the workspace carries the same one.
 - **Holding on when a frame says nothing**: hidden goes on along the trajectory,
   refuted searches every orientation where it stood. All in a room reaches 68, 74
   and 57 of 90 on three paths, the room 78, 73 and 79
-  ([the step](docs/hold-step.md)).
+  ([the step](docs/hot/hold-step.md)).
 - **All effects recedes** by 7 or 8 frames, shake by 1 or 2; the realistic scenes
   stay at 0 of 72.
 - **The simple situations have their own page**, apart from the realistic scenes.
@@ -79,7 +83,7 @@ crate of the workspace carries the same one.
   the rays through, ranks the truth first ([why](ideas/method/pose-information.md)).
 - **Demo B with a noisy box**: the room goes from 0 to 71 of 90, 77 and 69 on paths
   never used; with every effect, 41, then only 20 and 13
-  ([the box](docs/box-step.md), [the step before](docs/shape-crop-step.md)).
+  ([the box](docs/hot/box-step.md), [the step before](docs/hot/shape-crop-step.md)).
 - **The ladder is answered**: along rays, and read as segments without any start.
 - **All effects recedes**, 84 to 79 of 90; the realistic scenes stay at 0 of 72.
 

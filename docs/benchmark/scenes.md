@@ -20,7 +20,7 @@ and 54 of 72. Every film: [scene films](../scene-films.md).
 - **Used to choose**: the crate, whose regression was fixed on it, the gear, whose
   bug it showed, and five more to test the changes.
 
-They run the pipeline of [demo B](../answer-step.md): a noisy box in place of a
+They run the pipeline of [demo B](../hot/answer-step.md): a noisy box in place of a
 detector, poses along rays then a short alignment, the trajectory held when a frame
 says nothing.
 

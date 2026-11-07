@@ -1,7 +1,9 @@
-use super::correspond::{correspond, residual};
+use super::correspond::{correspond, correspond_on, residual};
 use crate::fit::{Match, kabsch, observe, point_to_plane};
 use crate::geometry::count_as_float;
-use crate::{Alignment, Error, Icp, Metric, PointCloud, RigidTransform, StopReason, Target};
+use crate::{
+    Alignment, Error, Icp, Metric, PointCloud, RigidTransform, StopReason, Surface, Target,
+};
 
 impl Icp {
     /// # Errors
@@ -18,18 +20,52 @@ impl Icp {
         if self.metric == Metric::PointToPlane && target.normals().is_none() {
             return Err(Error::MissingNormals);
         }
+        self.iterate(source, initial, |pose| {
+            correspond(source, target, pose, self)
+        })
+    }
+
+    /// As [`Icp::align`], onto a surface itself rather than samples of it: the
+    /// nearest point is exact on a [`crate::MeshIndex`], a read on a
+    /// [`crate::DistanceField`]. The metric still chooses what is minimised.
+    ///
+    /// # Errors
+    /// [`Error::TooFewCorrespondences`] or [`Error::Degenerate`], as [`Icp::align`].
+    pub fn align_on(
+        &self,
+        source: &PointCloud,
+        surface: &impl Surface,
+        initial: &RigidTransform,
+    ) -> Result<Alignment, Error> {
+        self.iterate(source, initial, |pose| {
+            correspond_on(source, surface, pose, self)
+        })
+    }
+
+    fn iterate(
+        &self,
+        source: &PointCloud,
+        initial: &RigidTransform,
+        pairs: impl Fn(&RigidTransform) -> Vec<Match>,
+    ) -> Result<Alignment, Error> {
         let mut pose = *initial;
         for iteration in 1..=self.convergence.max_iterations {
             let deviation = initial.inverse().then(&pose);
-            let step = self.solve(&correspond(source, target, &pose, self), &deviation)?;
+            let step = self.solve(&pairs(&pose), &deviation)?;
             pose = pose.then(&step);
             if self.is_settled(&step) {
-                return self.finish(source, target, pose, iteration, StopReason::Converged);
+                return Self::finish(
+                    source,
+                    &pairs(&pose),
+                    pose,
+                    iteration,
+                    StopReason::Converged,
+                );
             }
         }
-        self.finish(
+        Self::finish(
             source,
-            target,
+            &pairs(&pose),
             pose,
             self.convergence.max_iterations,
             StopReason::IterationLimit,
@@ -55,14 +91,12 @@ impl Icp {
     }
 
     fn finish(
-        &self,
         source: &PointCloud,
-        target: &Target,
+        matches: &[Match],
         pose: RigidTransform,
         iterations: u32,
         stop: StopReason,
     ) -> Result<Alignment, Error> {
-        let matches = correspond(source, target, &pose, self);
         if matches.is_empty() {
             return Err(Error::TooFewCorrespondences {
                 found: 0,
@@ -79,7 +113,7 @@ impl Icp {
             inlier_fraction: count_as_float(matches.len()) / count_as_float(source.count()),
             iterations,
             stop,
-            observability: observe(&matches),
+            observability: observe(matches),
         })
     }
 }

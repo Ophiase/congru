@@ -25,7 +25,7 @@ Median error on the first path: room 0.96°, all in a room 1.48°, all effects 0
 
 ## What decides
 
-The rule is in [holding on](../ideas/method/hold-through-loss.md).
+The rule is in [holding on](../../ideas/method/hold-through-loss.md).
 
 | The frame says | Answer |
 | --- | --- |

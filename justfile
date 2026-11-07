@@ -60,6 +60,10 @@ comparison:
     RAYON_NUM_THREADS=1 cargo run --release -q -p congru-bench -- --comparison
     OMP_NUM_THREADS=1 uv run --no-project --python 3.12 --with numpy --with open3d --with small_gicp python ideas/experiments/comparison/compare.py out/comparison docs/benchmark/comparison.md
 
+[doc("A model held as samples, a mesh or a distance field, one thread: writes docs/benchmark/on-mesh.md")]
+bench-on-mesh:
+    RAYON_NUM_THREADS=1 cargo run --release -q -p congru-bench -- --on-mesh
+
 [doc("Build the C ABI and run the C++ example against it")]
 capi-example:
     cargo build --release -q -p congru-capi

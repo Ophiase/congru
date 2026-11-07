@@ -24,8 +24,8 @@ every page that shows a scene says so.
 given this region of interest, a little larger, a little off. Never the model's
 shape.
 
-- [What the shape gave](../../docs/shape-crop-step.md).
-- [What a box gives](../../docs/box-step.md).
+- [What the shape gave](../../docs/hot/shape-crop-step.md).
+- [What a box gives](../../docs/hot/box-step.md).
 
 ## [sketch] Point pair features, voted
 

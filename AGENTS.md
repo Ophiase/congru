@@ -131,10 +131,10 @@ pushed without being asked.
 
 ## Downloads
 
-Test scans only: single data files (`.ply`, `.obj`, `.xyz`) by direct URL,
-into a gitignored `data/<source>/` with `SHA256SUMS` and a `SOURCE.md`
-recording origin and licence. Never clone, never fetch an archive of
-scripts, never execute what was downloaded.
+Test scans and public benchmark sets, data only: files or data archives by
+direct URL, into a gitignored `data/<source>/` with `SHA256SUMS` and a
+`SOURCE.md` recording origin and licence. Never clone, never fetch an archive
+of scripts, never execute what was downloaded.
 
 ## Never
 

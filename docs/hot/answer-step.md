@@ -2,7 +2,7 @@
 
 The current step of demo B and of the scenes, which now run one pipeline, the
 `Follower` of `congru-track`. Same noisy box as [before](hold-step.md), the only
-input from the truth. The rules: [what answers](../ideas/method/what-answers.md).
+input from the truth. The rules: [what answers](../../ideas/method/what-answers.md).
 
 ## Demo B, frames within 2° of 90
 
@@ -50,7 +50,7 @@ time.
 
 ## The scenes
 
-[Their films](scene-films.md), and [the table](benchmark/scenes.md). From a median
+[Their films](../scene-films.md), and [the table](../benchmark/scenes.md). From a median
 around 1.4 % of the size to around 0.7 %.
 
 ## [caution] What fails
@@ -65,4 +65,4 @@ around 1.4 % of the size to around 0.7 %.
 - **Thresholds came from one path**, and a small change of sampling moved the room
   from 86 to 90: a few frames are not a result.
 
-![All effects, then all in a room](figures/tracking.gif)
+![All effects, then all in a room](../figures/tracking.gif)

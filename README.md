@@ -19,7 +19,7 @@ the motion between them and says how sure it is, from Rust, Python or C.
 | --- | --- |
 | Finds a rigid motion from marks, a scan or depth frames, and says which motions the data left free | Bend, segment, view, or read a zoo of file formats |
 | [Proves](docs/benchmark/certified-method.md), on tens of marks, strays included, how far an answer can be from the best one | Prove anything on a whole scan, or that the best one is the truth |
-| Matches [Open3D and small_gicp](docs/benchmark/comparison.md) in accuracy on the same frames | Beat Open3D's speed, run in real time on a whole scene, or meet a real recording yet |
+| [Aligns on the mesh itself](ideas/method/representations.md), by a distance field: [faster than Open3D](docs/benchmark/comparison.md), same accuracy, on simulated frames | Run in real time on a whole scene, or meet a real recording yet |
 
 ## Start here
 
@@ -164,7 +164,7 @@ Open3D and PCL do that.
 | Closed form, weighted, with the reflection fix | Done, tested |
 | ICP: point-to-point, point-to-plane, robust kernels, trimming | Done, tested |
 | Multistart over SO(3) (super-Fibonacci spirals) | Done, tested |
-| Mesh targets, sampled with face normals | Done, tested |
+| Mesh targets: sampled, exact by a tree, or a distance field | Done, [measured](docs/benchmark/on-mesh.md) |
 | Observability: which motions the data leaves free | Done, tested |
 | Simulated tracking demo: depth camera, degradations, projective tracking | Done, measured |
 | Python, C ABI and C++ header (unstable), command line printing JSON | Done ([bindings](docs/bindings.md)) |
@@ -183,7 +183,7 @@ Open3D and PCL do that.
   seed only; a wrong pose can be held for a whole film
   ([table](ideas/method/box-as-test.md)).
 - **Without a box**, demo B in a room holds most frames, and twins cannot be told
-  apart ([why](docs/answer-step.md)).
+  apart ([why](docs/hot/answer-step.md)).
 - **Not real time yet**: a search costs seconds, and following a whole scene about
   0.4 s per frame ([where it goes](ideas/architecture/acceleration.md)).
 

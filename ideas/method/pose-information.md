@@ -68,13 +68,13 @@ tuning.
 
 ## What it changed, end to end
 
-**[caution]** This table is [the shape crop step](../../docs/shape-crop-step.md).
+**[caution]** This table is [the shape crop step](../../docs/hot/shape-crop-step.md).
 
 - **The scan was cut with the model's silhouette** at the predicted pose: a
   hypothesis choosing the data that confirm it. No sensor gives such a cut.
 - **No truth reached it**, but the author called it what it is, and it is gone.
-- **The current measures**: [what answers](../../docs/answer-step.md), after
-  [holding on](../../docs/hold-step.md) and [a noisy box](../../docs/box-step.md).
+- **The current measures**: [what answers](../../docs/hot/answer-step.md), after
+  [holding on](../../docs/hot/hold-step.md) and [a noisy box](../../docs/hot/box-step.md).
 
 Demo B, the whole pipeline, frames within 2°, out of 90. The two other paths were
 never used to choose anything.
@@ -129,7 +129,7 @@ What each part answers, and what forced it:
 - **Detection in a room is still weak**: on the flat view, the right pose is not
   offered, or ranks past 3000 of 11000. The tracker hides this: it needs a
   detection only at the start and when lost.
-- **The realistic scenes run this pipeline now**: [the step](../../docs/answer-step.md).
+- **The realistic scenes run this pipeline now**: [the step](../../docs/hot/answer-step.md).
 - **Cost**: a detection in a room takes about 6 s on 4 threads, far from real time.
 - **The score is coarse**: it tells a right pose from a wrong one, not 0.5° from
   2°. Choosing the higher score between two near poses made tracking worse.
