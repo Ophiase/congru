@@ -15,6 +15,12 @@ the motion between them and says how sure it is, from Rust, Python or C.
   <img src="docs/figures/tracking.gif" alt="A machined part tracked through a simulated depth camera" width="49%">
 </p>
 
+| What it does | What it does not |
+| --- | --- |
+| Finds a rigid motion from marks, a scan or depth frames, and says which motions the data left free | Bend, segment, view, or read a zoo of file formats |
+| [Proves](docs/benchmark/certified-method.md), on a few clean marks, how far an answer can be from the best one | Prove anything on a whole scan, or with strays, yet |
+| Matches [Open3D and small_gicp](docs/benchmark/comparison.md) in accuracy on the same frames | Run in real time on a whole scene, or on any real recording yet |
+
 ## Start here
 
 | If you want | Go to |
@@ -24,14 +30,8 @@ the motion between them and says how sure it is, from Rust, Python or C.
 | Dependencies | Rust 1.89+, `just`; Python 3.14+; C/C++ |
 | The demos, every film | [docs/demos.md](docs/demos.md) |
 | The pipeline, layer by layer | [docs/pipeline.md](docs/pipeline.md) |
-| How methods are measured | [protocol](docs/benchmark/protocol.md) · [results](docs/benchmark/results.md) · [against a proof](docs/benchmark/certified.md) |
+| How methods are measured | [protocol](docs/benchmark/protocol.md) · [results](docs/benchmark/results.md) · [against a proof](docs/benchmark/certified.md) · [against others](docs/benchmark/comparison.md) · [off the model](docs/benchmark/breaking.md) |
 | The scenes, and what fails today | [scenes](docs/benchmark/scenes.md) · [status](#status) |
-
-## In plain words
-
-A robot, a headset or a scanner sees an object as a few thousand noisy dots, and
-knows its 3D model. congru finds how to move the model onto the dots, says whether
-it is sure, and keeps doing it frame after frame ([beyond](ideas/beyond.md)).
 
 ## Why this project exists
 
