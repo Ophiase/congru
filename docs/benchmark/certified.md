@@ -13,14 +13,14 @@ marks on a part, their correspondences unknown, some of them strays.
 
 | Method | Mean gap, mm | Worst, mm | Within 2 mm | Near the truth, all |
 | --- | ---: | ---: | ---: | ---: |
-| ICP, a guess 20° off | 2.32 | 3.20 | 3 of 7 | 5 of 32 |
-| ICP, no guess | 3.88 | 9.31 | 2 of 7 | 2 of 32 |
-| Multistart, 64 starts | 1.46 | 2.55 | 5 of 7 | 7 of 32 |
+| ICP, a guess 20° off | 4.26 | 8.30 | 5 of 27 | 5 of 32 |
+| ICP, no guess | 4.52 | 9.31 | 6 of 27 | 2 of 32 |
+| Multistart, 64 starts | 2.74 | 4.74 | 10 of 27 | 7 of 32 |
 
 ## What the proof says
 
-- **Closed**: 7 of 32 within the budget; elsewhere the bound holds, far.
-- **The best pose is near the truth**: 10 of 32.
+- **Closed**: 27 of 32 within the budget; elsewhere the bound holds, far.
+- **The best pose is near the truth**: 11 of 32.
 - **The data choose**: on 0 of 32, every pose not excluded is within
   10°; a `+` below says more may be left.
 
@@ -28,35 +28,35 @@ marks on a part, their correspondences unknown, some of them strays.
 
 | Instance | Closed | Best pose off, ° | Not excluded, ° | Seconds |
 | --- | --- | ---: | ---: | ---: |
-| bracket, 12 marks, 1 mm, 0 strays | yes | 7.0 | 180+ | 2 |
-| bracket, 12 marks, 1 mm, 0 strays | yes | 0.4 | 23+ | 4 |
-| bracket, 12 marks, 1 mm, 3 strays | no | 147.0 | 0+ | 5 |
-| bracket, 12 marks, 1 mm, 3 strays | no | 172.1 | 0+ | 7 |
-| bracket, 12 marks, 3 mm, 0 strays | no | 147.6 | 180+ | 7 |
-| bracket, 12 marks, 3 mm, 0 strays | no | 5.3 | 22+ | 5 |
-| bracket, 12 marks, 3 mm, 3 strays | no | 86.2 | 0+ | 6 |
-| bracket, 12 marks, 3 mm, 3 strays | no | 173.3 | 0+ | 7 |
-| bracket, 30 marks, 1 mm, 0 strays | yes | 0.4 | 16 | 4 |
-| bracket, 30 marks, 1 mm, 0 strays | yes | 0.3 | 23+ | 5 |
-| bracket, 30 marks, 1 mm, 7 strays | no | 3.8 | 0+ | 14 |
-| bracket, 30 marks, 1 mm, 7 strays | no | 1.4 | 0+ | 16 |
-| bracket, 30 marks, 3 mm, 0 strays | yes | 2.6 | 15+ | 8 |
-| bracket, 30 marks, 3 mm, 0 strays | no | 1.4 | 22+ | 9 |
-| bracket, 30 marks, 3 mm, 7 strays | no | 10.3 | 0+ | 14 |
-| bracket, 30 marks, 3 mm, 7 strays | no | 1.9 | 0+ | 15 |
-| gear, 12 marks, 1 mm, 0 strays | no | 0.5 | 180+ | 3 |
-| gear, 12 marks, 1 mm, 0 strays | no | 90.0 | 180+ | 3 |
-| gear, 12 marks, 1 mm, 3 strays | no | 76.6 | 0+ | 4 |
-| gear, 12 marks, 1 mm, 3 strays | no | 49.6 | 0+ | 4 |
-| gear, 12 marks, 3 mm, 0 strays | no | 104.0 | 158+ | 3 |
-| gear, 12 marks, 3 mm, 0 strays | no | 165.0 | 179+ | 3 |
-| gear, 12 marks, 3 mm, 3 strays | no | 174.0 | 0+ | 4 |
-| gear, 12 marks, 3 mm, 3 strays | no | 140.3 | 0+ | 4 |
-| gear, 30 marks, 1 mm, 0 strays | yes | 120.7 | 180+ | 5 |
-| gear, 30 marks, 1 mm, 0 strays | yes | 149.3 | 179+ | 6 |
-| gear, 30 marks, 1 mm, 7 strays | no | 14.5 | 0+ | 10 |
-| gear, 30 marks, 1 mm, 7 strays | no | 172.6 | 0+ | 9 |
-| gear, 30 marks, 3 mm, 0 strays | no | 2.1 | 0+ | 7 |
-| gear, 30 marks, 3 mm, 0 strays | no | 150.9 | 0+ | 7 |
-| gear, 30 marks, 3 mm, 7 strays | no | 102.2 | 0+ | 9 |
-| gear, 30 marks, 3 mm, 7 strays | no | 62.4 | 0+ | 9 |
+| bracket, 12 marks, 1 mm, 0 strays | yes | 0.7 | 180+ | 7 |
+| bracket, 12 marks, 1 mm, 0 strays | yes | 0.4 | 27+ | 1 |
+| bracket, 12 marks, 1 mm, 3 strays | yes | 141.5 | 60+ | 5 |
+| bracket, 12 marks, 1 mm, 3 strays | yes | 19.5 | 0+ | 7 |
+| bracket, 12 marks, 3 mm, 0 strays | no | 14.1 | 179+ | 12 |
+| bracket, 12 marks, 3 mm, 0 strays | yes | 5.3 | 29+ | 3 |
+| bracket, 12 marks, 3 mm, 3 strays | yes | 88.1 | 179+ | 6 |
+| bracket, 12 marks, 3 mm, 3 strays | yes | 162.4 | 0+ | 7 |
+| bracket, 30 marks, 1 mm, 0 strays | yes | 0.4 | 16 | 1 |
+| bracket, 30 marks, 1 mm, 0 strays | yes | 0.3 | 23 | 2 |
+| bracket, 30 marks, 1 mm, 7 strays | yes | 0.4 | 0+ | 10 |
+| bracket, 30 marks, 1 mm, 7 strays | yes | 1.8 | 0+ | 9 |
+| bracket, 30 marks, 3 mm, 0 strays | yes | 2.9 | 18+ | 4 |
+| bracket, 30 marks, 3 mm, 0 strays | yes | 1.2 | 26+ | 11 |
+| bracket, 30 marks, 3 mm, 7 strays | yes | 4.4 | 0+ | 12 |
+| bracket, 30 marks, 3 mm, 7 strays | yes | 1.2 | 0+ | 11 |
+| gear, 12 marks, 1 mm, 0 strays | yes | 89.6 | 180+ | 4 |
+| gear, 12 marks, 1 mm, 0 strays | yes | 0.9 | 180+ | 2 |
+| gear, 12 marks, 1 mm, 3 strays | yes | 85.3 | 0+ | 3 |
+| gear, 12 marks, 1 mm, 3 strays | yes | 147.6 | 0+ | 2 |
+| gear, 12 marks, 3 mm, 0 strays | no | 15.8 | 180+ | 11 |
+| gear, 12 marks, 3 mm, 0 strays | no | 164.5 | 179+ | 11 |
+| gear, 12 marks, 3 mm, 3 strays | yes | 146.3 | 0+ | 3 |
+| gear, 12 marks, 3 mm, 3 strays | yes | 28.0 | 0+ | 3 |
+| gear, 30 marks, 1 mm, 0 strays | yes | 59.3 | 180+ | 3 |
+| gear, 30 marks, 1 mm, 0 strays | yes | 120.7 | 180+ | 3 |
+| gear, 30 marks, 1 mm, 7 strays | yes | 58.9 | 0+ | 3 |
+| gear, 30 marks, 1 mm, 7 strays | yes | 121.4 | 0+ | 4 |
+| gear, 30 marks, 3 mm, 0 strays | no | 118.1 | 156+ | 22 |
+| gear, 30 marks, 3 mm, 0 strays | no | 178.9 | 0+ | 23 |
+| gear, 30 marks, 3 mm, 7 strays | yes | 124.2 | 0+ | 4 |
+| gear, 30 marks, 3 mm, 7 strays | yes | 116.5 | 0+ | 7 |

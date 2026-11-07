@@ -1,3 +1,6 @@
+#[cfg(test)]
+mod attacks;
+mod best;
 mod cube;
 #[cfg(test)]
 mod shapes;
@@ -6,16 +9,14 @@ mod tests;
 
 use std::collections::BinaryHeap;
 
+use best::Best;
 use cube::{Cube, Problem};
 
 use crate::search::map;
-use crate::{
-    Distance, Error, NearestNeighbors, Point, PointCloud, RigidTransform, Vector, fit_rigid,
-};
+use crate::{Distance, Error, NearestNeighbors, Point, PointCloud, RigidTransform, Vector};
 
 /// Cubes split at once between two looks at the upper bound.
 const BATCH: usize = 512;
-const POLISH_STEPS: usize = 6;
 
 /// A search with a proof: [branch and bound] over every rotation and a box of
 /// translations, for the mean of squared distances to the nearest target point,
@@ -84,15 +85,19 @@ impl Certifier {
         let index = NearestNeighbors::new(target)?;
         let problem = problem_of(source, &index, self.truncation.get());
         let mut best = Best::of(&problem, seeds);
-        let root = problem.measured(Cube {
-            rotation: Vector::zeros(),
-            translation: target.centroid().coords,
-            half_rotation: std::f64::consts::PI,
-            half_translation: self.reach.get(),
-            lower: 0.0,
-            value: f64::INFINITY,
-        });
+        let root = problem.measured(
+            Cube {
+                rotation: Vector::zeros(),
+                translation: target.centroid().coords,
+                half_rotation: std::f64::consts::PI,
+                half_translation: self.reach.get(),
+                lower: 0.0,
+                value: f64::INFINITY,
+            },
+            f64::INFINITY,
+        );
         best.offer(problem.pose(&root), root.value);
+        best.polish_from(&problem, target, &[best.pose]);
         Ok(self.search(&problem, target, root, best))
     }
 
@@ -111,15 +116,10 @@ impl Certifier {
             if batch.is_empty() {
                 break;
             }
-            let children = map(&batch, |cube| problem.measured(*cube));
+            let ceiling = best.value + self.margin;
+            let children = map(&batch, |cube| problem.measured(*cube, ceiling));
             measured += children.len();
-            if let Some(lowest) = children
-                .iter()
-                .min_by(|left, right| left.value.total_cmp(&right.value))
-            {
-                best.offer(problem.pose(lowest), lowest.value);
-                best.polish(problem, target);
-            }
+            best.polish_lowest(problem, target, &children);
             open.extend(
                 children
                     .into_iter()
@@ -159,7 +159,7 @@ impl Certifier {
                 break;
             }
             match cube.split(reach, self.resolution) {
-                Some(split) => children.extend(split),
+                Some(split) => children.extend(split.into_iter().filter(Cube::inside_the_turns)),
                 None => settled.push(cube),
             }
         }
@@ -188,58 +188,5 @@ fn problem_of<'data>(
         reach,
         index,
         truncation_squared: truncation * truncation,
-    }
-}
-
-/// The best pose evaluated so far: the upper bound.
-struct Best {
-    pose: RigidTransform,
-    value: f64,
-}
-
-impl Best {
-    fn of(problem: &Problem<'_>, seeds: &[RigidTransform]) -> Self {
-        let mut best = Self {
-            pose: RigidTransform::identity(),
-            value: f64::INFINITY,
-        };
-        for seed in seeds {
-            best.offer(*seed, problem.value(seed));
-        }
-        best
-    }
-
-    fn offer(&mut self, pose: RigidTransform, value: f64) {
-        if value < self.value {
-            self.pose = pose;
-            self.value = value;
-        }
-    }
-
-    /// A few closed-form steps on the pairs within the truncation: the bound tightens
-    /// sooner from a good upper bound, and only an evaluated value is kept.
-    fn polish(&mut self, problem: &Problem<'_>, target: &PointCloud) {
-        let mut pose = self.pose;
-        for _ in 0..POLISH_STEPS {
-            let rotated = |point: &Point| pose.apply(&Point::from(point.coords + problem.centre));
-            let (from, to): (Vec<Point>, Vec<Point>) = problem
-                .centred
-                .iter()
-                .filter_map(|point| {
-                    let found = problem.index.nearest(&rotated(point));
-                    (found.squared_distance < problem.truncation_squared).then(|| {
-                        (
-                            Point::from(point.coords + problem.centre),
-                            target.points()[found.index],
-                        )
-                    })
-                })
-                .unzip();
-            let Ok(fit) = fit_rigid(&from, &to, None) else {
-                return;
-            };
-            pose = fit.transform;
-            self.offer(pose, problem.value(&pose));
-        }
     }
 }
