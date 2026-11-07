@@ -1,20 +1,12 @@
 use std::sync::Mutex;
 
-use bytemuck::{Pod, Zeroable};
 use congru::{DistanceField, Point};
 use wgpu::util::{BufferInitDescriptor, DeviceExt};
 
+use super::setup::{narrowed, pipeline_of, uniform_of};
+
 const WORKGROUP: u32 = 256;
 const ANSWER_BYTES: u64 = 16;
-
-#[repr(C)]
-#[derive(Clone, Copy, Pod, Zeroable)]
-struct GridUniform {
-    voxel: f32,
-    width: u32,
-    height: u32,
-    depth: u32,
-}
 
 /// The device, the field on it and the shader that reads it. One batch at a time.
 pub struct Reader {
@@ -172,43 +164,9 @@ impl Reader {
     }
 }
 
-fn uniform_of(device: &wgpu::Device, field: &DistanceField) -> Option<wgpu::Buffer> {
-    let grid = field.grid();
-    Some(device.create_buffer_init(&BufferInitDescriptor {
-        label: None,
-        contents: bytemuck::bytes_of(&GridUniform {
-            voxel: narrowed(grid.voxel),
-            width: u32::try_from(grid.sizes[0]).ok()?,
-            height: u32::try_from(grid.sizes[1]).ok()?,
-            depth: u32::try_from(grid.sizes[2]).ok()?,
-        }),
-        usage: wgpu::BufferUsages::UNIFORM,
-    }))
-}
-
-fn pipeline_of(device: &wgpu::Device) -> wgpu::ComputePipeline {
-    let module = device.create_shader_module(wgpu::include_wgsl!("read.wgsl"));
-    device.create_compute_pipeline(&wgpu::ComputePipelineDescriptor {
-        label: None,
-        layout: None,
-        module: &module,
-        entry_point: Some("read"),
-        compilation_options: wgpu::PipelineCompilationOptions::default(),
-        cache: None,
-    })
-}
-
 fn bound(binding: u32, buffer: &wgpu::Buffer) -> wgpu::BindGroupEntry<'_> {
     wgpu::BindGroupEntry {
         binding,
         resource: buffer.as_entire_binding(),
     }
-}
-
-#[expect(
-    clippy::cast_possible_truncation,
-    reason = "a place in the grid in single precision, far finer than a voxel"
-)]
-const fn narrowed(value: f64) -> f32 {
-    value as f32
 }

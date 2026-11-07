@@ -41,8 +41,8 @@ device, [measured against each kind of hardware](../../docs/benchmark/hardware.m
 - **The field on one core beats the k-d tree on twelve**, 5 to 10 times.
 - **On a GTX 960 the GPU never wins**: 78 ms a million points against 21.5 on
   twelve cores. The trip through memory costs more than the reads save.
-- **So nothing is assumed**: `GpuField` measures the machine when built, and sends
-  a batch to the device only from the size where it was faster.
-- **[to check]** A recent card, and a pipeline that stays on the device instead of
-  coming back at each iteration, are likely to change this.
+- **So nothing is assumed**: `GpuField` measures the machine when built, and
+  sends a batch to the device only from the size where it was faster.
+- **[to check]** A recent card, and a pipeline that stays on the device instead
+  of coming back at each iteration, are likely to change this.
 - **Not rendering**: 0.18 ms a call there, about what a round trip costs.

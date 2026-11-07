@@ -2,6 +2,7 @@
 //! read per point. Optional: no device, no [`GpuField`], and the field reads itself.
 
 mod device;
+mod setup;
 
 use congru::{Closest, DistanceField, Point, Surface};
 use device::Reader;

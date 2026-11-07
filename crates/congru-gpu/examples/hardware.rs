@@ -39,18 +39,9 @@ fn near_the_surface(mesh: &congru::TriangleMesh, count: usize) -> anyhow::Result
         .collect())
 }
 
-fn main() -> anyhow::Result<()> {
-    let mesh = bracket()?;
-    let exact = MeshIndex::new(&mesh)?;
-    let cloud = mesh.sample_surface(Distance::new(0.002)?)?.cloud().clone();
-    let tree = NearestNeighbors::new(&cloud)?;
-    let field = DistanceField::from_mesh(&mesh, Distance::new(0.002)?, Distance::new(0.035)?)?;
-    let copy = DistanceField::from_mesh(&mesh, Distance::new(0.002)?, Distance::new(0.035)?)?;
-    let gpu = GpuField::new(copy).ok();
-    let device = gpu.as_ref().map_or("none", GpuField::device).to_owned();
-    let mut page = String::from(INTRO);
+fn write_device(page: &mut String, device: &str, gpu: Option<&GpuField>) -> anyhow::Result<()> {
     let threads = std::thread::available_parallelism().map_or(1, usize::from);
-    let crossover = gpu.as_ref().map_or(usize::MAX, GpuField::fewest_on_device);
+    let crossover = gpu.map_or(usize::MAX, GpuField::fewest_on_device);
     let choice = if crossover == usize::MAX {
         "stays on the CPU at every size".to_owned()
     } else {
@@ -64,34 +55,62 @@ fn main() -> anyhow::Result<()> {
         page,
         "`GpuField` measures the machine when built; here, a batch\n{choice}.\n"
     )?;
+    Ok(())
+}
+
+fn main() -> anyhow::Result<()> {
+    let mesh = bracket()?;
+    let exact = MeshIndex::new(&mesh)?;
+    let cloud = mesh.sample_surface(Distance::new(0.002)?)?.cloud().clone();
+    let tree = NearestNeighbors::new(&cloud)?;
+    let field = DistanceField::from_mesh(&mesh, Distance::new(0.002)?, Distance::new(0.035)?)?;
+    let copy = DistanceField::from_mesh(&mesh, Distance::new(0.002)?, Distance::new(0.035)?)?;
+    let gpu = GpuField::new(copy).ok();
+    let device = gpu.as_ref().map_or("none", GpuField::device).to_owned();
+    let mut page = String::from(INTRO);
+    write_device(&mut page, &device, gpu.as_ref())?;
     page += "| Points | Tree, all cores | Mesh, all cores | Field, one core | Field, all cores | Field, GPU |\n";
     page += "| ---: | ---: | ---: | ---: | ---: | ---: |\n";
     for size in SIZES {
         let queries = near_the_surface(&mesh, size)?;
-        let trees = median_ms(|| {
-            congru::map(&queries, |query| tree.nearest(query));
-        });
-        let meshes = median_ms(|| {
-            exact.closest_all(&queries);
-        });
-        let one = median_ms(|| {
-            for query in &queries {
-                field.closest(query);
-            }
-        });
-        let all = median_ms(|| {
-            field.closest_all(&queries);
-        });
-        let device = gpu.as_ref().map_or(f64::NAN, |gpu| {
-            median_ms(|| {
-                gpu.closest_on_device(&queries);
-            })
-        });
         writeln!(
             page,
-            "| {size} | {trees:.2} ms | {meshes:.2} ms | {one:.2} ms | {all:.2} ms | {device:.2} ms |"
+            "{}",
+            row(size, &queries, &tree, &exact, &field, gpu.as_ref())
         )?;
     }
     std::fs::write("docs/benchmark/hardware.md", page)?;
     Ok(())
+}
+
+fn row(
+    size: usize,
+    queries: &[Point],
+    tree: &NearestNeighbors,
+    exact: &MeshIndex,
+    field: &DistanceField,
+    gpu: Option<&GpuField>,
+) -> String {
+    let trees = median_ms(|| {
+        congru::map(queries, |query| tree.nearest(query));
+    });
+    let meshes = median_ms(|| {
+        exact.closest_all(queries);
+    });
+    let one = median_ms(|| {
+        for query in queries {
+            field.closest(query);
+        }
+    });
+    let all = median_ms(|| {
+        field.closest_all(queries);
+    });
+    let device = gpu.map_or(f64::NAN, |gpu| {
+        median_ms(|| {
+            gpu.closest_on_device(queries);
+        })
+    });
+    format!(
+        "| {size} | {trees:.2} ms | {meshes:.2} ms | {one:.2} ms | {all:.2} ms | {device:.2} ms |"
+    )
 }
