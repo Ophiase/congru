@@ -18,8 +18,8 @@ independent.
 | [The proof](../../ideas/method/certificate.md) | On the surface; lemma written, drawn |
 | Scenes | A car shaped like one; a parking lot, a workshop |
 
-**Tried and dropped**: the field in the tracker's short alignment. It reads the far
-side too: bracket behind a crate 66 to 58 of 72.
+**Tried and dropped**: the field in the tracker's short alignment. It reads the
+far side too: bracket behind a crate 66 to 58 of 72.
 
 **Not done**: threads in every loop; real recordings, on their way.
 
