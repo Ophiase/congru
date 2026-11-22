@@ -1,0 +1,43 @@
+name = "bin of parts"
+summary = "A gear on top of a jumble of brackets in an open bin, seen from above: the picking problem."
+
+[camera]
+position = [0.0, -0.35, 0.75]
+look_at = [0.0, 0.0, 0.05]
+field_of_view = 60.0
+width = 320
+height = 240
+
+[ground]
+size = 4.0
+relief = 0.003
+wave = 1.0
+seed = 3
+
+[[objects]]
+kind = "bin"
+size = [0.6, 0.45, 0.2]
+position = [0.0, 0.0, 0.0]
+
+[[objects]]
+kind = "bracket"
+position = [-0.12, -0.06, 0.03]
+yaw = 40.0
+
+[[objects]]
+kind = "bracket"
+position = [0.1, 0.08, 0.03]
+yaw = -110.0
+
+[[objects]]
+kind = "bracket"
+position = [0.12, -0.1, 0.06]
+yaw = 160.0
+roll = 20.0
+
+[[objects]]
+kind = "gear"
+position = [-0.02, 0.02, 0.08]
+yaw = 10.0
+roll = 12.0
+target = true

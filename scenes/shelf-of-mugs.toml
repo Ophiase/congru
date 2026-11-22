@@ -1,0 +1,38 @@
+name = "shelf of mugs"
+summary = "A row of mugs on a shelf, one of them the target, all alike but for their handles."
+
+[camera]
+position = [0.2, -0.7, 0.75]
+look_at = [0.0, 0.45, 0.5]
+field_of_view = 60.0
+width = 320
+height = 240
+
+[[objects]]
+kind = "shelf"
+size = [1.0, 0.35, 1.2]
+position = [0.0, 0.5, 0.0]
+
+[[objects]]
+kind = "mug"
+size = [0.09, 0.09, 0.11]
+position = [-0.3, 0.45, 0.4]
+yaw = 30.0
+
+[[objects]]
+kind = "mug"
+size = [0.09, 0.09, 0.11]
+position = [-0.1, 0.45, 0.4]
+yaw = -60.0
+target = true
+
+[[objects]]
+kind = "mug"
+size = [0.09, 0.09, 0.11]
+position = [0.12, 0.45, 0.4]
+yaw = 150.0
+
+[[objects]]
+kind = "crate"
+size = [0.3, 0.25, 0.2]
+position = [0.0, 0.45, 0.79]

@@ -1,0 +1,57 @@
+name = "parking lot"
+summary = "One car among a row of parked ones, nearly alike, with a van and a tree: only the box says which."
+noise_at_one_metre = 0.0002
+
+[camera]
+position = [-3.0, -6.0, 2.6]
+look_at = [0.0, 6.0, 0.7]
+field_of_view = 70.0
+width = 360
+height = 240
+
+[ground]
+size = 60.0
+relief = 0.03
+wave = 6.0
+seed = 21
+
+[[objects]]
+kind = "car"
+size = [4.3, 1.8, 1.45]
+position = [0.0, 6.0, 0.0]
+yaw = 90.0
+target = true
+
+[[objects]]
+kind = "car"
+size = [4.4, 1.8, 1.5]
+position = [-2.8, 6.0, 0.0]
+yaw = 90.0
+
+[[objects]]
+kind = "car"
+size = [4.1, 1.75, 1.4]
+position = [2.8, 6.2, 0.0]
+yaw = 92.0
+
+[[objects]]
+kind = "car"
+size = [5.2, 2.0, 2.2]
+position = [5.8, 6.0, 0.0]
+yaw = 88.0
+
+[[objects]]
+kind = "car"
+size = [4.5, 1.85, 1.5]
+position = [-1.2, 13.0, 0.0]
+yaw = -90.0
+
+[[objects]]
+kind = "tree"
+size = [3.0, 3.0, 6.0]
+position = [-7.0, 9.0, 0.0]
+
+[[objects]]
+kind = "building"
+size = [16.0, 7.0, 8.0]
+position = [2.0, 24.0, 0.0]

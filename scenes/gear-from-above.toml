@@ -1,0 +1,31 @@
+name = "gear from above"
+summary = "A gear lying flat, seen straight down: flat on flat, the view the votes cannot read."
+
+[camera]
+position = [0.02, 0.0, 1.35]
+look_at = [0.0, 0.02, 0.75]
+field_of_view = 60.0
+width = 320
+height = 240
+
+[ground]
+size = 6.0
+relief = 0.004
+wave = 1.5
+seed = 15
+
+[[objects]]
+kind = "table"
+size = [1.4, 0.8, 0.75]
+position = [0.0, 0.1, 0.0]
+
+[[objects]]
+kind = "gear"
+position = [0.0, 0.02, 0.75]
+yaw = 5.0
+target = true
+
+[[objects]]
+kind = "crate"
+size = [0.14, 0.12, 0.08]
+position = [0.25, -0.15, 0.75]

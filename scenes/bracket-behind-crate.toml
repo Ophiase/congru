@@ -1,0 +1,31 @@
+name = "bracket behind a crate"
+summary = "A small crate hides one end of a bracket: part of what would pin the pose is out of sight."
+
+[camera]
+position = [0.0, -0.8, 1.15]
+look_at = [0.0, 0.1, 0.78]
+field_of_view = 60.0
+width = 320
+height = 240
+
+[ground]
+size = 6.0
+relief = 0.004
+wave = 1.5
+seed = 13
+
+[[objects]]
+kind = "table"
+size = [1.4, 0.8, 0.75]
+position = [0.0, 0.1, 0.0]
+
+[[objects]]
+kind = "bracket"
+position = [0.05, 0.15, 0.75]
+yaw = 10.0
+target = true
+
+[[objects]]
+kind = "crate"
+size = [0.07, 0.06, 0.09]
+position = [-0.05, 0.0, 0.75]

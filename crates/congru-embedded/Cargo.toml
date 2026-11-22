@@ -1,0 +1,23 @@
+[package]
+name = "congru-embedded"
+description = "Rigid registration without the standard library: closed forms and ICP in f32 or f64, no allocation in the loop."
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+libm = "0.2.16"
+thiserror = { version = "2.0.21", default-features = false }
+
+[dev-dependencies]
+anyhow = "1.0.104"
+congru = { workspace = true, default-features = true }
+congru-sim.workspace = true
+congru-synth.workspace = true
+nalgebra.workspace = true
+rand.workspace = true
+
+[lints]
+workspace = true

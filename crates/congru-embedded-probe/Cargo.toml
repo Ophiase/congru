@@ -1,0 +1,26 @@
+[package]
+name = "congru-embedded-probe"
+description = "A bare-metal image exercising congru-embedded: proves it links without std, and is what its code size is measured on."
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+congru-embedded = { path = "../congru-embedded" }
+
+[[bin]]
+name = "probe-f32"
+path = "src/bin/f32.rs"
+test = false
+bench = false
+
+[[bin]]
+name = "probe-f64"
+path = "src/bin/f64.rs"
+test = false
+bench = false
+
+[lints]
+workspace = true

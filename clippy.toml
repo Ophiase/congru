@@ -1,0 +1,17 @@
+min-ident-chars-threshold = 1
+allowed-idents-below-min-chars = []
+allow-unwrap-in-tests = true
+allow-expect-in-tests = true
+allow-panic-in-tests = true
+too-many-lines-threshold = 40
+doc-valid-idents = [
+  "GeMan",
+  "McClure",
+  "Kabsch",
+  "Umeyama",
+  "SciPy",
+  "NumPy",
+  "PyO3",
+  "Open3D",
+  "..",
+]

@@ -1,0 +1,114 @@
+use congru::{RigidTransform, TriangleMesh};
+use congru_vision::pixel::coordinate;
+use congru_vision::{Camera, DepthImage, render};
+use rand::rngs::ChaCha8Rng;
+use rand::{RngExt, SeedableRng};
+
+/// A simulated box is this much wider than the object, and off by this share.
+const BOX_GROWTH: f64 = 0.4;
+const BOX_SHIFT: f64 = 0.1;
+/// The region of interest of a video: a little larger, a little off.
+const ROI_GROWTH: f64 = 0.2;
+const ROI_SHIFT: f64 = 0.05;
+const ROI_SEED: u64 = 7_000;
+/// Measures a worse detector: `shift,growth`, as shares of the object's size.
+const BOX_VARIABLE: &str = "CONGRU_BOX";
+const SEED_VARIABLE: &str = "CONGRU_SEED";
+/// Longer than any film: two seeds never share a frame's draw.
+const SEED_STRIDE: u64 = 100_000;
+
+/// What a 2D detector on the colour image gives: a box around the object,
+/// here simulated from the truth, grown and shifted. Only the pixels in it
+/// are kept; neither depth nor orientation comes from the truth.
+pub fn boxed(
+    depth: &DepthImage,
+    camera: &Camera,
+    model: &TriangleMesh,
+    truth: &RigidTransform,
+) -> DepthImage {
+    kept_in_box(depth, camera, model, truth, BOX_GROWTH, [BOX_SHIFT; 2])
+}
+
+/// The region of interest a video would be given: the true silhouette's box,
+/// a little larger, its offset drawn anew at each frame. The one input taken from
+/// the truth, standing in for a detector: never the shape, only a rectangle.
+pub fn region_of_interest(
+    depth: &DepthImage,
+    camera: &Camera,
+    model: &TriangleMesh,
+    truth: &RigidTransform,
+    frame: u64,
+) -> DepthImage {
+    noisy_region(depth, camera, model, truth, frame, box_noise())
+}
+
+/// As [`region_of_interest`], with `(shift, growth)` as shares of the object's size.
+pub fn noisy_region(
+    depth: &DepthImage,
+    camera: &Camera,
+    model: &TriangleMesh,
+    truth: &RigidTransform,
+    frame: u64,
+    (shift, growth): (f64, f64),
+) -> DepthImage {
+    let mut random = ChaCha8Rng::seed_from_u64(frame + ROI_SEED + seed());
+    let mut offset = || shift * (random.random::<f64>() * 2.0 - 1.0);
+    let shifts = [offset(), offset()];
+    kept_in_box(depth, camera, model, truth, growth, shifts)
+}
+
+/// How far a run's sensor and box draws are moved, for measuring other seeds.
+pub fn seed() -> u64 {
+    std::env::var(SEED_VARIABLE)
+        .ok()
+        .and_then(|value| value.parse().ok())
+        .map_or(0, |seed: u64| seed * SEED_STRIDE)
+}
+
+pub fn box_noise() -> (f64, f64) {
+    std::env::var(BOX_VARIABLE)
+        .ok()
+        .and_then(|value| {
+            let (shift, growth) = value.split_once(',')?;
+            Some((shift.parse().ok()?, growth.parse().ok()?))
+        })
+        .unwrap_or((ROI_SHIFT, ROI_GROWTH))
+}
+
+fn kept_in_box(
+    depth: &DepthImage,
+    camera: &Camera,
+    model: &TriangleMesh,
+    truth: &RigidTransform,
+    growth: f64,
+    shifts: [f64; 2],
+) -> DepthImage {
+    let silhouette = render(camera, &[(model, *truth)]).depth;
+    let inside: Vec<(usize, usize)> = silhouette
+        .positions()
+        .filter(|(column, row)| silhouette.get(*column, *row).is_finite())
+        .collect();
+    let bounds = |pick: fn(&(usize, usize)) -> usize| {
+        let values = inside.iter().map(pick);
+        (values.clone().min().unwrap_or(0), values.max().unwrap_or(0))
+    };
+    let (left, right) = bounds(|pixel| pixel.0);
+    let (top, bottom) = bounds(|pixel| pixel.1);
+    let grown = |low: usize, high: usize, shift: f64| {
+        let (low, high) = (coordinate(low), coordinate(high));
+        let size = high - low;
+        (
+            low - growth * size / 2.0 + shift * size,
+            high + growth * size / 2.0 + shift * size,
+        )
+    };
+    let (columns, rows) = (grown(left, right, shifts[0]), grown(top, bottom, shifts[1]));
+    let mut kept = DepthImage::filled(depth.width(), depth.height(), f64::NAN);
+    for (column, row) in depth.positions() {
+        let (across, down) = (coordinate(column), coordinate(row));
+        if (columns.0..=columns.1).contains(&across) && (rows.0..=rows.1).contains(&down) {
+            kept.set(column, row, depth.get(column, row));
+        }
+    }
+    kept
+}

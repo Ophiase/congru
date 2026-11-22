@@ -1,0 +1,23 @@
+[package]
+name = "congru-gpu"
+description = "A distance field read on a GPU for congru, optional: the CPU answers when no device does."
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+bytemuck = { version = "1", features = ["derive"] }
+congru = { workspace = true, default-features = true }
+nalgebra.workspace = true
+pollster = "0.4"
+wgpu = "27"
+
+[dev-dependencies]
+anyhow = "1.0.104"
+congru-sim.workspace = true
+rand.workspace = true
+
+[lints]
+workspace = true

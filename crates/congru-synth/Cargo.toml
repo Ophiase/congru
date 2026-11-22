@@ -1,0 +1,21 @@
+[package]
+name = "congru-synth"
+description = "Synthetic registration problems with known ground truth: resampling noise, outliers, partial views, random rigid motions."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+nalgebra.workspace = true
+rand.workspace = true
+rand_distr.workspace = true
+congru = { workspace = true, default-features = false }
+congru-vision.workspace = true
+thiserror.workspace = true
+
+[lints]
+workspace = true

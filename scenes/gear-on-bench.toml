@@ -1,0 +1,42 @@
+name = "gear on a bench"
+summary = "A gear lying among a bracket, a mug and crates on a workbench: twelve teeth, twelve near-answers."
+
+[camera]
+position = [-0.4, -0.55, 1.15]
+look_at = [0.0, 0.05, 0.75]
+field_of_view = 55.0
+width = 320
+height = 240
+
+[ground]
+size = 6.0
+relief = 0.004
+wave = 1.5
+seed = 5
+
+[[objects]]
+kind = "table"
+size = [1.6, 0.9, 0.75]
+position = [0.0, 0.1, 0.0]
+
+[[objects]]
+kind = "gear"
+position = [0.0, 0.0, 0.75]
+yaw = 7.0
+target = true
+
+[[objects]]
+kind = "bracket"
+position = [0.2, 0.15, 0.75]
+yaw = -40.0
+
+[[objects]]
+kind = "mug"
+size = [0.08, 0.08, 0.1]
+position = [-0.2, 0.2, 0.75]
+
+[[objects]]
+kind = "crate"
+size = [0.2, 0.15, 0.12]
+position = [-0.35, -0.1, 0.75]
+yaw = 20.0

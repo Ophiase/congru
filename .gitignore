@@ -1,0 +1,17 @@
+target/
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.rumdl_cache/
+*.so
+
+# Downloaded test scans, see AGENTS.md
+/data/
+
+# Benchmark output and rendered figures
+/out/
+/docs/paper/*.pdf
+
+# Agent worktrees
+/.claude/worktrees/

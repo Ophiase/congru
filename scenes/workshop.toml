@@ -1,0 +1,66 @@
+name = "workshop"
+summary = "A bracket on a crowded bench, among gears, mugs, crates and a twin further back, a wall behind."
+
+[camera]
+position = [0.1, -0.85, 1.35]
+look_at = [0.0, 0.1, 0.78]
+field_of_view = 60.0
+width = 320
+height = 240
+
+[ground]
+size = 6.0
+relief = 0.004
+wave = 1.5
+seed = 22
+
+[[objects]]
+kind = "table"
+size = [1.8, 1.0, 0.75]
+position = [0.0, 0.1, 0.0]
+
+[[objects]]
+kind = "bracket"
+position = [0.0, -0.02, 0.75]
+yaw = 40.0
+target = true
+
+[[objects]]
+kind = "bracket"
+position = [0.42, 0.35, 0.75]
+yaw = -30.0
+
+[[objects]]
+kind = "gear"
+position = [-0.3, -0.1, 0.75]
+
+[[objects]]
+kind = "gear"
+position = [-0.55, 0.25, 0.75]
+
+[[objects]]
+kind = "mug"
+size = [0.08, 0.08, 0.1]
+position = [0.25, -0.15, 0.75]
+
+[[objects]]
+kind = "mug"
+size = [0.09, 0.09, 0.11]
+position = [-0.12, 0.28, 0.75]
+
+[[objects]]
+kind = "crate"
+size = [0.3, 0.22, 0.2]
+position = [0.2, 0.38, 0.75]
+yaw = 12.0
+
+[[objects]]
+kind = "crate"
+size = [0.2, 0.2, 0.15]
+position = [-0.42, 0.45, 0.75]
+yaw = -20.0
+
+[[objects]]
+kind = "wall"
+size = [4.0, 0.1, 2.5]
+position = [0.0, 1.0, 0.0]
